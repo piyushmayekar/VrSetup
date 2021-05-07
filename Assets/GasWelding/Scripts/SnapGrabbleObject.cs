@@ -98,7 +98,7 @@ public class SnapGrabbleObject : MonoBehaviour
            // EndGrabbable.enabled = false;
             connected = true;
         }
-        else if (isLighter && (other.gameObject.tag == "HandR" || other.gameObject.tag == "HandL"))
+        else if (isLighter && (other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
             StartCoroutine(Lighter());
           

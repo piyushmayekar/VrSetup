@@ -28,10 +28,6 @@ public class GasWeldingStep : MonoBehaviour
     public Collider[] ppekitcolliders;
     [Header("Table uper gas kit")]
     public Collider[] GasTablekitcolliders;
-    [Header("Index to enable tableObject collider")]
-    public int indexColider;
-    [Header("Player look at")]
-    public Transform[] playerLookTransform;
     [Header("outLine Object to HighLight")]
     public Outline[] objectOutLines;
     [Header("SnapGrabbleObject")]
@@ -81,8 +77,10 @@ public class GasWeldingStep : MonoBehaviour
         bluePipeRop.GetComponent<CapsuleCollider>().enabled = false;
         redPipeRop.GetComponent<CapsuleCollider>().enabled = false;
         // onEnableStep6Object();
-      //  Onclickbtn_s_4_confirm_p3();
-    // Onclickbtn_s_4_confirm_p2();
+        //  Onclickbtn_s_4_confirm_p3();
+        // Onclickbtn_s_4_confirm_p2();
+        //   OnEnableStep5object();
+    //    StartCoroutine(lighterEnable());
     }
     public void Update()
     {
@@ -409,17 +407,18 @@ public class GasWeldingStep : MonoBehaviour
     }
     public void Onclickbtn_s_6_confirm()
     {
-        n_C_hand_left.SetActive(true);
+        /*n_C_hand_left.SetActive(true);
         n_C_hand_right.SetActive(true);
 
         C_hand_left.SetActive(false);
-        C_hand_right.SetActive(false);
+        C_hand_right.SetActive(false);*/
 
         //step6Pnl.SetActive(false);
         step6Pnl.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
         setPressureRegulatorCanvas.SetActive(true);
 
         GasTablekitcolliders[9].enabled = true;// blue valve nozzel
+        GasTablekitcolliders[9].transform.GetChild(1).gameObject.SetActive(true);
      //   GasTablekitcolliders[9].GetComponent<OVRGrabbable>().enabled = true;
 
         //   objectOutLines[5].enabled = true;
@@ -433,7 +432,8 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[10].enabled = true;
 
         GasTablekitcolliders[10].enabled = true;// red  valve nozzel
-       // GasTablekitcolliders[10].GetComponent<OVRGrabbable>().enabled = true;
+        GasTablekitcolliders[10].transform.GetChild(1).gameObject.SetActive(true);
+        // GasTablekitcolliders[10].GetComponent<OVRGrabbable>().enabled = true;
     }
 
     #endregion
@@ -446,12 +446,12 @@ public class GasWeldingStep : MonoBehaviour
         step6Pnl.SetActive(false);
         step7Pnl.SetActive(true);
 
-        C_hand_left.SetActive(true);
+        /*C_hand_left.SetActive(true);
         C_hand_right.SetActive(true);
 
 
         n_C_hand_left.SetActive(false);
-        n_C_hand_right.SetActive(false);
+        n_C_hand_right.SetActive(false);*/
     }
     public void Onclickbtn_s_7_confirm()
     {
@@ -521,11 +521,11 @@ public class GasWeldingStep : MonoBehaviour
         step8Pnl.SetActive(true);
         step8Pnl.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
 
-        n_C_hand_left.SetActive(true);
+        /*n_C_hand_left.SetActive(true);
         n_C_hand_right.SetActive(true);
 
         C_hand_left.SetActive(false);
-        C_hand_right.SetActive(false);
+        C_hand_right.SetActive(false);*/
         StartCoroutine(lighterEnable());
     }
     IEnumerator lighterEnable()
@@ -575,6 +575,7 @@ public class GasWeldingStep : MonoBehaviour
           n_C_hand_right.SetActive(false);*/
         step8Pnl.SetActive(false);
         step9Pnl.SetActive(true);
+        Onclickbtn_s_9_confirm();
     }
     #endregion
     #region Step 9: Flame Setting.
@@ -591,6 +592,7 @@ public class GasWeldingStep : MonoBehaviour
         Step9flame.SetActive(true);
         //step10Pnl.SetActive(true);
         GasTablekitcolliders[18].enabled = true;
+        GasTablekitcolliders[18].transform.parent.GetComponent<RotateNozzle>().enabled = true;
        // GasTablekitcolliders[18].GetComponent<OVRGrabbable>().enabled = true;
 
         GasTablekitcolliders[14].GetComponent<Outline>().enabled = true;
@@ -608,12 +610,15 @@ public class GasWeldingStep : MonoBehaviour
 
         //  GasTablekitcolliders[12].GetComponent<Outline>().enabled = false;
         GasTablekitcolliders[18].enabled = false;
+        GasTablekitcolliders[18].transform.parent.gameObject.SetActive(false);
+        GasTablekitcolliders[20].transform.parent.gameObject.SetActive(true);
         GasTablekitcolliders[14].GetComponent<Outline>().enabled = false;
 
         GasTablekitcolliders[19].enabled = true;  //green
-     //   GasTablekitcolliders[19].GetComponent<OVRGrabbable>().enabled = true;
+        GasTablekitcolliders[19].transform.parent.GetComponent<RotateNozzle>().enabled = true;
+        //   GasTablekitcolliders[19].GetComponent<OVRGrabbable>().enabled = true;
 
-        GasTablekitcolliders[19].GetComponent<Outline>().enabled = true; //green
+        GasTablekitcolliders[19].transform.parent.GetComponent<Outline>().enabled = true; //green
 
     }
     public void PlayFlamsParticle2_Flam() //second step flame   red 
@@ -625,15 +630,16 @@ public class GasWeldingStep : MonoBehaviour
         reduce_or_carb_F.SetActive(false);
 
         GasTablekitcolliders[19].enabled = false;
-        GasTablekitcolliders[19].GetComponent<Outline>().enabled = false;
+        GasTablekitcolliders[19].transform.parent.GetComponent<Outline>().enabled = false;
 
         extraRedBol.SetActive(true);
         oldRedBol.SetActive(true);
 
         GasTablekitcolliders[20].enabled = true;
-     //   GasTablekitcolliders[20].GetComponent<OVRGrabbable>().enabled = true;
+        GasTablekitcolliders[20].transform.parent.GetComponent<RotateNozzle>().enabled = true;
+        //   GasTablekitcolliders[20].GetComponent<OVRGrabbable>().enabled = true;
 
-        GasTablekitcolliders[20].GetComponent<Outline>().enabled = true;
+        GasTablekitcolliders[20].transform.parent.GetComponent<Outline>().enabled = true;
 
     }
     public void PlayFlamsParticle3_flam() // netural flame
@@ -641,16 +647,16 @@ public class GasWeldingStep : MonoBehaviour
         step9Pnl_part3.SetActive(false);
 
         GasTablekitcolliders[20].enabled = false;
-        GasTablekitcolliders[20].GetComponent<Outline>().enabled = false;
+        GasTablekitcolliders[20].transform.parent.GetComponent<Outline>().enabled = false;
 
         neturel_F.SetActive(true);
         oxidizing_F.SetActive(false);
 
-        C_hand_left.SetActive(true);
+       /* C_hand_left.SetActive(true);
         C_hand_right.SetActive(true);
 
         n_C_hand_left.SetActive(false);
-        n_C_hand_right.SetActive(false);
+        n_C_hand_right.SetActive(false);*/
 
         step10Pnl.SetActive(true);
     }

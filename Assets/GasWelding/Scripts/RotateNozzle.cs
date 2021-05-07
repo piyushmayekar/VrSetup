@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class RotateNozzle : MonoBehaviour
 {
@@ -61,8 +63,11 @@ public class RotateNozzle : MonoBehaviour
                 this.gameObject.GetComponent<BoxCollider>().enabled = false;
                 NextStep.Invoke();
                 this.gameObject.GetComponent<RotateNozzle>().enabled = false;
+                this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+                this.transform.localPosition = initPos;
+                this.transform.localRotation =Quaternion.Euler(newRot.x,0,0);
                 //EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
-               // EndGrabbable.enabled = false;
+                // EndGrabbable.enabled = false;
             }
                 
         }
@@ -77,8 +82,11 @@ public class RotateNozzle : MonoBehaviour
                     this.gameObject.GetComponent<BoxCollider>().enabled = false;
                     NextStep.Invoke();
                     this.gameObject.GetComponent<RotateNozzle>().enabled = false;
-                   // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
-                   // EndGrabbable.enabled = false;
+                    // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
+                    // EndGrabbable.enabled = false;
+                    this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+                    this.transform.localPosition = initPos;
+                    this.transform.localRotation = Quaternion.Euler(newRot.x, 0, 0);
                 }
             }
             else if (isGreenValve) //green bol at tourch
@@ -90,8 +98,11 @@ public class RotateNozzle : MonoBehaviour
                     this.gameObject.GetComponent<BoxCollider>().enabled = false;
                     NextStep.Invoke();
                     this.gameObject.GetComponent<RotateNozzle>().enabled = false;
-                   // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
-                   // EndGrabbable.enabled = false;
+                    this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+                    // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
+                    // EndGrabbable.enabled = false;
+                    this.transform.localPosition = initPos;
+                    this.transform.localRotation = Quaternion.Euler(0, 0,newRot.z);
                 }
             }
             else
@@ -101,6 +112,9 @@ public class RotateNozzle : MonoBehaviour
                     this.gameObject.GetComponent<BoxCollider>().enabled = false;
                     NextStep.Invoke();
                     this.gameObject.GetComponent<RotateNozzle>().enabled = false;
+                    this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+                    this.transform.localPosition = initPos;
+                    this.transform.localRotation = Quaternion.Euler(0, 0, newRot.z);
                     //EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
                     //EndGrabbable.enabled = false;
                 }
