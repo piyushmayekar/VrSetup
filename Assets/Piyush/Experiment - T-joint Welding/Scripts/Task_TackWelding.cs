@@ -1,0 +1,31 @@
+using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit;
+using FlatWelding;
+using UnityEngine;
+
+namespace TWelding
+{
+    public class Task_TackWelding : Task
+    {
+        [SerializeField] WeldingMachine machine;
+        [SerializeField] ElectrodeType requireElectrodeType = ElectrodeType._315mm;
+        [SerializeField] XRGrabInteractable jobPlatesGrabInteractable;
+        [SerializeField] List<WeldingPoint> weldingPoints;
+        int weldingDoneOnPoints = 0;
+        public override void OnTaskBegin()
+        {
+            base.OnTaskBegin();
+            weldingPoints[0].transform.parent.gameObject.SetActive(true);
+            weldingPoints.ForEach(point => point.OnWeldingDone += () =>
+            {
+                weldingDoneOnPoints++;
+                if (weldingDoneOnPoints >= weldingPoints.Count)
+                {
+                    jobPlatesGrabInteractable.enabled = true;
+                    OnTaskCompleted();
+                }
+            });
+            machine.CheckIfRequiredElectrodePlaced(requireElectrodeType);
+        }
+    }
+}
