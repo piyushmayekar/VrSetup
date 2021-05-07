@@ -7,11 +7,12 @@ namespace TWelding
 {
     public class JobPlate : MonoBehaviour
     {
-        public event Action OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone;
+        public event Action OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
         public static List<JobPlate> jobPlates = new List<JobPlate>();
 
         [Header("Scriber Marking")]
         [SerializeField] List<GameObject> markingPoints;
+        [SerializeField] List<MarkingLinePoint> markingLinePoints;
         [SerializeField] LineRenderer markingLine;
         [SerializeField] int currentMarking = 0;
         [SerializeField] List<GameObject> scriberHighlights;
@@ -31,8 +32,12 @@ namespace TWelding
         [SerializeField] Rigidbody extraPlateRB;
         [SerializeField] List<GameObject> cuttingPoints;
         [SerializeField] int currentCuttingPoints = 0;
-        [SerializeField] bool isCuttingDone = false;
+        [SerializeField] bool isCuttingDone = false, isFilingDone = false;
+        [SerializeField] GameObject roughEdge;
+        [SerializeField] List<FilingPoint> filingPoints;
+
         public bool IsCuttingDone { get => isCuttingDone; set => isCuttingDone = value; }
+        public bool IsFilingDone { get => isFilingDone; set => isFilingDone = value; }
 
         void Awake()
         {
@@ -50,14 +55,30 @@ namespace TWelding
         void TurnOnMarkingPoint()
         {
             markingPoints[currentMarking].SetActive(true);
+            if (markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>())
+                markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>().OnMarkingDone += OnMarkingDone;
         }
 
         internal void OnMarkingDone()
         {
+            currentMarking++;
             if (currentMarking < markingPoints.Count)
             {
-                currentMarking++;
                 TurnOnMarkingPoint();
+            }
+            if (currentMarking == markingPoints.Count - 1)
+            {
+                markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
+                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+            }
+        }
+
+        internal void OnMarkingPointScriberEnter(int index, Vector3 position)
+        {
+            if (index == LineMarkingPoint)
+            {
+                markingLinePoints[index].gameObject.SetActive(false);
+                OnMarkingDone(position);
             }
         }
 
@@ -118,6 +139,20 @@ namespace TWelding
                 scriberTaskParent.SetActive(false);
                 centerPunchTaskParent.SetActive(false);
                 OnHacksawCuttingDone?.Invoke();
+
+                //Rough edge
+                roughEdge.SetActive(true);
+            }
+        }
+
+        internal void OnFilingDoneAtPoint(FilingPoint point)
+        {
+            if (filingPoints.Contains(point)) filingPoints.Remove(point);
+            if (filingPoints.Count == 0)
+            {
+                IsFilingDone = true;
+                roughEdge.SetActive(false);
+                OnFilingDone?.Invoke();
             }
         }
     }

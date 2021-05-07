@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Written by Piyush Mayekar
+/// </summary>
 namespace FlatWelding
 {
     public class TaskManager : MonoBehaviour

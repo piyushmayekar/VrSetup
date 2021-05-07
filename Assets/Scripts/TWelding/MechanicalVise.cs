@@ -8,6 +8,12 @@ namespace TWelding
     public class MechanicalVise : MonoBehaviour
     {
         [SerializeField] Transform handle, slider;
+
+        [SerializeField, Tooltip("The transforms of the position holders of both the jobs")]
+        List<XRSocketInteractor> jobSockets;
+
+        [SerializeField] GameObject jobPlateHighlight;
+        [SerializeField] List<GameObject> hacksawAnimators;
         [SerializeField] float sliderParameter;
 
         [SerializeField, Tooltip("The angle limits of the handle with respect to Left World Axis")]
@@ -18,12 +24,27 @@ namespace TWelding
         public void OnHandleSelectEnter() => StartCoroutine(TrackHandleRotation());
         public void OnHandleSelectExit() => StopCoroutine(TrackHandleRotation());
 
+        [SerializeField] Collider _collider;
+
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
         void Awake()
         {
             slider.localPosition = openPos;
+        }
+
+        internal void OnTaskBegin()
+        {
+            jobPlateHighlight.SetActive(true);
+            _collider.enabled = true;
+        }
+
+        internal void OnTaskCompleted()
+        {
+            jobPlateHighlight.SetActive(false);
+            _collider.enabled = false;
+            TurnOffHacksawAnimations();
         }
 
         IEnumerator TrackHandleRotation()
@@ -38,17 +59,55 @@ namespace TWelding
 
         }
 
+        /// <summary>
+        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag(_Constants.JOB_TAG))
+            {
+                JobPlate plateEntered = other.GetComponent<JobPlate>();
+                if (plateEntered)
+                {
+                    int index = JobPlate.jobPlates.FindIndex(plate => plate == plateEntered);
+                    jobSockets[index].socketActive = true;
+                    jobSockets[index == 0 ? 1 : 0].socketActive = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// OnTriggerExit is called when the Collider other has stopped touching the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(_Constants.JOB_TAG))
+                TurnOffHacksawAnimations();
+        }
+
         public void OnSocketEnter(SelectEnterEventArgs args)
         {
             if (args.interactable.CompareTag("Job"))
             {
-                args.interactable.GetComponent<JobPlate>().SetupForCutting();
+                JobPlate plate = args.interactable.GetComponent<JobPlate>();
+                int index = JobPlate.jobPlates.FindIndex(p => p == plate);
+                plate.SetupForCutting();
+                jobPlateHighlight.SetActive(false);
+                if (!plate.IsCuttingDone)
+                {
+                    hacksawAnimators[index].SetActive(true);
+                    plate.OnHacksawCuttingDone += TurnOffHacksawAnimations;
+                }
             }
         }
 
         public void OnSocketExit(SelectEnterEventArgs args)
         {
-
+            jobPlateHighlight.SetActive(true);
         }
+
+        public void TurnOffHacksawAnimations() => hacksawAnimators.ForEach(x => x.SetActive(false));
     }
 }

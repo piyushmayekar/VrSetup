@@ -9,20 +9,20 @@ namespace TWelding
         [SerializeField] JobPlate job;
         [SerializeField] GameObject indicator;
         [SerializeField] Collider _collider;
-        [SerializeField] List<Collider> bladePoints;
-        [SerializeField] List<bool> pointTouched = new List<bool>() { false, false, false };
-
-
-        public void OnContactWithBladePoint(Collider point)
+        /// <summary>
+        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerEnter(Collider other)
         {
-            pointTouched[bladePoints.FindIndex(x => x == point)] = true;
-            if (pointTouched.TrueForAll(x => x))
+            if (other.CompareTag(_Constants.HACKSAW_BLADE_TAG))
             {
                 _collider.enabled = false;
                 indicator.SetActive(false);
                 job.CuttingDone();
             }
         }
+
 
     }
 }

@@ -7,11 +7,26 @@ namespace TWelding
 {
     public class Task_Hacksaw : Task
     {
-        [SerializeField] XRSocketInteractor socketInteractor;
+        [SerializeField] int platesCount = 0;
+        [SerializeField] MechanicalVise mechanicalVise;
+
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            socketInteractor.gameObject.SetActive(true);
+            mechanicalVise.OnTaskBegin();
+            JobPlate.jobPlates.ForEach(plate => plate.OnFilingDone += () =>
+            {
+                platesCount++;
+                if (platesCount == JobPlate.jobPlates.Count)
+                    OnTaskCompleted();
+            });
         }
+
+        public override void OnTaskCompleted()
+        {
+            base.OnTaskCompleted();
+            mechanicalVise.OnTaskCompleted();
+        }
+
     }
 }

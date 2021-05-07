@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,8 @@ namespace TWelding
 {
     public class MarkingPoint : MonoBehaviour
     {
-        [SerializeField] JobPlate jobPlate;
+        public Action OnMarkingDone;
+
         [SerializeField] Renderer _renderer;
         [SerializeField] List<GameObject> highlights;
 
@@ -21,7 +23,7 @@ namespace TWelding
                 GetComponent<Collider>().enabled = false;
                 _renderer.enabled = true;
                 highlights.ForEach(x => x.SetActive(false));
-                jobPlate.OnMarkingDone();
+                OnMarkingDone?.Invoke();
             }
         }
     }

@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace TWelding
 {
-    public class BladePoint : MonoBehaviour
+    public class FilingPoint : MonoBehaviour
     {
-        [SerializeField] Collider _collider;
+        [SerializeField] JobPlate job;
+        [SerializeField] int cleaningTimes = 5;
 
         /// <summary>
         /// OnTriggerEnter is called when the Collider other enters the trigger.
@@ -14,9 +15,10 @@ namespace TWelding
         /// <param name="other">The other Collider involved in this collision.</param>
         void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("CuttingPoint"))
+            if (other.CompareTag("FlatFile") && cleaningTimes > 0)
             {
-                other.GetComponent<CuttingPoint>().OnContactWithBladePoint(_collider);
+                cleaningTimes--;
+                job.OnFilingDoneAtPoint(this);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace FlatWelding
     public class CanvasPositioner : MonoBehaviour
     {
         [SerializeField] Transform xrRigT, displayer;
-        [SerializeField] float yHeight = 1f, lerpSpeed = 0.1f;
+        [SerializeField] float yOffset = 1f, lerpSpeed = 0.1f;
         [SerializeField] Vector3 finalPos;
 
         LayerMask wall;
@@ -30,7 +30,7 @@ namespace FlatWelding
             {
                 if (Physics.Raycast(xrRigT.position, xrRigT.forward, out RaycastHit hit, 20f, wall))
                 {
-                    finalPos = hit.point + Vector3.up * yHeight;
+                    finalPos = new Vector3(hit.point.x, xrRigT.position.y + yOffset, hit.point.z);
                     displayer.rotation = Quaternion.LookRotation(-Vector3.forward);
                 }
                 displayer.position = Vector3.Lerp(displayer.position, finalPos, lerpSpeed);
