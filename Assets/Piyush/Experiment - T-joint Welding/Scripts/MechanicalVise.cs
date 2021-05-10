@@ -13,13 +13,16 @@ namespace TWelding
         List<XRSocketInteractor> jobSockets;
 
         [SerializeField] GameObject jobPlateHighlight;
+        [SerializeField] JobPlate currentHoldingPlate = null;
         [SerializeField] List<GameObject> hacksawAnimators;
         [SerializeField] float sliderParameter;
 
         [SerializeField, Tooltip("The angle limits of the handle with respect to Left World Axis")]
         Vector2 angleLimits = new Vector2(-125f, 125f);
 
-        [SerializeField, Tooltip("Slider positions")] Vector3 openPos, closedPos;
+        [SerializeField, Tooltip("Slider positions")]
+        Vector3 openPos, closedPos, closedPosFull, closedPosBreadth, closedPosLength;
+        [SerializeField] bool isViseOpen = true;
 
         public void OnHandleSelectEnter() => StartCoroutine(TrackHandleRotation());
         public void OnHandleSelectExit() => StopCoroutine(TrackHandleRotation());
@@ -54,6 +57,7 @@ namespace TWelding
                 float angle = Vector3.SignedAngle(Vector3.forward, handle.right, Vector3.left);
                 sliderParameter = Mathf.InverseLerp(angleLimits.x, angleLimits.y, angle);
                 slider.transform.localPosition = Vector3.Lerp(openPos, closedPos, sliderParameter);
+                isViseOpen = sliderParameter < 0.9f;
                 yield return null;
             }
 
@@ -100,12 +104,17 @@ namespace TWelding
                     hacksawAnimators[index].SetActive(true);
                     plate.OnHacksawCuttingDone += TurnOffHacksawAnimations;
                 }
+                currentHoldingPlate = plate;
+                if (currentHoldingPlate.PlateType == PlateType.Length) closedPos = closedPosLength;
+                if (currentHoldingPlate.PlateType == PlateType.Breadth) closedPos = closedPosBreadth;
             }
         }
 
         public void OnSocketExit(SelectEnterEventArgs args)
         {
             jobPlateHighlight.SetActive(true);
+            currentHoldingPlate = null;
+            closedPos = closedPosFull;
         }
 
         public void TurnOffHacksawAnimations() => hacksawAnimators.ForEach(x => x.SetActive(false));
