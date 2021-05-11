@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit;
 using FlatWelding;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TWelding
 {
@@ -11,7 +12,9 @@ namespace TWelding
         [SerializeField] ElectrodeType requireElectrodeType = ElectrodeType._315mm;
         [SerializeField] XRGrabInteractable jobPlatesGrabInteractable;
         [SerializeField] List<WeldingPoint> weldingPoints;
+        [SerializeField] Button doneButton;
         int weldingDoneOnPoints = 0;
+
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
@@ -22,10 +25,16 @@ namespace TWelding
                 if (weldingDoneOnPoints >= weldingPoints.Count)
                 {
                     jobPlatesGrabInteractable.enabled = true;
-                    OnTaskCompleted();
+                    doneButton.gameObject.SetActive(true);
                 }
             });
             machine.CheckIfRequiredElectrodePlaced(requireElectrodeType);
+        }
+
+        public override void OnTaskCompleted()
+        {
+            doneButton.gameObject.SetActive(false);
+            base.OnTaskCompleted();
         }
     }
 }

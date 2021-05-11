@@ -63,23 +63,30 @@ namespace TWelding
         void TurnOnMarkingPoint()
         {
             markingPoints[currentMarking].SetActive(true);
-            if (markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>())
-                markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>().OnMarkingDone += OnMarkingDone;
+            MarkingPoint markingPoint = markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>();
+            if (markingPoint)
+                markingPoint.OnMarkingDone += OnMarkingDone;
+            else if (markingPoints[currentMarking].transform.GetChild(0).GetComponentInChildren<MarkingLinePoint>())
+            {
+                markingLinePointIndex = 0;
+                markingLine = markingPoints[currentMarking].transform.GetChild(0).GetComponent<LineRenderer>();
+                markingLinePoints = new List<MarkingLinePoint>(markingPoints[currentMarking].transform.GetChild(0).GetComponentsInChildren<MarkingLinePoint>());
+                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+            }
         }
 
         internal void OnMarkingDone()
         {
+            //Turning off highlights
+            markingPoints[currentMarking].transform.GetChild(1).gameObject?.SetActive(false);
+            markingPoints[currentMarking].transform.GetChild(2).gameObject?.SetActive(false);
             currentMarking++;
             if (currentMarking < markingPoints.Count)
-            {
                 TurnOnMarkingPoint();
-                if (markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>())
-                    markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>().OnMarkingDone += OnMarkingDone;
-            }
-            if (currentMarking == markingPoints.Count - 1)
+            else
             {
-                markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
-                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+                jobSockets[1].socketActive = true;
+                jobSockets[1].GetComponent<MeshRenderer>().enabled = true;
             }
         }
 
@@ -97,12 +104,9 @@ namespace TWelding
             markingLinePointIndex++;
             markingLine.positionCount++;
             markingLine.SetPosition(markingLine.positionCount - 1, position);
-            if (markingLinePointIndex >= markingLinePoints.Count)
-            {
-                jobSockets[1].socketActive = true;
-                jobSockets[1].GetComponent<MeshRenderer>().enabled = true;
-            }
             scriberHighlights.ForEach(highlight => highlight.SetActive(false));
+            if (markingLinePointIndex >= markingLinePoints.Count)
+                OnMarkingDone();
         }
 
         public override void OnTaskCompleted()

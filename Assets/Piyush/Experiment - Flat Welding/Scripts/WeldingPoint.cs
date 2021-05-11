@@ -80,7 +80,7 @@ public class WeldingPoint : MonoBehaviour
                     prefab.transform.parent = null;
                     prefab.GetComponent<Rigidbody>().AddForce(UnityEngine.Random.insideUnitSphere
                     * UnityEngine.Random.Range(residueThrowForce.x, residueThrowForce.y));
-                    Destroy(prefab, 60f);
+                    Destroy(prefab, 20f);
                 });
             }
             OnHitWithHammer?.Invoke();

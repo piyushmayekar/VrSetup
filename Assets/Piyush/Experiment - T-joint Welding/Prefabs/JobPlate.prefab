@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2876723812362393047}
   - component: {fileID: 3347404301914305259}
   - component: {fileID: 7635112855790097524}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Rough Edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 5665327145364370454}
   - component: {fileID: 1916934957303442746}
   - component: {fileID: 5186463612068887360}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FilingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 4392331025851263843}
   - component: {fileID: 5737690796364928093}
   - component: {fileID: 5737690796364928094}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Plate Elongated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2681811225831245089}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AttachTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5737690795488623809}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CuttingPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 5737690795539979667}
   - component: {fileID: 5737690795539979669}
   - component: {fileID: 5737690795539979668}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690795539979668
 BoxCollider:
@@ -417,7 +416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5737690795708479659}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ScriberTask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5737690795730614581}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Marking1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +485,7 @@ GameObject:
   - component: {fileID: 5737690795754081242}
   - component: {fileID: 5737690795754081241}
   - component: {fileID: 5737690795754081240}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MarkingPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f817d11a1e01348970bfb84ac91f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   _renderer: {fileID: 5737690795754081241}
   highlights:
   - {fileID: 3678859223598605611}
@@ -599,7 +597,7 @@ GameObject:
   - component: {fileID: 5737690795757428071}
   - component: {fileID: 5737690795757428089}
   - component: {fileID: 5737690795757428088}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690795757428088
 BoxCollider:
@@ -660,7 +657,7 @@ GameObject:
   - component: {fileID: 5737690795842411430}
   - component: {fileID: 5737690795842411429}
   - component: {fileID: 5737690795842411428}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MarkingPoint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -771,7 +768,7 @@ GameObject:
   - component: {fileID: 5737690795891974804}
   - component: {fileID: 5737690795891974806}
   - component: {fileID: 5737690795891974805}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,7 +801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690795891974805
 BoxCollider:
@@ -832,7 +828,7 @@ GameObject:
   - component: {fileID: 5737690795933917487}
   - component: {fileID: 5737690795933917486}
   - component: {fileID: 5737690795933917485}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MarkingPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -943,7 +939,7 @@ GameObject:
   - component: {fileID: 5737690795946919180}
   - component: {fileID: 5737690795946919182}
   - component: {fileID: 5737690795946919181}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,7 +972,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690795946919181
 BoxCollider:
@@ -1002,7 +997,7 @@ GameObject:
   - component: {fileID: 5737690795973892440}
   - component: {fileID: 5737690795973892442}
   - component: {fileID: 5737690795973892441}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1035,7 +1030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690795973892441
 BoxCollider:
@@ -1061,7 +1055,7 @@ GameObject:
   - component: {fileID: 5737690796036759344}
   - component: {fileID: 5737690796036759346}
   - component: {fileID: 5737690796036759345}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1094,7 +1088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796036759345
 BoxCollider:
@@ -1120,7 +1113,7 @@ GameObject:
   - component: {fileID: 5737690796088268973}
   - component: {fileID: 5737690796088268975}
   - component: {fileID: 5737690796088268974}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1153,7 +1146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796088268974
 BoxCollider:
@@ -1179,7 +1171,7 @@ GameObject:
   - component: {fileID: 5737690796238225213}
   - component: {fileID: 5737690796238225215}
   - component: {fileID: 5737690796238225214}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1212,7 +1204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796238225214
 BoxCollider:
@@ -1238,7 +1229,7 @@ GameObject:
   - component: {fileID: 5737690796238349718}
   - component: {fileID: 5737690796238349736}
   - component: {fileID: 5737690796238349719}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1271,7 +1262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796238349719
 BoxCollider:
@@ -1297,7 +1287,7 @@ GameObject:
   - component: {fileID: 5737690796242320551}
   - component: {fileID: 5737690796242320569}
   - component: {fileID: 5737690796242320568}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1330,7 +1320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796242320568
 BoxCollider:
@@ -1356,7 +1345,7 @@ GameObject:
   - component: {fileID: 5737690796317273206}
   - component: {fileID: 5737690796317273096}
   - component: {fileID: 5737690796317273207}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1389,7 +1378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796317273207
 BoxCollider:
@@ -1415,7 +1403,7 @@ GameObject:
   - component: {fileID: 5737690796394577270}
   - component: {fileID: 5737690796394577160}
   - component: {fileID: 5737690796394577271}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1448,7 +1436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796394577271
 BoxCollider:
@@ -1474,7 +1461,7 @@ GameObject:
   - component: {fileID: 5737690796415799062}
   - component: {fileID: 5737690796415799080}
   - component: {fileID: 5737690796415799063}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1507,7 +1494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796415799063
 BoxCollider:
@@ -1533,7 +1519,7 @@ GameObject:
   - component: {fileID: 5737690796437357811}
   - component: {fileID: 5737690796437357813}
   - component: {fileID: 5737690796437357812}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1566,7 +1552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796437357812
 BoxCollider:
@@ -1592,7 +1577,7 @@ GameObject:
   - component: {fileID: 5737690796479309724}
   - component: {fileID: 5737690796479309726}
   - component: {fileID: 5737690796479309725}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1625,7 +1610,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796479309725
 BoxCollider:
@@ -1651,7 +1635,7 @@ GameObject:
   - component: {fileID: 5737690796489211021}
   - component: {fileID: 5737690796489211023}
   - component: {fileID: 5737690796489211022}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1684,7 +1668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796489211022
 BoxCollider:
@@ -1710,7 +1693,7 @@ GameObject:
   - component: {fileID: 5737690796495605600}
   - component: {fileID: 5737690796495605602}
   - component: {fileID: 5737690796495605601}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1743,7 +1726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796495605601
 BoxCollider:
@@ -1769,7 +1751,7 @@ GameObject:
   - component: {fileID: 5737690796591946942}
   - component: {fileID: 5737690796591946928}
   - component: {fileID: 5737690796591946943}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1802,7 +1784,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796591946943
 BoxCollider:
@@ -1828,7 +1809,7 @@ GameObject:
   - component: {fileID: 5737690796609479522}
   - component: {fileID: 5737690796609479524}
   - component: {fileID: 5737690796609479523}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1861,7 +1842,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796609479523
 BoxCollider:
@@ -1887,7 +1867,7 @@ GameObject:
   - component: {fileID: 5737690796695055883}
   - component: {fileID: 5737690796695055885}
   - component: {fileID: 5737690796695055884}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1920,7 +1900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796695055884
 BoxCollider:
@@ -1944,7 +1923,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5737690796744083915}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: FinalMarkingLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1977,7 +1956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5737690796821256796}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Marking2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2014,7 +1993,7 @@ GameObject:
   - component: {fileID: 5737690796851447919}
   - component: {fileID: 5737690796851447918}
   - component: {fileID: 5737690796851447917}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Plate Extra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2124,7 +2103,7 @@ GameObject:
   - component: {fileID: 5737690796975297984}
   - component: {fileID: 5737690796975297986}
   - component: {fileID: 5737690796975297985}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2157,7 +2136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690796975297985
 BoxCollider:
@@ -2181,7 +2159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5737690797273473646}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CenterPunchTask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2216,7 +2194,7 @@ GameObject:
   - component: {fileID: 5737690797368952159}
   - component: {fileID: 5737690797368952145}
   - component: {fileID: 5737690797368952144}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: PointHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2297,7 +2275,7 @@ GameObject:
   - component: {fileID: 5737690797439233124}
   - component: {fileID: 5737690797439233126}
   - component: {fileID: 5737690797439233125}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2330,7 +2308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690797439233125
 BoxCollider:
@@ -2356,7 +2333,7 @@ GameObject:
   - component: {fileID: 5737690797494797132}
   - component: {fileID: 5737690797494797134}
   - component: {fileID: 5737690797494797133}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2389,7 +2366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690797494797133
 BoxCollider:
@@ -2415,7 +2391,7 @@ GameObject:
   - component: {fileID: 5737690797551581714}
   - component: {fileID: 5737690797551581716}
   - component: {fileID: 5737690797551581715}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: PointHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2496,7 +2472,7 @@ GameObject:
   - component: {fileID: 5737690797552793105}
   - component: {fileID: 5737690797552793107}
   - component: {fileID: 5737690797552793106}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: PointHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2579,7 +2555,7 @@ GameObject:
   - component: {fileID: 5737690797554355082}
   - component: {fileID: 5737690797554355085}
   - component: {fileID: 5737690797554355083}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MarkingPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2695,7 +2671,7 @@ GameObject:
   - component: {fileID: 5737690797554449061}
   - component: {fileID: 5737690797554449060}
   - component: {fileID: 5737690797554449059}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MarkingPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2728,7 +2704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f817d11a1e01348970bfb84ac91f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   _renderer: {fileID: 5737690797554449060}
   highlights:
   - {fileID: 3678859221862925010}
@@ -2808,7 +2783,7 @@ GameObject:
   - component: {fileID: 5737690797554981972}
   - component: {fileID: 5737690797554981974}
   - component: {fileID: 5737690797554981973}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2841,7 +2816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690797554981973
 BoxCollider:
@@ -2867,7 +2841,7 @@ GameObject:
   - component: {fileID: 5737690797556801346}
   - component: {fileID: 5737690797556801348}
   - component: {fileID: 5737690797556801347}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2900,7 +2874,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690797556801347
 BoxCollider:
@@ -2928,7 +2901,7 @@ GameObject:
   - component: {fileID: 5737690797561445311}
   - component: {fileID: 5737690797561445310}
   - component: {fileID: 5737690797561445296}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JobPlate
   m_TagString: Job
   m_Icon: {fileID: 0}
@@ -2972,6 +2945,7 @@ MonoBehaviour:
   - {fileID: 5737690795730614580}
   - {fileID: 5737690796821256795}
   - {fileID: 5737690796744083914}
+  markingLinePoints: []
   markingLine: {fileID: 5737690797578049231}
   currentMarking: 0
   scriberHighlights:
@@ -3144,7 +3118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5737690797578049230}
   - component: {fileID: 5737690797578049231}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3298,7 +3272,7 @@ GameObject:
   - component: {fileID: 5737690797628926871}
   - component: {fileID: 5737690797628926889}
   - component: {fileID: 5737690797628926888}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: MarkingLinePoint (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3331,7 +3305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee161059b08f69f40a2a7baef2fb669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobPlate: {fileID: 5737690797561445297}
   pointIndex: 0
 --- !u!65 &5737690797628926888
 BoxCollider:
@@ -3359,7 +3332,7 @@ GameObject:
   - component: {fileID: 9208758269152305257}
   - component: {fileID: 5737690796364928095}
   - component: {fileID: 5737690796364928080}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Plate OG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3470,7 +3443,7 @@ GameObject:
   - component: {fileID: 8364288556059920665}
   - component: {fileID: 2674145411939353778}
   - component: {fileID: 1692040585719582661}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FilingPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3529,7 +3502,7 @@ GameObject:
   - component: {fileID: 5258533923164593219}
   - component: {fileID: 2177881931936343135}
   - component: {fileID: 1957160899967147866}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FilingPoint (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3584,6 +3557,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5737690795488623809}
     m_Modifications:
+    - target: {fileID: 5768242295201970481, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8445558012703888168, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3653,6 +3630,10 @@ PrefabInstance:
       value: CuttingPoints
       objectReference: {fileID: 0}
     - target: {fileID: 8445558012703888171, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445558012703888171, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -3678,6 +3659,18 @@ PrefabInstance:
     - target: {fileID: 2038716613234647346, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
       propertyPath: m_Name
       value: Scriber Highlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038716613234647346, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383017609431386409, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383017609440206957, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8635381179962405229, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
       propertyPath: m_RootOrder
@@ -3758,6 +3751,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scriber Highlight
       objectReference: {fileID: 0}
+    - target: {fileID: 2038716613234647346, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383017609431386409, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383017609440206957, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8635381179962405229, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3821,6 +3826,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5737690795488623809}
     m_Modifications:
+    - target: {fileID: 5768242295201970481, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8445558012703888168, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -3890,6 +3899,10 @@ PrefabInstance:
       value: CuttingPoints (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8445558012703888171, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445558012703888171, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -3912,9 +3925,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5737690795730614581}
     m_Modifications:
+    - target: {fileID: 391077683412965375, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385362967475602474, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851996251923834626, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8984032106369322574, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_Name
       value: SteelRulerHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984032106369322574, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 9074394586970425459, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_RootOrder
@@ -3922,7 +3951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074394586970425459, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.0089
       objectReference: {fileID: 0}
     - target: {fileID: 9074394586970425459, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4039,6 +4068,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: HammerHighlight
       objectReference: {fileID: 0}
+    - target: {fileID: 3603259482791267289, guid: 920ba771877721e43bb6580bd085376a, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3854802654327456209, guid: 920ba771877721e43bb6580bd085376a, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044289066536172769, guid: 920ba771877721e43bb6580bd085376a, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5293047927227221866, guid: 920ba771877721e43bb6580bd085376a, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 920ba771877721e43bb6580bd085376a, type: 3}
 --- !u!1 &9052523363996321061 stripped
@@ -4061,6 +4106,18 @@ PrefabInstance:
     - target: {fileID: 2038716613234647346, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
       propertyPath: m_Name
       value: Scriber Highlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038716613234647346, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383017609431386409, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383017609440206957, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8635381179962405229, guid: 68172a72ab2a2a848996934ac6fe82e5, type: 3}
       propertyPath: m_RootOrder
@@ -4137,6 +4194,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5737690797554355081}
     m_Modifications:
+    - target: {fileID: 194071892435279985, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 263170759454947816, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 584161965129051766, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523591032254864862, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1988942619715044546, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2089256644347809181, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2510202222035431928, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -4193,9 +4274,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 2776048706272116784, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2998789543431318338, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
       propertyPath: m_Name
       value: Center punch Highlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998789543431318338, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494398454674894894, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674359292593407835, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6217524689260175149, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191083859307886410, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74acf329b084bfd409bee2ee838ac5c6, type: 3}
@@ -4216,6 +4321,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5737690795488623809}
     m_Modifications:
+    - target: {fileID: 5768242295201970481, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8445558012703888168, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -4285,6 +4394,10 @@ PrefabInstance:
       value: CuttingPoints (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8445558012703888171, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445558012703888171, guid: f27e0247b75b940408dc833d96a50f19, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -4307,9 +4420,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5737690796821256796}
     m_Modifications:
+    - target: {fileID: 391077683412965375, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385362967475602474, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851996251923834626, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8984032106369322574, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_Name
       value: SteelRulerHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984032106369322574, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 9074394586970425459, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_RootOrder
@@ -4317,7 +4446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074394586970425459, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.0089
       objectReference: {fileID: 0}
     - target: {fileID: 9074394586970425459, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4374,9 +4503,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5737690796744083915}
     m_Modifications:
+    - target: {fileID: 391077683412965375, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385362967475602474, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851996251923834626, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8984032106369322574, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_Name
       value: SteelRulerHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984032106369322574, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 9074394586970425459, guid: ffe028a07c6f24c45a807b5684c5722e, type: 3}
       propertyPath: m_RootOrder

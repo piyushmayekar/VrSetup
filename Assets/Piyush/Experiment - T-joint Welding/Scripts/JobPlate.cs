@@ -8,7 +8,8 @@ namespace TWelding
     public class JobPlate : MonoBehaviour
     {
         public event Action OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
-        public static List<JobPlate> jobPlates = new List<JobPlate>();
+
+        [SerializeField] PlateType plateType;
 
         [Header("Scriber Marking")]
         [SerializeField] List<GameObject> markingPoints;
@@ -38,7 +39,9 @@ namespace TWelding
 
         public bool IsCuttingDone { get => isCuttingDone; set => isCuttingDone = value; }
         public bool IsFilingDone { get => isFilingDone; set => isFilingDone = value; }
+        public PlateType PlateType { get => plateType; set => plateType = value; }
 
+        public static List<JobPlate> jobPlates = new List<JobPlate>();
         void Awake()
         {
             if (!jobPlates.Contains(this))
@@ -89,7 +92,7 @@ namespace TWelding
             markingLine.SetPosition(markingLine.positionCount - 1, position);
             if (lineMarkingPoint >= totalLineMarkingPoints)
                 OnScriberMarkingDone?.Invoke();
-            scriberHighlights[1].SetActive(false);
+            scriberHighlights.ForEach(highlight => highlight.SetActive(false));
         }
 
         //CENTER PUNCH
@@ -156,4 +159,10 @@ namespace TWelding
             }
         }
     }
+    [System.Serializable]
+    public enum PlateType
+    {
+        Breadth, Length
+    }
 }
+
