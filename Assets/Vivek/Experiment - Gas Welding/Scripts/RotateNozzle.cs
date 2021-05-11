@@ -71,7 +71,7 @@ public class RotateNozzle : MonoBehaviour
             }
                 
         }
-        else
+     /*   else
         {
             this.transform.localRotation = newRot;
             if (isRedValve)//red bol at tourch
@@ -79,7 +79,7 @@ public class RotateNozzle : MonoBehaviour
                 if (this.transform.localRotation.x >= RotateValue && this.transform.localRotation.x <= (RotateValue + 0.2f))
                 {
                     Debug.Log("Is match " + this.transform.localRotation.x);
-                    this.gameObject.GetComponent<BoxCollider>().enabled = false;
+                  this.gameObject.transform.GetChild(2).GetComponent<SphereCollider>().enabled = false;
                     NextStep.Invoke();
                     this.gameObject.GetComponent<RotateNozzle>().enabled = false;
                     // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
@@ -87,6 +87,7 @@ public class RotateNozzle : MonoBehaviour
                     this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
                     this.transform.localPosition = initPos;
                     this.transform.localRotation = Quaternion.Euler(newRot.x, 0, 0);
+             
                 }
             }
             else if (isGreenValve) //green bol at tourch
@@ -95,7 +96,7 @@ public class RotateNozzle : MonoBehaviour
                 if (this.transform.localRotation.z >= RotateValue && this.transform.localRotation.z <= (RotateValue + 0.2f))
                 {
                     Debug.Log("Is match " + this.transform.rotation.z);
-                    this.gameObject.GetComponent<BoxCollider>().enabled = false;
+                    this.gameObject.transform.GetChild(2).GetComponent<SphereCollider>().enabled = false;
                     NextStep.Invoke();
                     this.gameObject.GetComponent<RotateNozzle>().enabled = false;
                     this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
@@ -109,7 +110,7 @@ public class RotateNozzle : MonoBehaviour
             {
                 if (this.transform.localRotation.z >= RotateValue && this.transform.localRotation.z <= (RotateValue + 0.2f))
                 {
-                    this.gameObject.GetComponent<BoxCollider>().enabled = false;
+                    this.gameObject.transform.GetChild(2).GetComponent<SphereCollider>().enabled = false;
                     NextStep.Invoke();
                     this.gameObject.GetComponent<RotateNozzle>().enabled = false;
                     this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
@@ -119,7 +120,7 @@ public class RotateNozzle : MonoBehaviour
                     //EndGrabbable.enabled = false;
                 }
             }
-        }
+        }*/
 
         /*        if ((nextSnap == snap1) && ((circleValve && open) || !circleValve))
                 {
@@ -170,4 +171,55 @@ public class RotateNozzle : MonoBehaviour
 
 
     }
+    public void RedValve()
+    {
+        Debug.Log("Is match " + this.transform.localRotation.x);
+        this.gameObject.transform.GetChild(2).GetComponent<SphereCollider>().enabled = false;
+        NextStep.Invoke();
+        this.gameObject.GetComponent<RotateNozzle>().enabled = false;
+        // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
+        // EndGrabbable.enabled = false;
+        this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+        this.transform.localPosition = initPos;
+        this.transform.localRotation = Quaternion.Euler(newRot.x, 0, 0);
+
+    }
+    public void GreenValve()
+    {
+        this.gameObject.transform.GetChild(2).GetComponent<SphereCollider>().enabled = false;
+        NextStep.Invoke();
+        this.gameObject.GetComponent<RotateNozzle>().enabled = false;
+        this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+        // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
+        // EndGrabbable.enabled = false;
+        this.transform.localPosition = initPos;
+        this.transform.localRotation = Quaternion.Euler(0, 0, newRot.z);
+    }
+ /*   private void OnTriggerEnter(Collider other)
+    {
+        if (isRedValve && (other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
+        {
+            Debug.Log("Is match " + this.transform.localRotation.x);
+            this.gameObject.transform.GetChild(2).GetComponent<SphereCollider>().enabled = false;
+            NextStep.Invoke();
+            this.gameObject.GetComponent<RotateNozzle>().enabled = false;
+            // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
+            // EndGrabbable.enabled = false;
+            this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+            this.transform.localPosition = initPos;
+            this.transform.localRotation = Quaternion.Euler(newRot.x, 0, 0);
+        }
+        else if (isGreenValve && (other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
+        {
+            this.gameObject.transform.GetChild(2).GetComponent<SphereCollider>().enabled = false;
+            NextStep.Invoke();
+            this.gameObject.GetComponent<RotateNozzle>().enabled = false;
+            this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+            // EndGrabbable.UnGrabMe(Vector3.zero, Vector3.zero);
+            // EndGrabbable.enabled = false;
+            this.transform.localPosition = initPos;
+            this.transform.localRotation = Quaternion.Euler(0, 0, newRot.z);
+        }
+      
+    }*/
 }

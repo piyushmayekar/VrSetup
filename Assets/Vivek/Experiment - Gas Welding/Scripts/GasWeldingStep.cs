@@ -87,6 +87,7 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
+    // StartCoroutine(lighterEnable());
     }
     public void Start()
     {
@@ -95,9 +96,9 @@ public class GasWeldingStep : MonoBehaviour
     IEnumerator PlayGasWeldingStartAudio()
     {
         PlayStepAudio(0);
-        yield return new WaitForSeconds(stepAudioSource.clip.length + 0.2f);
+        yield return new WaitForSeconds(0.2f+stepAudioSource.clip.length);
         PlayStepAudio(1);
-        yield return new WaitForSeconds(stepAudioSource.clip.length + 0.2f);
+        yield return new WaitForSeconds(0.2f + stepAudioSource.clip.length);
         PlayStepAudio(2);
 
     }
@@ -632,8 +633,8 @@ public class GasWeldingStep : MonoBehaviour
                                                  // GasTablekitcolliders[12].GetComponent<OVRGrabbable>().enabled = true;
         GasTablekitcolliders[12].GetComponent<Outline>().enabled = true;
 
-        redbol.enabled = true;
-        greenbol.enabled = true;
+       /* redbol.enabled = true;
+        greenbol.enabled = true;*/
         /*  step8Pnl.SetActive(true);
           step8Pnl.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);*/
        
@@ -694,7 +695,7 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_9_confirm);
         PlayStepAudio(12);// open flam audio
-        //   Onclickbtn_s_9_confirm();
+        //  Onclickbtn_s_9_confirm();
     }
     #endregion
     #region Step 9: Flame Setting.
