@@ -27,9 +27,12 @@ public class Task : MonoBehaviour
 
     public virtual void OnTaskCompleted()
     {
-        isTaskComplete = true;
-        FlatWelding.TaskManager.Instance.OnTaskCompleted(this);
-        //Turning off highlights
-        highlights.ForEach(x => x.gameObject.SetActive(false));
+        if (!isTaskComplete)
+        {
+            isTaskComplete = true;
+            FlatWelding.TaskManager.Instance.OnTaskCompleted(this);
+            //Turning off highlights
+            highlights.ForEach(x => x.gameObject.SetActive(false));
+        }
     }
 }

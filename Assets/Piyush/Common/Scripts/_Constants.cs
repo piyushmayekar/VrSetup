@@ -8,6 +8,7 @@ public static class _Constants
     public const string SLAG_TAG = "Slag";
     public const string CHIPPING_HAMMER_TAG = "ChippingHammer";
     public const string HACKSAW_BLADE_TAG = "HackSawBlade";
+    public const string SPACER_TAG = "Spacer";
 
     //Messages
     public const string ELECTRODE_NOT_CORRECT = "Please insert the correct electrode";

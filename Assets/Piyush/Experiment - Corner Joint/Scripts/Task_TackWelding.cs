@@ -4,7 +4,7 @@ using FlatWelding;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TWelding
+namespace CornerWelding
 {
     public class Task_TackWelding : Task
     {
@@ -16,12 +16,12 @@ namespace TWelding
         [SerializeField] GameObject spacerGrabbablePrefab;
         [SerializeField] List<GameObject> spacersToRemove = new List<GameObject>();
         [SerializeField] int weldingDoneOnPoints = 0;
-        [SerializeField] Button doneButton;
+
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
             weldingPoints[0].transform.parent.gameObject.SetActive(true);
-            weldingPoints.ForEach(point => point.OnWeldingDone += () =>
+            weldingPoints.ForEach(point => point.OnWeldingDone += (point) =>
             {
                 weldingDoneOnPoints++;
                 if (weldingDoneOnPoints >= weldingPoints.Count)
@@ -35,13 +35,16 @@ namespace TWelding
                     }
                 }
             });
-            machine.CheckIfRequiredElectrodePlaced(requireElectrodeType);
-        }
 
-        public override void OnTaskCompleted()
-        {
-            doneButton.gameObject.SetActive(false);
-            base.OnTaskCompleted();
+            FinalJobPlatesManager.OnSpacerRemoved += (spacer) =>
+            {
+                if (spacersToRemove.Contains(spacer))
+                    spacersToRemove.Remove(spacer);
+                spacer.SetActive(false);
+                if (spacersToRemove.Count == 0)
+                    OnTaskCompleted();
+            };
+            machine.CheckIfRequiredElectrodePlaced(requireElectrodeType);
         }
     }
 }
