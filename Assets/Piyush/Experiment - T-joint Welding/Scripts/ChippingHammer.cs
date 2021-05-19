@@ -2,14 +2,13 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace FlatWelding
+namespace TWelding
 {
     public class ChippingHammer : MonoBehaviour
     {
         [SerializeField] bool isHittingLeftPoints;
         [SerializeField] SoundPlayer soundPlayer;
 
-        //TODO Remove this
         public bool IsHittingLeftPoints { get => isHittingLeftPoints; set => isHittingLeftPoints = value; }
 
         #region SINGLETON
@@ -30,7 +29,11 @@ namespace FlatWelding
         /// </summary>
         void Start()
         {
-            WeldingArea.OnChippingHammerEnter += PlayHitSound;
+            WeldingArea.OnChippingHammerEnter += (bool isHittingLeftPoints) =>
+            {
+                IsHittingLeftPoints = isHittingLeftPoints;
+                PlayHitSound();
+            };
         }
 
         internal void PlayHitSound()

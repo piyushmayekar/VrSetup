@@ -14,19 +14,15 @@ namespace FlatWelding
             base.OnTaskBegin();
             weldingTask.WeldingPoints.ForEach(point =>
             {
-                if (point.IsExteriorWeldingPoint)
-                {
-                    exteriorPointsCount++;
-                    point.OnHitWithHammer += OnExteriorPointHit;
-                }
+                point.OnHitWithHammer += OnWeldingPointHit;
             });
         }
 
-        public void OnExteriorPointHit()
+        public void OnWeldingPointHit()
         {
             highlights.ForEach(x => x.gameObject.SetActive(false));
             pointsHit++;
-            if (pointsHit >= exteriorPointsCount)
+            if (pointsHit >= weldingTask.WeldingPoints.Count)
                 OnTaskCompleted();
         }
 

@@ -17,6 +17,7 @@ namespace CornerWelding
         [SerializeField] bool currentSet = false, electrodePlaced = false;
         [SerializeField] FinalJobPlatesManager finalJobPlates;
         [SerializeField] bool turnOnJobGrabAfterJobComplete = false;
+        [SerializeField] GameObject weavingImage;
         WeldingMachine machine;
 
         public override void OnTaskBegin()
@@ -47,6 +48,7 @@ namespace CornerWelding
             weldingArea.SetActive(true);
             allPoints[0].transform.parent.gameObject.SetActive(true);
             machineAnimation.SetActive(true);
+            weavingImage.SetActive(true);
             allPoints.ForEach(point =>
             {
                 if (point.ShouldShowSlag)

@@ -12,9 +12,6 @@ namespace TWelding
         [SerializeField] ElectrodeType requireElectrodeType = ElectrodeType._315mm;
         [SerializeField] XRGrabInteractable jobPlatesGrabInteractable;
         [SerializeField] List<WeldingPoint> weldingPoints;
-        [SerializeField] List<GameObject> finalSpacers;
-        [SerializeField] GameObject spacerGrabbablePrefab;
-        [SerializeField] List<GameObject> spacersToRemove = new List<GameObject>();
         [SerializeField] int weldingDoneOnPoints = 0;
         [SerializeField] Button doneButton;
         public override void OnTaskBegin()
@@ -26,13 +23,8 @@ namespace TWelding
                 weldingDoneOnPoints++;
                 if (weldingDoneOnPoints >= weldingPoints.Count)
                 {
-                    for (var i = 0; i < finalSpacers.Count; i++)
-                    {
-                        GameObject spacer = finalSpacers[i];
-                        spacersToRemove.Add(Instantiate(spacerGrabbablePrefab, spacer.transform.position,
-                        spacer.transform.rotation, spacer.transform.parent));
-                        Destroy(spacer);
-                    }
+                    doneButton.gameObject.SetActive(true);
+                    jobPlatesGrabInteractable.enabled = true;
                 }
             });
             machine.CheckIfRequiredElectrodePlaced(requireElectrodeType);

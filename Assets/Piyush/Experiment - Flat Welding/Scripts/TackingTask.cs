@@ -8,23 +8,24 @@ namespace FlatWelding
 {
     public class TackingTask : Task
     {
-        [SerializeField] List<WeldingPoint> tacks;
-
+        [SerializeField] GameObject pointsParent;
+        List<WeldingPoint> weldingPoints;
+        int weldingDone = 0;
 
         public override void OnTaskBegin()
         {
-            tacks.ForEach(x =>
+            pointsParent.SetActive(true);
+            weldingPoints = new List<WeldingPoint>(pointsParent.GetComponentsInChildren<WeldingPoint>());
+            weldingPoints.ForEach(x =>
             {
-                x.gameObject.SetActive(true);
-                x.OnWeldingDone += OnTackDone;
+                x.OnWeldingDone += OnWeldingDone;
             });
-            MainWeldingTask.OnTaskDone += () =>
-                tacks.ForEach(t => t.gameObject.SetActive(false));
         }
 
-        internal void OnTackDone()
+        internal void OnWeldingDone()
         {
-            if (tacks.TrueForAll(t => t.IsWeldingDone))
+            weldingDone++;
+            if (weldingDone >= weldingPoints.Count)
                 OnTaskCompleted();
         }
     }
