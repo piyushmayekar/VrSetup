@@ -7,7 +7,7 @@ public class ToolsSpawner : MonoBehaviour
 {
     [SerializeField] ToolRepository toolRepository;
     [SerializeField] List<ToolType> toolsToSpawn;
-    public float x_Start, z_Start;
+    float x_Start, z_Start;
     public int ColumnLength = 2, RowLength = 2;
     public float x_Space = 0.5f, z_Space = 0.5f;
     public Transform toolsParent;
@@ -16,10 +16,12 @@ public class ToolsSpawner : MonoBehaviour
     void Start()
     {
         if (toolsParent == null) toolsParent = transform;
+        x_Start = toolsParent.transform.position.x;
+        z_Start = toolsParent.transform.position.z;
         for (int i = 0; i < toolsToSpawn.Count; i++)
         {
             //Spawning Tool Prefab
-            Vector3 position = new Vector3(x_Start + (x_Space * (i % ColumnLength)), transform.position.y, z_Start + (-z_Space * (i / ColumnLength)));
+            Vector3 position = new Vector3(x_Start + (x_Space * (i % ColumnLength)), toolsParent.position.y, z_Start + (z_Space * (i / ColumnLength)));
             GameObject prefab = GetTheToolPrefab(toolsToSpawn[i]);
             Instantiate(prefab, position, prefab.transform.rotation, toolsParent);
 
@@ -42,7 +44,7 @@ public class ToolsSpawner : MonoBehaviour
 public enum ToolType
 {
     Bottle, BrushWire, BrushFlat, CenterPunch,
-    ChippingHammer, DotPunch, ElectroRod, FlatFile,
+    ChippingHammer, DotPunch, ElectroRod35mm, ElectroRod4mm, FlatFile,
     Hacksaw, Hammer, Scriber, SteelRule,
     Tong
 }

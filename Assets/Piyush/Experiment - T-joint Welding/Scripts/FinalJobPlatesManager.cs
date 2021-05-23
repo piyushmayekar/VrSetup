@@ -1,19 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinalJobPlatesManager : MonoBehaviour
+namespace TWelding
 {
-    [SerializeField] Vector3 initPos;
-    [SerializeField] Quaternion initRot;
-    void Start()
+    public class FinalJobPlatesManager : MonoBehaviour
     {
-        initPos = transform.position;
-        initRot = transform.rotation;
-    }
+        public static Action<GameObject> OnSpacerRemoved;
+        [SerializeField] Vector3 initPos;
+        [SerializeField] Quaternion initRot;
+        void Start()
+        {
+            initPos = transform.position;
+            initRot = transform.rotation;
+        }
 
-    public void OnSelectExit()
-    {
-        transform.SetPositionAndRotation(initPos, initRot);
+        public void OnSelectExit()
+        {
+            transform.SetPositionAndRotation(initPos, initRot);
+        }
+
+        /// <summary>
+        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(_Constants.SPACER_TAG))
+                OnSpacerRemoved?.Invoke(other.gameObject);
+        }
     }
 }

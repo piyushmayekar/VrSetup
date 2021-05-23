@@ -10,11 +10,9 @@ namespace FlatWelding
     {
         public event Action OnElectrodePlacedEvent;
         [SerializeField] ParticleSystem ps;
-        [SerializeField] bool isOn = false, isElectrodePlaced = false, isTipInContact = false, isElectrodeAtLeft = false;
+        [SerializeField] bool isOn = false, isElectrodePlaced = false, isTipInContact = false;
         [SerializeField] GameObject tip;
         [SerializeField] SoundPlayer soundPlayer;
-        [SerializeField] GameObject indicator;
-        [SerializeField] TMPro.TextMeshProUGUI errorText;
         [SerializeField] ElectrodeType requiredElectrodeType;
         [SerializeField] Electrode currentElectrode;
 
@@ -23,7 +21,6 @@ namespace FlatWelding
         public static WeldingMachine Instance => instance;
 
         public ElectrodeType RequiredElectrodeType { get => requiredElectrodeType; set => requiredElectrodeType = value; }
-        public bool IsElectrodeAtLeft { get => isElectrodeAtLeft; set => isElectrodeAtLeft = value; }
 
         static WeldingMachine instance = null;
 
@@ -44,6 +41,7 @@ namespace FlatWelding
         {
             ToggleMachine(false);
             ToggleWeldingTip();
+            WeldingArea.OnWeldingMachineTipContact += TipInContact;
         }
 
         public void TipInContact(bool inContact)
@@ -91,7 +89,6 @@ namespace FlatWelding
                     OnElectrodePlacedEvent?.Invoke();
                 }
                 ToggleWeldingTip();
-                ShowErrorIndicator(electrode.ElectrodeType != RequiredElectrodeType, _Constants.ELECTRODE_NOT_CORRECT);
             }
         }
 
@@ -111,14 +108,6 @@ namespace FlatWelding
             }
         }
 
-        public void ShowErrorIndicator(bool show, string message = null)
-        {
-            if (indicator)
-            {
-                indicator.SetActive(show);
-                if (show) errorText.text = message;
-            }
-        }
     }
 }
 

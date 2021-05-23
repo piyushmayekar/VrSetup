@@ -9,10 +9,11 @@ namespace TWelding
     {
         [SerializeField] GameObject weldingArea;
         [SerializeField] GameObject pointsParent, tackingPointsParent;
-        [SerializeField] Transform leftPointingT, rightPointingT, electrodeT;
+        [SerializeField, Tooltip("Transforms used for determining electrode angle")]
+        Transform leftPointingT, rightPointingT, electrodeT;
         [SerializeField, Tooltip("The max angle between the job plate angle vector & the electrode beyond which we will display an error")]
         float maxAngleThreshold = 10f;
-        [SerializeField] int interiorWeldingPoints = 0, weldingPointsToHitWHammer = 0; //Exterior points
+        [SerializeField] int weldingRemainingCount = 0, slagRemaining = 0; //Exterior points
         [SerializeField] List<WeldingPoint> weldingPoints;
 
         WeldingMachine machine;
@@ -28,29 +29,29 @@ namespace TWelding
 
         private void InitializeEverything()
         {
+            weldingPoints = new List<WeldingPoint>(
+                pointsParent.GetComponentsInChildren<WeldingPoint>());
             weldingArea.SetActive(true);
             pointsParent.SetActive(true);
             weldingPoints.ForEach(point =>
             {
-                if (point.IsExteriorWeldingPoint)
+                if (point.ShouldShowSlag)
                 {
-                    weldingPointsToHitWHammer++;
                     point.OnHitWithHammer += () =>
                     {
-                        weldingPointsToHitWHammer--;
+                        slagRemaining--;
                         CheckIfTaskCompleted();
                     };
                 }
-                else
-                {
-                    interiorWeldingPoints++;
-                    point.OnWeldingDone += () =>
+                point.OnWeldingDone += () =>
                     {
-                        interiorWeldingPoints--;
+                        weldingRemainingCount--;
                         CheckIfTaskCompleted();
                     };
-                }
             });
+            weldingRemainingCount = weldingPoints.Count;
+            slagRemaining = weldingPoints.Count;
+
             WeldingPoint.CheckWeldingElectrodeAngle += (isLeft) =>
             {
                 float angle = 0f;
@@ -62,7 +63,7 @@ namespace TWelding
 
         public void CheckIfTaskCompleted()
         {
-            if (interiorWeldingPoints <= 0 && weldingPointsToHitWHammer <= 0)
+            if (weldingRemainingCount <= 0 && slagRemaining <= 0)
             {
                 CurrentKnob.OnTargetValueSet -= InitializeEverything;
                 tackingPointsParent.SetActive(false);
