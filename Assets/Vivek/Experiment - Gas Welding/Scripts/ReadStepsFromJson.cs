@@ -23,7 +23,7 @@ public class ReadStepsFromJson : MonoBehaviour
         }
         stepText.text = readSteps.ExperimentTitle;
     }
-    public void LoadNextStepText()
+    void LoadNextStepText()
     {
         if (readSteps.Steps.Length > countStep)
         {
@@ -31,22 +31,26 @@ public class ReadStepsFromJson : MonoBehaviour
             countStep++;
         }
     }
+    /// <summary>
+    ///Load new text or msg on canvas.
+    /// </summary>
     public void onClickConfirmbtn()
     {
         LoadNextStepText();
     }
-
+    /// <summary>
+    ///Add Canvas Button Click Event <paramref name="args"/>.
+    /// </summary>
+    /// <param name="callBtnclickEvent">Pass the method to set in button click.</param>
     public void AddClickConfirmbtnEvent(OnClickBtnEvent callBtnclickEvent)
     {
-       // Debug.Log("Call 2");
         confirmbtn.gameObject.SetActive(true);
          confirmbtn.onClick.RemoveAllListeners();
          confirmbtn.onClick.AddListener(() => callBtnclickEvent());
-        //    confirmbtn.onClick.AddListener(() => HideConifmBnt());
-        //    LoadNextStepText();
-      
     }
-  
+    /// <summary>
+    ///Hide canvas button when you click.
+    /// </summary>
     public void HideConifmBnt()
     {
         confirmbtn.gameObject.SetActive(false);
