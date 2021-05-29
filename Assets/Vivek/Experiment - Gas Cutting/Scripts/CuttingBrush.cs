@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class CuttingBrush : MonoBehaviour
 {
+    public static CuttingBrush instance;
     [SerializeField] ParticleSystem dustPS;
     [SerializeField] SoundPlayer soundPlayer;
     [SerializeField] Rigidbody parentBrushRb;
-
+    private void Awake()
+    {
+        instance = this;
+    }
     void OnTriggerEnter(Collider other)
     {
         PlayBrushStrokeSound();
@@ -17,10 +21,11 @@ public class CuttingBrush : MonoBehaviour
            // other.enabled = false;
             dustPS.Play();
             EdgeBrushed();
+     //       Debug.Log("Calll");
         }
         if (other.CompareTag(_Constants.SLAG_TAG))
         {
-            other.GetComponent<Rigidbody>().velocity = parentBrushRb.velocity;
+          //  other.GetComponent<Rigidbody>().velocity = parentBrushRb.velocity;
             Destroy(other.gameObject, 5f);
         }
     }
@@ -32,13 +37,23 @@ public class CuttingBrush : MonoBehaviour
     }
 
     [SerializeField, Tooltip("Total no of cleaning points")]
-    int cleanPointCount = 15;
+  public  int cleanPointCount = 15;
     void EdgeBrushed()
     {
+        Debug.Log(cleanPointCount);
         cleanPointCount--;
+        
         if (cleanPointCount <= 0)
         {
-            GasCuttingManager.instance.checkBrushStep();
+            if (!GasCuttingManager.instance.flameOff)
+            {
+                GasCuttingManager.instance.checkBrushStep();
+            }
+            else
+            {
+                GasCuttingManager.instance.cleanBrushFinish();
+
+            }
         }
 
     }

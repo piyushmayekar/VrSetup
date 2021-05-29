@@ -16,18 +16,11 @@ public class DetectObject : MonoBehaviour
                 GasWeldingStep.instance.OnEnableStep2object();
             }
             other.gameObject.SetActive(false); 
-        }/*else if(other.gameObject.tag =="CrackTab")
+        }else if(other.gameObject. name == "Cutting welding tourch")
         {
-            GasWeldingStep.instance.countCrackTab++;
-            other.gameObject.tag = "Untagged";
-            other.gameObject.GetComponent<BoxCollider>().enabled=false;
-            other.gameObject.GetComponent<Outline>().enabled = false;
-            if (GasWeldingStep.instance.countCrackTab==2)
-            {
-                GasWeldingStep.instance.OnEnableStep4object();
-            }
-            other.gameObject.SetActive(false);
-        }*/
+            GasCuttingManager.instance.Checktourch90degree();
+            this.gameObject.SetActive(false);
+        }
     }
    
 }

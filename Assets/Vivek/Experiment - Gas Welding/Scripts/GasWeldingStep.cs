@@ -21,8 +21,7 @@ public class GasWeldingStep : MonoBehaviour
     public GameObject ParentBluePipEndPoint, ParentRedPipeEndPoint, nozzelSnapPoint;
     public GameObject RedRegulator, blackRegulator, redPipeRop, bluePipeRop, flameBlueParticle, flameYellowParticel, blacksmoke, oxidizing_F, reduce_or_carb_F, neturel_F;
     //  public GameObject[] HighLightObject;
-    public GameObject step8Flame, Step9flame, extraRedBol, oldRedBol;
-
+    public GameObject step8Flame, Step9flame, extraRedBol, oldRedBol, redRotateSprite, BlueRotatesprite;
     [Header("ppeCollider")]
     public Collider[] ppekitcolliders;
     [Header("Table uper gas kit")]
@@ -364,9 +363,11 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[4].enabled = false;
         objectOutLines[9].enabled = true;
         readSteps.HideConifmBnt();
+        BlueRotatesprite.SetActive(true);
     }
     public void OnEnableRedValeNozzel()
     {
+        redRotateSprite.SetActive(true);
         objectOutLines[9].enabled = false;
         objectOutLines[10].enabled = true;
 

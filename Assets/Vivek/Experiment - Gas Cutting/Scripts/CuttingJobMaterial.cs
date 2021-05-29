@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using TWelding;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+    public enum CuttingType { Gascut, CircularCut, BevelCut };
 public class CuttingJobMaterial : MonoBehaviour
 {
     public static CuttingJobMaterial instance;
-    [SerializeField] List<GameObject> markingPoints;
+    public CuttingType cuttingType;
+
+    [SerializeField] public List<GameObject> markingPoints;
     [SerializeField] List<MarkingLinePoint> markingLinePoints;
-    [SerializeField] LineRenderer markingLine, markingLine2, markingLine3;
+    [SerializeField] public LineRenderer markingLine, markingLine2, markingLine3;
     [SerializeField] int currentMarking = 0;
     [SerializeField] List<GameObject> scriberHighlights;
- public   int totalLineMarkingPoints = 0, totalLineMarkingPoints2,totalLineMarkingPoints3;
-   public int lineMarkingPoint = 0;
+    public int totalLineMarkingPoints = 0, totalLineMarkingPoints2, totalLineMarkingPoints3;
+    public int lineMarkingPoint = 0;
     public int LineMarkingPoint { get => lineMarkingPoint; set => lineMarkingPoint = value; }
 
     [Header("-------Hammer punch-------")]
     //public GameObject SCriberHitpoint;
     [SerializeField] List<PunchMarkingPoint> centerPunchMarkingPoints;
     [SerializeField] int currentCPMarkingPointIndex = 0;
+    [SerializeField] SoundPlayer hummerCenterPunchsound, Scibersound;
     PunchMarkingPoint CurrentMarkingPoint => centerPunchMarkingPoints[currentCPMarkingPointIndex];
-    public GameObject SteelScale;
+    public GameObject SteelScale, SnapScale1, SnapScale2, SnapScale3;
     public int CountLine;
+    public List<Outline> outlines;
     void Awake()
     {
         instance = this;
@@ -29,7 +34,8 @@ public class CuttingJobMaterial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-  //      StartScriberMarking();
+        //      StartScriberMarking();
+        //  StartCenterPunchMarking();
     }
 
     //SCRIBER MARKING
@@ -45,115 +51,193 @@ public class CuttingJobMaterial : MonoBehaviour
     void TurnOnMarkingPoint()
     {
         markingPoints[currentMarking].SetActive(true);
+        if (currentMarking < outlines.Count)
+        {
+            Debug.Log(currentMarking);
+            outlines[currentMarking].enabled = true;
+        }
         Debug.Log("TurnOnMarkingPoint   " + markingPoints[currentMarking].name);
+        Debug.Log(currentMarking);
+
         if (markingPoints[currentMarking].GetComponentInChildren<MarkingPointGet>())
             markingPoints[currentMarking].GetComponentInChildren<MarkingPointGet>().OnMarkingDone += OnMarkingDone;
     }
     public int countpoint;
 
-    void OnMarkingDone()
+    public void OnMarkingDone()
     {
         Debug.Log("Call OnMarkingDone");
         countpoint++;
-        if (countpoint==2|| countpoint ==4 || countpoint==6)
+        if (cuttingType == CuttingType.Gascut)
         {
-            return;
+            if (countpoint == 2 || countpoint == 4 || countpoint == 6)
+            {
+                Debug.Log("    " + currentMarking);
+
+                return;
+            }
+            else
+            {
+                currentMarking++;
+                Debug.Log(currentMarking);
+
+                TurnOnMarkingPoint();
+
+            }
         }
         else
         {
-        currentMarking++;
-        TurnOnMarkingPoint();
+            if (cuttingType == CuttingType.CircularCut)
+            { 
+                currentMarking++;
+            }
+            else
+            {
+                Debug.Log("countpoint" + countpoint);
+                if (countpoint == 2)
+                {
+                    Debug.Log(currentMarking);
+         //       TurnOnMarkingPoint();
+                }
+                else
+                {
+                    currentMarking++;
+                    TurnOnMarkingPoint();
+                    return;
+                }
 
+            }
         }
-      /*   if (currentMarking < markingPoints.Count)
+        if (currentMarking == 1)
         {
-            TurnOnMarkingPoint();
-        }*/
-      if (currentMarking ==  1)
-        {
+            Debug.Log(currentMarking);
             markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
             markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+            if (cuttingType == CuttingType.CircularCut)
+            {
+               // if (index <= markingLinePoints.Count)
+                {
+                    markingLinePoints[0].GetComponent<Outline>().enabled = true;
+                    markingLinePoints[0].GetComponent<MeshRenderer>().enabled = true;
+                }
+            }
+           /* if (cuttingType != CuttingType.CircularCut)
+            {
+              //  if (index <= markingLinePoints.Count)
+                {
+                    markingLinePoints[0].GetComponent<Outline>().enabled = true;
+                }
+            }*/
         }
-     /* else if( currentMarking == 2)
-        {
-            markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
-            markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
-        }*/
+
     }
+    public int countIndex;
     void OnMarkingPointScriberEnter(int index, Vector3 position)
     {
-        Debug.Log("OnMarkingPointScriberEnter");
         if (index == LineMarkingPoint)
         {
-            markingLinePoints[index].gameObject.SetActive(false);
+             Scibersound.PlayClip(0);
+          if(cuttingType== CuttingType.CircularCut)
+            {
+        Debug.Log(markingLinePoints.Count +"   OnMarkingPointScriberEnter" + index);
+                if (index < markingLinePoints.Count)
+                {
+                    if (index+1 != markingLinePoints.Count)
+                    {
+                        markingLinePoints[index + 1].GetComponent<Outline>().enabled = true;
+                        markingLinePoints[index + 1].GetComponent<MeshRenderer>().enabled = true;
+                    }
+                }
+            }
+            countIndex = index;
+            Debug.Log("CI  " + countIndex);
             OnMarkingDone(position);
+            Debug.Log("CI * " + countIndex);
         }
     }
     void OnMarkingDone(Vector3 position)
     {
-     //   Debug.Log("OnMarkingDone");
+         Debug.Log("OnMarkingDone....");
         lineMarkingPoint++;
         markingLine.positionCount++;
+            markingLinePoints[countIndex].gameObject.SetActive(false);
         markingLine.SetPosition(markingLine.positionCount - 1, position);
+
         if (lineMarkingPoint >= totalLineMarkingPoints)
         {
             Debug.Log("DoneMarking");
             //OnScriberMarkingDone?.Invoke();
-            CountLine += 1;
+            if (cuttingType == CuttingType.Gascut)
+            {
+                CountLine += 1;
 
-            Enable_2_LinePoint();
+                Enable_2_LinePoint();
+            }
+            else
+            {
+                Debug.Log("check job");
+                GasCuttingManager.instance.CheckJobPlace();
+                for (int i = 0; i < outlines.Count; i++)
+                {
+                    outlines[i].enabled = false;
+                }
+                for (int i = 0; i < markingPoints.Count - 1; i++)
+                {
 
+                    markingPoints[i].SetActive(false);
+                }
+            }
         }
         scriberHighlights.ForEach(highlight => highlight.SetActive(false));
     }
     public void Enable_2_LinePoint()
     {
-        if (CountLine==3)
+        if (CountLine == 3)
         {
-            StartCenterPunchMarking();
+            //     StartCenterPunchMarking();
+            Debug.Log("$$$$$$$$$$$$$$$$");
+            //     SnapScale3.GetComponent<BoxCollider>().enabled = true;
+            GasCuttingManager.instance.CheckJobPlace();
+            for (int i = 0; i < markingPoints.Count - 1; i++)
+            {
 
+                markingPoints[i].SetActive(false);
+            }
         }
         else
         {
             if (CountLine == 1)
             {
-               /* currentMarking++;
-                if (currentMarking < markingPoints.Count)
-                {
-                    TurnOnMarkingPoint();
-                }*//* currentMarking++;
-                if (currentMarking < markingPoints.Count)
-                {
-                    TurnOnMarkingPoint();
-                }*/
+
                 totalLineMarkingPoints = markingLine2.transform.childCount;
                 markingLine = markingLine2;
                 currentMarking++;
-                SteelScale.GetComponent<BoxCollider>().enabled = true;
+
+                SnapScale1.GetComponent<BoxCollider>().enabled = true;
+                outlines[1].enabled = false;
                 Debug.Log("DoneMarking ***");
                 TurnOnMarkingPoint();
                 markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
                 markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
                 lineMarkingPoint = 0;
-                //  currentMarking = 0;
+
             }
             else
             {
+                markingPoints[currentMarking].SetActive(false);
                 currentMarking++;
                 if (currentMarking < markingPoints.Count)
                 {
                     TurnOnMarkingPoint();
                 }
-                totalLineMarkingPoints = markingLine3.transform.childCount;
                 markingLine = markingLine3;
-
-                SteelScale.GetComponent<BoxCollider>().enabled = true;
+                totalLineMarkingPoints = markingLine3.transform.childCount;
+                SnapScale2.GetComponent<BoxCollider>().enabled = true;
                 markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
                 markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
                 lineMarkingPoint = 0;
-                currentMarking++;
                 TurnOnMarkingPoint();
-                //  currentMarking = 0;
+
 
             }
         }
@@ -166,13 +250,20 @@ public class CuttingJobMaterial : MonoBehaviour
         CurrentMarkingPoint.gameObject.SetActive(true);
         CenterPunch.OnHammerHit += OnHammerHit;
     }
+    public void PlayhummerCenterPunchsound()
+    {
+       // if (!hummerCenterPunchsound.AudioSource.isPlaying)
+
+            hummerCenterPunchsound.PlayClip(hummerCenterPunchsound.Clips[0]);
+        Debug.Log("Call hammmer inside ");
+    }
     private void OnHammerHit()
     {
         if (CurrentMarkingPoint.IsCenterPunchInside)
         {
-        Debug.Log("Call hammmer inside ");
-            CurrentMarkingPoint.MarkingDone();
+            CurrentMarkingPoint.gameObject.SetActive(false);
             currentCPMarkingPointIndex++;
+            PlayhummerCenterPunchsound();
             if (currentCPMarkingPointIndex < centerPunchMarkingPoints.Count)
                 CurrentMarkingPoint.gameObject.SetActive(true);
             else
@@ -185,14 +276,15 @@ public class CuttingJobMaterial : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-       /* if (other.transform.tag == "Job")
-        {
-        Debug.Log("other 1" + other.gameObject.name);
+        /* if (other.transform.tag == "Job")
+         {
+         Debug.Log("other 1" + other.gameObject.name);
 
-            other.transform.tag = "Untagged";
-            GasCuttingManager.instance.CheckJobPlace();
-        }
-        else*/ if (other.transform.tag == "JobFlat")
+             other.transform.tag = "Untagged";
+             GasCuttingManager.instance.CheckJobPlace();
+         }
+         else*/
+        if (other.transform.tag == "JobFlat")
         {
             Debug.Log("other 1" + other.gameObject.name);
             other.transform.tag = "Untagged";

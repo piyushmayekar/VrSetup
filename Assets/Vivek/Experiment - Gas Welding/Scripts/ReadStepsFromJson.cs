@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ReadStepsFromJson : MonoBehaviour
 {
@@ -12,10 +13,11 @@ public class ReadStepsFromJson : MonoBehaviour
     public GameObject panel;
     [SerializeField] int countStep;
     [SerializeField] TextMeshProUGUI stepText;
-    [SerializeField]public  Button confirmbtn;
+    [SerializeField] public Button confirmbtn;
+    public string sceneName;
     public delegate void OnClickBtnEvent();
 
-    void Awake ()
+    void Awake()
     {
         if (jsonFile != null)
         {
@@ -45,8 +47,8 @@ public class ReadStepsFromJson : MonoBehaviour
     public void AddClickConfirmbtnEvent(OnClickBtnEvent callBtnclickEvent)
     {
         confirmbtn.gameObject.SetActive(true);
-         confirmbtn.onClick.RemoveAllListeners();
-         confirmbtn.onClick.AddListener(() => callBtnclickEvent());
+        confirmbtn.onClick.RemoveAllListeners();
+        confirmbtn.onClick.AddListener(() => callBtnclickEvent());
     }
     /// <summary>
     ///Hide canvas button when you click.
@@ -55,7 +57,14 @@ public class ReadStepsFromJson : MonoBehaviour
     {
         confirmbtn.gameObject.SetActive(false);
     }
+   
+   
+    public void onClickRetryButton()
+    {
+        SceneManager.LoadScene(sceneName);
+      
     }
+}
 [System.Serializable]
 public class ReadSteps
 {
