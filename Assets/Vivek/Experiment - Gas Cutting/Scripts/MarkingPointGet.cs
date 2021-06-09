@@ -28,7 +28,6 @@ public class MarkingPointGet : MonoBehaviour
         {
             this.gameObject.GetComponent<Collider>().enabled = false;
             _renderer.enabled = true;
-            Debug.Log("***");
             other.gameObject.GetComponent<BoxCollider>().enabled = false;
             // enableobject.SetActive(true);
             highlights.ForEach(x => x.SetActive(false));

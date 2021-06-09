@@ -22,7 +22,7 @@ public class CuttingLineAtJob : MonoBehaviour
                 LineCutPoints[2].transform.GetChild(i).GetComponent<BoxCollider>().enabled = false;
 
             }
-           
+
         }
         countlinePoint = LineCutPoints[CurrentLine].childCount;
         for (int i = 0; i < LineCutPoints.Length; i++)
@@ -32,22 +32,18 @@ public class CuttingLineAtJob : MonoBehaviour
         }
 
         LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).GetChild(0).gameObject.SetActive(true);
-        Debug.Log(LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).name);
-
-        if (cuttingType==CuttingType.CircularCut)
+        if (cuttingType == CuttingType.CircularCut)
         {
-         //   if (countlinePoint != 0)
-            {
 
-                LineCutPoints[CurrentLine].transform.GetChild(countlinePoint -1).GetComponent<MeshRenderer>().enabled = (true);
-                LineCutPoints[CurrentLine].transform.GetChild(countlinePoint-1 ).GetComponent<Outline>().enabled = (true);
-            }
+            LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).GetComponent<MeshRenderer>().enabled = (true);
+            LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).GetComponent<Outline>().enabled = (true);
+
         }
         else
         {
 
         }
-       
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,7 +56,7 @@ public class CuttingLineAtJob : MonoBehaviour
                 LineCutPoints[CurrentLine].GetComponent<LineRenderer>().positionCount++;
                 LineCutPoints[CurrentLine].GetComponent<LineRenderer>().SetPosition(LineCutPoints[CurrentLine].GetComponent<LineRenderer>().positionCount - 1, other.gameObject.transform.localPosition);
                 other.gameObject.SetActive(false);
-                if(cuttingType== CuttingType.Gascut)
+                if (cuttingType == CuttingType.Gascut)
                 {
                     checkGasCutLine();
                 }
@@ -76,7 +72,7 @@ public class CuttingLineAtJob : MonoBehaviour
                     }
                     checkGasCircularLine();
                 }
-                
+
             }
         }
     }
@@ -115,11 +111,11 @@ public class CuttingLineAtJob : MonoBehaviour
         if (countlinePoint <= 0)
         {
             CurrentLine++;
-                GasCuttingManager.instance.CheckCuttingLine();
-                iscutting = true;
-                DrawLine[CurrentLine - 1].SetActive(false);
-                cutModel[CurrentLine - 1].SetActive(false);
-                cutModel[CurrentLine].SetActive(true);
+            GasCuttingManager.instance.CheckCuttingLine();
+            iscutting = true;
+            DrawLine[CurrentLine - 1].SetActive(false);
+            cutModel[CurrentLine - 1].SetActive(false);
+            cutModel[CurrentLine].SetActive(true);
             LineCutPoints[CurrentLine - 1].gameObject.SetActive(false);
 
         }

@@ -77,6 +77,7 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
         // StartCoroutine(lighterEnable());
+       // Debug.Log("gas welding");
     }
     public void Start()
     {

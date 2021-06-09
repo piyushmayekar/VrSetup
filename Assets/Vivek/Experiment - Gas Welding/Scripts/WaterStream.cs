@@ -45,7 +45,7 @@ public class WaterStream : MonoBehaviour
     {
         
         Ray ray = new Ray(transform.position, Vector3.down);
-        Physics.Raycast(ray, out hit, 2.0f);
+        Physics.Raycast(ray, out hit,10f);
        if(hitcollidername!=null)
         {
             if (hit.collider != null)

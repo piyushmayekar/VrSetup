@@ -5,9 +5,13 @@ using UnityEngine;
 public class FreezeRotation : MonoBehaviour
 
 {
-
+    public static FreezeRotation instance;
     public Transform Freezeangle;
     public bool isFreeze;
+    private void Awake()
+    {
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
