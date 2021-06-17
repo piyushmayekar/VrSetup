@@ -1,0 +1,15 @@
+*Gas hos pipe*
+
+[Refernce image of wire prefaab.PNG]
+
+1) start sphere is starting position of wire 
+
+2) blue end spheare(1) is ending position of wire.using this gameobject you will greb the wire.
+
+3) blue end spheare(1) object the snapGrabbleobject script is used for calling after snap any objects.
+
+4) for giving wire attcahment position using belw code
+ 	bluePipeRop.transform.parent = ParentBluePipEndPoint.gameObject.transform; .//parent object where you want to end points
+        bluePipeRop.transform.localPosition = Vector3.zero;
+        bluePipeRop.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        bluePipeRop.GetComponent<CapsuleCollider>().enabled = false;
