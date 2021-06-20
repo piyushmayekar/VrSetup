@@ -34,14 +34,14 @@ public class PourDetector : MonoBehaviour
         currentStream.Begin();
         currentStream.hitcollidername = cylinderkey;
         currentStream.NextStep = NextStep;
-        print("Start");
+      //  print("Start");
 
     }
     void EndPour()
     {
         currentStream.End();
         currentStream = null;
-        print("end");
+      //  print("end");
 
     }
     float CalculatePourAngle()
