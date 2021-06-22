@@ -126,8 +126,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.04124236, y: 0.01, z: 0.01}
-  m_Center: {x: 0.011651993, y: 0, z: 0}
+  m_Size: {x: 0.02, y: 0.005, z: 0.005}
+  m_Center: {x: 0.005, y: 0, z: 0}
 --- !u!114 &8445558012703888169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,11 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60a5fbef03d656478154a5015760a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  job: {fileID: 0}
-  indicator: {fileID: 5768242295201970481}
   _collider: {fileID: 8445558012703888086}
-  bladePoints: []
-  pointTouched: 000000
 --- !u!54 &8445558012703888087
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -9,9 +9,9 @@ namespace TWelding
     {
         [SerializeField] Transform handle, slider;
 
-        [SerializeField, Tooltip("The transforms of the position holders of both the jobs")]
-        List<XRSocketInteractor> jobSockets;
-
+        [SerializeField, Tooltip("The transforms of the position holders of according to the job plate types")]
+        List<Transform> jobTransforms;
+        [SerializeField] XRSocketInteractor jobSocket;
         [SerializeField] GameObject jobPlateHighlight;
         [SerializeField] JobPlate currentHoldingPlate = null;
         [SerializeField] List<GameObject> hacksawAnimators;
@@ -21,13 +21,14 @@ namespace TWelding
         Vector2 angleLimits = new Vector2(-125f, 125f);
 
         [SerializeField, Tooltip("Slider positions")]
-        Vector3 openPos, closedPos, closedPosFull, closedPosBreadth, closedPosLength;
-        [SerializeField] bool isViseOpen = true;
+        Vector3 openPos, closedPos, closedPosFull;
+        [SerializeField] List<Vector3> sliderClosedPositions;
+        [SerializeField] bool isViseOpen = true, shouldSwitchAttachTransforms = true;
 
         public void OnHandleSelectEnter() => StartCoroutine(TrackHandleRotation());
         public void OnHandleSelectExit() => StopCoroutine(TrackHandleRotation());
 
-        [SerializeField] Collider _collider;
+        public bool ShouldSwitchAttachTransforms { get => shouldSwitchAttachTransforms; set => shouldSwitchAttachTransforms = value; }
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
@@ -39,14 +40,16 @@ namespace TWelding
 
         internal void OnTaskBegin()
         {
-            jobPlateHighlight.SetActive(true);
-            _collider.enabled = true;
+            // jobPlateHighlight.SetActive(true);
+            // _collider.enabled = true;
+            jobSocket.socketActive = true;
         }
 
         internal void OnTaskCompleted()
         {
-            jobPlateHighlight.SetActive(false);
-            _collider.enabled = false;
+            // jobPlateHighlight.SetActive(false);
+            // jobSocket.socketActive = false;
+            // _collider.enabled = false;
             TurnOffHacksawAnimations();
         }
 
@@ -63,58 +66,41 @@ namespace TWelding
 
         }
 
-        /// <summary>
-        /// OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag(_Constants.JOB_TAG))
-            {
-                JobPlate plateEntered = other.GetComponent<JobPlate>();
-                if (plateEntered)
-                {
-                    int index = JobPlate.jobPlates.FindIndex(plate => plate == plateEntered);
-                    jobSockets[index].socketActive = true;
-                    jobSockets[index == 0 ? 1 : 0].socketActive = false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// OnTriggerExit is called when the Collider other has stopped touching the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
-        void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag(_Constants.JOB_TAG))
-                TurnOffHacksawAnimations();
-        }
-
         public void OnSocketEnter(SelectEnterEventArgs args)
         {
-            if (args.interactable.CompareTag("Job"))
+            if (args.interactable.CompareTag(_Constants.JOB_TAG))
             {
                 JobPlate plate = args.interactable.GetComponent<JobPlate>();
-                int index = JobPlate.jobPlates.FindIndex(p => p == plate);
-                plate.SetupForCutting();
-                jobPlateHighlight.SetActive(false);
-                if (!plate.IsCuttingDone)
+                int index = (int)plate.PlateType;
+                // jobPlateHighlight.SetActive(false);
+                if (ShouldSwitchAttachTransforms)
                 {
-                    hacksawAnimators[index].SetActive(true);
-                    plate.OnHacksawCuttingDone += TurnOffHacksawAnimations;
+                    if (!plate.IsCuttingDone)
+                    {
+                        plate.SetupForCutting();
+                        hacksawAnimators[index].SetActive(true);
+                        plate.OnHacksawCuttingDone += TurnOffHacksawAnimations;
+                    }
+                    if (index >= 0 && index < jobTransforms.Count)
+                        jobSocket.attachTransform = jobTransforms[index];
+                    currentHoldingPlate = plate;
+                    if (index <= sliderClosedPositions.Count)
+                        closedPos = sliderClosedPositions[index];
                 }
-                currentHoldingPlate = plate;
-                if (currentHoldingPlate.PlateType == PlateType.Length) closedPos = closedPosLength;
-                if (currentHoldingPlate.PlateType == PlateType.Breadth) closedPos = closedPosBreadth;
             }
         }
 
-        public void OnSocketExit(SelectEnterEventArgs args)
+        public void OnSocketExit(SelectExitEventArgs args)
         {
-            jobPlateHighlight.SetActive(true);
+            // if (ShouldSwitchAttachTransforms)
+            //     jobPlateHighlight.SetActive(true);
+            if (args.interactable.CompareTag(_Constants.JOB_TAG))
+            {
+                JobPlate plate = args.interactable.GetComponent<JobPlate>();
+                plate.OnMechanicalViseSocketExit();
+            }
             currentHoldingPlate = null;
-            closedPos = closedPosFull;
+            TurnOffHacksawAnimations();
         }
 
         public void TurnOffHacksawAnimations() => hacksawAnimators.ForEach(x => x.SetActive(false));

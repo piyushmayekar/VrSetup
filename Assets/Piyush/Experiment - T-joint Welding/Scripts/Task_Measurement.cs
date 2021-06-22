@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TWelding
 {
     public class Task_Measurement : Task
     {
-        [SerializeField] Button button;
+        [SerializeField] GameObject button;
+        [SerializeField] string _buttonText = "Done";
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
@@ -17,12 +19,17 @@ namespace TWelding
         private void EnableDoneButton()
         {
             button.gameObject.SetActive(true);
+            button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = _buttonText;
+            XRGrabInteractable interactable = button.GetComponent<XRGrabInteractable>();
+            interactable.firstHoverEntered.RemoveAllListeners();
+            interactable.firstHoverEntered.AddListener(new UnityEngine.Events.UnityAction<HoverEnterEventArgs>(OnButtonClicked));
         }
 
-        public void OnButtonClick()
+        public void OnButtonClicked(HoverEnterEventArgs arg)
         {
-            button.gameObject.SetActive(false);
+            button.SetActive(false);
             OnTaskCompleted();
         }
+
     }
 }

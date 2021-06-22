@@ -18,7 +18,7 @@ namespace TWelding
         /// <param name="other">The other Collider involved in this collision.</param>
         void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("DotPoint"))
+            if (other.CompareTag(_Constants.CENTER_PUNCH_DOT_POINT_TAG))
             {
                 IsCenterPunchInside = true;
             }
@@ -30,7 +30,7 @@ namespace TWelding
         /// <param name="other">The other Collider involved in this collision.</param>
         void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("DotPoint"))
+            if (other.CompareTag(_Constants.CENTER_PUNCH_DOT_POINT_TAG))
             {
                 IsCenterPunchInside = false;
             }

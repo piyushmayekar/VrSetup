@@ -31,7 +31,7 @@ namespace TWelding
         [SerializeField] GameObject scriberTaskParent;
         [SerializeField] GameObject elongatedPlate, ogPlate, extraPlate;
         [SerializeField] Rigidbody extraPlateRB;
-        [SerializeField] List<GameObject> cuttingPoints;
+        [SerializeField] List<CuttingPoint> cuttingPoints;
         [SerializeField] int currentCuttingPoints = 0;
         [SerializeField] bool isCuttingDone = false, isFilingDone = false;
         [SerializeField] GameObject roughEdge;
@@ -102,6 +102,11 @@ namespace TWelding
             CenterPunch.OnHammerHit += OnHammerHit;
         }
 
+        internal void OnMechanicalViseSocketExit()
+        {
+            GetComponent<Collider>().isTrigger = false;
+        }
+
         private void OnHammerHit()
         {
             if (CurrentMarkingPoint.IsCenterPunchInside)
@@ -121,10 +126,12 @@ namespace TWelding
         //HACKSAW CUTTING
         public void SetupForCutting()
         {
+            Invoke(nameof(DisableMainCollider), 1f);
             elongatedPlate.GetComponent<Collider>().enabled = false;
             cuttingPoints[0].transform.parent.gameObject.SetActive(true);
+            cuttingPoints.ForEach(point => point.OnCuttingDone += CuttingDone);
         }
-
+        public void DisableMainCollider() => GetComponent<Collider>().enabled = false;
         internal void CuttingDone()
         {
             currentCuttingPoints++;
@@ -145,6 +152,7 @@ namespace TWelding
 
                 //Rough edge
                 roughEdge.SetActive(true);
+                filingPoints.ForEach(point => point.OnFilingDone += OnFilingDoneAtPoint);
             }
         }
 
@@ -155,6 +163,7 @@ namespace TWelding
             {
                 IsFilingDone = true;
                 roughEdge.SetActive(false);
+                GetComponent<Collider>().enabled = true;
                 OnFilingDone?.Invoke();
             }
         }

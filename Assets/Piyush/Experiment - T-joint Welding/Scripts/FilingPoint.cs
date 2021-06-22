@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ namespace TWelding
 {
     public class FilingPoint : MonoBehaviour
     {
-        [SerializeField] JobPlate job;
+        public Action<FilingPoint> OnFilingDone;
         [SerializeField] int cleaningTimes = 5;
 
         /// <summary>
@@ -15,10 +16,11 @@ namespace TWelding
         /// <param name="other">The other Collider involved in this collision.</param>
         void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("FlatFile") && cleaningTimes > 0)
+            if (other.CompareTag(_Constants.FLATFILE_TAG) && cleaningTimes > 0)
             {
                 cleaningTimes--;
-                job.OnFilingDoneAtPoint(this);
+                if (cleaningTimes <= 0)
+                    OnFilingDone?.Invoke(this);
             }
         }
     }

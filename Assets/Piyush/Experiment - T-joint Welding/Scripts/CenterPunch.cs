@@ -6,7 +6,7 @@ using UnityEngine;
 public class CenterPunch : MonoBehaviour
 {
     public static event Action OnHammerHit;
-
+    public float hitThreshold = 1f;
 
     /// <summary>
     /// OnCollisionEnter is called when this collider/rigidbody has begun
@@ -17,7 +17,8 @@ public class CenterPunch : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Hammer"))
         {
-            OnHammerHit?.Invoke();
+            if (other.impulse.magnitude >= hitThreshold)
+                OnHammerHit?.Invoke();
         }
     }
 }

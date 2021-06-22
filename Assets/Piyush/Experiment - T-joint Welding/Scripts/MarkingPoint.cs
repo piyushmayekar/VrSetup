@@ -18,7 +18,7 @@ namespace TWelding
         /// <param name="other">The other Collider involved in this collision.</param>
         void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("MarkPoint"))
+            if (other.CompareTag(_Constants.SCRIBER_TIP_TAG))
             {
                 GetComponent<Collider>().enabled = false;
                 _renderer.enabled = true;

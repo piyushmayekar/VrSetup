@@ -13,7 +13,8 @@ namespace TWelding
         [SerializeField] XRGrabInteractable jobPlatesGrabInteractable;
         [SerializeField] List<WeldingPoint> weldingPoints;
         [SerializeField] int weldingDoneOnPoints = 0;
-        [SerializeField] Button doneButton;
+        [SerializeField] GameObject button;
+        [SerializeField] string _buttonText = "Done";
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
@@ -23,16 +24,31 @@ namespace TWelding
                 weldingDoneOnPoints++;
                 if (weldingDoneOnPoints >= weldingPoints.Count)
                 {
-                    doneButton.gameObject.SetActive(true);
+                    EnableDoneButton();
                     jobPlatesGrabInteractable.enabled = true;
                 }
             });
             machine.CheckIfRequiredElectrodePlaced(requireElectrodeType);
         }
 
+        private void EnableDoneButton()
+        {
+            button.gameObject.SetActive(true);
+            button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = _buttonText;
+            XRGrabInteractable interactable = button.GetComponent<XRGrabInteractable>();
+            interactable.firstHoverEntered.RemoveAllListeners();
+            interactable.firstHoverEntered.AddListener(new UnityEngine.Events.UnityAction<HoverEnterEventArgs>(OnButtonClicked));
+        }
+
+        public void OnButtonClicked(HoverEnterEventArgs arg)
+        {
+            OnTaskCompleted();
+            button.SetActive(false);
+        }
+
         public override void OnTaskCompleted()
         {
-            doneButton.gameObject.SetActive(false);
+            button.gameObject.SetActive(false);
             base.OnTaskCompleted();
         }
     }

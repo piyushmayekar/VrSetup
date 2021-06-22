@@ -14,8 +14,8 @@ namespace TWelding
         [SerializeField, Tooltip("The final job plates which will be shown after the plates are placed in the sockets")]
         List<GameObject> finalJobs;
 
-        [SerializeField] GameObject doneButton;
-
+        [SerializeField] GameObject button;
+        [SerializeField] string _buttonText = "Done";
         [Header("Scriber Marking")]
         [SerializeField] List<GameObject> markingPoints;
         [SerializeField] LineRenderer markingLine;
@@ -51,10 +51,22 @@ namespace TWelding
                 if (index == 0)
                     StartScriberMarking();
                 else if (index == JobPlate.jobPlates.Count - 1)
-                    doneButton.SetActive(true);
+                {
+                    button.SetActive(true);
+                    button.gameObject.SetActive(true);
+                    button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = _buttonText;
+                    XRGrabInteractable interactable = button.GetComponent<XRGrabInteractable>();
+                    interactable.firstHoverEntered.RemoveAllListeners();
+                    interactable.firstHoverEntered.AddListener(new UnityEngine.Events.UnityAction<HoverEnterEventArgs>(OnButtonClicked));
+
+                }
             }
         }
-
+        public void OnButtonClicked(HoverEnterEventArgs arg)
+        {
+            button.SetActive(false);
+            OnTaskCompleted();
+        }
         public void StartScriberMarking()
         {
             TurnOnMarkingPoint();
@@ -111,7 +123,7 @@ namespace TWelding
 
         public override void OnTaskCompleted()
         {
-            doneButton.SetActive(false);
+            button.SetActive(false);
             base.OnTaskCompleted();
         }
     }

@@ -11,8 +11,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.008445502, y: 0.0000381, z: 0.0006350002}
-  m_Center: {x: -0.004222751, y: 0.00001905, z: -0.00031749636}
+  m_Size: {x: 0.0012835349, y: 0.0000381, z: 0.00063500024}
+  m_Center: {x: -0.00064176746, y: 0.00001905, z: -0.00031749636}
+--- !u!114 &8762613030838041218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8984032106369322574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404d13773ecdda0488746d946e67525e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tagOfObject: SteelRuler
 --- !u!1001 &619153702360221851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68,6 +81,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 8375037908630210261, guid: 0782c8f7e463f1a409d9030c91120d3f, type: 3}
+      propertyPath: m_TagString
+      value: SteelRuler
+      objectReference: {fileID: 0}
     - target: {fileID: 8464819856034037992, guid: 0782c8f7e463f1a409d9030c91120d3f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -122,6 +139,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7232862358591702949, guid: 0782c8f7e463f1a409d9030c91120d3f, type: 3}
+    - {fileID: 508645100, guid: 0782c8f7e463f1a409d9030c91120d3f, type: 3}
+    - {fileID: 508645101, guid: 0782c8f7e463f1a409d9030c91120d3f, type: 3}
+    - {fileID: 508645099, guid: 0782c8f7e463f1a409d9030c91120d3f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0782c8f7e463f1a409d9030c91120d3f, type: 3}
 --- !u!1 &8984032106369322574 stripped
 GameObject:
