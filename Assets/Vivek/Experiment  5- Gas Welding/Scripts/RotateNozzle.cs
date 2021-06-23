@@ -56,6 +56,7 @@ public class RotateNozzle : MonoBehaviour
         if (ishideMesh)
         {
             HideMesh.enabled = false;
+        }
             OtherRotate.SetActive(true);
             // OtherRotate.transform.localRotation =Quaternion.Inverse(Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z));
             OtherRotate.transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
@@ -119,7 +120,7 @@ public class RotateNozzle : MonoBehaviour
             }
         }
        
-    }
+    
 
     void CallEndMethod()
     {
