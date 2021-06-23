@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &6692424623708131557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3603259482791267289}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.018202066, y: 0.030392408, z: 0.014245385}
+  m_Center: {x: 0.009281635, y: 0.10307819, z: -0.0003721742}
+--- !u!114 &3669157526430495593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3603259482791267289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404d13773ecdda0488746d946e67525e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tagOfObject: Hammer
 --- !u!1001 &5293047927447416313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,4 +115,10 @@ PrefabInstance:
     - {fileID: 1811929441, guid: 84b6794f79638ba41a7393765998a7a1, type: 3}
     - {fileID: 1811929439, guid: 84b6794f79638ba41a7393765998a7a1, type: 3}
     - {fileID: 1811929437, guid: 84b6794f79638ba41a7393765998a7a1, type: 3}
+    - {fileID: 617293706752978678, guid: 84b6794f79638ba41a7393765998a7a1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 84b6794f79638ba41a7393765998a7a1, type: 3}
+--- !u!1 &3603259482791267289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8896287546012214816, guid: 84b6794f79638ba41a7393765998a7a1, type: 3}
+  m_PrefabInstance: {fileID: 5293047927447416313}
+  m_PrefabAsset: {fileID: 0}

@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &3090214658176977861
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038716613234647346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.000113427406, y: 0.00015210635, z: 0.00017075674}
+  m_Center: {x: -0.0011035173, y: -0.000040215837, z: -0.000005942205}
+--- !u!114 &1737363616899477238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038716613234647346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404d13773ecdda0488746d946e67525e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tagOfObject: MarkPoint
 --- !u!1001 &4383017609247228375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,4 +115,10 @@ PrefabInstance:
     - {fileID: 479512094, guid: 23c61de8be9b3f045838b3014ca9d501, type: 3}
     - {fileID: 346246703, guid: 23c61de8be9b3f045838b3014ca9d501, type: 3}
     - {fileID: 1031905724, guid: 23c61de8be9b3f045838b3014ca9d501, type: 3}
+    - {fileID: 3979462912644303045, guid: 23c61de8be9b3f045838b3014ca9d501, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 23c61de8be9b3f045838b3014ca9d501, type: 3}
+--- !u!1 &2038716613234647346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2349017250226200805, guid: 23c61de8be9b3f045838b3014ca9d501, type: 3}
+  m_PrefabInstance: {fileID: 4383017609247228375}
+  m_PrefabAsset: {fileID: 0}

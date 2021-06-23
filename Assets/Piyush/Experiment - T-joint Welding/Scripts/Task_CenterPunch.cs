@@ -13,12 +13,15 @@ namespace TWelding
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            JobPlate.jobPlates.ForEach(plate => plate.StartCenterPunchMarking());
+            plateCount = 0;
+            JobPlate.jobPlates[plateCount].StartCenterPunchMarking();
             JobPlate.jobPlates.ForEach(plate => plate.OnCenterPunchMarkingDone += () =>
             {
                 plateCount++;
                 if (plateCount >= JobPlate.jobPlates.Count)
                     OnTaskCompleted();
+                else
+                    JobPlate.jobPlates[plateCount].StartCenterPunchMarking();
             });
         }
     }

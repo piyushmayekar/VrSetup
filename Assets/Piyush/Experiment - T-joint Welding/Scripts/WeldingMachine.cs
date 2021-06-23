@@ -10,6 +10,7 @@ namespace TWelding
     {
         public event Action OnElectrodePlacedEvent;
         [SerializeField] ParticleSystem ps;
+        [SerializeField] GameObject sparkLight;
         [SerializeField] bool isOn = false, isElectrodePlaced = false, isTipInContact = false, isElectrodeAtLeft = false;
         [SerializeField] GameObject tip;
         [SerializeField] SoundPlayer soundPlayer;
@@ -67,11 +68,13 @@ namespace TWelding
             if (on && isTipInContact && IsElectrodePlaced)
             {
                 ps.Play();
+                sparkLight.SetActive(true);
                 soundPlayer.PlayClip(soundPlayer.Clips[0], true);
             }
             else
             {
                 ps.Stop();
+                sparkLight.SetActive(false);
                 soundPlayer.StopPlayingAllSounds();
             }
         }
