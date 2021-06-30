@@ -123,6 +123,7 @@ public class CuttingJobMaterial : MonoBehaviour
     {
         if (index == LineMarkingPoint)
         {
+            Debug.Log("Play sound");
             Scibersound.PlayClip(0);
             if (cuttingType == CuttingType.CircularCut)
             {
@@ -220,6 +221,7 @@ public class CuttingJobMaterial : MonoBehaviour
     //CENTER PUNCH
     public void StartCenterPunchMarking()
     {
+        Debug.Log("StartCenterPunchMarking");
         CurrentMarkingPoint.gameObject.SetActive(true);
         CenterPunch.OnHammerHit += OnHammerHit;
     }
@@ -229,8 +231,10 @@ public class CuttingJobMaterial : MonoBehaviour
     }
     private void OnHammerHit()
     {
+        Debug.Log("OnHammerHit call");
         if (CurrentMarkingPoint.IsCenterPunchInside)
         {
+            Debug.Log("OnHammerHit call  IsCenterPunchInside");
             CurrentMarkingPoint.gameObject.SetActive(false);
             currentCPMarkingPointIndex++;
             PlayhummerCenterPunchsound();
@@ -238,6 +242,7 @@ public class CuttingJobMaterial : MonoBehaviour
                 CurrentMarkingPoint.gameObject.SetActive(true);
             else
             {
+                Debug.Log("OnHammerHit call  checkStep5");
                 CenterPunch.OnHammerHit -= OnHammerHit;
                 GasCuttingManager.instance.checkStep5();
             }

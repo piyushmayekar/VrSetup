@@ -11,7 +11,7 @@ public class JointWelding : MonoBehaviour
     public GameObject weldingModel, tackPoint;
     public Material RedMaterial, blackMaterial;
     public SoundPlayer chippingHummer;
-    public bool isWelding;
+    public bool isWelding, isFiller;
     public void Awake()
     {
         instance = this;
@@ -19,7 +19,10 @@ public class JointWelding : MonoBehaviour
         countlinePoint = 0;// WeldingLine[CurrentLine].transform.childCount;
     }
     public void Start()
-    { }
+    {
+         Debug.Log("gas welding");
+
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "DotPoint")
@@ -28,12 +31,16 @@ public class JointWelding : MonoBehaviour
             other.transform.GetComponent<MeshRenderer>().material = blackMaterial;
             other.transform.GetComponent<SphereCollider>().enabled = false;
 
-            if (countdotpoint ==3)
+            if (countdotpoint == 3)
             {
                 GasJointweldingManager.instance.CheckTackPoint();
             }
         }
-        if (isWelding && other.transform.tag == "Slag")
+        if (other.transform.tag == "Electrode")
+        {
+            isFiller = true;
+        }
+        if (isWelding && other.transform.tag == "Slag" && isFiller)
         {
             if (WeldingLine[CurrentLine].transform.GetChild(countlinePoint).name == other.transform.name)
             {
@@ -47,13 +54,20 @@ public class JointWelding : MonoBehaviour
                 }
                 else
                 {
-                other.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+                    other.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
                     chippingHummer.PlayClip(0);
                     GasJointweldingManager.instance.hummerhighlight.SetActive(false);
                     StartCoroutine(HammerBreakpoint(other.gameObject));
                     OnCallHammerMethodCollider();
                 }
             }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "Electrode")
+        {
+            isFiller = false;
         }
     }
     public IEnumerator HammerBreakpoint(GameObject other)
@@ -69,8 +83,8 @@ public class JointWelding : MonoBehaviour
     {
         if (countlinePoint + 1 <= WeldingLine[CurrentLine].transform.childCount)
         {
-            WeldingLine[CurrentLine].transform.GetChild(countlinePoint).gameObject.GetComponent<BoxCollider>().enabled=true;
-            WeldingLine[CurrentLine].transform.GetChild(countlinePoint).gameObject.GetComponent<MeshRenderer>().enabled= true;
+            WeldingLine[CurrentLine].transform.GetChild(countlinePoint).gameObject.GetComponent<BoxCollider>().enabled = true;
+            WeldingLine[CurrentLine].transform.GetChild(countlinePoint).gameObject.GetComponent<MeshRenderer>().enabled = true;
 
         }
         else// (countlinePoint <= 0)
@@ -83,9 +97,9 @@ public class JointWelding : MonoBehaviour
             }
             else
             {
-          //   WeldingLine[CurrentLine].SetActive(true);
+                //   WeldingLine[CurrentLine].SetActive(true);
                 countlinePoint = 0;
-              //  isWelding = false;
+                //  isWelding = false;
                 //  WeldingLine[CurrentLine].transform.GetChild(0).gameObject.SetActive(true);
                 WeldingLine[CurrentLine].transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
                 WeldingLine[CurrentLine].transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = true;
@@ -107,6 +121,7 @@ public class JointWelding : MonoBehaviour
                 tackPoint.SetActive(false);
                 weldingModel.SetActive(true);
                 FreezeRotation.instance.isFreeze = false;
+                isFiller = true;
                 GasJointweldingManager.instance.weldingComplete();
             }
             else

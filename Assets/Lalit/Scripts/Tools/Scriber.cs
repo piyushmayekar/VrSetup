@@ -10,6 +10,7 @@ public class Scriber : MonoBehaviour
     {
         if (other.tag == "ScriberHighlight")
         {
+            Debug.Log("Callinf scriber");
             other.gameObject.SetActive(false);
 
         }

@@ -10,6 +10,11 @@ public class JointMSPlate : MonoBehaviour
 
     public SoundPlayer chippingHummer;
     public int countchippinghammer;
+    public void Start()
+    {
+      //  Debug.Log("gas welding");
+
+    }
     public void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "JobFlat")

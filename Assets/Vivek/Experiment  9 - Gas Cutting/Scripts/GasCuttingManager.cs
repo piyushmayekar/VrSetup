@@ -9,39 +9,36 @@ public class GasCuttingManager : MonoBehaviour
 
     [Header("outLine Object to HighLight")]
     public Outline[] objectOutLines;
-
-    [Header("Canvas ")]
-    public GameObject finishPanel;
-
-    [Header("Extra objects")]
-    public GameObject redPipeRop;
-    public GameObject bluePipeRop, ParentBluePipEndPoint, ParentRedPipeEndPoint, neturalFlameCube, mm5object;
-    public GameObject netural_flame;
-    public GameObject leverflameHandel, torch90degree;
-    public GameObject BlueRotatesprite, redRotateSprite;
     [Header("ppeCollider")]
     public Collider[] ppekitcolliders;
 
     [Header("Table uper gas kit")]
     public Collider[] GasTableObjectcolliders;
+    [Header("Canvas ")]
+    public GameObject finishPanel;
+
+    [Header("Extra objects")]   
+    public GameObject neturalFlameCube;
+    public GameObject netural_flame, lighterFlame;
+    public GameObject torch90degree, blacksmoke;
+    [Header("          ")]
+    public RotateNozzle redBol, blueBol, blackValve, redValve;
+    
 
     [Header("Read step from json calss")]
     public ReadStepsFromJson readSteps;
-    [Header("Counters")]
-    public int countppekit;
-
-    public bool isPipeRedConnect, isPipeblueConnect;
+    //[Header("Counters")]
+    int countppekit;
     public bool flameOff = false;
     // Start is called before the first frame update
     public void Awake()
     {
         instance = this;
         Application.targetFrameRate = 60;
-
+        Debug.Log("Call cutting");
     }
     public void Start()
     {
-
         for (int i = 0; i < ppekitcolliders.Length; i++)
         {
             ppekitcolliders[i].enabled = false;
@@ -51,28 +48,16 @@ public class GasCuttingManager : MonoBehaviour
         {
             objectOutLines[i].enabled = false;
         }
-
+        for (int i = 0; i < GasTableObjectcolliders.Length; i++)
+        {
+            GasTableObjectcolliders[i].enabled = false;
+        }
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
-    }
-    // Update is called once per frame
-    public void Update()
-    {
-        if (isPipeblueConnect)
-        {
-            bluePipeRop.transform.parent = ParentBluePipEndPoint.gameObject.transform; // new 22
-            bluePipeRop.transform.localPosition = Vector3.zero;
-            bluePipeRop.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        }
-        if (isPipeRedConnect)
-        {
-            redPipeRop.transform.parent = ParentRedPipeEndPoint.gameObject.transform;//red pipe sphere welding Tourch   //new 22
-            redPipeRop.transform.localPosition = Vector3.zero;
-            redPipeRop.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        }
-
-    }
+     //   checkStep5();
+       }
+   
     public void ConfirmSatrtbtn()
     {
         readSteps.onClickConfirmbtn();
@@ -80,7 +65,7 @@ public class GasCuttingManager : MonoBehaviour
         PlayStepAudio(3);// kit audio
     }
     #region step1 Step 1: Wear PPE Kit
-     void Onclickbtn_s_1_confirm()
+    void Onclickbtn_s_1_confirm()
     {
         readSteps.HideConifmBnt();
         for (int i = 0; i < ppekitcolliders.Length; i++)
@@ -100,7 +85,7 @@ public class GasCuttingManager : MonoBehaviour
         selectObject.SetActive(false);
 
     }
-     void OnEnableStep2object() //get all ppe kit then this call
+    void OnEnableStep2object() //get all ppe kit then this call
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_2_confirm);
@@ -108,7 +93,7 @@ public class GasCuttingManager : MonoBehaviour
     }
     #endregion
     #region Step 2: Keep raw material ready as per the given drawing.
-     void Onclickbtn_s_2_confirm()
+    void Onclickbtn_s_2_confirm()
     {
         readSteps.HideConifmBnt();
         CuttingJobMaterial.instance.StartScriberMarking();
@@ -120,18 +105,19 @@ public class GasCuttingManager : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_3_confirm);
-        PlayStepAudio(4);//   
+        PlayStepAudio(4);//
     }
 
     #endregion
     #region Step 3: Keep the job on the Cutting table in flat position.
-     void Onclickbtn_s_3_confirm()
+    void Onclickbtn_s_3_confirm()
     {
         readSteps.HideConifmBnt();
         OnEnableStep3object();
     }
-     void OnEnableStep3object()
+    void OnEnableStep3object()
     {
+        GasTableObjectcolliders[0].enabled = true;
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = true;// job plate material
         objectOutLines[1].gameObject.SetActive(true);// job flat  object position
         objectOutLines[1].enabled = true;// job flat position
@@ -139,52 +125,56 @@ public class GasCuttingManager : MonoBehaviour
     }
     public void CheckJobFlatPlace()
     {
+        GasTableObjectcolliders[0].enabled = false;
         //job plat posion set
-        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-1.310f, 0.023f, -0.076f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.5286f, 0.01f, -0.1383f);//objectOutLines[1].transform.position;// job plate material
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
         readSteps.onClickConfirmbtn();
         objectOutLines[1].enabled = false;// job flat position
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
         PlayStepAudio(4);// 
+                         // Onclickbtn_s_4_confirm();
     }
     #endregion
     #region Step 4: Clean the job surface with wire brush and remove burrs by filing.
-     void OnEnableStep4object()
+    void OnEnableStep4object()
     {
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-        GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = true;// brush out line
+        // GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = true;// brush out line
         GasTableObjectcolliders[1].enabled = true;// brush collider
+        objectOutLines[2].enabled = true;
     }
 
-     void Onclickbtn_s_4_confirm()
+    void Onclickbtn_s_4_confirm()
     {
-
         readSteps.HideConifmBnt();
         OnEnableStep4object();
     }
     public void checkBrushStep()
     {
-        GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = false;// Brushout line
+        objectOutLines[2].enabled = false;
+        //   GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = false;// Brushout line
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false; // job plate outline
+        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
-        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
+        //  Onclickbtn_s_5_confirm();
     }
     #endregion
     #region Step 5: As per the drawing, the surfaces of the job should be marked and punched.
     public void MarkingPointTwoEnable()
     {
-        GasTableObjectcolliders[10].enabled = true;
+        GasTableObjectcolliders[2].enabled = true;
     }
-     void OnEnableStep5object()
+    void OnEnableStep5object()
     {
         CuttingJobMaterial.instance.StartCenterPunchMarking();
-        objectOutLines[5].enabled = true;
-        objectOutLines[6].enabled = true;
+        objectOutLines[3].enabled = true;
+        objectOutLines[4].enabled = true;
         GasTableObjectcolliders[1].GetComponent<Rigidbody>().isKinematic = true;// brush collider
     }
-     void Onclickbtn_s_5_confirm()
+    void Onclickbtn_s_5_confirm()
     {
         OnEnableStep5object();
         readSteps.HideConifmBnt();
@@ -192,216 +182,90 @@ public class GasCuttingManager : MonoBehaviour
     public void checkStep5()
     {
         readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_6_confirm);
-        objectOutLines[5].enabled = false;
-        objectOutLines[6].enabled = false;
+        //readSteps.AddClickConfirmbtnEvent(Onclickbtn_s7_confirm);
+        readSteps.AddClickConfirmbtnEvent(SetUpTrolley.instance.Onclickbtn_s_3_confirm);
+        objectOutLines[3].enabled = false;
+        objectOutLines[4].enabled = false;
     }
-    #endregion
-    #region Step 6: Set up Gas Cutting hoses to pressure regulator mounted on cylinders
-     void onEnableStep6Object()
-    {
-
-        GasTableObjectcolliders[2].enabled = true;//blue hose pipe
-        GasTableObjectcolliders[2].GetComponent<Outline>().enabled = true;//blue hose pipe at table outline
-        objectOutLines[2].enabled = true;         // blue hose pipe outline regulator
-    }
-     void Onclickbtn_s_6_confirm()
-    {
-        GasTableObjectcolliders[0].GetComponent<XRGrabInteractable>().enabled = true;
-        readSteps.HideConifmBnt();
-        onEnableStep6Object();
-    }
-    public void EnableRedHosPipe()
-    {
-        objectOutLines[2].enabled = false;         // blue hose pipe outline regulator
-        GasTableObjectcolliders[3].enabled = true;//red hose pipe
-
-        GasTableObjectcolliders[3].GetComponent<Outline>().enabled = true;//red hose pipe at table outline
-        objectOutLines[3].enabled = true;         // red hose pipe outline regulator
-    }
-    public void EnableWeldingCuttingtorch() //cutting tourch and blue pipe rop
-    {
-        objectOutLines[3].enabled = false;         // red hose pipe outline regulator
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s7_confirm);
-    }
-    #endregion
-    #region Step 7: Hoses connection to Gas Cutting torch
-     void onEnableStep7Object()
-    {
-        GasTableObjectcolliders[4].enabled = true; // cutting welding tourch
-        GasTableObjectcolliders[4].GetComponent<Outline>().enabled = true;
-        GasTableObjectcolliders[5].enabled = true;// blue pipe sphere at tourch
-        bluePipeRop.GetComponent<CapsuleCollider>().enabled = true; // blue hose pipe end position capsule collider
-        bluePipeRop.GetComponent<Outline>().enabled = true;// blue hose pipe end position out linecapsule collider
-        GasTableObjectcolliders[5].GetComponent<Outline>().enabled = true;// blue pipe sphere outline
-    }
-     void Onclickbtn_s7_confirm()
-    {
-        onEnableStep7Object();
-        readSteps.HideConifmBnt();
-    }
-    public void BluePipeConnectATTorch() // blue pipe obejct hide and red pipe object true
-    {
-        // Debug.Log("Red final");
-        bluePipeRop.GetComponent<CapsuleCollider>().enabled = false; // blue hose pipe end position capsule collider
-        bluePipeRop.GetComponent<Outline>().enabled = false;// blue hose pipe end position out linecapsule collider
-        GasTableObjectcolliders[5].GetComponent<Outline>().enabled = false;// blue pipe sphere outline
-
-        // call at update
-        bluePipeRop.GetComponent<SnapGrabbleObject>().enabled = false;
-
-        bluePipeRop.transform.parent = ParentBluePipEndPoint.gameObject.transform;
-
-        bluePipeRop.transform.localPosition = Vector3.zero;
-        bluePipeRop.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        bluePipeRop.GetComponent<CapsuleCollider>().enabled = false;
-        isPipeblueConnect = true;
-
-
-        //red pipe object 
-        GasTableObjectcolliders[6].enabled = true;// red pipe sphere at tourch
-        redPipeRop.GetComponent<CapsuleCollider>().enabled = true; // red hose pipe end position capsule collider
-        redPipeRop.GetComponent<Outline>().enabled = true;// red hose pipe end position out linecapsule collider
-        GasTableObjectcolliders[6].GetComponent<Outline>().enabled = true;// red pipe sphere outline
-    }
-    public void RedPipeConnectAtTorch()//  red pipe object hide
-    {
-
-        //red pipe object 
-        GasTableObjectcolliders[6].enabled = false;// red pipe sphere at tourch
-        redPipeRop.GetComponent<CapsuleCollider>().enabled = false; // red hose pipe end position capsule collider
-        redPipeRop.GetComponent<Outline>().enabled = false;// red hose pipe end position out linecapsule collider
-        GasTableObjectcolliders[6].GetComponent<Outline>().enabled = false;// red pipe sphere outline
-
-        // call at update
-        redPipeRop.GetComponent<SnapGrabbleObject>().enabled = false;
-        redPipeRop.transform.parent = ParentBluePipEndPoint.gameObject.transform;
-
-        redPipeRop.transform.localPosition = Vector3.zero;
-        redPipeRop.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        redPipeRop.GetComponent<CapsuleCollider>().enabled = false;
-        isPipeRedConnect = true;
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s8_confirm);
-        GasTableObjectcolliders[4].GetComponent<Outline>().enabled = false;
-    }
-
-    #endregion
-    #region Step 8: Show Fixing orifice nozzle of 1.2 mm on gas cutting torch(cutting blow pipe).
-     void Onclickbtn_s8_confirm()
-    {
-        onEnableStep8Object();
-        readSteps.HideConifmBnt();
-    }
-     void onEnableStep8Object()
-    {
-        GasTableObjectcolliders[7].enabled = true;
-        GasTableObjectcolliders[7].GetComponent<Outline>().enabled = true;
-
-    }
-    public void CheckNozzelConnected()
-    {
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
-    }
-
-    #endregion
-    #region Step 9: Need to set the pressure of oxygen at 1.6 kg/cm2 and for acetylene set it at 0.15 kg/cm2.
-     void Onclickbtn_s9_confirm()
-    {
-        onEnableStep9Object();
-        readSteps.HideConifmBnt();
-    }
-     void onEnableStep9Object()
-    {
-        // enable blue Nozzel objects
-        GasTableObjectcolliders[8].enabled = true;// blue valve nozzel
-        GasTableObjectcolliders[8].transform.GetChild(1).gameObject.SetActive(true);
-        objectOutLines[2].enabled = true; // blue reguletor
-        BlueRotatesprite.SetActive(true);
-
-    }
-    public void enableRedNozzelvalveObjects()
-    {
-        objectOutLines[2].enabled = false; // blue reguletor
-        // enable red Nozzel objects
-        GasTableObjectcolliders[9].enabled = true;// red valve nozzel
-        GasTableObjectcolliders[9].transform.GetChild(1).gameObject.SetActive(true);
-        objectOutLines[3].enabled = true; // red reguletor
-        redRotateSprite.SetActive(true);
-    }
-    public void Enablestep10()
-    {
-        objectOutLines[3].enabled = false; // red reguletor
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10_confirm);
-    }
-    #endregion
-    #region Step 10: Set the neutral flame.
+    #endregion    
+    #region Step 10Open acetylene control valve and light the flame with spark lighter.
     public bool IsEnableFlame, step10Call;
-     void Onclickbtn_s10_confirm()
+ public    void Onclickbtn_s10_confirm()
     {
         onEnableStep10Object();
         readSteps.HideConifmBnt();
     }
+
     //carburing flame
-    public void NeturalFlameFinish()
+    public void OpenFlameRedBol()
     {
-        if (step10Call)
+        if (!isTurnOffFlame)
         {
-            if (!IsEnableFlame)
-            {
-                netural_flame.SetActive(true);
-                netural_flame.GetComponent<AudioSource>().Play();
-                readSteps.onClickConfirmbtn();
-                readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
-
-                IsEnableFlame = true;
-            }
-            else
-            {
-                netural_flame.SetActive(true);
-                netural_flame.GetComponent<AudioSource>().Play();
-
-            }
+            objectOutLines[5].enabled = true;
+            GasTableObjectcolliders[3].enabled = true;
+            GasTableObjectcolliders[3].GetComponent<Outline>().enabled = true;
+            GasTableObjectcolliders[3].GetComponent<SnapGrabbleObject>().enabled = true;
         }
+
+    }
+    public void LighterSnap_true()
+    {
+        objectOutLines[5].enabled = false;
+        StartCoroutine(lighterEnable());
+    }
+    IEnumerator lighterEnable()
+    {
+        blacksmoke.SetActive(true); // black smoke
+        yield return new WaitForSeconds(0.5f);
+        blacksmoke.SetActive(false); // black smoke
+
+        IsEnableFlame = true;
+        lighterFlame.SetActive(true);
+        lighterFlame.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.5f);
+        lighterFlame.SetActive(false);
+        readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
+
+
     }
     //netural flame
     //netural flame with oxygen cutting flame
     //oxidizing flame
-     void onEnableStep10Object()
+    void onEnableStep10Object()
     {
-        step10Call = true;
+        redBol.enabled = true; //RED  bol reduse or crbarn
+        redBol.GetComponent<Outline>().enabled = true;
+        GasTableObjectcolliders[4].enabled = true;
 
     }
     #endregion
     #region Step 11: Keep the gas cutting torch (blow pipe) at 90° on job surface and the cutting line.
-     void Onclickbtn_s11_confirm()
+    void Onclickbtn_s11_confirm()
     {
         onEnableStep11Object();
         readSteps.HideConifmBnt();
     }
-     void onEnableStep11Object()
+    void onEnableStep11Object()
     {
         torch90degree.SetActive(true);
     }
     public void Checktourch90degree()
     {
         torch90degree.SetActive(false);
-        GasTableObjectcolliders[4].GetComponent<FreezeRotation>().isFreeze = true;
+        GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = true;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s12_confirm);
     }
     #endregion
     #region Step 12: Heat one end of the marking line till it turns cherry red.Keep a distance of 5mm between the job and the nozzle.
-     void Onclickbtn_s12_confirm()
+    void Onclickbtn_s12_confirm()
     {
         readSteps.HideConifmBnt();
         onEnableStep12Object();
         //   Debug.Log("1c");
     }
-     void onEnableStep12Object()
+    void onEnableStep12Object()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s13_confirm);
@@ -409,60 +273,178 @@ public class GasCuttingManager : MonoBehaviour
 
     #endregion
     #region Step 13: Press oxygen lever and slowly proceed in the direction of cutting
-   
-     void Onclickbtn_s13_confirm()
+
+    void Onclickbtn_s13_confirm()
     {
-        // Debug.Log("3 c");
+        objectOutLines[6].enabled = true;
+        step10Call = true;
         onEnableStep13Object();
         readSteps.HideConifmBnt();
     }
-     void onEnableStep13Object()
+
+    void onEnableStep13Object()
     {
-        //  Debug.Log("4");
         neturalFlameCube.SetActive(true);
         flameOff = true;
-
-
+    }
+    public void OnPressLever()
+    {
+        if (step10Call)
+        {
+            netural_flame.SetActive(true);
+            netural_flame.GetComponent<AudioSource>().Play();
+        }
     }
     public void CheckCuttingLine()
     {
         if (flameOff)
         {
-            Debug.Log("Check flame cutting call");
-            // leverflameHandel.GetComponent<XRGrabInteractable>().enabled = false;
-            step10Call = false;
-            netural_flame.SetActive(false);
-            GasTableObjectcolliders[4].GetComponent<FreezeRotation>().isFreeze = false;
+
+            objectOutLines[6].enabled = false;
+            // netural_flame.SetActive(false);
+            GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = false;
             CuttingBrush.instance.cleanPointCount = 15;
             CuttingBrush.instance.isStop = false;
+            readSteps.onClickConfirmbtn();
+            readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_14_1_confirm);
+        }
+    }
+
+    #endregion
+
+
+    #region Step 14: Turning off Flame
+    public GameObject dummyRedBol;
+    void Onclickbtn_s_14_1_confirm()
+    {
+        Debug.Log("Call end flame");
+        readSteps.HideConifmBnt();
+        redBol.gameObject.SetActive(false);
+        dummyRedBol.gameObject.SetActive(true);
+        redBol = dummyRedBol.GetComponent<RotateNozzle>();
+
+        isTurnOffFlame = true;
+        SetUpTrolley.instance.isTurnOffFlame = true;
+        redBol.enabled = true; //RED  bol reduse or crbarn
+        redBol.RotateValue = 40; //RED  bol reduse or crbarn
+        redBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
+        redBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
+        redBol.isclockwise = false; //RED  bol reduse or crbarn
+
+        redBol.GetComponent<Outline>().enabled = true;
+
+    }
+    public void callTurnOff2_flame()//oxidiz
+    {
+        if (isTurnOffFlame)
+        {
+            redBol.GetComponent<BoxCollider>().enabled = false;
+            redBol.enabled = false; //RED  bol reduse or crbarn
+            GasTableObjectcolliders[5].enabled = true;  //GREEN  bol oxidizing
+
+            blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
+            blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
+            blueBol.RotateValue = 60; //GREEN  bol oxidizing
+            blueBol.enabled = true; //GREEN  bol oxidizing
+            blueBol.isclockwise = false; //GREEN  bol oxidizing
+
+            blueBol.GetComponent<Outline>().enabled = true;
+        }
+    }
+    public void callFalmeOff()
+    {
+        if (isTurnOffFlame)
+        {
+            step10Call = false;
+            netural_flame.SetActive(false);
+            blueBol.GetComponent<Outline>().enabled = false;
+
+            callCloseCylinderValves();
+
+        }
+    }
+    //close valve
+    public void callCloseCylinderValves()
+    {
+
+        readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_10_1confirm);
+
+    }
+    public GameObject ZeroMeterred, ZeroMeterBlack;
+    void Onclickbtn_s_10_1confirm()
+    {
+        Debug.Log("10");
+        readSteps.HideConifmBnt();
+        GasTableObjectcolliders[7].enabled = true;// blue valve nozzel
+
+        objectOutLines[9].enabled = true;// black regulator
+
+        blackValve.isclockwise = false;                           // black valve
+        blackValve.enabled = true;                                // black valve
+        blackValve.otherMeterobject.SetActive(false);             // black valve
+        blackValve.otherMeterobject = ZeroMeterBlack;               // black valve
+        blackValve.MeterObject.SetActive(true);                   // black valve
+        blackValve.RotateValue = 15;                              // black valve
+     //   blackValve.speed = 20;
+    }
+    public void callBlackValve_Bol()
+    {
+        if (isTurnOffFlame)
+        {
+            Debug.Log("10eer");
+            GasTableObjectcolliders[7].enabled = false;// blue valve nozzel
+                                                       //   GasTableObjectcolliders[9].GetComponent<Outline>().enabled = true;// blue valve nozzel
+            objectOutLines[9].enabled = false;// blue regulator
+
+            GasTableObjectcolliders[8].enabled = true;// blue valve nozzel
+                                                      //   GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;// blue valve nozzel
+            objectOutLines[10].enabled = true;// red regulator
+
+            redValve.isclockwise = false;  // red valve
+            redValve.enabled = true;                          // red valve
+            redValve.otherMeterobject.SetActive(false);       // red valve
+            redValve.otherMeterobject = ZeroMeterred;       // red valve
+            redValve.MeterObject.SetActive(true);             // red valve
+            redValve.RotateValue = 10;                         // red valve
+        }
+    }
+    public void CallRedValve_bol()
+    {
+        if (isTurnOffFlame)
+        {
+            objectOutLines[10].enabled = false;// red regulator
+
+            GasTableObjectcolliders[8].enabled = false;// blue valve nozzel
+            GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;// blue valve nozzel
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s14_confirm);
         }
     }
-    public void removexrgrabonLeverflame()
-    {
 
-    }
+    public bool isTurnOffFlame;
     #endregion
-    #region Step 14: Pick up C.S. brush and clean the surface
-     void Onclickbtn_s14_confirm()
+
+
+    #region Step 15: Pick up C.S. brush and clean the surface
+    void Onclickbtn_s14_confirm()
     {
         onEnableStep14Object();
         readSteps.HideConifmBnt();
     }
-     void onEnableStep14Object()
+    void onEnableStep14Object()
     {
-        GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = true;// brush out line
+        GasTableObjectcolliders[1].enabled = true;
         Debug.Log("Call bursh out line");
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-
+        objectOutLines[2].enabled = true;
 
     }
     public void cleanBrushFinish()
     {
+        objectOutLines[2].enabled = false;
         finishPanel.SetActive(true);
         readSteps.panel.SetActive(false);
-        GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = false;// brush out line
 
     }
     #endregion
