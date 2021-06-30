@@ -223,7 +223,7 @@ public class GasCuttingManager : MonoBehaviour
         lighterFlame.SetActive(true);
         lighterFlame.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.5f);
-        lighterFlame.SetActive(false);
+       
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
 
@@ -294,6 +294,14 @@ public class GasCuttingManager : MonoBehaviour
             netural_flame.SetActive(true);
             netural_flame.GetComponent<AudioSource>().Play();
         }
+        else
+        {
+            if (IsEnableFlame)
+            {
+                lighterFlame.SetActive(true);
+                lighterFlame.GetComponent<AudioSource>().Play();
+            }
+        }
     }
     public void CheckCuttingLine()
     {
@@ -355,6 +363,8 @@ public class GasCuttingManager : MonoBehaviour
     {
         if (isTurnOffFlame)
         {
+            IsEnableFlame = false;
+            lighterFlame.SetActive(false);
             step10Call = false;
             netural_flame.SetActive(false);
             blueBol.GetComponent<Outline>().enabled = false;

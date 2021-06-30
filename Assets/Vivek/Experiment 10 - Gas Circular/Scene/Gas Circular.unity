@@ -27589,6 +27589,22 @@ PrefabInstance:
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayClip
       objectReference: {fileID: 0}
+    - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: readSteps
+      value: 
+      objectReference: {fileID: 1079840938}
+    - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: stepAudioSource
+      value: 
+      objectReference: {fileID: 1456437660}
+    - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: CallEndMethod.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1229513398}
+    - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: CallEndMethod.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Onclickbtn_s10_confirm
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732661071804254, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -27628,7 +27644,11 @@ PrefabInstance:
     - target: {fileID: 5465732661144825654, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: callAnyOtherMethod.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1229513398}
+      objectReference: {fileID: 1195961548}
+    - target: {fileID: 5465732661144825654, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: callAnyOtherMethod.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DoneRedClip_T
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732661227532277, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -27660,11 +27680,19 @@ PrefabInstance:
     - target: {fileID: 5465732661461253351, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1229513398}
+      objectReference: {fileID: 1195961548}
+    - target: {fileID: 5465732661461253351, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Done_oxygen_shop_water
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732661479659342, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1229513398}
+      objectReference: {fileID: 1195961548}
+    - target: {fileID: 5465732661479659342, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Done_acetylene_shop_water
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732661634932060, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: callAnyOtherMethod.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -27696,7 +27724,11 @@ PrefabInstance:
     - target: {fileID: 5465732661863781577, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: callAnyOtherMethod.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1229513398}
+      objectReference: {fileID: 1195961548}
+    - target: {fileID: 5465732661863781577, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: callAnyOtherMethod.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnConnecteblackPipe
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732661863781620, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -27808,7 +27840,11 @@ PrefabInstance:
     - target: {fileID: 5465732662695107995, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: callAnyOtherMethod.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1229513398}
+      objectReference: {fileID: 1195961548}
+    - target: {fileID: 5465732662695107995, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: callAnyOtherMethod.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnConnecteRedPipe
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732662794314577, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -27852,11 +27888,15 @@ PrefabInstance:
     - target: {fileID: 5465732663107859174, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1229513398}
+      objectReference: {fileID: 1195961548}
     - target: {fileID: 5465732663107859174, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1229513398}
+    - target: {fileID: 5465732663107859174, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnEnableRedValeNozzel
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732663107859192, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_Size.x
       value: 1.880286
@@ -28912,7 +28952,7 @@ MonoBehaviour:
   finishPanel: {fileID: 1079840939}
   neturalFlameCube: {fileID: 1195961592}
   netural_flame: {fileID: 1195961591}
-  lighterFlame: {fileID: 0}
+  lighterFlame: {fileID: 1445289070}
   torch90degree: {fileID: 1045098403}
   blacksmoke: {fileID: 1195961590}
   redBol: {fileID: 1195961583}
@@ -32322,6 +32362,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointIndex: 0
+--- !u!1 &1445289070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6149317693276047164, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+  m_PrefabInstance: {fileID: 1195961544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1447637959
 GameObject:
   m_ObjectHideFlags: 0
