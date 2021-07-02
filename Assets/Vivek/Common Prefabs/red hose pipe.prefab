@@ -212,71 +212,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollisionMaterial: {fileID: 0}
   m_SelfCollisions: 0
-  restLength_: 0.83196354
+  restLength_: 0.8218967
   elements:
   - particle1: 0
     particle2: 1
-    restLength: 0.063059255
+    restLength: 0.16582744
     constraintForce: 0
     tearResistance: 1
   - particle1: 1
     particle2: 2
-    restLength: 0.06453717
+    restLength: 0.16613108
     constraintForce: 0
     tearResistance: 1
   - particle1: 2
     particle2: 3
-    restLength: 0.064246245
+    restLength: 0.16616489
     constraintForce: 0
     tearResistance: 1
   - particle1: 3
     particle2: 4
-    restLength: 0.06450267
+    restLength: 0.1664032
     constraintForce: 0
     tearResistance: 1
   - particle1: 4
     particle2: 5
-    restLength: 0.064358816
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 5
-    particle2: 6
-    restLength: 0.064192064
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 6
-    particle2: 7
-    restLength: 0.06428032
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 7
-    particle2: 8
-    restLength: 0.064334914
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 8
-    particle2: 9
-    restLength: 0.06435071
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 9
-    particle2: 10
-    restLength: 0.06421356
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 10
-    particle2: 11
-    restLength: 0.06410388
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 11
-    particle2: 12
-    restLength: 0.06434502
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 12
-    particle2: 13
-    restLength: 0.061438866
+    restLength: 0.15737012
     constraintForce: 0
     tearResistance: 1
   m_RopeBlueprint: {fileID: 11400000, guid: 1f16c6d9be408a84aa9c374b013b097b, type: 2}
@@ -437,7 +397,7 @@ MonoBehaviour:
   material: {fileID: 11400000, guid: b231b678223e044588ce32ebccbe77f3, type: 2}
   phase: 0
   thickness: 0
-  m_SourceCollider: {fileID: 0}
+  m_SourceCollider: {fileID: 502070722797427542}
   m_DistanceField: {fileID: 11400000, guid: 686c93eba354f8244b37ef71001e6aa7, type: 2}
 --- !u!1 &502070722897025642
 GameObject:
@@ -1171,6 +1131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
+  meshFilter:
+  - {fileID: 502070723767691628}
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0

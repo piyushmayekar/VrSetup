@@ -73,13 +73,13 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
-
-        // Debug.Log("gas welding");
+// Debug.Log("gas welding");
     }
     public void Start()
     {
         StartCoroutine(PlayGasWeldingStartAudio());
         //   Onclickbtn_s_5_confirm();
+      //  ConfirmSatrtbtn();
     }
     IEnumerator PlayGasWeldingStartAudio()
     {
@@ -407,7 +407,8 @@ public class GasWeldingStep : MonoBehaviour
         BluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         BluePipEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
 
-        BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);
+        //BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);//Add By GP
+        //BluePipEndPoint.SetActive(false);
         isPipeblueConnect = true;
     }
     public void OnConnecteRedPipe()
@@ -422,8 +423,8 @@ public class GasWeldingStep : MonoBehaviour
         RedPipeEndPoint.transform.localPosition = Vector3.zero;
         RedPipeEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         RedPipeEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
-        RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);
+        RedPipeEndPoint.SetActive(false);
+        //RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);//Add By GP
         // RedPipeEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
         isPipeRedConnect = true;
 

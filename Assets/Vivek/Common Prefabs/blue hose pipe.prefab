@@ -189,6 +189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
+  meshFilter:
+  - {fileID: 1423264269801872070}
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -676,76 +678,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollisionMaterial: {fileID: 0}
   m_SelfCollisions: 0
-  restLength_: 0.86039346
+  restLength_: 1.0152498
   elements:
   - particle1: 0
     particle2: 1
-    restLength: 0.06350505
+    restLength: 0.09965778
     constraintForce: 0
     tearResistance: 1
   - particle1: 1
     particle2: 2
-    restLength: 0.06361728
+    restLength: 0.09975221
     constraintForce: 0
     tearResistance: 1
   - particle1: 2
     particle2: 3
-    restLength: 0.0636662
+    restLength: 0.0997991
     constraintForce: 0
     tearResistance: 1
   - particle1: 3
     particle2: 4
-    restLength: 0.06368189
+    restLength: 0.09974994
     constraintForce: 0
     tearResistance: 1
   - particle1: 4
     particle2: 5
-    restLength: 0.06366826
+    restLength: 0.082371086
     constraintForce: 0
     tearResistance: 1
   - particle1: 5
     particle2: 6
-    restLength: 0.06357124
+    restLength: 0.08240682
     constraintForce: 0
     tearResistance: 1
   - particle1: 6
     particle2: 7
-    restLength: 0.06067315
+    restLength: 0.08235306
     constraintForce: 0
     tearResistance: 1
   - particle1: 7
     particle2: 8
-    restLength: 0.06071801
+    restLength: 0.08202821
     constraintForce: 0
     tearResistance: 1
   - particle1: 8
     particle2: 9
-    restLength: 0.06075831
+    restLength: 0.066729724
     constraintForce: 0
     tearResistance: 1
   - particle1: 9
     particle2: 10
-    restLength: 0.060775258
+    restLength: 0.06380384
     constraintForce: 0
     tearResistance: 1
   - particle1: 10
     particle2: 11
-    restLength: 0.060781594
+    restLength: 0.07988953
     constraintForce: 0
     tearResistance: 1
   - particle1: 11
     particle2: 12
-    restLength: 0.060731128
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 12
-    particle2: 13
-    restLength: 0.06087951
-    constraintForce: 0
-    tearResistance: 1
-  - particle1: 13
-    particle2: 14
-    restLength: 0.05336655
+    restLength: 0.07670853
     constraintForce: 0
     tearResistance: 1
   m_RopeBlueprint: {fileID: 11400000, guid: b308f1c9434db69419bc2d7b68eb0975, type: 2}

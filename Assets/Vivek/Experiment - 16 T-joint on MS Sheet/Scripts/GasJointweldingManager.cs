@@ -55,8 +55,11 @@ public class GasJointweldingManager : MonoBehaviour
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
-    ///    Onclickbtn_s_2_confirm();
-      //  Onclickbtn_s10_confirm();
+        //  PlaceJobPlate();
+       // Debug.Log("Check scene");
+        ///    Onclickbtn_s_2_confirm();
+        //  Onclickbtn_s10_confirm();
+       //ConfirmSatrtbtn();
     }
 
     // Update is called once per frame
@@ -149,7 +152,7 @@ public class GasJointweldingManager : MonoBehaviour
     public void PlaceJobPlate()
     {
         //job plat posion set
-        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.854f, 0.009f, 0.1383f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.693f,0.0081f,-0.1198f);//objectOutLines[1].transform.position;// job plate material
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
         objectOutLines[1].enabled = false;// job flat position

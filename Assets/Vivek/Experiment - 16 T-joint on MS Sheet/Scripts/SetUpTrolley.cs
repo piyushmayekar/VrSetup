@@ -217,7 +217,7 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[10].enabled = true; //blue hose pipe
         GasTablekitcolliders[10].GetComponent<SnapGrabbleObject>().enabled = true; // blue hose pipe
         GasTablekitcolliders[10].transform.GetChild(0).gameObject.SetActive(true);
-        GasTablekitcolliders[10].transform.GetChild(0).transform.GetChild(0).GetComponent<Outline>().enabled = true;
+        GasTablekitcolliders[10].GetComponent<Outline>().enabled = true;
         objectOutLines[5].enabled = true;//blue regulators outline
     }
     public void onEnableStep5Object_3()
@@ -225,7 +225,7 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[11].enabled = true;//red hose pipe
         GasTablekitcolliders[11].GetComponent<SnapGrabbleObject>().enabled = true; // red hose pipe
         GasTablekitcolliders[11].transform.GetChild(0).gameObject.SetActive(true);
-        GasTablekitcolliders[11].transform.GetChild(0).transform.GetChild(0).GetComponent<Outline>().enabled = true;
+        GasTablekitcolliders[11].GetComponent<Outline>().enabled = true;
         objectOutLines[4].enabled = true;   //red regulators
 
         objectOutLines[5].enabled = false;  //blue   regulators outline
@@ -301,6 +301,8 @@ public class SetUpTrolley : MonoBehaviour
 
         GasTablekitcolliders[17].enabled = true;// blue pipe sphere welding Tourch 
         bluePipeRop.GetComponent<CapsuleCollider>().enabled = true;
+        BluePipEndPoint.GetComponent<SnapGrabbleObject>().enabled = true;
+
         objectOutLines[7].enabled = true;// blue pipe sphere outline
         objectOutLines[9].enabled = true;// blue end capsule
 
@@ -315,6 +317,7 @@ public class SetUpTrolley : MonoBehaviour
 
         GasTablekitcolliders[17].enabled = false; // blue pipe sphere welding Tourch 
         GasTablekitcolliders[18].enabled = true; // red pipe sphere welding Tourch 
+        RedPipeEndPoint.GetComponent<SnapGrabbleObject>().enabled = true;
 
         redPipeRop.GetComponent<CapsuleCollider>().enabled = true;
 
@@ -327,7 +330,7 @@ public class SetUpTrolley : MonoBehaviour
         BluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         BluePipEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
 
-        BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);
+      //  BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);
         isPipeblueConnect = true;
     }
     public void OnConnecteRedPipe()
@@ -344,7 +347,7 @@ public class SetUpTrolley : MonoBehaviour
         RedPipeEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         RedPipeEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
-        RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);
+     //RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);
         // RedPipeEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
         isPipeRedConnect = true;
 
