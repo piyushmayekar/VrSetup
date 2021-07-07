@@ -9,7 +9,7 @@ namespace Grinding
 {
     public class JobPlate : MonoBehaviour
     {
-        public event Action OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
+        public event UnityAction OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
         public UnityEvent OnGrindingComplete;
 
         [Header("Scriber Marking")]
@@ -122,6 +122,7 @@ namespace Grinding
             }
             if (_localScale == finalScale) //Grinding Complete
             {
+                Destroy(extraPlate);
                 mainCollider.enabled = true;
                 grindingCollider.enabled = false;
                 grindingStage = 1;

@@ -9,6 +9,7 @@ public class PositionResetter : MonoBehaviour
 {
     public bool shouldReset = true;
     public Vector3 lastStablePos, lastStableRotEulerAngles;
+    public float stableVelocityThreshold = 1f;
     public Rigidbody rb;
 
     /// <summary>
@@ -32,7 +33,8 @@ public class PositionResetter : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if (other.collider.gameObject.name == _Constants.TABLE_TAG && rb.velocity.sqrMagnitude <= 1f)
+        if (other.collider.gameObject.name == _Constants.TABLE_TAG && rb.velocity.sqrMagnitude <= stableVelocityThreshold
+        && rb.angularVelocity.sqrMagnitude <= stableVelocityThreshold)
         {
             lastStablePos = transform.position;
             lastStableRotEulerAngles = transform.rotation.eulerAngles;

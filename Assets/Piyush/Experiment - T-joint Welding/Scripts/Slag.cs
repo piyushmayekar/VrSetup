@@ -33,7 +33,7 @@ namespace TWelding
         {
             if (other.gameObject.CompareTag(_Constants.CHIPPING_HAMMER_TAG)
             && other.relativeVelocity.magnitude >= breakForceThreshold
-            && weldingPoint.IsPointOnLeft == WeldingPoint.chippingHammer.IsHittingLeftPoints)
+            && weldingPoint.IsPointOnLeft == weldingPoint.chippingHammer.IsHittingLeftPoints)
             {
                 _renderer.enabled = false;
                 slagPrefabs.ForEach(prefab =>

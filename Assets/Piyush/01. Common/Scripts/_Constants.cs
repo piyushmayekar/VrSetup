@@ -16,6 +16,11 @@ public static class _Constants
     public const string FLATFILE_TAG = "FlatFile";
     public const string GRINDING_WHEEL_TAG = "GrindingWheel";
     public const string PLATE_STAND = "PlateStand";
+    public const string HAMMER_TAG = "Hammer";
+    public const string CUTTINGPOINT_TAG = "CuttingPoint";
+    public const string FILING_POINT_TAG = "FilingPoint";
+    public const string LEFT_HAND_TAG = "LeftHand";
+    public const string RIGHT_HAND_TAG = "RightHand";
 
     //Messages
     public const string ELECTRODE_NOT_CORRECT = "Please insert the correct electrode";

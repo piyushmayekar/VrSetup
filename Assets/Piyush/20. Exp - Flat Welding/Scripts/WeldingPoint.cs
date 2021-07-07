@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FlatWelding;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace FlatWelding
 {
@@ -11,7 +12,7 @@ namespace FlatWelding
     /// </summary>
     public class WeldingPoint : MonoBehaviour
     {
-        public event Action OnWeldingDone, OnHitWithHammer;
+        public event UnityAction OnWeldingDone, OnHitWithHammer;
 
         [SerializeField] bool isWeldingDone = false, shouldShowSlag = false;
         [SerializeField] float breakForceThreshold = 1.5f;

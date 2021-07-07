@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.Events;
 
 namespace FlatWelding
 {
@@ -10,6 +12,21 @@ namespace FlatWelding
     public class WearApparelTask : Task
     {
         [SerializeField] List<GameObject> objectsToPick;
+
+        public override void OnTaskBegin()
+        {
+            //TODO
+            objectsToPick.ForEach(o =>
+            {
+                o.GetComponent<XRGrabInteractable>().selectEntered.RemoveAllListeners();
+                o.GetComponent<XRGrabInteractable>().selectEntered.AddListener(OnObjectSelect);
+            });
+        }
+
+        public void OnObjectSelect(SelectEnterEventArgs args)
+        {
+            OnObjectSelect(args.interactable.gameObject);
+        }
 
         public void OnObjectSelect(GameObject _obj)
         {

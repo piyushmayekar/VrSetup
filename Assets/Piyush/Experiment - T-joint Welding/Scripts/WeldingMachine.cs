@@ -9,6 +9,9 @@ namespace TWelding
     public class WeldingMachine : MonoBehaviour
     {
         public event Action OnElectrodePlacedEvent;
+        [SerializeField] Animator _AC;
+        [SerializeField] bool isSqueezerTouched = false;
+        [SerializeField] Collider squeezerCollider;
         [SerializeField] ParticleSystem ps;
         [SerializeField] GameObject sparkLight;
         [SerializeField] bool isOn = false, isElectrodePlaced = false, isTipInContact = false, isElectrodeAtLeft = false;
@@ -18,6 +21,7 @@ namespace TWelding
         [SerializeField] TMPro.TextMeshProUGUI errorText;
         [SerializeField] ElectrodeType requiredElectrodeType;
         [SerializeField] Electrode currentElectrode;
+        [SerializeField] XRSocketInteractor socket_Electrode;
 
         public bool IsElectrodePlaced { get => isElectrodePlaced; set => isElectrodePlaced = value; }
         #region SINGLETON
@@ -25,7 +29,7 @@ namespace TWelding
 
         public ElectrodeType RequiredElectrodeType { get => requiredElectrodeType; set => requiredElectrodeType = value; }
         public bool IsElectrodeAtLeft { get => isElectrodeAtLeft; set => isElectrodeAtLeft = value; }
-
+        public bool IsSqueezerTouched { get => isSqueezerTouched; set => isSqueezerTouched = value; }
         static WeldingMachine instance = null;
 
         void Awake()
@@ -36,6 +40,51 @@ namespace TWelding
                 Destroy(gameObject);
         }
         #endregion
+        public void OnGunHoldStart(SelectEnterEventArgs args)
+        {
+
+            // Debug.Log("here socket" + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
+            //If squeezer is touched & is not holding an electrode, 
+            //open the gun & set the e socket active
+            if (IsSqueezerTouched)
+            {
+                IsSqueezerTouched = false;
+                ToggleGunSqueezers(true);
+                squeezerCollider.enabled = false;
+                // Debug.Log("setting " + (!IsHoldingElectrode));
+                socket_Electrode.socketActive = !IsElectrodePlaced;
+
+            }
+            // Debug.Log("-- " + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
+            //If squeezer is touched & is holding an electrode, 
+            //open the gun & set the e socket inactive, so the electrode drops
+        }
+
+        public void OnGunHoldEnd(SelectExitEventArgs args)
+        {
+            IsSqueezerTouched = false;
+            ToggleGunSqueezers(IsSqueezerTouched);
+            Invoke(nameof(EnableSqueezerCollider), 1f);
+        }
+
+        void EnableSqueezerCollider()
+        {
+            squeezerCollider.enabled = true;
+            IsSqueezerTouched = false;
+        }
+
+        public void OnSqueezerHoldStart(HoverEnterEventArgs args)
+        {
+            if (args.interactor)
+            {
+                IsSqueezerTouched = true;
+            }
+        }
+
+        void ToggleGunSqueezers(bool open)
+        {
+            _AC.SetBool("Open", open);
+        }
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -105,8 +154,16 @@ namespace TWelding
                 ToggleWeldingTip();
                 ShowErrorIndicator(electrode.ElectrodeType != RequiredElectrodeType, _Constants.ELECTRODE_NOT_CORRECT);
             }
+            else
+            {
+                socket_Electrode.socketActive = false;
+                Invoke(nameof(TurnOnElectrodeSocket), 2f);
+            }
         }
-
+        void TurnOnElectrodeSocket()
+        {
+            socket_Electrode.socketActive = true;
+        }
         /// <summary>
         /// Only turn on welding tip if the appropriate electrode is placed
         /// </summary>
@@ -119,6 +176,7 @@ namespace TWelding
         {
             if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
             {
+                currentElectrode = null;
                 IsElectrodePlaced = false;
             }
         }

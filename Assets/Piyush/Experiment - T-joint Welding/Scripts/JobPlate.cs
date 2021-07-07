@@ -1,36 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using VWelding;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TWelding
 {
     public class JobPlate : MonoBehaviour
     {
-        public event Action OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
+        public event UnityAction OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
 
         [SerializeField] PlateType plateType;
 
         [Header("Scriber Marking")]
-        [SerializeField] List<GameObject> markingPoints;
-        [SerializeField] List<MarkingLinePoint> markingLinePoints;
-        [SerializeField] LineRenderer markingLine;
-        [SerializeField] int currentMarking = 0;
-        [SerializeField] List<GameObject> scriberHighlights;
-        int totalLineMarkingPoints = 0;
-        int lineMarkingPoint = 0;
-        public int LineMarkingPoint { get => lineMarkingPoint; set => lineMarkingPoint = value; }
+        [SerializeField] List<ScriberMarking> scriberMarkings;
+        [SerializeField] int scriberMarkingIndex = 0;
 
         [Header("Center Punch Marking")]
-        [SerializeField] List<PunchMarkingPoint> centerPunchMarkingPoints;
-        [SerializeField] int currentCPMarkingPointIndex = 0;
-        PunchMarkingPoint CurrentMarkingPoint => centerPunchMarkingPoints[currentCPMarkingPointIndex];
+        [SerializeField] List<CenterPunchMarking> centerPunchMarkings;
+        [SerializeField] int cpMarkingIndex = 0;
 
         [Header("Hacksaw cutting")]
         [SerializeField] GameObject centerPunchTaskParent;
         [SerializeField] GameObject scriberTaskParent;
         [SerializeField] GameObject elongatedPlate, ogPlate, extraPlate;
-        [SerializeField] Rigidbody extraPlateRB;
         [SerializeField] List<CuttingPoint> cuttingPoints;
         [SerializeField] int currentCuttingPoints = 0;
         [SerializeField] bool isCuttingDone = false, isFilingDone = false;
@@ -44,84 +38,52 @@ namespace TWelding
         public static List<JobPlate> jobPlates = new List<JobPlate>();
         void Awake()
         {
+            // Debug.Log(JobPlate.jobPlates.Count);
             if (!jobPlates.Contains(this))
                 jobPlates.Add(this);
+            // Debug.Log(JobPlate.jobPlates.Count);
         }
 
         //SCRIBER MARKING
         public void StartScriberMarking()
         {
-            TurnOnMarkingPoint();
-            totalLineMarkingPoints = markingLine.transform.childCount;
+            scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
+            scriberMarkings[scriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
         }
 
-        void TurnOnMarkingPoint()
+        void ScriberMarkingStep()
         {
-            markingPoints[currentMarking].SetActive(true);
-            if (markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>())
-                markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>().OnMarkingDone += OnMarkingDone;
-        }
-
-        internal void OnMarkingDone()
-        {
-            currentMarking++;
-            if (currentMarking < markingPoints.Count)
+            scriberMarkings[scriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
+            scriberMarkingIndex++;
+            if (scriberMarkingIndex < scriberMarkings.Count)
             {
-                TurnOnMarkingPoint();
+                scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
+                scriberMarkings[scriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
             }
-            if (currentMarking == markingPoints.Count - 1)
-            {
-                markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
-                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
-            }
-        }
-
-        internal void OnMarkingPointScriberEnter(int index, Vector3 position)
-        {
-            if (index == LineMarkingPoint)
-            {
-                markingLinePoints[index].gameObject.SetActive(false);
-                OnMarkingDone(position);
-            }
-        }
-
-        internal void OnMarkingDone(Vector3 position)
-        {
-            lineMarkingPoint++;
-            markingLine.positionCount++;
-            markingLine.SetPosition(markingLine.positionCount - 1, position);
-            if (lineMarkingPoint >= totalLineMarkingPoints)
+            else
                 OnScriberMarkingDone?.Invoke();
-            scriberHighlights.ForEach(highlight => highlight.SetActive(false));
         }
 
         //CENTER PUNCH
         public void StartCenterPunchMarking()
         {
-            CurrentMarkingPoint.gameObject.SetActive(true);
-            CenterPunch.OnHammerHit += OnHammerHit;
+            centerPunchMarkings[cpMarkingIndex].StartMarkingProcess();
+            centerPunchMarkings[cpMarkingIndex].OnMarkingDone += CenterPunchStep;
         }
 
-        internal void OnMechanicalViseSocketExit()
+        void CenterPunchStep()
         {
-            GetComponent<Collider>().isTrigger = false;
-        }
-
-        private void OnHammerHit()
-        {
-            if (CurrentMarkingPoint.IsCenterPunchInside)
+            centerPunchMarkings[cpMarkingIndex].OnMarkingDone -= CenterPunchStep;
+            cpMarkingIndex++;
+            if (cpMarkingIndex < centerPunchMarkings.Count)
             {
-                CurrentMarkingPoint.MarkingDone();
-                currentCPMarkingPointIndex++;
-                if (currentCPMarkingPointIndex < centerPunchMarkingPoints.Count)
-                    CurrentMarkingPoint.gameObject.SetActive(true);
-                else
-                {
-                    CenterPunch.OnHammerHit -= OnHammerHit;
-                    OnCenterPunchMarkingDone?.Invoke();
-                }
+                centerPunchMarkings[cpMarkingIndex].StartMarkingProcess();
+                centerPunchMarkings[cpMarkingIndex].OnMarkingDone += CenterPunchStep;
             }
+            else
+                OnCenterPunchMarkingDone?.Invoke();
         }
+
 
         //HACKSAW CUTTING
         public void SetupForCutting()
@@ -131,7 +93,14 @@ namespace TWelding
             cuttingPoints[0].transform.parent.gameObject.SetActive(true);
             cuttingPoints.ForEach(point => point.OnCuttingDone += CuttingDone);
         }
+
         public void DisableMainCollider() => GetComponent<Collider>().enabled = false;
+
+        public void OnMechanicalViseSocketExit()
+        {
+            GetComponent<Collider>().enabled = true;
+        }
+
         internal void CuttingDone()
         {
             currentCuttingPoints++;
@@ -144,10 +113,11 @@ namespace TWelding
                 ogPlate.GetComponent<Collider>().enabled = true;
                 extraPlate.transform.parent = null;
                 extraPlate.GetComponent<Collider>().enabled = true;
+                Rigidbody extraPlateRB = extraPlate.AddComponent<Rigidbody>();
                 extraPlateRB.useGravity = true;
                 extraPlateRB.isKinematic = false;
-                scriberTaskParent.SetActive(false);
-                centerPunchTaskParent.SetActive(false);
+                scriberTaskParent?.SetActive(false);
+                centerPunchTaskParent?.SetActive(false);
                 OnHacksawCuttingDone?.Invoke();
 
                 //Rough edge
@@ -167,11 +137,6 @@ namespace TWelding
                 OnFilingDone?.Invoke();
             }
         }
-    }
-    [System.Serializable]
-    public enum PlateType
-    {
-        Breadth, Length
     }
 }
 
