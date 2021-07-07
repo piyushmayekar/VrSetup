@@ -114,7 +114,9 @@ public class Outline : MonoBehaviour
 
         // Apply material properties immediately
         needsUpdate = true;
+        
     }
+   
 
     void OnEnable()
     {
@@ -129,36 +131,26 @@ public class Outline : MonoBehaviour
 
             renderer.materials = materials.ToArray();
         }
-    }
 
-    void OnValidate()
-    {
-
-        // Update material properties
-        needsUpdate = true;
-
-        // Clear cache when baking is disabled or corrupted
-        if (!precomputeOutline && bakeKeys.Count != 0 || bakeKeys.Count != bakeValues.Count)
-        {
-            bakeKeys.Clear();
-            bakeValues.Clear();
-        }
-
-        // Generate smooth normals when baking is enabled
-        if (precomputeOutline && bakeKeys.Count == 0)
-        {
-            Bake();
-        }
-    }
-
-    void Update()
-    {
         if (needsUpdate)
         {
             needsUpdate = false;
 
             UpdateMaterialProperties();
         }
+      
+    }
+
+
+
+    void Update()
+    {
+        /* if (needsUpdate)
+          {
+              needsUpdate = false;
+
+              UpdateMaterialProperties();
+          }*/
     }
 
     void OnDisable()
@@ -184,58 +176,35 @@ public class Outline : MonoBehaviour
         Destroy(outlineFillMaterial);
     }
 
-    void Bake()
-    {
-
-        // Generate smooth normals for each mesh
-        var bakedMeshes = new HashSet<Mesh>();
-
-        foreach (var meshFilter in GetComponentsInChildren<MeshFilter>())
-        {
-
-            // Skip duplicates
-            if (!bakedMeshes.Add(meshFilter.sharedMesh))
-            {
-                continue;
-            }
-
-            // Serialize smooth normals
-            var smoothNormals = SmoothNormals(meshFilter.sharedMesh);
-
-            bakeKeys.Add(meshFilter.sharedMesh);
-            bakeValues.Add(new ListVector3() { data = smoothNormals });
-        }
-    }
-
     void LoadSmoothNormals()
     {
 
-        // Retrieve or generate smooth normals
-        foreach (var meshFilter in GetComponentsInChildren<MeshFilter>())
-        {
+        /* // Retrieve or generate smooth normals
+         foreach (var meshFilter in GetComponentsInChildren<MeshFilter>())
+         {
 
-            // Skip if smooth normals have already been adopted
-            if (!registeredMeshes.Add(meshFilter.sharedMesh))
-            {
-                continue;
-            }
+             // Skip if smooth normals have already been adopted
+             if (!registeredMeshes.Add(meshFilter.sharedMesh))
+             {
+                 continue;
+             }
 
-            // Retrieve or generate smooth normals
-            var index = bakeKeys.IndexOf(meshFilter.sharedMesh);
-            var smoothNormals = (index >= 0) ? bakeValues[index].data : SmoothNormals(meshFilter.sharedMesh);
+             // Retrieve or generate smooth normals
+             var index = bakeKeys.IndexOf(meshFilter.sharedMesh);
+             var smoothNormals = (index >= 0) ? bakeValues[index].data : SmoothNormals(meshFilter.sharedMesh);
 
-            // Store smooth normals in UV3
-            meshFilter.sharedMesh.SetUVs(3, smoothNormals);
-        }
-
-        // Clear UV3 on skinned mesh renderers
-        foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
-        {
-            if (registeredMeshes.Add(skinnedMeshRenderer.sharedMesh))
-            {
-                skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
-            }
-        }
+             // Store smooth normals in UV3
+             meshFilter.sharedMesh.SetUVs(3, smoothNormals);
+         }
+ */
+        /* // Clear UV3 on skinned mesh renderers
+         foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+         {
+             if (registeredMeshes.Add(skinnedMeshRenderer.sharedMesh))
+             {
+                 skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
+             }
+         }*/
     }
 
     List<Vector3> SmoothNormals(Mesh mesh)
