@@ -16,6 +16,7 @@ namespace TWelding
             mechanicalVise.OnTaskBegin();
             JobPlate.jobPlates.ForEach(plate => plate.OnFilingDone += () =>
             {
+                string s = platesCount.ToString();
                 platesCount++;
                 if (platesCount == JobPlate.jobPlates.Count)
                     OnTaskCompleted();

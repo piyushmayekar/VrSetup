@@ -29,7 +29,7 @@ namespace Grinding
             ToggleMachine(isOn);
         }
 
-        public void OnSwitchHoverEnter(HoverEnterEventArgs args)
+        public void OnSwitchHoverEnter()
         {
             ToggleMachine(!isOn);
         }

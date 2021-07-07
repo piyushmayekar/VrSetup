@@ -2,20 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 namespace VWelding
 {
     public class ScriberMarking : MonoBehaviour
     {
-        public Action OnMarkingDone;
+        public UnityAction OnMarkingDone;
         [SerializeField] List<GameObject> dotPoints;
         [SerializeField] List<MarkingPoint> dotMarkingPoints;
         [SerializeField] LineRenderer lineRenderer;
         [SerializeField] List<MarkingPoint> lineMarkingPoints;
         [SerializeField] int currentMarkingPointIndex = 0;
+        [SerializeField] PiyushUtils.Scriber scriber;
 
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
+        void Start()
+        {
+            scriber = PiyushUtils.Scriber.Instance;
+        }
         public void StartMarkingProcess()
         {
+            int i = (currentMarkingPointIndex);
             dotMarkingPoints[currentMarkingPointIndex].StartMarking();
             dotMarkingPoints[currentMarkingPointIndex].OnMarkingDone += OnDotMarkingDone;
         }
@@ -56,6 +67,30 @@ namespace VWelding
             if (currentMarkingPointIndex >= lineMarkingPoints.Count)
             {
                 OnMarkingDone?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag(_Constants.SCRIBER_TIP_TAG))
+            {
+                scriber.OnMarkingAreaEnter();
+            }
+        }
+
+        /// <summary>
+        /// OnTriggerEnter is called when the Collider other enters the trigger.
+        /// </summary>
+        /// <param name="other">The other Collider involved in this collision.</param>
+        void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(_Constants.SCRIBER_TIP_TAG))
+            {
+                scriber.OnMarkingAreaExit();
             }
         }
     }

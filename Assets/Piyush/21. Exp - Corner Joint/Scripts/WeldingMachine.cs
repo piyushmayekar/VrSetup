@@ -8,6 +8,10 @@ namespace CornerWelding
 {
     public class WeldingMachine : MonoBehaviour
     {
+        [SerializeField] Animator _AC;
+        [SerializeField] bool isSqueezerTouched = false;
+        [SerializeField] Collider squeezerCollider;
+
         public event Action OnElectrodePlacedEvent;
         [SerializeField] ParticleSystem ps;
         [SerializeField] GameObject sparkLight;
@@ -20,11 +24,12 @@ namespace CornerWelding
         [SerializeField] Electrode currentElectrode;
         [SerializeField] XRSocketInteractor socket_Electrode;
 
+        public ElectrodeType RequiredElectrodeType { get => requiredElectrodeType; set => requiredElectrodeType = value; }
+        public bool IsSqueezerTouched { get => isSqueezerTouched; set => isSqueezerTouched = value; }
+
         public bool IsElectrodePlaced { get => isElectrodePlaced; set => isElectrodePlaced = value; }
         #region SINGLETON
         public static WeldingMachine Instance => instance;
-
-        public ElectrodeType RequiredElectrodeType { get => requiredElectrodeType; set => requiredElectrodeType = value; }
 
         static WeldingMachine instance = null;
 
@@ -36,11 +41,81 @@ namespace CornerWelding
                 Destroy(gameObject);
         }
         #endregion
+        public void OnGunHoldStart(SelectEnterEventArgs args)
+        {
 
-        /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
-        /// </summary>
+            // Debug.Log("here socket" + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
+            //If squeezer is touched & is not holding an electrode, 
+            //open the gun & set the e socket active
+            if (IsSqueezerTouched)
+            {
+                IsSqueezerTouched = false;
+                ToggleGunSqueezers(true);
+                squeezerCollider.enabled = false;
+                // Debug.Log("setting " + (!IsHoldingElectrode));
+                socket_Electrode.socketActive = !IsElectrodePlaced;
+
+            }
+            // Debug.Log("-- " + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
+            //If squeezer is touched & is holding an electrode, 
+            //open the gun & set the e socket inactive, so the electrode drops
+        }
+
+        public void OnGunHoldEnd(SelectExitEventArgs args)
+        {
+            IsSqueezerTouched = false;
+            ToggleGunSqueezers(IsSqueezerTouched);
+            Invoke(nameof(EnableSqueezerCollider), 1f);
+        }
+
+        void EnableSqueezerCollider()
+        {
+            squeezerCollider.enabled = true;
+            IsSqueezerTouched = false;
+        }
+
+        public void OnSqueezerHoldStart(HoverEnterEventArgs args)
+        {
+            if (args.interactor)
+            {
+                IsSqueezerTouched = true;
+            }
+        }
+
+        void ToggleGunSqueezers(bool open)
+        {
+            _AC.SetBool("Open", open);
+        }
+
+        public void OnElectrodeSocketEnter(SelectEnterEventArgs args)
+        {
+            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
+            {
+                Electrode electrode = args.interactable.GetComponent<Electrode>();
+                if (electrode.ElectrodeType == RequiredElectrodeType)
+                {
+                    IsElectrodePlaced = true;
+                    currentElectrode = electrode;
+                    OnElectrodePlacedEvent?.Invoke();
+                }
+                ToggleWeldingTip();
+                ShowErrorIndicator(electrode.ElectrodeType != RequiredElectrodeType, _Constants.ELECTRODE_NOT_CORRECT);
+            }
+            else
+            {
+                socket_Electrode.socketActive = false;
+                Invoke(nameof(TurnOnElectrodeSocket), 2f);
+            }
+        }
+
+        public void OnElectrodeSocketExit(SelectExitEventArgs args)
+        {
+            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
+            {
+                currentElectrode = null;
+                IsElectrodePlaced = false;
+            }
+        }
         void Start()
         {
             ToggleMachine(false);
@@ -82,27 +157,6 @@ namespace CornerWelding
             return IsElectrodePlaced;
         }
 
-        public void OnElectrodePlaced(SelectEnterEventArgs args)
-        {
-
-            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
-            {
-                Electrode electrode = args.interactable.GetComponent<Electrode>();
-                if (electrode.ElectrodeType == RequiredElectrodeType)
-                {
-                    IsElectrodePlaced = true;
-                    currentElectrode = electrode;
-                    OnElectrodePlacedEvent?.Invoke();
-                }
-                ToggleWeldingTip();
-                ShowErrorIndicator(electrode.ElectrodeType != RequiredElectrodeType, _Constants.ELECTRODE_NOT_CORRECT);
-            }
-            else
-            {
-                socket_Electrode.socketActive = false;
-                Invoke(nameof(TurnOnElectrodeSocket), 2f);
-            }
-        }
 
         void TurnOnElectrodeSocket()
         {
@@ -115,14 +169,6 @@ namespace CornerWelding
         private void ToggleWeldingTip()
         {
             tip.SetActive(IsElectrodePlaced);
-        }
-
-        public void OnElectrodeRemoved(SelectExitEventArgs args)
-        {
-            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
-            {
-                IsElectrodePlaced = false;
-            }
         }
 
         public void ShowErrorIndicator(bool show, string message = null)

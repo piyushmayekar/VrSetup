@@ -19,7 +19,8 @@ namespace Grinding
 
         void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag(_Constants.GRINDING_WHEEL_TAG))
+            GrinderWheel wheel = other.GetComponent<GrinderWheel>();
+            if (wheel)
                 _OnCollisionExitWithWheel();
         }
 

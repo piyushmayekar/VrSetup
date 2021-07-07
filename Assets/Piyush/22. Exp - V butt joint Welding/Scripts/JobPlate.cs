@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TWelding;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace VWelding
 {
     public class JobPlate : MonoBehaviour
     {
-        public event Action OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
+        public event UnityAction OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
 
         [SerializeField] PlateType plateType;
 
@@ -37,8 +38,10 @@ namespace VWelding
         public static List<JobPlate> jobPlates = new List<JobPlate>();
         void Awake()
         {
+            // Debug.Log(JobPlate.jobPlates.Count);
             if (!jobPlates.Contains(this))
                 jobPlates.Add(this);
+            // Debug.Log(JobPlate.jobPlates.Count);
         }
 
         //SCRIBER MARKING
@@ -130,6 +133,7 @@ namespace VWelding
             {
                 IsFilingDone = true;
                 roughEdge.SetActive(false);
+                GetComponent<Collider>().enabled = true;
                 OnFilingDone?.Invoke();
             }
         }

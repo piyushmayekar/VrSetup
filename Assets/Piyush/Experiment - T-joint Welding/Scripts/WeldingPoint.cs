@@ -33,7 +33,7 @@ namespace TWelding
         public bool IsPointOnLeft { get => isPointOnLeft; set => isPointOnLeft = value; }
 
         static WeldingMachine machine;
-        public static ChippingHammer chippingHammer;
+        public ChippingHammer chippingHammer;
         static WeldingArea weldingArea;
 
         /// <summary>
@@ -43,7 +43,6 @@ namespace TWelding
         {
             rb = GetComponent<Rigidbody>();
             machine = WeldingMachine.Instance;
-            chippingHammer = ChippingHammer.Instance;
             weldingArea = WeldingArea.Instance;
             IsPointOnLeft = Vector3.Distance(weldingArea.LeftT.position, transform.position) <
                     Vector3.Distance(weldingArea.RightT.position, transform.position);

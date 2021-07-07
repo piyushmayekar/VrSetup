@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5631032097930317510}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Scriber Markings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1788438304288902319}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2339,7 +2339,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7553716758358721678, guid: ba9b8b81e250d40489ffff58ac9466c4, type: 3}
 --- !u!1 &2256062677441906886
@@ -2357,7 +2357,7 @@ GameObject:
   - component: {fileID: 2256062677441906880}
   - component: {fileID: 1331469906833278413}
   - component: {fileID: 2256062677441906885}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: JobPlate
   m_TagString: Job
   m_Icon: {fileID: 0}
@@ -2584,6 +2584,7 @@ MonoBehaviour:
   shouldReset: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
+  stableVelocityThreshold: 1
   rb: {fileID: 0}
 --- !u!65 &2256062677441906885
 BoxCollider:
@@ -10070,6 +10071,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.004342005
       objectReference: {fileID: 0}
+    - target: {fileID: 2143112904420286988, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
+      propertyPath: m_Size.x
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143112904420286988, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143112904420286988, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
+      propertyPath: m_Size.z
+      value: 0.005
+      objectReference: {fileID: 0}
     - target: {fileID: 2143112904420286995, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.017778
@@ -10081,6 +10094,18 @@ PrefabInstance:
     - target: {fileID: 3863369380839298660, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.017778
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863369380839298683, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
+      propertyPath: m_Size.x
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863369380839298683, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863369380839298683, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
+      propertyPath: m_Size.z
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 3863369380884915464, guid: 2456a42ddbb2fc941adda2cb692f679f, type: 3}
       propertyPath: m_RootOrder

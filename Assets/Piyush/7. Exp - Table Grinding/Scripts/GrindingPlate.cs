@@ -31,8 +31,6 @@ namespace Grinding
             if (wheel && wheel.IsWheelSpinning && grindingStage == (int)GrindingWheelType.Surface)
             {
                 _grinderCoroutine = StartCoroutine(SurfaceGrinder());
-                if (roughEdge)
-                    roughEdge.SetActive(true);
             }
         }
 

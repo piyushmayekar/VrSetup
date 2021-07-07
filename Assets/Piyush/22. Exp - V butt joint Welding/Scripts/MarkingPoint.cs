@@ -2,12 +2,13 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace VWelding
 {
     public class MarkingPoint : MonoBehaviour
     {
-        public Action<MarkingPoint> OnMarkingDone;
+        public UnityAction<MarkingPoint> OnMarkingDone;
         [SerializeField] MarkingPointType markingType;
         [SerializeField] bool isCenterPunchInside = false;
         [SerializeField] List<GameObject> highlights;
@@ -21,6 +22,8 @@ namespace VWelding
 
         public void ToggleHighlight(bool on = true)
         {
+            string s = highlights.Count + "";
+            Debug.Log(s);
             highlights.ForEach(highlight => highlight.SetActive(on));
         }
 
@@ -30,13 +33,15 @@ namespace VWelding
         /// <param name="other">The other Collider involved in this collision.</param>
         void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(_Constants.CENTER_PUNCH_DOT_POINT_TAG)
-            && markingType == MarkingPointType.CenterPunch)
+            string s = other.tag;
+            // Debug.Log(s);
+            if (markingType == MarkingPointType.CenterPunch &&
+            other.CompareTag(_Constants.CENTER_PUNCH_DOT_POINT_TAG))
             {
                 IsCenterPunchInside = true;
             }
-            else if (other.CompareTag(_Constants.SCRIBER_TIP_TAG)
-            && markingType == MarkingPointType.Scriber)
+            if (markingType == MarkingPointType.Scriber
+            && other.CompareTag(_Constants.SCRIBER_TIP_TAG))
             {
                 OnMarkingDone?.Invoke(this);
             }

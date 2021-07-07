@@ -12,6 +12,7 @@ namespace TWelding
         {
             base.OnTaskBegin();
             platesScribed = 0;
+            // string s = (JobPlate.jobPlates[platesScribed].name);
             JobPlate.jobPlates[platesScribed].StartScriberMarking();
             JobPlate.jobPlates.ForEach(x => x.OnScriberMarkingDone += () =>
             {

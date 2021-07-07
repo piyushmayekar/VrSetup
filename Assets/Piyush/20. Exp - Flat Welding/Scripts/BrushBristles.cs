@@ -10,18 +10,16 @@ namespace FlatWelding
     public class BrushBristles : MonoBehaviour
     {
         [SerializeField] ParticleSystem dustPS;
-        [SerializeField] BrushTask task;
         [SerializeField] SoundPlayer soundPlayer;
         [SerializeField] Rigidbody parentBrushRb;
         void OnTriggerEnter(Collider other)
         {
-            PlayBrushStrokeSound();
+            if (!other.name.Contains("Hand"))
+                PlayBrushStrokeSound();
             if (other.CompareTag(_Constants.CLEANPOINT_TAG))
             {
                 //Turning off the clean point collider once the cleaning is done
-                other.enabled = false;
                 dustPS.Play();
-                task.EdgeBrushed();
             }
             if (other.CompareTag(_Constants.SLAG_TAG))
             {
