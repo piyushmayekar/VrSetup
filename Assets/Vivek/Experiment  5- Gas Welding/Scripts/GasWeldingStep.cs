@@ -7,7 +7,7 @@ public class GasWeldingStep : MonoBehaviour
 {
     public static GasWeldingStep instance;
     [Header("Canvas ")]
-    public GameObject finishPanel;
+    public GameObject finishPanel, videoPlayBtn;
     public GameObject setPressureRegulatorCanvas, LighterCanvas, lighter_Flame;
     public GameObject creacking_C_key1_canvas, creacking_C_key2_canvas;
 
@@ -42,6 +42,7 @@ public class GasWeldingStep : MonoBehaviour
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;
+   
     private void Awake()
     {
         instance = this;
@@ -73,13 +74,14 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
-// Debug.Log("gas welding");
+        // Debug.Log("gas welding");
     }
     public void Start()
     {
         StartCoroutine(PlayGasWeldingStartAudio());
+      
         //   Onclickbtn_s_5_confirm();
-      //  ConfirmSatrtbtn();
+        //  ConfirmSatrtbtn();
     }
     IEnumerator PlayGasWeldingStartAudio()
     {
@@ -172,7 +174,6 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[0].enabled = true;
         GasTablekitcolliders[1].enabled = true;//red crecking  cylinder key
         rotateNozzles[0].enabled = true; //red crecking  cylinder key
-
     }
     public void Onclickcreacking_C_key1_canvas_btn()
     {
@@ -189,6 +190,8 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[1].enabled = false;
         objectOutLines[0].enabled = true;
         GasTablekitcolliders[2].gameObject.SetActive(false);
+        Debug.Log("VideoComming");
+        videoPlayBtn.SetActive(true);
         OnEnableStep4object();
     }
     public void CheckCylinderCrack(GameObject go)
@@ -197,6 +200,7 @@ public class GasWeldingStep : MonoBehaviour
         countCrackTab++;
         if (countCrackTab == 2)
         {
+
             OnEnableStep4object();
         }
         go.SetActive(false);
@@ -212,6 +216,7 @@ public class GasWeldingStep : MonoBehaviour
 
     void Onclickbtn_s_4_confirm()
     {
+        videoPlayBtn.SetActive(false);
         objectOutLines[21].enabled = true; //red cylinder key
         GasTablekitcolliders[3].enabled = true; // red gas regulators
         GasTablekitcolliders[3].GetComponent<Outline>().enabled = true;
@@ -585,7 +590,7 @@ public class GasWeldingStep : MonoBehaviour
     IEnumerator lighterEnable()
     {
         GasTablekitcolliders[14].enabled = false; // red bol at gas tourch
-        lighter_Flame.SetActive(false);
+                                                  // lighter_Flame.SetActive(false);
         GasTablekitcolliders[14].GetComponent<SnapGrabbleObject>().enabled = false;
         GasTablekitcolliders[14].gameObject.SetActive(false); // red bol at gas tourch
         PlayFlamsParticle1();   //new 22
@@ -709,7 +714,7 @@ public class GasWeldingStep : MonoBehaviour
         GasTablekitcolliders[18].enabled = true;
 
         rotateNozzles[2].enabled = true; //RED  bol reduse or crbarn
-        rotateNozzles[2].RotateValue = 40; //RED  bol reduse or crbarn
+        rotateNozzles[2].RotateValue = 50; //RED  bol reduse or crbarn
         rotateNozzles[2].transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         rotateNozzles[2].OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         rotateNozzles[2].isclockwise = false; //RED  bol reduse or crbarn
@@ -736,7 +741,7 @@ public class GasWeldingStep : MonoBehaviour
             GasTablekitcolliders[19].transform.gameObject.SetActive(true);  //GREEN  bol oxidizing
             rotateNozzles[3].transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
             rotateNozzles[3].OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            rotateNozzles[3].RotateValue = 40; //GREEN  bol oxidizing
+            rotateNozzles[3].RotateValue = 50; //GREEN  bol oxidizing
             rotateNozzles[3].enabled = true; //GREEN  bol oxidizing
             rotateNozzles[3].isclockwise = false; //GREEN  bol oxidizing
 
@@ -815,6 +820,7 @@ public class GasWeldingStep : MonoBehaviour
             objectOutLines[4].enabled = false;
             Debug.Log("Call next to fin ix");
             readSteps.panel.SetActive(false);
+            readSteps.tablet.SetActive(true);
             finishPanel.SetActive(true);
             rotateNozzles[6].enabled = false;
             GasTablekitcolliders[10].enabled = false;
@@ -843,4 +849,5 @@ public class GasWeldingStep : MonoBehaviour
             stepAudioSource.PlayOneShot(stepsAudioClip[index]);
         }
     }
+   
 }

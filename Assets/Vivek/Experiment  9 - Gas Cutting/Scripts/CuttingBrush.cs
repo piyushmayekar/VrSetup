@@ -16,9 +16,9 @@ public class CuttingBrush : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        PlayBrushStrokeSound();
         if (other.CompareTag(_Constants.CLEANPOINT_TAG))
         {
+        PlayBrushStrokeSound();
 
             dustPS.Play();
             EdgeBrushed();

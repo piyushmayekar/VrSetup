@@ -28,6 +28,7 @@ public class CuttingJobMaterial : MonoBehaviour
     public GameObject SteelScale, SnapScale1, SnapScale2, SnapScale3;
     public int CountLine;
     public List<Outline> outlines;
+    public FreezeRotation centerPunch, scribal;
     void Awake()
     {
         instance = this;
@@ -157,6 +158,8 @@ public class CuttingJobMaterial : MonoBehaviour
             }
             else
             {
+                scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
+                Destroy(scribal);
                 GasCuttingManager.instance.CheckJobPlace();
                 for (int i = 0; i < outlines.Count; i++)
                 {
@@ -176,6 +179,9 @@ public class CuttingJobMaterial : MonoBehaviour
         if (CountLine == 3)
         {
             GasCuttingManager.instance.CheckJobPlace();
+
+            scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
+            Destroy(scribal);
             for (int i = 0; i < markingPoints.Count - 1; i++)
             {
                 markingPoints[i].SetActive(false);
@@ -244,6 +250,8 @@ public class CuttingJobMaterial : MonoBehaviour
             {
                 Debug.Log("OnHammerHit call  checkStep5");
                 CenterPunch.OnHammerHit -= OnHammerHit;
+                centerPunch.GetComponent<XRGrabInteractable>().selectEntered = null;
+                Destroy(centerPunch);
                 GasCuttingManager.instance.checkStep5();
             }
         }

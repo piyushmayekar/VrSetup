@@ -25,7 +25,12 @@ public class JointWelding : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "DotPoint")
+        if (other.transform.tag == "Electrode")
+        {
+            isFiller = true;
+        }
+
+        if (other.transform.tag == "DotPoint" && isFiller)
         {
             countdotpoint++;
             other.transform.GetComponent<MeshRenderer>().material = blackMaterial;
@@ -36,10 +41,7 @@ public class JointWelding : MonoBehaviour
                 GasJointweldingManager.instance.CheckTackPoint();
             }
         }
-        if (other.transform.tag == "Electrode")
-        {
-            isFiller = true;
-        }
+       
         if (isWelding && other.transform.tag == "Slag" && isFiller)
         {
             if (WeldingLine[CurrentLine].transform.GetChild(countlinePoint).name == other.transform.name)
@@ -120,7 +122,7 @@ public class JointWelding : MonoBehaviour
             {
                 tackPoint.SetActive(false);
                 weldingModel.SetActive(true);
-                FreezeRotation.instance.isFreeze = false;
+             //   FreezeRotation.instance.isFreeze = false;
                 isFiller = true;
                 GasJointweldingManager.instance.weldingComplete();
             }
@@ -129,9 +131,10 @@ public class JointWelding : MonoBehaviour
                 WeldingLine[CurrentLine].SetActive(true);
                 countlinePoint = 0;
                 isWelding = false;
-                FreezeRotation.instance.isFreeze = false;
-                FreezeRotation.instance.Freezeangle = GasJointweldingManager.instance.torch_m_35d.transform;
+            //    FreezeRotation.instance.isFreeze = false;
+              //  FreezeRotation.instance.Freezeangle = GasJointweldingManager.instance.torch_m_35d.transform;
                 GasJointweldingManager.instance.torch_m_35d.SetActive(true);
+                GasJointweldingManager.instance.SecondTourchPlateRotate();
                 WeldingLine[CurrentLine].transform.GetChild(0).gameObject.SetActive(true);
             }
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class SetUpTrolley : MonoBehaviour
 {
@@ -31,7 +32,10 @@ public class SetUpTrolley : MonoBehaviour
     [Header("Step End Method ")]
     public UnityEvent CallEndMethod;
     int countCrackTab;
-  
+    [Header("Object Position Resetter ")]
+    public Transform[] toolToReset;
+    public List<Vector3> toolToResetPosition, toolToResetRotate;
+
     public void Awake()
     {
         instance = this;
@@ -59,7 +63,11 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[14].GetComponent<SnapGrabbleObject>().enabled = false;
         bluePipeRop.GetComponent<CapsuleCollider>().enabled = false;
         redPipeRop.GetComponent<CapsuleCollider>().enabled = false;
-
+        for (int i = 0; i < toolToReset.Length; i++)
+        {
+            toolToResetPosition.Add(toolToReset[i].localPosition);
+            toolToResetRotate.Add(toolToReset[i].localEulerAngles);
+        }
     }
     public void Update()
     {
@@ -154,7 +162,7 @@ public class SetUpTrolley : MonoBehaviour
     {
         objectOutLines[3].enabled = false; //black cylinder key
         objectOutLines[4].enabled = false; //red cylinder key
-        Debug.Log("call end  of regulator");
+    //    Debug.Log("call end  of regulator");
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_1_confirm);
     }
@@ -229,7 +237,7 @@ public class SetUpTrolley : MonoBehaviour
         objectOutLines[4].enabled = true;   //red regulators
 
         objectOutLines[5].enabled = false;  //blue   regulators outline
-        Debug.Log("Red turn tiyare");
+       // Debug.Log("Red turn tiyare");
     }
 
     void Onclickbtn_s_5_2_confirm()//hose clip confirm
@@ -411,7 +419,7 @@ public class SetUpTrolley : MonoBehaviour
             objectOutLines[12].enabled = false; // red reguletor
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_8_confirm_p2);
-            Debug.Log("call water");
+          //  Debug.Log("call water");
         }
     }
     #endregion
@@ -436,6 +444,8 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[22].enabled = true; //Glass object for black
         GasTablekitcolliders[22].GetComponent<Outline>().enabled = true; //Glass object for black
         objectOutLines[5].enabled = true; //regulator black
+       
+
     }
     public void Done_oxygen_shop_water() //oxygen  shop water
     {
@@ -451,6 +461,12 @@ public class SetUpTrolley : MonoBehaviour
     #region Step 9_p: Show Fixing orifice nozzle of 1.2 mm on gas cutting torch(cutting blow pipe).
     void Onclickbtn_s9_confirm()
     {
+        GasTablekitcolliders[21].gameObject.SetActive(true);
+        SetObjectRestPos_Rotate(0);
+
+        GasTablekitcolliders[22].gameObject.SetActive(true);
+        SetObjectRestPos_Rotate(1);
+
         onEnableStep9Object();
         readSteps.HideConifmBnt();
     }
@@ -472,5 +488,12 @@ public class SetUpTrolley : MonoBehaviour
             stepAudioSource.Stop();
             stepAudioSource.PlayOneShot(stepsAudioClip[index]);
         }
+    }
+    public void SetObjectRestPos_Rotate(int indexOfReset)
+    {
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = false;
+        toolToReset[indexOfReset].transform.localPosition = toolToResetPosition[indexOfReset];
+        toolToReset[indexOfReset].transform.localEulerAngles = toolToResetRotate[indexOfReset];
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = true;
     }
 }

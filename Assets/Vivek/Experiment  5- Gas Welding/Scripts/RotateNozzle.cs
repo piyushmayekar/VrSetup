@@ -124,7 +124,7 @@ public class RotateNozzle : MonoBehaviour
 
     void CallEndMethod()
     {
-        Debug.Log("Call next step   " + OtherRotate.name);
+      //  Debug.Log("Call next step   " + OtherRotate.name);
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         NextStep.Invoke();
         this.gameObject.GetComponent<RotateNozzle>().enabled = false;

@@ -13,6 +13,7 @@ public class CheckCollider : MonoBehaviour
     {
         if (other.gameObject.tag == Tagname)
         {
+          //  Debug.Log("call get");
             callAnyOtherMethod.Invoke();
         }
     }

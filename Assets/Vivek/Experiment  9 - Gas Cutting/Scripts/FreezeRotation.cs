@@ -17,9 +17,12 @@ public class FreezeRotation : MonoBehaviour
     {
         
     }
-
+    public void EnableFreeze(bool isfreeze)
+    {
+        isFreeze = isfreeze;
+    }
     // Update is called once per frame
-    void Update()
+   void Update()
     {
         if(isFreeze)
         {

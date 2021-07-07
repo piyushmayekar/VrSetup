@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GasJointweldingManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class GasJointweldingManager : MonoBehaviour
     [Header("Extra objects")]
         public GameObject  neturalFlameCube;
     public GameObject netural_flame, jointTackPoint, hummerhighlight, blacksmoke,
-                      highlighttriSquare,torch35D,torch_m_35d,lighterFlame, supportPlat;
+                      highlighttriSquare,torch35D,torch_m_35d,lighterFlame, supportPlat,supportCube1,supportcube2;
     public GameObject[] weldingLine1, weldingLine2;
      [Header("          ")]
     public RotateNozzle redBol, blueBol, blackValve, redValve;
@@ -31,6 +32,10 @@ public class GasJointweldingManager : MonoBehaviour
    // [Header("Counters")]
      int countppekit;
     public bool flameOff = false, step10Call, isTurnOffFlame, IsEnableFlame;
+    [Header("Object Position Resetter ")]
+    public Transform[] toolToReset;
+    public List<Vector3> toolToResetPosition, toolToResetRotate;
+
     void Awake()
     {
         instance = this;
@@ -55,20 +60,15 @@ public class GasJointweldingManager : MonoBehaviour
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
-        //  PlaceJobPlate();
-       // Debug.Log("Check scene");
-        ///    Onclickbtn_s_2_confirm();
-        //  Onclickbtn_s10_confirm();
-       //ConfirmSatrtbtn();
+        for (int i = 0; i < toolToReset.Length; i++)
+        {
+            toolToResetPosition.Add(toolToReset[i].localPosition);
+            toolToResetRotate.Add(toolToReset[i].localEulerAngles);
+        }
+        //     Onclickbtn_s10_confirm();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
-    public void ConfirmSatrtbtn()
+      public void ConfirmSatrtbtn()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_1_confirm);
@@ -111,8 +111,6 @@ public class GasJointweldingManager : MonoBehaviour
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
         objectOutLines[9].enabled = true;
         GasTableObjectcolliders[1].enabled = true;// brush collider
-
-
     }
 
     public void checkBrushStep()
@@ -134,6 +132,7 @@ public class GasJointweldingManager : MonoBehaviour
     #region Step 3:  Keep the job on welding table in “T” Position.
     void Onclickbtn_s_3_confirm()
     {
+        SetObjectRestPos_Rotate(0); //Brush tool
         readSteps.HideConifmBnt();
         OnEnableStep3object();
     }
@@ -210,7 +209,7 @@ public class GasJointweldingManager : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
 
-
+        GasTableObjectcolliders[2].GetComponent<Outline>().enabled = false;
     }
     //netural flame
     //netural flame with oxygen cutting flame
@@ -232,12 +231,20 @@ public class GasJointweldingManager : MonoBehaviour
         jointTackPoint.SetActive(true);
         neturalFlameCube.SetActive(true);
         step10Call = true;
+
+        SetObjectRestPos_Rotate(1); //lighter tool
+
+        GasTableObjectcolliders[8].enabled = true;
+        GasTableObjectcolliders[8].GetComponent<Outline>().enabled = true;
+
         readSteps.HideConifmBnt();
     }
    
     public void CheckTackPoint()
     {
         supportPlat.SetActive(false);
+       // GasTableObjectcolliders[8].enabled = false;
+        GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10__confirm);
 
@@ -264,6 +271,8 @@ public class GasJointweldingManager : MonoBehaviour
     #region step10:  With the help of tri square, check the alignment of the job and clean the tag weld.
     void Onclickbtn_s10__confirm()
     {
+        SetObjectRestPos_Rotate(2); //filler  tool
+
         readSteps.HideConifmBnt();
         highlighttriSquare.SetActive(true);
 
@@ -285,18 +294,46 @@ public class GasJointweldingManager : MonoBehaviour
     #region step 11 : Start Welding by Leftward Technique.
      void Onclickbtn_s11_confirm()
     {
+        SetObjectRestPos_Rotate(3); //try squre  tool
+
         readSteps.HideConifmBnt();
+
         weldingLine1[0].SetActive(true);
         weldingLine1[0].transform.GetChild(0).gameObject.SetActive(true);
-       
+
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.6975f, -0.005f, -0.1198f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles =new Vector3(0,0,-10);
+        supportCube1.SetActive(true);
+        supportcube2.SetActive(false);
+
         GasTableObjectcolliders[8].enabled = true;
         GasTableObjectcolliders[8].GetComponent<Outline>().enabled = true;
         // JointWelding.instance.WeldingEnable();
         torch35D.SetActive(true);
     }
+    public void SecondTourchPlateRotate()
+    {
+        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
+
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.6975f, -0.005f, -0.1198f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 0, 10);
+        supportCube1.SetActive(false);
+        supportcube2.SetActive(true);
+    }
     public void weldingComplete()
     {
+        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
+
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.693f, 0.0081f, -0.1198f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = Vector3.zero;
+        supportCube1.SetActive(true);
+        supportcube2.SetActive(true);
+
         GasTableObjectcolliders[8].GetComponent<Outline>().enabled =false;
+        GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectEntered = null;
+        GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectExited = null;
+      Destroy(  GasTableObjectcolliders[8].GetComponent<FreezeRotation>());
+
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_12_1_confirm);
 
@@ -304,8 +341,12 @@ public class GasJointweldingManager : MonoBehaviour
     }
     public void CheckWelding_rot(GameObject weldingTorch)
     {
+
         weldingTorch.SetActive(false);
-        FreezeRotation.instance.isFreeze = true;
+        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().Freezeangle = weldingTorch.transform;
+
+        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = true;
+       // FreezeRotation.instance.isFreeze = true;
         neturalFlameCube.GetComponent<JointWelding>().isWelding = true;
     }
     #endregion
@@ -314,6 +355,8 @@ public class GasJointweldingManager : MonoBehaviour
     public GameObject dummyRedBol;
     void Onclickbtn_s_12_1_confirm()
     {
+        SetObjectRestPos_Rotate(2); //filler  tool
+
         Debug.Log("Call end flame");
         readSteps.HideConifmBnt();
         redBol.gameObject.SetActive(false);
@@ -324,7 +367,7 @@ public class GasJointweldingManager : MonoBehaviour
         SetUpTrolley.instance.isTurnOffFlame = true;
         redBol.enabled = true; //RED  bol reduse or crbarn
         redBol.RotateValue = 30; //RED  bol reduse or crbarn
-        redBol.speed = 25;
+       // redBol.speed = 25;
         redBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         redBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         redBol.isclockwise = false; //RED  bol reduse or crbarn
@@ -451,6 +494,8 @@ public class GasJointweldingManager : MonoBehaviour
     #region step 14 Check the defects.
      void Onclickbtn_s14_confirm()
     {
+        SetObjectRestPos_Rotate(0); //brush tool
+
         hummerhighlight.SetActive(true);
         objectOutLines[4].enabled = true;
         objectOutLines[4].transform.parent.GetComponent<JointWelding>().isWelding = true;
@@ -470,11 +515,19 @@ public class GasJointweldingManager : MonoBehaviour
         finishPanel.SetActive(true);
         readSteps.panel.SetActive(false);
         objectOutLines[4].enabled = false;
+        SetObjectRestPos_Rotate(4); //chapping hummer tool
         Debug.Log("call end");
     }
 
     #endregion
     #region Others methods
+    public void SetObjectRestPos_Rotate(int indexOfReset)
+    {
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = false;
+        toolToReset[indexOfReset].transform.localPosition = toolToResetPosition[indexOfReset];
+        toolToReset[indexOfReset].transform.localEulerAngles = toolToResetRotate[indexOfReset];
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = true;
+    }
     void PlayStepAudio(int index)
     {
         /*if (stepAudioSource.clip != null)

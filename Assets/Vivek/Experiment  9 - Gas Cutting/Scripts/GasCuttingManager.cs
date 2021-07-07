@@ -30,6 +30,9 @@ public class GasCuttingManager : MonoBehaviour
     //[Header("Counters")]
     int countppekit;
     public bool flameOff = false;
+    [Header("Object Position Resetter ")]
+    public Transform[] toolToReset;
+    public List<Vector3> toolToResetPosition, toolToResetRotate;
     // Start is called before the first frame update
     public void Awake()
     {
@@ -55,8 +58,13 @@ public class GasCuttingManager : MonoBehaviour
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
-     //   checkStep5();
-       }
+        for (int i = 0; i < toolToReset.Length; i++)
+        {
+            toolToResetPosition.Add(toolToReset[i].localPosition);
+            toolToResetRotate.Add(toolToReset[i].localEulerAngles);
+        }
+        //   checkStep5();
+    }
    
     public void ConfirmSatrtbtn()
     {
@@ -100,6 +108,7 @@ public class GasCuttingManager : MonoBehaviour
     }
     public void CheckJobPlace()
     {
+
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
         objectOutLines[0].enabled = false; // job plate mateial place position
 
@@ -112,6 +121,7 @@ public class GasCuttingManager : MonoBehaviour
     #region Step 3: Keep the job on the Cutting table in flat position.
     void Onclickbtn_s_3_confirm()
     {
+        SetObjectRestPos_Rotate(1);// Scribal tool
         readSteps.HideConifmBnt();
         OnEnableStep3object();
     }
@@ -157,6 +167,7 @@ public class GasCuttingManager : MonoBehaviour
         //   GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = false;// Brushout line
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false; // job plate outline
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
+       
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
         //  Onclickbtn_s_5_confirm();
@@ -176,6 +187,7 @@ public class GasCuttingManager : MonoBehaviour
     }
     void Onclickbtn_s_5_confirm()
     {
+        SetObjectRestPos_Rotate(0); //Brush tool
         OnEnableStep5object();
         readSteps.HideConifmBnt();
     }
@@ -184,8 +196,14 @@ public class GasCuttingManager : MonoBehaviour
         readSteps.onClickConfirmbtn();
         //readSteps.AddClickConfirmbtnEvent(Onclickbtn_s7_confirm);
         readSteps.AddClickConfirmbtnEvent(SetUpTrolley.instance.Onclickbtn_s_3_confirm);
+        readSteps.confirmbtn.onClick.AddListener(() => checkCenterPunchHummer());
         objectOutLines[3].enabled = false;
         objectOutLines[4].enabled = false;
+    }
+   void checkCenterPunchHummer()
+    {
+        SetObjectRestPos_Rotate(2); //centar punch tool
+        SetObjectRestPos_Rotate(3); //Hummar tool
     }
     #endregion    
     #region Step 10Open acetylene control valve and light the flame with spark lighter.
@@ -226,6 +244,7 @@ public class GasCuttingManager : MonoBehaviour
        
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
+        GasTableObjectcolliders[3].GetComponent<Outline>().enabled = false;
 
 
     }
@@ -243,6 +262,7 @@ public class GasCuttingManager : MonoBehaviour
     #region Step 11: Keep the gas cutting torch (blow pipe) at 90° on job surface and the cutting line.
     void Onclickbtn_s11_confirm()
     {
+        SetObjectRestPos_Rotate(4); //lighter tool
         onEnableStep11Object();
         readSteps.HideConifmBnt();
     }
@@ -455,7 +475,7 @@ public class GasCuttingManager : MonoBehaviour
         objectOutLines[2].enabled = false;
         finishPanel.SetActive(true);
         readSteps.panel.SetActive(false);
-
+       // SetObjectRestPos_Rotate(0); //Brush tool
     }
     #endregion
 
@@ -467,6 +487,13 @@ public class GasCuttingManager : MonoBehaviour
             stepAudioSource.Stop();
             stepAudioSource.PlayOneShot(stepsAudioClip[index]);
         }*/
+    }
+   public  void SetObjectRestPos_Rotate(int indexOfReset)
+    {
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = false;
+        toolToReset[indexOfReset].transform.localPosition = toolToResetPosition[indexOfReset];
+        toolToReset[indexOfReset].transform.localEulerAngles= toolToResetRotate[indexOfReset];
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled =true;
     }
     #endregion
 }

@@ -1939,7 +1939,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -2626,7 +2625,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -3214,8 +3212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter:
-  - {fileID: 1207825624}
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -3536,7 +3532,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -3990,6 +3985,8 @@ MonoBehaviour:
   outlines:
   - {fileID: 1195961545}
   - {fileID: 1195961545}
+  centerPunch: {fileID: 1195961556}
+  scribal: {fileID: 1195961549}
   countpoint: 0
   countIndex: 0
 --- !u!4 &263967553
@@ -4403,7 +4400,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -4532,7 +4528,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -4772,7 +4767,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -5389,7 +5383,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -10371,7 +10364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: bb85b35356dc52b469045404af77af22, type: 3}
+  - {fileID: 8300000, guid: 1d7f26db6d84f304186e07a8e6f3387b, type: 3}
   - {fileID: 8300000, guid: 10474cda51dbb9342b78c06f05fc9e5b, type: 3}
   clipLists: []
   audioSource: {fileID: 399084861}
@@ -10779,7 +10772,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -12008,7 +12000,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -13906,7 +13897,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -14130,7 +14120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -15317,7 +15306,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -15555,7 +15543,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -15927,7 +15914,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -23307,7 +23293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -23862,8 +23847,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter:
-  - {fileID: 917974076}
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -24414,7 +24397,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -24720,7 +24702,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -25403,7 +25384,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -26380,7 +26360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -26700,7 +26679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -27543,18 +27521,30 @@ PrefabInstance:
       objectReference: {fileID: 1229513398}
     - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 399084860}
     - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1195961549}
+    - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
@@ -27562,11 +27552,27 @@ PrefabInstance:
       value: PlayClip
       objectReference: {fileID: 0}
     - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: EnableFreeze
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SoundPlayer, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: FreezeRotation, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069960630644085363, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1069960631000973140, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
@@ -27581,6 +27587,10 @@ PrefabInstance:
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 399084860}
+    - target: {fileID: 1069960631198082377, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.451
+      objectReference: {fileID: 0}
     - target: {fileID: 2209984123538482193, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -27612,6 +27622,14 @@ PrefabInstance:
     - target: {fileID: 4679182172781512425, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayClip
+      objectReference: {fileID: 0}
+    - target: {fileID: 5123767290449731725, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5123767291133063284, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: readSteps
@@ -27781,6 +27799,14 @@ PrefabInstance:
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 399084860}
+    - target: {fileID: 5465732662160617089, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465732662160617089, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0c7dc17cfc243df4382cedc157bf1692, type: 2}
     - target: {fileID: 5465732662160617103, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -27944,6 +27970,10 @@ PrefabInstance:
     - target: {fileID: 5465732663107859192, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_Center.z
       value: -0.21852922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499061827091692087, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.527
       objectReference: {fileID: 0}
     - target: {fileID: 5852707639103143996, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -28239,6 +28269,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38369a96d5d396f419f752ced3b26857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1195961549 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3099492389919602488, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+  m_PrefabInstance: {fileID: 1195961544}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2f6c683c7426248bad1c7c12a71faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1195961550 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5465732661166717013, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
@@ -28269,6 +28310,17 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 901900393954462780, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
   m_PrefabInstance: {fileID: 1195961544}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1195961556 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1060273144852308752, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+  m_PrefabInstance: {fileID: 1195961544}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2f6c683c7426248bad1c7c12a71faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &1195961561 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 5465732662183820590, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
@@ -29610,7 +29662,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -30150,7 +30201,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -30749,7 +30799,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -31041,7 +31090,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -31360,7 +31408,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -35958,7 +36005,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -36243,7 +36289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -36439,8 +36484,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter:
-  - {fileID: 1863973400}
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -37659,7 +37702,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -37788,7 +37830,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -38083,7 +38124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -38354,7 +38394,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -39217,7 +39256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -39421,7 +39459,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -40864,7 +40901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -41541,7 +41577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -41779,7 +41814,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -42567,7 +42601,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -42969,7 +43002,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
@@ -43512,7 +43544,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  meshFilter: []
   outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
