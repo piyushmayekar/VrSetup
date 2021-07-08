@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CenterPunch : MonoBehaviour
 {
-    public static event Action OnHammerHit;
+    public static event UnityAction OnHammerHit;
     public float hitThreshold = 1f;
 
     Rigidbody rb;
@@ -40,9 +41,11 @@ public class CenterPunch : MonoBehaviour
     {
         if (other.gameObject.CompareTag(_Constants.HAMMER_TAG))
         {
-            hammer.RemoveVelocity();
             if (other.impulse.magnitude >= hitThreshold)
+            {
                 OnHammerHit?.Invoke();
+            }
+            hammer.RemoveVelocity();
         }
     }
 

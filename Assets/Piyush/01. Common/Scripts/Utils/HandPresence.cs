@@ -87,7 +87,10 @@ namespace PiyushUtils
             {
                 toolName = currentGrabInteractable.name;
                 handAnimator.SetBool(IS_HAND_OPEN, false);
-                handAnimator.Play(toolName);
+                if (currentGrabInteractable.ShouldUseDefaultFistAnim)
+                    handAnimator.Play(FIST);
+                else
+                    handAnimator.Play(toolName);
             }
         }
         public void OnHandSelectExit(SelectExitEventArgs args)

@@ -23,7 +23,6 @@ namespace VWelding
         public void ToggleHighlight(bool on = true)
         {
             string s = highlights.Count + "";
-            Debug.Log(s);
             highlights.ForEach(highlight => highlight.SetActive(on));
         }
 
