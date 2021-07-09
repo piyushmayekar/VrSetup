@@ -42,6 +42,7 @@ namespace VWelding
             if (markingType == MarkingPointType.Scriber
             && other.CompareTag(_Constants.SCRIBER_TIP_TAG))
             {
+                Debug.Log(nameof(Scriber) + " inside " + name);
                 OnMarkingDone?.Invoke(this);
             }
         }

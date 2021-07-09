@@ -36,7 +36,7 @@ namespace FlatWelding
         IEnumerator Start()
         {
             tasks = new List<Task>(GetComponentsInChildren<Task>());
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
             StartTask(CurrentTaskIndex);
         }
 

@@ -15,7 +15,7 @@ namespace TWelding
 
         [Header("Scriber Marking")]
         [SerializeField] List<ScriberMarking> scriberMarkings;
-        [SerializeField] int scriberMarkingIndex = 0;
+        [SerializeField] int scriberMarkingIndex = -1;
 
         [Header("Center Punch Marking")]
         [SerializeField] List<CenterPunchMarking> centerPunchMarkings;
@@ -34,31 +34,27 @@ namespace TWelding
         public bool IsCuttingDone { get => isCuttingDone; set => isCuttingDone = value; }
         public bool IsFilingDone { get => isFilingDone; set => isFilingDone = value; }
         public PlateType PlateType { get => plateType; set => plateType = value; }
+        public int ScriberMarkingIndex { get => scriberMarkingIndex; set => scriberMarkingIndex = value; }
 
         public static List<JobPlate> jobPlates = new List<JobPlate>();
         void Awake()
         {
-            // Debug.Log(JobPlate.jobPlates.Count);
-            if (!jobPlates.Contains(this))
-                jobPlates.Add(this);
-            // Debug.Log(JobPlate.jobPlates.Count);
+            if (gameObject.activeSelf)
+                if (!jobPlates.Contains(this))
+                    jobPlates.Add(this);
+
         }
 
-        //SCRIBER MARKING
-        public void StartScriberMarking()
+        internal void ScriberMarkingStep()
         {
-            scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
-            scriberMarkings[scriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
-        }
-
-        void ScriberMarkingStep()
-        {
-            scriberMarkings[scriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
-            scriberMarkingIndex++;
-            if (scriberMarkingIndex < scriberMarkings.Count)
+            Debug.Log(nameof(ScriberMarkingStep) + ": " + ScriberMarkingIndex);
+            if (ScriberMarkingIndex >= 0 && ScriberMarkingIndex < scriberMarkings.Count)
+                scriberMarkings[ScriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
+            ScriberMarkingIndex++;
+            if (ScriberMarkingIndex < scriberMarkings.Count)
             {
-                scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
-                scriberMarkings[scriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
+                scriberMarkings[ScriberMarkingIndex].StartMarkingProcess();
+                scriberMarkings[ScriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
             }
             else
                 OnScriberMarkingDone?.Invoke();

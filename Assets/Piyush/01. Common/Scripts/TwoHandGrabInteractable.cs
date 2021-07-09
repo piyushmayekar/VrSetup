@@ -6,13 +6,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PiyushUtils
 {
-    public class TwoHandGrabInteractable : XRGrabInteractable
+    public class TwoHandGrabInteractable : CustomXRGrabInteractable
     {
         public List<XRSimpleInteractable> secondHandGrabPoints;
         public XRBaseInteractor secondInteractor = null;
         public enum TwoHandRotationType { None, First, Second }
         public TwoHandRotationType rotationType;
         public Vector3 rotationOffset;
+        public Vector3 rightHandRotationOffset, leftHandRotationOffset;
+        public string secondHandGrabAnimationName;
         Quaternion intialAttachTransformRotation;
 
         /// <summary>
@@ -30,6 +32,8 @@ namespace PiyushUtils
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
+            if (grabbedInteractorType == InteractorType.RightHand) rotationOffset = rightHandRotationOffset;
+            if (grabbedInteractorType == InteractorType.LeftHand) rotationOffset = leftHandRotationOffset;
             intialAttachTransformRotation = selectingInteractor.attachTransform.localRotation;
         }
 
@@ -72,11 +76,21 @@ namespace PiyushUtils
         public void OnSecondHandGrab(SelectEnterEventArgs args)
         {
             secondInteractor = args.interactor;
+            HandPresence handPresence = args.interactor.GetComponentInChildren<HandPresence>();
+            if (handPresence)
+            {
+                handPresence.OnHandSelectEnterSecondGrabPoint(this);
+            }
         }
 
         public void OnSecondHandRelease(SelectExitEventArgs args)
         {
             secondInteractor = null;
+            HandPresence handPresence = args.interactor.GetComponentInChildren<HandPresence>();
+            if (handPresence)
+            {
+                handPresence.OnHandSelectExitSecondGrabPoint(this);
+            }
         }
 
         public override bool IsSelectableBy(XRBaseInteractor interactor)

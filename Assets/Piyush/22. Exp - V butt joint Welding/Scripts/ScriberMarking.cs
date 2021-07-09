@@ -27,12 +27,14 @@ namespace VWelding
         public void StartMarkingProcess()
         {
             int i = (currentMarkingPointIndex);
+            Debug.Log(nameof(StartMarkingProcess));
             dotMarkingPoints[currentMarkingPointIndex].StartMarking();
             dotMarkingPoints[currentMarkingPointIndex].OnMarkingDone += OnDotMarkingDone;
         }
 
         public void OnDotMarkingDone(MarkingPoint markingPoint)
         {
+            Debug.Log(nameof(OnDotMarkingDone));
             dotPoints[currentMarkingPointIndex].SetActive(true);
             dotMarkingPoints[currentMarkingPointIndex].ToggleHighlight(false);
             dotMarkingPoints[currentMarkingPointIndex].OnMarkingDone -= OnDotMarkingDone;
@@ -56,6 +58,7 @@ namespace VWelding
 
         public void OnLineMarkingDone(MarkingPoint point)
         {
+            Debug.Log(nameof(OnLineMarkingDone));
             if (point.index <= currentMarkingPointIndex)
             {
                 currentMarkingPointIndex++;

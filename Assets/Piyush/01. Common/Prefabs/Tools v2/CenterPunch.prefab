@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8275d086b98f9994c968d9982d0e512f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitThreshold: 1
+  hitThreshold: 0.25
 --- !u!65 &2430017888372933822
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -237,6 +237,7 @@ MonoBehaviour:
   grabbedInteractorType: 0
   leftHandAttachTransform: {fileID: 4787393103753339186}
   rightHandAttachTransform: {fileID: 7375260283869715579}
+  shouldUseDefaultFistAnim: 0
 --- !u!1 &4787393103370493859
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,8 +280,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.00072916556, y: 0.000101599995, z: 0.000101599995}
-  m_Center: {x: 0.00023866679, y: 2.1810491e-11, z: 0}
+  m_Size: {x: 0.00072916556, y: 0.00018737055, z: 0.00013726864}
+  m_Center: {x: 0.00023866679, y: 0.0000059631407, z: 0.000017834329}
 --- !u!1 &4787393103753339185
 GameObject:
   m_ObjectHideFlags: 0
