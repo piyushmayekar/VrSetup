@@ -103,13 +103,25 @@ namespace PiyushUtils
         //When grabbing the Second Grab point - in case the interactable is a two hand grab interactable
         public void OnHandSelectEnterSecondGrabPoint(TwoHandGrabInteractable grabInteractable)
         {
-            currentGrabInteractable = grabInteractable;
             toolName = grabInteractable.secondHandGrabAnimationName;
             handAnimator.SetBool(IS_HAND_OPEN, false);
             handAnimator.Play(toolName);
         }
 
         public void OnHandSelectExitSecondGrabPoint(TwoHandGrabInteractable grabInteractable)
+        {
+            currentGrabInteractable = null;
+            toolName = string.Empty;
+        }
+
+        public void OnSecondHandPointHoverEnter(string toolAnimToPlay)
+        {
+            toolName = toolAnimToPlay;
+            handAnimator.SetBool(IS_HAND_OPEN, false);
+            handAnimator.Play(toolName);
+        }
+
+        public void OnSecondHandPointHoverExit()
         {
             currentGrabInteractable = null;
             toolName = string.Empty;

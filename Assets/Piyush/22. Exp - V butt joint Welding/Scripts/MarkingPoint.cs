@@ -44,6 +44,7 @@ namespace VWelding
             {
                 Debug.Log(nameof(Scriber) + " inside " + name);
                 OnMarkingDone?.Invoke(this);
+                Debug.Log(nameof(Scriber) + " inside-- " + name);
             }
         }
 

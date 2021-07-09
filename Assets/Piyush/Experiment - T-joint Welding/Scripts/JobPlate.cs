@@ -43,13 +43,14 @@ namespace TWelding
                 if (!jobPlates.Contains(this))
                     jobPlates.Add(this);
 
+
         }
 
         internal void ScriberMarkingStep()
         {
-            Debug.Log(nameof(ScriberMarkingStep) + ": " + ScriberMarkingIndex);
-            if (ScriberMarkingIndex >= 0 && ScriberMarkingIndex < scriberMarkings.Count)
-                scriberMarkings[ScriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
+            Debug.Log(nameof(ScriberMarkingStep) + ": " + ScriberMarkingIndex + " c:" + scriberMarkings.Count);
+            // if (ScriberMarkingIndex >= 0 && ScriberMarkingIndex < scriberMarkings.Count)
+            //     scriberMarkings[ScriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
             ScriberMarkingIndex++;
             if (ScriberMarkingIndex < scriberMarkings.Count)
             {
@@ -57,7 +58,10 @@ namespace TWelding
                 scriberMarkings[ScriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
             }
             else
+            {
+                Debug.Log("else: " + ScriberMarkingIndex);
                 OnScriberMarkingDone?.Invoke();
+            }
         }
 
         //CENTER PUNCH
