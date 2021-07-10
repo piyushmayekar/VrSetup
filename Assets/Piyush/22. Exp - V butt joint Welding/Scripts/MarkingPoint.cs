@@ -23,7 +23,6 @@ namespace VWelding
         public void ToggleHighlight(bool on = true)
         {
             string s = highlights.Count + "";
-            Debug.Log(s);
             highlights.ForEach(highlight => highlight.SetActive(on));
         }
 
@@ -43,7 +42,9 @@ namespace VWelding
             if (markingType == MarkingPointType.Scriber
             && other.CompareTag(_Constants.SCRIBER_TIP_TAG))
             {
+                Debug.Log(nameof(Scriber) + " inside " + name);
                 OnMarkingDone?.Invoke(this);
+                Debug.Log(nameof(Scriber) + " inside-- " + name);
             }
         }
 

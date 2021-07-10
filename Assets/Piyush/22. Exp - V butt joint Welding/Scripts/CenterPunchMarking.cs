@@ -31,6 +31,7 @@ namespace VWelding
 
         public void OnHammerHit()
         {
+            Debug.Log(nameof(OnHammerHit) + " " + dotMarkingPoints[currentMarkingPointIndex].IsCenterPunchInside);
             if (dotMarkingPoints[currentMarkingPointIndex].IsCenterPunchInside)
                 OnDotMarkingDone(dotMarkingPoints[currentMarkingPointIndex]);
         }

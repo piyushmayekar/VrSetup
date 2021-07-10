@@ -80,6 +80,7 @@ namespace PiyushUtils
             targetDevice.TryGetFeatureValue(CommonUsages.grip, out gripValue);
         }
 
+        //When Grabbing First Grab Point - in case the interactable is a two hand grab interactable
         public void OnHandSelectEnter(SelectEnterEventArgs args)
         {
             currentGrabInteractable = args.interactable as CustomXRGrabInteractable;
@@ -87,10 +88,40 @@ namespace PiyushUtils
             {
                 toolName = currentGrabInteractable.name;
                 handAnimator.SetBool(IS_HAND_OPEN, false);
-                handAnimator.Play(toolName);
+                if (currentGrabInteractable.ShouldUseDefaultFistAnim)
+                    handAnimator.Play(FIST);
+                else
+                    handAnimator.Play(toolName);
             }
         }
         public void OnHandSelectExit(SelectExitEventArgs args)
+        {
+            currentGrabInteractable = null;
+            toolName = string.Empty;
+        }
+
+        //When grabbing the Second Grab point - in case the interactable is a two hand grab interactable
+        public void OnHandSelectEnterSecondGrabPoint(TwoHandGrabInteractable grabInteractable)
+        {
+            toolName = grabInteractable.secondHandGrabAnimationName;
+            handAnimator.SetBool(IS_HAND_OPEN, false);
+            handAnimator.Play(toolName);
+        }
+
+        public void OnHandSelectExitSecondGrabPoint(TwoHandGrabInteractable grabInteractable)
+        {
+            currentGrabInteractable = null;
+            toolName = string.Empty;
+        }
+
+        public void OnSecondHandPointHoverEnter(string toolAnimToPlay)
+        {
+            toolName = toolAnimToPlay;
+            handAnimator.SetBool(IS_HAND_OPEN, false);
+            handAnimator.Play(toolName);
+        }
+
+        public void OnSecondHandPointHoverExit()
         {
             currentGrabInteractable = null;
             toolName = string.Empty;

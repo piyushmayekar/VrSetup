@@ -8,8 +8,12 @@ namespace PiyushUtils
 {
     public class CustomXRGrabInteractable : XRGrabInteractable
     {
-        [SerializeField] InteractorType grabbedInteractorType = InteractorType.None;
+        [SerializeField] internal InteractorType grabbedInteractorType = InteractorType.None;
         [SerializeField] Transform leftHandAttachTransform, rightHandAttachTransform;
+        [SerializeField, Tooltip("Should this grabbable play default fist animation on grab.")]
+        bool shouldUseDefaultFistAnim = false;
+
+        public bool ShouldUseDefaultFistAnim { get => shouldUseDefaultFistAnim; set => shouldUseDefaultFistAnim = value; }
 
         protected override void OnHoverEntered(HoverEnterEventArgs args)
         {

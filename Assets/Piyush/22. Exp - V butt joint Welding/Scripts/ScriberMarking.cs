@@ -13,7 +13,7 @@ namespace VWelding
         [SerializeField] List<MarkingPoint> dotMarkingPoints;
         [SerializeField] LineRenderer lineRenderer;
         [SerializeField] List<MarkingPoint> lineMarkingPoints;
-        [SerializeField] int currentMarkingPointIndex = 0;
+        [SerializeField] int currentDotMarkingPointIndex = 0, currentLineMarkingPointIndex = 0;
         [SerializeField] PiyushUtils.Scriber scriber;
 
         /// <summary>
@@ -26,45 +26,49 @@ namespace VWelding
         }
         public void StartMarkingProcess()
         {
-            int i = (currentMarkingPointIndex);
-            dotMarkingPoints[currentMarkingPointIndex].StartMarking();
-            dotMarkingPoints[currentMarkingPointIndex].OnMarkingDone += OnDotMarkingDone;
+            int i = (currentDotMarkingPointIndex);
+            Debug.Log(nameof(StartMarkingProcess) + name);
+            dotMarkingPoints[currentDotMarkingPointIndex].StartMarking();
+            dotMarkingPoints[currentDotMarkingPointIndex].OnMarkingDone += OnDotMarkingDone;
         }
 
         public void OnDotMarkingDone(MarkingPoint markingPoint)
         {
-            dotPoints[currentMarkingPointIndex].SetActive(true);
-            dotMarkingPoints[currentMarkingPointIndex].ToggleHighlight(false);
-            dotMarkingPoints[currentMarkingPointIndex].OnMarkingDone -= OnDotMarkingDone;
-            currentMarkingPointIndex++;
-            if (currentMarkingPointIndex < dotPoints.Count)
+            Debug.Log(nameof(OnDotMarkingDone));
+            dotPoints[currentDotMarkingPointIndex].SetActive(true);
+            dotMarkingPoints[currentDotMarkingPointIndex].ToggleHighlight(false);
+            dotMarkingPoints[currentDotMarkingPointIndex].OnMarkingDone -= OnDotMarkingDone;
+            currentDotMarkingPointIndex++;
+            if (currentDotMarkingPointIndex < dotPoints.Count)
             {
-                dotMarkingPoints[currentMarkingPointIndex].StartMarking();
-                dotMarkingPoints[currentMarkingPointIndex].OnMarkingDone += OnDotMarkingDone;
+                dotMarkingPoints[currentDotMarkingPointIndex].StartMarking();
+                dotMarkingPoints[currentDotMarkingPointIndex].OnMarkingDone += OnDotMarkingDone;
             }
             else
             {
-                currentMarkingPointIndex = 0;
+                currentLineMarkingPointIndex = 0;
                 lineMarkingPoints.ForEach(point =>
                 {
                     point.index = point.transform.GetSiblingIndex();
                     point.OnMarkingDone += OnLineMarkingDone;
                 });
-                lineMarkingPoints[currentMarkingPointIndex].StartMarking();
+                lineMarkingPoints[currentLineMarkingPointIndex].StartMarking();
             }
         }
 
         public void OnLineMarkingDone(MarkingPoint point)
         {
-            if (point.index <= currentMarkingPointIndex)
+            Debug.Log(nameof(OnLineMarkingDone));
+            if (point.index <= currentLineMarkingPointIndex)
             {
-                currentMarkingPointIndex++;
-                lineRenderer.positionCount = currentMarkingPointIndex;
-                lineRenderer.SetPosition(currentMarkingPointIndex - 1, point.transform.localPosition);
+                currentLineMarkingPointIndex++;
+                lineRenderer.positionCount = currentLineMarkingPointIndex;
+                lineRenderer.SetPosition(currentLineMarkingPointIndex - 1, point.transform.localPosition);
                 point.ToggleHighlight(false);
                 point.OnMarkingDone -= OnLineMarkingDone;
             }
-            if (currentMarkingPointIndex >= lineMarkingPoints.Count)
+            else if (currentDotMarkingPointIndex >= dotPoints.Count &&
+             currentLineMarkingPointIndex >= lineMarkingPoints.Count)
             {
                 OnMarkingDone?.Invoke();
             }

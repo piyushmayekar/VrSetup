@@ -7,21 +7,22 @@ namespace TWelding
 {
     public class Task_Scriber : Task
     {
-        [SerializeField] int platesScribed = 0;
+        [SerializeField] int plateIndex = 0;
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            platesScribed = 0;
-            // string s = (JobPlate.jobPlates[platesScribed].name);
-            JobPlate.jobPlates[platesScribed].StartScriberMarking();
-            JobPlate.jobPlates.ForEach(x => x.OnScriberMarkingDone += () =>
-            {
-                platesScribed++;
-                if (platesScribed >= JobPlate.jobPlates.Count)
-                    OnTaskCompleted();
-                else
-                    JobPlate.jobPlates[platesScribed].StartScriberMarking();
-            });
+            JobPlate.jobPlates[plateIndex].ScriberMarkingStep();
+            JobPlate.jobPlates.ForEach(plate => plate.OnScriberMarkingDone += OnScriberMarkingDone);
+        }
+
+        void OnScriberMarkingDone()
+        {
+            Debug.Log(nameof(OnScriberMarkingDone) + plateIndex);
+            plateIndex++;
+            if (plateIndex >= JobPlate.jobPlates.Count)
+                OnTaskCompleted();
+            else
+                JobPlate.jobPlates[plateIndex].ScriberMarkingStep();
         }
 
     }

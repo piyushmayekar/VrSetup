@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1719360367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719360368}
+  m_Layer: 0
+  m_Name: Attach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1719360368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719360367}
+  m_LocalRotation: {x: 4.2632537e-14, y: -1, z: -5.793975e-14, w: 0.0000005587934}
+  m_LocalPosition: {x: -0.000000026746909, y: -0.00000001674246, z: 0.14399995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2591943436977419289}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &3045025172157779050
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,10 +59,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3045025172157779050}
-  m_LocalRotation: {x: 0.70710635, y: -0.0000000039512655, z: 0.0000000065854513, w: -0.7071073}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
   m_LocalPosition: {x: -0.111, y: -0.193, z: 0.0509}
-  m_LocalScale: {x: 1.6699636, y: 1.6699643, z: 1.6699643}
-  m_Children: []
+  m_LocalScale: {x: 1.6699636, y: 1.6699646, z: 1.6699646}
+  m_Children:
+  - {fileID: 1719360368}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
@@ -119,7 +150,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 1719360368}
   m_AttachEaseInTime: 0
   m_MovementType: 0
   m_VelocityDamping: 0.4
@@ -134,7 +165,7 @@ MonoBehaviour:
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -231,6 +262,6 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.003
-  m_Height: 0.16497941
+  m_Height: 0.084326155
   m_Direction: 2
-  m_Center: {x: -0.0002025442, y: -0.000000072414956, z: 0.075503185}
+  m_Center: {x: -0.00020254421, y: -0.00000007249973, z: 0.115829445}
