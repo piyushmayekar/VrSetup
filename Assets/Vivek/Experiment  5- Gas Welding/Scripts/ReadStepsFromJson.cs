@@ -8,11 +8,12 @@ using UnityEngine.SceneManagement;
 
 public class ReadStepsFromJson : MonoBehaviour
 {
+    public static ReadStepsFromJson instance;
     [SerializeField, Header("Json file to read Steps")] TextAsset jsonFile;
     public ReadSteps readSteps;
     public GameObject panel;
     [SerializeField] int countStep;
-    [SerializeField] TextMeshProUGUI stepText;
+   public  TextMeshProUGUI stepText;
     [SerializeField] public Button confirmbtn;
     public string sceneName;
     public delegate void OnClickBtnEvent();
@@ -20,6 +21,7 @@ public class ReadStepsFromJson : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         if (jsonFile != null)
         {
             readSteps = JsonUtility.FromJson<ReadSteps>(jsonFile.text);
@@ -47,7 +49,8 @@ public class ReadStepsFromJson : MonoBehaviour
     /// <param name="callBtnclickEvent">Pass the method to set in button click.</param>
     public void AddClickConfirmbtnEvent(OnClickBtnEvent callBtnclickEvent)
     {
-        if (jsonFile.name == "GasWelding")
+        Debug.Log("SADSDas");
+     //   if (jsonFile.name == "GasWelding")
         {
             tablet.SetActive(true);
         }
@@ -60,7 +63,7 @@ public class ReadStepsFromJson : MonoBehaviour
     /// </summary>
     public void HideConifmBnt()
     {
-        if (jsonFile.name == "GasWelding")
+      //  if (jsonFile.name == "GasWelding")
         {
             tablet.SetActive(false);
         }

@@ -15,7 +15,7 @@ public class SetUpTrolley : MonoBehaviour
     [Header("          ")]
     public RotateNozzle[] rotateNozzles;
     [Header("          ")]
-    public GameObject BluePipEndPoint;
+    public GameObject bluePipEndPoint;
     public GameObject RedPipeEndPoint, ParentBluePipEndPoint, ParentRedPipeEndPoint, nozzelSnapPoint;
     public GameObject redPipeRop, bluePipeRop, blacksmoke, redRotateSprite, BlueRotatesprite;
     [Header("          ")]
@@ -96,6 +96,7 @@ public class SetUpTrolley : MonoBehaviour
 
   public void Onclickbtn_s_3_confirm()
     {
+      
         HighLightCylinderCrack();
         readSteps.HideConifmBnt();
     }
@@ -309,7 +310,7 @@ public class SetUpTrolley : MonoBehaviour
 
         GasTablekitcolliders[17].enabled = true;// blue pipe sphere welding Tourch 
         bluePipeRop.GetComponent<CapsuleCollider>().enabled = true;
-        BluePipEndPoint.GetComponent<SnapGrabbleObject>().enabled = true;
+        bluePipEndPoint.GetComponent<SnapGrabbleObject>().enabled = true;
 
         objectOutLines[7].enabled = true;// blue pipe sphere outline
         objectOutLines[9].enabled = true;// blue end capsule
@@ -329,14 +330,14 @@ public class SetUpTrolley : MonoBehaviour
 
         redPipeRop.GetComponent<CapsuleCollider>().enabled = true;
 
-        BluePipEndPoint.GetComponent<SnapGrabbleObject>().enabled = false;
+        bluePipEndPoint.GetComponent<SnapGrabbleObject>().enabled = false;
 
-        BluePipEndPoint.transform.parent = ParentBluePipEndPoint.gameObject.transform;
+        bluePipEndPoint.transform.parent = ParentBluePipEndPoint.gameObject.transform;
 
-        BluePipEndPoint.transform.localPosition = Vector3.zero;
-        BluePipEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        BluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
-        BluePipEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
+        bluePipEndPoint.transform.localPosition = Vector3.zero;
+        bluePipEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        bluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
+        bluePipEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
 
       //  BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);
         isPipeblueConnect = true;

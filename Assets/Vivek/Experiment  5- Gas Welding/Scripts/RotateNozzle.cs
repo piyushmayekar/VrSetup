@@ -19,9 +19,16 @@ public class RotateNozzle : MonoBehaviour
     public bool ismeter, isRegulator;
     public bool isclockwise;
     Quaternion t_rotate;
-    public float speed=20f;
+    public float speed = 20f;
+    List<UnityEngine.XR.InputDevice> leftHandDevices;
+    List<UnityEngine.XR.InputDevice> righthandDevices;
     void Start()
     {
+        leftHandDevices = new List<InputDevice>();
+        righthandDevices = new List<InputDevice>();
+        InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, leftHandDevices);
+        InputDevices.GetDevicesAtXRNode(XRNode.RightHand, righthandDevices);
+
         initPos = this.transform.localPosition;
         initRot = this.transform.localRotation;
         t_rotate = transform.localRotation;
@@ -31,6 +38,8 @@ public class RotateNozzle : MonoBehaviour
         MeterObject.SetActive(false);
         otherMeterobject.SetActive(true);
     }
+
+
     public void callEnterGrabObject()
     {
         // Debug.Log("call grab enter");
@@ -57,78 +66,78 @@ public class RotateNozzle : MonoBehaviour
         {
             HideMesh.enabled = false;
         }
-            OtherRotate.SetActive(true);
-            // OtherRotate.transform.localRotation =Quaternion.Inverse(Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z));
-            OtherRotate.transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
-            if (ismeter)
+        OtherRotate.SetActive(true);
+        // OtherRotate.transform.localRotation =Quaternion.Inverse(Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z));
+        OtherRotate.transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
+        if (ismeter)
+        {
+            MeterObject.transform.localRotation = OtherRotate.transform.localRotation;
+        }
+        if (isclockwise)
+        {
+            if (z)
             {
-                MeterObject.transform.localRotation = OtherRotate.transform.localRotation;
-            }
-            if (isclockwise)
-            {
-                if (z)
+                //Debug.Log("callzzzzzzzzzzzz grab enter");
+                if (OtherRotate.transform.eulerAngles.z > RotateValue && OtherRotate.transform.eulerAngles.z < (RotateValue + 20))
                 {
-                    //Debug.Log("callzzzzzzzzzzzz grab enter");
-                    if (OtherRotate.transform.eulerAngles.z > RotateValue && OtherRotate.transform.eulerAngles.z < (RotateValue + 20))
-                    {
-                        CallEndMethod();
-                    }
-                }
-                else if (y)
-                {
-                    if (OtherRotate.transform.eulerAngles.y > RotateValue && OtherRotate.transform.eulerAngles.y < (RotateValue + 20))
-                    {
-                        CallEndMethod();
-                    }
-                }
-                else if (x)
-                {
-                    if (OtherRotate.transform.localEulerAngles.x > RotateValue && OtherRotate.transform.localEulerAngles.x < (RotateValue + 20))
-                    {
-                        CallEndMethod();
-                    }
-
+                    CallEndMethod();
                 }
             }
-            else
+            else if (y)
             {
-                if (z)
+                if (OtherRotate.transform.eulerAngles.y > RotateValue && OtherRotate.transform.eulerAngles.y < (RotateValue + 20))
                 {
-                    transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, -t_rotate.z);
-                    if (transform.localEulerAngles.z > RotateValue && transform.localEulerAngles.z < (RotateValue + 20))
-                    {
-                        CallEndMethod();
-                    }
+                    CallEndMethod();
                 }
-                else if (y)
+            }
+            else if (x)
+            {
+                if (OtherRotate.transform.localEulerAngles.x > RotateValue && OtherRotate.transform.localEulerAngles.x < (RotateValue + 20))
                 {
-                    transform.localRotation = Quaternion.Euler(t_rotate.x, -t_rotate.y, t_rotate.z);
-                    if (transform.eulerAngles.y > RotateValue && transform.eulerAngles.y < (RotateValue + 20))
-                    {
-                        CallEndMethod();
-                    }
+                    CallEndMethod();
                 }
-                else if (x)
-                {
-                    transform.localRotation = Quaternion.Euler(-t_rotate.x, t_rotate.y, t_rotate.z);
-                    if (transform.localEulerAngles.x >RotateValue && transform.localEulerAngles.x < (RotateValue + 20))
-                    {
-                        CallEndMethod();
-                    }
 
-                }
             }
         }
-       
-    
+        else
+        {
+            if (z)
+            {
+                transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, -t_rotate.z);
+                if (transform.localEulerAngles.z > RotateValue && transform.localEulerAngles.z < (RotateValue + 20))
+                {
+                    CallEndMethod();
+                }
+            }
+            else if (y)
+            {
+                transform.localRotation = Quaternion.Euler(t_rotate.x, -t_rotate.y, t_rotate.z);
+                if (transform.eulerAngles.y > RotateValue && transform.eulerAngles.y < (RotateValue + 20))
+                {
+                    CallEndMethod();
+                }
+            }
+            else if (x)
+            {
+                transform.localRotation = Quaternion.Euler(-t_rotate.x, t_rotate.y, t_rotate.z);
+                if (transform.localEulerAngles.x > RotateValue && transform.localEulerAngles.x < (RotateValue + 20))
+                {
+                    CallEndMethod();
+                }
+
+            }
+        }
+    }
+
+
 
     void CallEndMethod()
     {
-      //  Debug.Log("Call next step   " + OtherRotate.name);
+        //  Debug.Log("Call next step   " + OtherRotate.name);
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         NextStep.Invoke();
         this.gameObject.GetComponent<RotateNozzle>().enabled = false;
-        if(isRegulator)
+        if (isRegulator)
         {
             Destroy(this.gameObject.GetComponent<RotateNozzle>());
         }
@@ -149,15 +158,16 @@ public class RotateNozzle : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-
+        leftHandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val);
+        righthandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val1);
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
-            callEnterGrabObject();
+            if (val || val1)
+                callEnterGrabObject();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
             callExitObjectGrab();
@@ -165,10 +175,30 @@ public class RotateNozzle : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+        leftHandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val);
+        righthandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val1);
+        print(val1);
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
-            callEnterGrabObject();
-
+            if (val || val1)
+                callEnterGrabObject();
         }
+    }
+
+    public void TEST()
+    {
+        /*print("TEST>>>>>>>>>>>>>>>");
+        if (x)
+        {
+            Debug.Log("aaaaaaaaaaaaaaaaaaaaa");
+            t_rotate.x += Time.deltaTime * speed;
+        }
+        if (y)
+            t_rotate.y += Time.deltaTime * speed;
+        if (z)
+            t_rotate.z += Time.deltaTime * speed;
+
+        transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);*/
+        //callEnterGrabObject();
     }
 }

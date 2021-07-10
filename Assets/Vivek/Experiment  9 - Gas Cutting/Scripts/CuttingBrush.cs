@@ -58,8 +58,6 @@ public class CuttingBrush : MonoBehaviour
             }
             else
             {
-
-
                 if (!GasCuttingManager.instance.flameOff)
                 {
                     GasCuttingManager.instance.checkBrushStep();
@@ -71,6 +69,11 @@ public class CuttingBrush : MonoBehaviour
                 }
             }
             isStop = true;
+        }
+        else
+        {
+            ReadStepsFromJson.instance.tablet.SetActive(true);
+            ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
         }
 
     }

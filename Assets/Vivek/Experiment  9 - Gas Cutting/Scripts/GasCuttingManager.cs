@@ -17,13 +17,13 @@ public class GasCuttingManager : MonoBehaviour
     [Header("Canvas ")]
     public GameObject finishPanel;
 
-    [Header("Extra objects")]   
+    [Header("Extra objects")]
     public GameObject neturalFlameCube;
     public GameObject netural_flame, lighterFlame;
     public GameObject torch90degree, blacksmoke;
     [Header("          ")]
     public RotateNozzle redBol, blueBol, blackValve, redValve;
-    
+
 
     [Header("Read step from json calss")]
     public ReadStepsFromJson readSteps;
@@ -56,7 +56,7 @@ public class GasCuttingManager : MonoBehaviour
             GasTableObjectcolliders[i].enabled = false;
         }
         readSteps.panel.SetActive(true);
-        readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
+       readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
         for (int i = 0; i < toolToReset.Length; i++)
         {
@@ -64,14 +64,17 @@ public class GasCuttingManager : MonoBehaviour
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
         //   checkStep5();
+        //     Onclickbtn_s_2_confirm();
+
     }
-   
+
     public void ConfirmSatrtbtn()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_1_confirm);
         PlayStepAudio(3);// kit audio
     }
+
     #region step1 Step 1: Wear PPE Kit
     void Onclickbtn_s_1_confirm()
     {
@@ -137,7 +140,9 @@ public class GasCuttingManager : MonoBehaviour
     {
         GasTableObjectcolliders[0].enabled = false;
         //job plat posion set
-        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.5286f, 0.01f, -0.1383f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(1.031f, 0.0012f, 2.4138f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
+
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
         readSteps.onClickConfirmbtn();
@@ -167,7 +172,7 @@ public class GasCuttingManager : MonoBehaviour
         //   GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = false;// Brushout line
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false; // job plate outline
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
-       
+
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
         //  Onclickbtn_s_5_confirm();
@@ -200,7 +205,7 @@ public class GasCuttingManager : MonoBehaviour
         objectOutLines[3].enabled = false;
         objectOutLines[4].enabled = false;
     }
-   void checkCenterPunchHummer()
+    void checkCenterPunchHummer()
     {
         SetObjectRestPos_Rotate(2); //centar punch tool
         SetObjectRestPos_Rotate(3); //Hummar tool
@@ -208,7 +213,7 @@ public class GasCuttingManager : MonoBehaviour
     #endregion    
     #region Step 10Open acetylene control valve and light the flame with spark lighter.
     public bool IsEnableFlame, step10Call;
- public    void Onclickbtn_s10_confirm()
+    public void Onclickbtn_s10_confirm()
     {
         onEnableStep10Object();
         readSteps.HideConifmBnt();
@@ -241,7 +246,7 @@ public class GasCuttingManager : MonoBehaviour
         lighterFlame.SetActive(true);
         lighterFlame.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.5f);
-       
+
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
         GasTableObjectcolliders[3].GetComponent<Outline>().enabled = false;
@@ -416,7 +421,7 @@ public class GasCuttingManager : MonoBehaviour
         blackValve.otherMeterobject = ZeroMeterBlack;               // black valve
         blackValve.MeterObject.SetActive(true);                   // black valve
         blackValve.RotateValue = 15;                              // black valve
-     //   blackValve.speed = 20;
+                                                                  //   blackValve.speed = 20;
     }
     public void callBlackValve_Bol()
     {
@@ -475,7 +480,7 @@ public class GasCuttingManager : MonoBehaviour
         objectOutLines[2].enabled = false;
         finishPanel.SetActive(true);
         readSteps.panel.SetActive(false);
-       // SetObjectRestPos_Rotate(0); //Brush tool
+        // SetObjectRestPos_Rotate(0); //Brush tool
     }
     #endregion
 
@@ -488,12 +493,12 @@ public class GasCuttingManager : MonoBehaviour
             stepAudioSource.PlayOneShot(stepsAudioClip[index]);
         }*/
     }
-   public  void SetObjectRestPos_Rotate(int indexOfReset)
+    public void SetObjectRestPos_Rotate(int indexOfReset)
     {
         toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = false;
         toolToReset[indexOfReset].transform.localPosition = toolToResetPosition[indexOfReset];
-        toolToReset[indexOfReset].transform.localEulerAngles= toolToResetRotate[indexOfReset];
-        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled =true;
+        toolToReset[indexOfReset].transform.localEulerAngles = toolToResetRotate[indexOfReset];
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = true;
     }
     #endregion
 }

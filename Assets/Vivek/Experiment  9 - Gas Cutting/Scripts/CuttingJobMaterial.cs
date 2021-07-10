@@ -15,13 +15,14 @@ public class CuttingJobMaterial : MonoBehaviour
     [SerializeField] public LineRenderer markingLine, markingLine2, markingLine3;
     [SerializeField] int currentMarking = 0;
     [SerializeField] List<GameObject> scriberHighlights;
-    public int totalLineMarkingPoints = 0, totalLineMarkingPoints2, totalLineMarkingPoints3;
+    public int totalLineMarkingPoints = 0;
     public int lineMarkingPoint = 0;
     public int LineMarkingPoint { get => lineMarkingPoint; set => lineMarkingPoint = value; }
 
     [Header("-------Hammer punch-------")]
     //public GameObject SCriberHitpoint;
     [SerializeField] List<PunchMarkingPoint> centerPunchMarkingPoints;
+    [SerializeField] List<GameObject> cpDotPoint;
     [SerializeField] int currentCPMarkingPointIndex = 0;
     [SerializeField] SoundPlayer hummerCenterPunchsound, Scibersound;
     PunchMarkingPoint CurrentMarkingPoint => centerPunchMarkingPoints[currentCPMarkingPointIndex];
@@ -33,26 +34,22 @@ public class CuttingJobMaterial : MonoBehaviour
     {
         instance = this;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        //  StartScriberMarking();
-        //  StartCenterPunchMarking();
-    }
-
+   
     //SCRIBER MARKING
     public void StartScriberMarking()
     {
         Debug.Log("StartScriberMarking");
         TurnOnMarkingPoint();
-        totalLineMarkingPoints = markingLine.transform.childCount;
+     //   totalLineMarkingPoints = markingLine.transform.childCount;
     }
 
     void TurnOnMarkingPoint()
     {
+        Debug.Log("CALLINTurnOnMarkingPoint");
         markingPoints[currentMarking].SetActive(true);
         if (currentMarking < outlines.Count)
         {
+            Debug.Log("CALLINGsdsa");
             outlines[currentMarking].enabled = true;
         }
 
@@ -138,6 +135,7 @@ public class CuttingJobMaterial : MonoBehaviour
                 }
             }
             countIndex = index;
+
             OnMarkingDone(position);
         }
     }
@@ -158,8 +156,8 @@ public class CuttingJobMaterial : MonoBehaviour
             }
             else
             {
-                scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
-                Destroy(scribal);
+               /* scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
+                Destroy(scribal);*/
                 GasCuttingManager.instance.CheckJobPlace();
                 for (int i = 0; i < outlines.Count; i++)
                 {
@@ -180,8 +178,8 @@ public class CuttingJobMaterial : MonoBehaviour
         {
             GasCuttingManager.instance.CheckJobPlace();
 
-            scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
-            Destroy(scribal);
+        /*    scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
+            Destroy(scribal);*/
             for (int i = 0; i < markingPoints.Count - 1; i++)
             {
                 markingPoints[i].SetActive(false);
@@ -192,7 +190,7 @@ public class CuttingJobMaterial : MonoBehaviour
             if (CountLine == 1)
             {
 
-                totalLineMarkingPoints = markingLine2.transform.childCount;
+               // totalLineMarkingPoints = markingLine2.transform.childCount;
                 markingLine = markingLine2;
                 currentMarking++;
 
@@ -213,7 +211,7 @@ public class CuttingJobMaterial : MonoBehaviour
                     TurnOnMarkingPoint();
                 }
                 markingLine = markingLine3;
-                totalLineMarkingPoints = markingLine3.transform.childCount;
+              //  totalLineMarkingPoints = markingLine3.transform.childCount;
                 SnapScale2.GetComponent<BoxCollider>().enabled = true;
                 markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
                 markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
@@ -245,13 +243,18 @@ public class CuttingJobMaterial : MonoBehaviour
             currentCPMarkingPointIndex++;
             PlayhummerCenterPunchsound();
             if (currentCPMarkingPointIndex < centerPunchMarkingPoints.Count)
+            {
                 CurrentMarkingPoint.gameObject.SetActive(true);
+                cpDotPoint[currentCPMarkingPointIndex - 1].SetActive(true);
+            }
+
             else
             {
                 Debug.Log("OnHammerHit call  checkStep5");
                 CenterPunch.OnHammerHit -= OnHammerHit;
-                centerPunch.GetComponent<XRGrabInteractable>().selectEntered = null;
-                Destroy(centerPunch);
+                cpDotPoint[currentCPMarkingPointIndex - 1].SetActive(true);
+                /*  centerPunch.GetComponent<XRGrabInteractable>().selectEntered = null;
+                  Destroy(centerPunch);*/
                 GasCuttingManager.instance.checkStep5();
             }
         }

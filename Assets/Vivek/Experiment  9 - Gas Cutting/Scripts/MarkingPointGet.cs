@@ -19,7 +19,7 @@ public class MarkingPointGet : MonoBehaviour
     {
         if (other.CompareTag("MarkPoint")&& other.gameObject.name == "hitpoint" && this.gameObject.name == "MarkingPoint2")
         {
-
+            Debug.Log("CALLED @001");
             GetComponent<Collider>().enabled = false;
             _renderer.enabled = true;
             highlights.ForEach(x => x.SetActive(false));
@@ -27,6 +27,7 @@ public class MarkingPointGet : MonoBehaviour
         }
         else if (other.CompareTag("SteelRuler")&& other.gameObject.name =="SteelRule" && this.gameObject.tag == "SteelRuleHighlight")
         {
+            Debug.Log("CALLED @002");
             this.gameObject.GetComponent<Collider>().enabled = false;
             _renderer.enabled = true;
             other.gameObject.GetComponent<BoxCollider>().enabled = false;
