@@ -338,8 +338,9 @@ public class SetUpTrolley : MonoBehaviour
         bluePipEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
         bluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         bluePipEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
+        bluePipEndPoint.transform.GetChild(0).transform.localPosition = new Vector3(0, 600, 0);
 
-      //  BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);
+        //  BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);
         isPipeblueConnect = true;
     }
     public void OnConnecteRedPipe()
@@ -355,8 +356,9 @@ public class SetUpTrolley : MonoBehaviour
         RedPipeEndPoint.transform.localPosition = Vector3.zero;
         RedPipeEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         RedPipeEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        RedPipeEndPoint.transform.GetChild(0).transform.localPosition = new Vector3(0, 13, 0);
 
-     //RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);
+        //RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);
         // RedPipeEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
         isPipeRedConnect = true;
 

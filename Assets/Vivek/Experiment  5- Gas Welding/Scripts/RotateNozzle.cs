@@ -120,6 +120,8 @@ public class RotateNozzle : MonoBehaviour
             else if (x)
             {
                 transform.localRotation = Quaternion.Euler(-t_rotate.x, t_rotate.y, t_rotate.z);
+             //   transform.localRotation = Quaternion.Euler(-t_rotate.x, t_rotate.y, t_rotate.z);
+
                 if (transform.localEulerAngles.x > RotateValue && transform.localEulerAngles.x < (RotateValue + 20))
                 {
                     CallEndMethod();
@@ -148,7 +150,7 @@ public class RotateNozzle : MonoBehaviour
     }
     public void callExitObjectGrab()
     {
-        transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
+       // transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
         if (ishideMesh)
         {
             HideMesh.enabled = true;
