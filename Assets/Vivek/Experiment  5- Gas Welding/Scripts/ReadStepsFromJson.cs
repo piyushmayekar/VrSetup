@@ -49,8 +49,7 @@ public class ReadStepsFromJson : MonoBehaviour
     /// <param name="callBtnclickEvent">Pass the method to set in button click.</param>
     public void AddClickConfirmbtnEvent(OnClickBtnEvent callBtnclickEvent)
     {
-        Debug.Log("SADSDas");
-     //   if (jsonFile.name == "GasWelding")
+         //   if (jsonFile.name == "GasWelding")
         {
             tablet.SetActive(true);
         }

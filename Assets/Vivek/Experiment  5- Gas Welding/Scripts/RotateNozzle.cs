@@ -177,7 +177,7 @@ public class RotateNozzle : MonoBehaviour
     {
         leftHandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val);
         righthandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val1);
-        print(val1);
+        // print(val1);
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
             if (val || val1)

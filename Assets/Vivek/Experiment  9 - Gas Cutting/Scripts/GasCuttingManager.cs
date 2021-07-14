@@ -65,7 +65,7 @@ public class GasCuttingManager : MonoBehaviour
         }
         //   checkStep5();
         //     Onclickbtn_s_2_confirm();
-
+       //    CheckJobFlatPlace();
     }
 
     public void ConfirmSatrtbtn()
@@ -140,8 +140,9 @@ public class GasCuttingManager : MonoBehaviour
     {
         GasTableObjectcolliders[0].enabled = false;
         //job plat posion set
-        GasTableObjectcolliders[0].transform.localPosition = new Vector3(1.031f, 0.0012f, 2.4138f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.338f, 0.016f, -0.094f);//objectOutLines[1].transform.position;// job plate material
+                                                                                                    //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
+GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);//objectOutLines[1].transform.position;// job plate material
 
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
@@ -188,7 +189,7 @@ public class GasCuttingManager : MonoBehaviour
         CuttingJobMaterial.instance.StartCenterPunchMarking();
         objectOutLines[3].enabled = true;
         objectOutLines[4].enabled = true;
-        GasTableObjectcolliders[1].GetComponent<Rigidbody>().isKinematic = true;// brush collider
+     //   GasTableObjectcolliders[1].GetComponent<Rigidbody>().isKinematic = true;// brush collider
     }
     void Onclickbtn_s_5_confirm()
     {
@@ -499,6 +500,10 @@ public class GasCuttingManager : MonoBehaviour
         toolToReset[indexOfReset].transform.localPosition = toolToResetPosition[indexOfReset];
         toolToReset[indexOfReset].transform.localEulerAngles = toolToResetRotate[indexOfReset];
         toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = true;
+    }
+    public void OnPressXbutton()
+    {
+        readSteps.tablet.SetActive(!readSteps.tablet.active);
     }
     #endregion
 }
