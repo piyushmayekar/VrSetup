@@ -42,7 +42,7 @@ public class GasWeldingStep : MonoBehaviour
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;
-   
+    public Vector3 blueStartpos, redStartpos;
     private void Awake()
     {
         instance = this;
@@ -75,6 +75,7 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
         // Debug.Log("gas welding");
+        //Onclickbtn_s_10_confirm();
     }
     public void Start()
     {
@@ -411,6 +412,7 @@ public class GasWeldingStep : MonoBehaviour
         BluePipEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
         BluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         BluePipEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
+        BluePipEndPoint.transform.GetChild(0).transform.localPosition = blueStartpos;//new Vector3(0, 600, 0);
 
         //BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);//Add By GP
         //BluePipEndPoint.SetActive(false);
@@ -428,7 +430,9 @@ public class GasWeldingStep : MonoBehaviour
         RedPipeEndPoint.transform.localPosition = Vector3.zero;
         RedPipeEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         RedPipeEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        RedPipeEndPoint.SetActive(false);
+        RedPipeEndPoint.transform.GetChild(0).transform.localPosition = redStartpos;// new Vector3(0, 13, 0);
+
+    //    RedPipeEndPoint.SetActive(false);
         //RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);//Add By GP
         // RedPipeEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
         isPipeRedConnect = true;
@@ -725,6 +729,7 @@ public class GasWeldingStep : MonoBehaviour
 
         objectOutLines[14].enabled = true;
         objectOutLines[15].enabled = false;
+        objectOutLines[23].enabled = true;
     }
     public void callTurnOff2_flame()//oxidiz
     {
@@ -735,7 +740,7 @@ public class GasWeldingStep : MonoBehaviour
 
             GasTablekitcolliders[18].enabled = false;
             oxidizing_F.GetComponent<AudioSource>().Play();
-
+            objectOutLines[23].enabled = false;
             rotateNozzles[2].enabled = false; //RED  bol reduse or crbarn
             GasTablekitcolliders[19].enabled = true;  //GREEN  bol oxidizing
             GasTablekitcolliders[19].transform.gameObject.SetActive(true);  //GREEN  bol oxidizing
@@ -747,6 +752,7 @@ public class GasWeldingStep : MonoBehaviour
 
             GasTablekitcolliders[18].enabled = false;
 
+            objectOutLines[24].enabled = true;
             objectOutLines[14].enabled = false;
             objectOutLines[15].enabled = true;
 
@@ -756,6 +762,7 @@ public class GasWeldingStep : MonoBehaviour
     {
         if (isTurnOffFlame)
         {
+            objectOutLines[24].enabled = false;
             oxidizing_F.SetActive(false);
             neturel_F.SetActive(false);
             reduce_or_carb_F.SetActive(false);

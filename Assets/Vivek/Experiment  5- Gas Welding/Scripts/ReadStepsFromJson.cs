@@ -13,7 +13,7 @@ public class ReadStepsFromJson : MonoBehaviour
     public ReadSteps readSteps;
     public GameObject panel;
     [SerializeField] int countStep;
-   public  TextMeshProUGUI stepText;
+    public TextMeshProUGUI stepText;
     [SerializeField] public Button confirmbtn;
     public string sceneName;
     public delegate void OnClickBtnEvent();
@@ -49,7 +49,7 @@ public class ReadStepsFromJson : MonoBehaviour
     /// <param name="callBtnclickEvent">Pass the method to set in button click.</param>
     public void AddClickConfirmbtnEvent(OnClickBtnEvent callBtnclickEvent)
     {
-         //   if (jsonFile.name == "GasWelding")
+        //   if (jsonFile.name == "GasWelding")
         {
             tablet.SetActive(true);
         }
@@ -62,19 +62,20 @@ public class ReadStepsFromJson : MonoBehaviour
     /// </summary>
     public void HideConifmBnt()
     {
-      //  if (jsonFile.name == "GasWelding")
+        //  if (jsonFile.name == "GasWelding")
         {
             tablet.SetActive(false);
         }
         confirmbtn.gameObject.SetActive(false);
     }
-   
-   
+
+
     public void onClickRetryButton()
     {
         SceneManager.LoadScene(sceneName);
-      
+
     }
+
 }
 [System.Serializable]
 public class ReadSteps

@@ -63,9 +63,10 @@ public class GasCuttingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
+      //  CheckJobFlatPlace();
         //   checkStep5();
         //     Onclickbtn_s_2_confirm();
-       //    CheckJobFlatPlace();
+        //    CheckJobFlatPlace();
     }
 
     public void ConfirmSatrtbtn()
@@ -501,9 +502,6 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
         toolToReset[indexOfReset].transform.localEulerAngles = toolToResetRotate[indexOfReset];
         toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = true;
     }
-    public void OnPressXbutton()
-    {
-        readSteps.tablet.SetActive(!readSteps.tablet.active);
-    }
+    
     #endregion
 }

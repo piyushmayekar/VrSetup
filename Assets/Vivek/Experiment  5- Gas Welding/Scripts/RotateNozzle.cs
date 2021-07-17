@@ -12,6 +12,7 @@ public class RotateNozzle : MonoBehaviour
     [Header("Freeze Rotation")]
     public bool x, y, z, ishideMesh;
     public GameObject MeterObject, otherMeterobject;
+    public Transform leftHand,grabObject;
     public GameObject OtherRotate;
     public MeshRenderer HideMesh;
     public UnityEvent NextStep;
@@ -43,6 +44,7 @@ public class RotateNozzle : MonoBehaviour
     public void callEnterGrabObject()
     {
         // Debug.Log("call grab enter");
+        
         this.transform.localPosition = initPos;
         if (isclockwise)
         {
@@ -150,7 +152,12 @@ public class RotateNozzle : MonoBehaviour
     }
     public void callExitObjectGrab()
     {
-       // transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
+        //GameObject g = grabObject.GetChild(0).gameObject;
+        //leftHand = GameObject.Find("Left Hand").gameObject.transform;
+        //g.transform.parent = leftHand;
+        //g.transform.position = g.transform.parent.position;
+        //g.transform.rotation = g.transform.parent.rotation;
+        // transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
         if (ishideMesh)
         {
             HideMesh.enabled = true;
@@ -162,10 +169,15 @@ public class RotateNozzle : MonoBehaviour
     {
         leftHandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val);
         righthandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val1);
+        
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
+            //print("ENter.................");
+            //leftHand.GetChild(0).transform.parent = grabObject.transform;
             if (val || val1)
-                callEnterGrabObject();
+            {
+                callEnterGrabObject();  
+            }
         }
     }
     private void OnTriggerExit(Collider other)

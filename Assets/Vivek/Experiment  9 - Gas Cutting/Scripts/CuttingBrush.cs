@@ -40,7 +40,7 @@ public class CuttingBrush : MonoBehaviour
     void EdgeBrushed()
     {
         cleanPointCount--;
-        if (cleanPointCount <= 0&& !isStop)
+        if (cleanPointCount <= 0 && !isStop)
         {
             if (type == experimentType.GasJointPlate)
             {
@@ -51,7 +51,7 @@ public class CuttingBrush : MonoBehaviour
                 }
                 else
                 {
-                //    Debug.Log("call brush2");
+                    //    Debug.Log("call brush2");
                     GasJointweldingManager.instance.cleanBrushFinish();
 
                 }
@@ -72,8 +72,11 @@ public class CuttingBrush : MonoBehaviour
         }
         else
         {
-            ReadStepsFromJson.instance.tablet.SetActive(true);
-            ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+            if (!isStop)
+            {
+                ReadStepsFromJson.instance.tablet.SetActive(true);
+                ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+            }
         }
 
     }

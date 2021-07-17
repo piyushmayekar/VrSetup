@@ -55,7 +55,7 @@ public class XrButtonPress : MonoBehaviour
     bool inputValue;
 
     InputFeatureUsage<bool> inputFeature;
-
+    public GameObject tablet;
     void Awake()
     {
         // get label selected by the user
@@ -92,6 +92,10 @@ public class XrButtonPress : MonoBehaviour
                 OnRelease.Invoke();
             }
         }
+    }
+    public void OnPressXbutton()
+    {
+        tablet.SetActive(!tablet.active);
     }
 }
 
