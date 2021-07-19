@@ -9,7 +9,9 @@ using UnityEngine.SceneManagement;
 public class ReadStepsFromJson : MonoBehaviour
 {
     public static ReadStepsFromJson instance;
-    [SerializeField, Header("Json file to read Steps")] TextAsset jsonFile;
+ //   [SerializeField, Header("Json file to read Steps for English")] TextAsset englishJson;
+   // [SerializeField, Header("Json file to read Steps for Gujarati")] TextAsset  gujaratiJson;
+   public TextAsset jsonFile;
     public ReadSteps readSteps;
     public GameObject panel;
     [SerializeField] int countStep;
@@ -18,14 +20,17 @@ public class ReadStepsFromJson : MonoBehaviour
     public string sceneName;
     public delegate void OnClickBtnEvent();
     public GameObject tablet;
-
+    
+    public TMP_FontAsset gujaratiFont, englishFont;
+    public bool isChangeFont;
     void Awake()
     {
         instance = this;
         if (jsonFile != null)
-        {
-            readSteps = JsonUtility.FromJson<ReadSteps>(jsonFile.text);
-        }
+         {
+             readSteps = JsonUtility.FromJson<ReadSteps>(jsonFile.text);
+         }
+       // OnClickFontBtn();
         stepText.text = readSteps.ExperimentTitle;
     }
     void LoadNextStepText()
@@ -36,6 +41,25 @@ public class ReadStepsFromJson : MonoBehaviour
             countStep++;
         }
     }
+   /* public void OnClickFontBtn()
+    {
+            isChangeFont=!isChangeFont;
+        if (isChangeFont) //Gujarati font load
+        {
+            jsonFile = gujaratiJson;
+            stepText.font = gujaratiFont;
+        }
+        else
+        {
+            jsonFile = englishJson;
+            stepText.font = englishFont;
+        }
+
+        if (jsonFile != null)
+        {
+            readSteps = JsonUtility.FromJson<ReadSteps>(jsonFile.text);
+        }
+    }*/
     /// <summary>
     ///Load new text or msg on canvas.
     /// </summary>
