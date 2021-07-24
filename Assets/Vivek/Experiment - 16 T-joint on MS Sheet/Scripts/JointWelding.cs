@@ -10,19 +10,37 @@ public class JointWelding : MonoBehaviour
     public GameObject[] WeldingLine;
     public GameObject weldingModel, tackPoint;
     public Material RedMaterial, blackMaterial;
+    public GameObject fireRedFilerMesh;
     public SoundPlayer chippingHummer;
     public bool isWelding, isFiller;
+    public ParticleSystem starParticle;
+    public GameObject sparkLight;
     public void Awake()
     {
+
         instance = this;
         CurrentLine = 0;
         countlinePoint = 0;// WeldingLine[CurrentLine].transform.childCount;
     }
     public void Start()
     {
-         Debug.Log("gas welding");
 
+     /* Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
+        tc.a = 0;
+        fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
+
+     */   /* loat counter = 0;
+         RedBolt.GetComponent<Renderer>().material.shader = Shader.Find("HDRP/Lit";
+         while (counter < 1)
+         {
+             counter += Time.deltaTime / 3;
+             RedBolt.GetComponent<Renderer>().material.Lerp(materialToChange, materialToChange2, counter);
+             yield return 0;
+         }
+ */
+       
     }
+   
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Electrode")
@@ -30,18 +48,30 @@ public class JointWelding : MonoBehaviour
             isFiller = true;
         }
 
+        if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
+        {
+            starParticle.Play();
+            starParticle.GetComponent<AudioSource>().Play();
+            sparkLight.SetActive(true);
+        }
+
         if (other.transform.tag == "DotPoint" && isFiller)
         {
             countdotpoint++;
             other.transform.GetComponent<MeshRenderer>().material = blackMaterial;
             other.transform.GetComponent<SphereCollider>().enabled = false;
-
+            starParticle.Play();
+            starParticle.GetComponent<AudioSource>().Play();
+            sparkLight.SetActive(true);
+            Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
+            tc.a += 0.02f;
+            fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
             if (countdotpoint == 3)
             {
                 GasJointweldingManager.instance.CheckTackPoint();
             }
         }
-       
+
         if (isWelding && other.transform.tag == "Slag" && isFiller)
         {
             if (WeldingLine[CurrentLine].transform.GetChild(countlinePoint).name == other.transform.name)
@@ -70,6 +100,18 @@ public class JointWelding : MonoBehaviour
         if (other.transform.tag == "Electrode")
         {
             isFiller = false;
+            sparkLight.SetActive(false);
+          //  starParticle.GetComponent<AudioSource>().Stop();
+        //    starParticle.Stop();
+        }
+    }
+    private void OnTriggerStay(Collider other)//Add By GP
+    {
+      if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
+        {
+            starParticle.Play();
+            starParticle.GetComponent<AudioSource>().Play();
+            sparkLight.SetActive(true);
         }
     }
     public IEnumerator HammerBreakpoint(GameObject other)
@@ -114,6 +156,12 @@ public class JointWelding : MonoBehaviour
         if (countlinePoint + 1 <= WeldingLine[CurrentLine].transform.childCount)
         {
             WeldingLine[CurrentLine].transform.GetChild(countlinePoint).gameObject.SetActive(true);
+            starParticle.Play();
+            starParticle.GetComponent<AudioSource>().Play();
+            sparkLight.SetActive(true);
+            Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
+            tc.a += 0.02f;
+            fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
         }
         else// (countlinePoint <= 0)
         {
@@ -122,7 +170,7 @@ public class JointWelding : MonoBehaviour
             {
                 tackPoint.SetActive(false);
                 weldingModel.SetActive(true);
-             //   FreezeRotation.instance.isFreeze = false;
+                //   FreezeRotation.instance.isFreeze = false;
                 isFiller = true;
                 GasJointweldingManager.instance.weldingComplete();
             }
@@ -131,8 +179,8 @@ public class JointWelding : MonoBehaviour
                 WeldingLine[CurrentLine].SetActive(true);
                 countlinePoint = 0;
                 isWelding = false;
-            //    FreezeRotation.instance.isFreeze = false;
-              //  FreezeRotation.instance.Freezeangle = GasJointweldingManager.instance.torch_m_35d.transform;
+                //    FreezeRotation.instance.isFreeze = false;
+                //  FreezeRotation.instance.Freezeangle = GasJointweldingManager.instance.torch_m_35d.transform;
                 GasJointweldingManager.instance.torch_m_35d.SetActive(true);
                 GasJointweldingManager.instance.SecondTourchPlateRotate();
                 WeldingLine[CurrentLine].transform.GetChild(0).gameObject.SetActive(true);

@@ -34,8 +34,8 @@ public class GlassManage : MonoBehaviour
 
     IEnumerator waiting()
     {
-        yield return new WaitForSeconds(2f);
-        HideObject[0].SetActive(false);
+       // yield return new WaitForSeconds(2f);
+     //   HideObject[0].SetActive(false);
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < SnapObject_new.Length; i++)
         {

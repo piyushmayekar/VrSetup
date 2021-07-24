@@ -38097,9 +38097,7 @@ MonoBehaviour:
         m_CallState: 2
   Parentgo: {fileID: 2613788712829589752}
   SnapObject_new: []
-  HideObject:
-  - {fileID: 2613788712829589752}
-  - {fileID: 5465732661196448151}
+  HideObject: []
 --- !u!33 &2541664100410683490
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -38470,9 +38468,7 @@ MonoBehaviour:
   SnapObject_new:
   - {fileID: 5465732661461253348}
   - {fileID: 2613788712829589752}
-  HideObject:
-  - {fileID: 2863226564965509064}
-  - {fileID: 5465732661196448151}
+  HideObject: []
 --- !u!33 &2159335896188829690
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -81432,9 +81428,11 @@ MonoBehaviour:
   tackPoint: {fileID: 0}
   RedMaterial: {fileID: 2100000, guid: 397332fe61b7a994e814c2ddbbb6d9b5, type: 2}
   blackMaterial: {fileID: 4735783700988644922, guid: 4a0f88df8e3e4c049b64d9cdddd35f8f, type: 3}
+  fireRedFilerMesh: {fileID: 0}
   chippingHummer: {fileID: 0}
   isWelding: 0
   isFiller: 0
+  starParticle: {fileID: 0}
 --- !u!1 &8571546836665317616
 GameObject:
   m_ObjectHideFlags: 0
@@ -84208,6 +84206,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 652a9107a7129f44793ff58358a2e921, type: 3}
   - {fileID: 8300000, guid: ff53542ffff6ef54ca087fb93da8c17d, type: 3}
   - {fileID: 8300000, guid: b658fdaa346b9e1459e676d418d8de1b, type: 3}
+  creckykeyClip: {fileID: 8300000, guid: 7adef8f67628d3649926c3a195910ef4, type: 3}
   CallEndMethod:
     m_PersistentCalls:
       m_Calls:
@@ -84230,6 +84229,8 @@ MonoBehaviour:
   toolToResetRotate: []
   blueStartpos: {x: 0, y: 600, z: 0}
   redStartpos: {x: 0, y: 13, z: 0}
+  isRedCrecking: 0
+  isBlackCrecking: 0
 --- !u!1 &9175354301376379372
 GameObject:
   m_ObjectHideFlags: 0

@@ -138,9 +138,8 @@ public class RotateNozzle : MonoBehaviour
     void CallEndMethod()
     {
         //  Debug.Log("Call next step   " + OtherRotate.name);
-        this.gameObject.GetComponent<BoxCollider>().enabled = false;
-        NextStep.Invoke();
         this.gameObject.GetComponent<RotateNozzle>().enabled = false;
+        this.gameObject.GetComponent<BoxCollider>().enabled = false;
         if (isRegulator)
         {
             Destroy(this.gameObject.GetComponent<RotateNozzle>());
@@ -149,6 +148,7 @@ public class RotateNozzle : MonoBehaviour
         {
             this.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
         }
+        NextStep.Invoke();
     }
     public void callExitObjectGrab()
     {

@@ -240,7 +240,7 @@ public class GasJointweldingManager : MonoBehaviour
         SetObjectRestPos_Rotate(1); //lighter tool
 
         GasTableObjectcolliders[8].enabled = true;
-        GasTableObjectcolliders[8].GetComponent<Outline>().enabled = true;
+        objectOutLines[10].GetComponent<Outline>().enabled = true;
 
         readSteps.HideConifmBnt();
     }
@@ -248,8 +248,8 @@ public class GasJointweldingManager : MonoBehaviour
     public void CheckTackPoint()
     {
         supportPlat.SetActive(false);
-       // GasTableObjectcolliders[8].enabled = false;
-        GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;
+        // GasTableObjectcolliders[8].enabled = false;
+        objectOutLines[10].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10__confirm);
 
@@ -312,7 +312,7 @@ public class GasJointweldingManager : MonoBehaviour
         supportcube2.SetActive(false);
 
         GasTableObjectcolliders[8].enabled = true;
-        GasTableObjectcolliders[8].GetComponent<Outline>().enabled = true;
+        objectOutLines[10].GetComponent<Outline>().enabled = true;
         // JointWelding.instance.WeldingEnable();
         torch35D.SetActive(true);
     }
@@ -328,7 +328,7 @@ public class GasJointweldingManager : MonoBehaviour
     public void weldingComplete()
     {
         GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
-
+      //  GasTableObjectcolliders[8].GetComponent<FreezeRotation>().isFreeze = false;
         //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//objectOutLines[1].transform.position;// job plate material
                                                                                                       //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
@@ -337,10 +337,10 @@ public class GasJointweldingManager : MonoBehaviour
         supportCube1.SetActive(true);
         supportcube2.SetActive(true);
 
-        GasTableObjectcolliders[8].GetComponent<Outline>().enabled =false;
+        objectOutLines[10].GetComponent<Outline>().enabled = false;
         GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectEntered = null;
         GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectExited = null;
-      Destroy(  GasTableObjectcolliders[8].GetComponent<FreezeRotation>());
+    //  Destroy(  GasTableObjectcolliders[8].GetComponent<FreezeRotation>());
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_12_1_confirm);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GasWeldingStep : MonoBehaviour
 {
@@ -42,7 +43,14 @@ public class GasWeldingStep : MonoBehaviour
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;
+    public AudioClip creckykeyClip;
+
     public Vector3 blueStartpos, redStartpos;
+
+    [Header("Object Position Resetter ")]
+    public Transform[] toolToReset;
+    public List<Vector3> toolToResetPosition, toolToResetRotate;
+    public bool isRedCrecking, isBlackCrecking;
     private void Awake()
     {
         instance = this;
@@ -79,8 +87,13 @@ public class GasWeldingStep : MonoBehaviour
     }
     public void Start()
     {
+        for (int i = 0; i < toolToReset.Length; i++)
+        {
+            toolToResetPosition.Add(toolToReset[i].localPosition);
+            toolToResetRotate.Add(toolToReset[i].localEulerAngles);
+        }
         StartCoroutine(PlayGasWeldingStartAudio());
-      
+       // Onclickbtn_s_3_confirm();
         //   Onclickbtn_s_5_confirm();
         //  ConfirmSatrtbtn();
     }
@@ -178,22 +191,44 @@ public class GasWeldingStep : MonoBehaviour
     }
     public void Onclickcreacking_C_key1_canvas_btn()
     {
-        objectOutLines[0].enabled = false;
-        objectOutLines[1].enabled = true;
+        if (!isRedCrecking)
+        {
+            isRedCrecking = true;
+            GasTablekitcolliders[1].enabled = true;//red crecking  cylinder key
+            rotateNozzles[0].enabled = true; //red crecking  cylinder key
+            rotateNozzles[0].isclockwise = false;
+            stepAudioSource.PlayOneShot(creckykeyClip);
+        }
+        else
+        {
+            objectOutLines[0].enabled = false;
+            objectOutLines[1].enabled = true;
 
-        GasTablekitcolliders[2].enabled = true;//blue crecking cylinder key
-        GasTablekitcolliders[1].gameObject.SetActive(false);
+            GasTablekitcolliders[2].enabled = true;//blue crecking cylinder key
+            GasTablekitcolliders[1].gameObject.SetActive(false);
 
-        rotateNozzles[1].enabled = true; //black crecking  cylinder key
+            rotateNozzles[1].enabled = true; //black crecking  cylinder key
+        }
     }
     public void Onclickcreacking_C_key2_canvas_btn()
     {
-        objectOutLines[1].enabled = false;
-        objectOutLines[0].enabled = true;
-        GasTablekitcolliders[2].gameObject.SetActive(false);
-        Debug.Log("VideoComming");
-        videoPlayBtn.SetActive(true);
-        OnEnableStep4object();
+        if (!isBlackCrecking)
+        {
+            isBlackCrecking = true;
+                 GasTablekitcolliders[2].enabled = true;//blue crecking cylinder key
+            rotateNozzles[1].enabled = true; //black crecking  cylinder key
+            rotateNozzles[1].isclockwise = false;
+            stepAudioSource.PlayOneShot(creckykeyClip);
+        }
+        else
+        {
+            objectOutLines[1].enabled = false;
+            objectOutLines[0].enabled = true;
+            GasTablekitcolliders[2].gameObject.SetActive(false);
+            Debug.Log("VideoComming");
+            videoPlayBtn.SetActive(true);
+            OnEnableStep4object();
+        }
     }
     public void CheckCylinderCrack(GameObject go)
     {
@@ -507,6 +542,11 @@ public class GasWeldingStep : MonoBehaviour
     }
     public void onEnableStep_7_part3_object()
     {
+        //red glass reset
+        GasTablekitcolliders[15].gameObject.SetActive(true);
+        SetObjectRestPos_Rotate(0);
+
+
         //   Debug.Log("call 5");
         objectOutLines[12].enabled = false; // glass red outline
 
@@ -541,6 +581,10 @@ public class GasWeldingStep : MonoBehaviour
 
     public void OnEnableNozzleObject()
     {
+        //blue glass reset
+        GasTablekitcolliders[16].gameObject.SetActive(true);
+        SetObjectRestPos_Rotate(0);
+
         objectOutLines[5].enabled = false;  //blue   regulators outline
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_7_3_confirm);
@@ -856,5 +900,11 @@ public class GasWeldingStep : MonoBehaviour
             stepAudioSource.PlayOneShot(stepsAudioClip[index]);
         }
     }
-   
+    public void SetObjectRestPos_Rotate(int indexOfReset)
+    {
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = false;
+        toolToReset[indexOfReset].transform.localPosition = toolToResetPosition[indexOfReset];
+        toolToReset[indexOfReset].transform.localEulerAngles = toolToResetRotate[indexOfReset];
+        toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = true;
+    }
 }

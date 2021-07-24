@@ -29,6 +29,7 @@ public class SetUpTrolley : MonoBehaviour
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;
+    public AudioClip creckykeyClip;
     [Header("Step End Method ")]
     public UnityEvent CallEndMethod;
     int countCrackTab;
@@ -36,6 +37,8 @@ public class SetUpTrolley : MonoBehaviour
     public Transform[] toolToReset;
     public List<Vector3> toolToResetPosition, toolToResetRotate;
     public Vector3 blueStartpos, redStartpos;
+
+    public bool isRedCrecking, isBlackCrecking;
     public void Awake()
     {
         instance = this;
@@ -68,6 +71,7 @@ public class SetUpTrolley : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
+      //  Onclickbtn_s_3_confirm();
     }
     public void Update()
     {
@@ -109,18 +113,42 @@ public class SetUpTrolley : MonoBehaviour
     }
     public void Onclickcreacking_C_key1_canvas_btn()
     {
-        objectOutLines[0].enabled = false;
+        if (!isRedCrecking)
+        {
+            isRedCrecking = true;
+            GasTablekitcolliders[0].enabled = true;//red crecking  cylinder key
+            rotateNozzles[0].enabled = true; //red crecking  cylinder key
+            rotateNozzles[0].isclockwise = false;
+            rotateNozzles[0].RotateValue = 20;
 
-        objectOutLines[1].enabled = true;
-        GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
-        rotateNozzles[1].enabled = true; //black crecking  cylinder key
+            stepAudioSource.PlayOneShot(creckykeyClip);
+        }
+        else
+        {
+            objectOutLines[0].enabled = false;
+            objectOutLines[1].enabled = true;
+            GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
+            rotateNozzles[1].enabled = true; //black crecking  cylinder key
+        }
     }
     public void Onclickcreacking_C_key2_canvas_btn()
     {
-        objectOutLines[1].enabled = false;
-        objectOutLines[0].enabled = false;
-       
-        OnEnableStep4object();
+        if (!isBlackCrecking)
+        {
+            isBlackCrecking = true;
+            GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
+            rotateNozzles[1].enabled = true; //black crecking  cylinder key
+            rotateNozzles[1].isclockwise = false; //black crecking  cylinder key
+            rotateNozzles[1].RotateValue = 20;
+            stepAudioSource.PlayOneShot(creckykeyClip);
+        }
+        else
+        {
+            objectOutLines[1].enabled = false;
+            objectOutLines[0].enabled = false;
+
+            OnEnableStep4object();
+        }
     }
     public void CheckCylinderCrack(GameObject go)
     {
@@ -444,6 +472,8 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[21].enabled = false; //Glass object for red
         GasTablekitcolliders[21].GetComponent<Outline>().enabled = false; //Glass object for red
         objectOutLines[4].enabled = false;//regulator red
+        GasTablekitcolliders[21].gameObject.SetActive(true);
+        SetObjectRestPos_Rotate(0);
 
         GasTablekitcolliders[22].enabled = true; //Glass object for black
         GasTablekitcolliders[22].GetComponent<Outline>().enabled = true; //Glass object for black
@@ -457,6 +487,9 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[22].enabled = false; //Glass object for black
         GasTablekitcolliders[22].GetComponent<Outline>().enabled = false; //Glass object for black
         objectOutLines[5].enabled = false;//regulator black
+        GasTablekitcolliders[22].gameObject.SetActive(true);
+        SetObjectRestPos_Rotate(1);
+
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
     }
@@ -465,11 +498,11 @@ public class SetUpTrolley : MonoBehaviour
     #region Step 9_p: Show Fixing orifice nozzle of 1.2 mm on gas cutting torch(cutting blow pipe).
     void Onclickbtn_s9_confirm()
     {
-        GasTablekitcolliders[21].gameObject.SetActive(true);
+      /*  GasTablekitcolliders[21].gameObject.SetActive(true);
         SetObjectRestPos_Rotate(0);
 
         GasTablekitcolliders[22].gameObject.SetActive(true);
-        SetObjectRestPos_Rotate(1);
+        SetObjectRestPos_Rotate(1);*/
 
         onEnableStep9Object();
         readSteps.HideConifmBnt();
