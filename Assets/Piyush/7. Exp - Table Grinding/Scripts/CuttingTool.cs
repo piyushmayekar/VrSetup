@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PiyushUtils;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Grinding
 {
@@ -9,7 +11,10 @@ namespace Grinding
     {
         public Action<GrindingWheelType> OnGrindingComplete;
         [SerializeField] int grindingDone = 0;
+        [SerializeField] string toolAnimToPlayOnSecondHandPoint = "Cutting Tool";
+        [SerializeField] CustomXRGrabInteractable _XRGrabInteractable;
         public Tooltips leftToolTips, rightToolTips;
+        
         void Awake()
         {
             leftToolTips.TurnOnTip();
@@ -27,6 +32,24 @@ namespace Grinding
                 OnGrindingComplete?.Invoke(GrindingWheelType.Rough);
             if (grindingDone == 4)
                 OnGrindingComplete?.Invoke(GrindingWheelType.Surface);
+        }
+
+        public void OnSecondGrabPointHoverEnter(HoverEnterEventArgs args)
+        {
+            PiyushUtils.HandPresence handPresence = args.interactor.GetComponentInChildren<PiyushUtils.HandPresence>();
+            if (handPresence && _XRGrabInteractable.isSelected)
+            {
+                handPresence.OnSecondHandPointHoverEnter(toolAnimToPlayOnSecondHandPoint);
+            }
+        }
+
+        public void OnSecondGrabPointHoverExit(HoverExitEventArgs args)
+        {
+            PiyushUtils.HandPresence handPresence = args.interactor.GetComponentInChildren<PiyushUtils.HandPresence>();
+            if (handPresence)
+            {
+                handPresence.OnSecondHandPointHoverExit();
+            }
         }
     }
 
@@ -56,5 +79,7 @@ namespace Grinding
             currentIndex++;
             TurnOnTip();
         }
+
+        
     }
 }

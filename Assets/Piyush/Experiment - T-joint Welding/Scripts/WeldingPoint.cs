@@ -21,11 +21,12 @@ namespace TWelding
         public static event Action<bool> CheckWeldingElectrodeAngle;
 
         [SerializeField] bool isWeldingDone = false, shouldShowSlag = false;
-        [SerializeField] float breakForceThreshold = 1.5f;
+        [SerializeField] float breakForceThreshold = 1.5f, weldingTimer = 1f;
         [SerializeField] MeshRenderer _renderer;
         [SerializeField] Material indicatorMaterial, weldingMat;
         [SerializeField] bool isPointOnLeft = false;
         Rigidbody rb;
+        Coroutine cor = null;
 
         public bool IsWeldingDone { get => isWeldingDone; set => isWeldingDone = value; }
         public bool ShouldShowSlag { get => shouldShowSlag; set => shouldShowSlag = value; }
@@ -52,17 +53,47 @@ namespace TWelding
         {
             if (other.CompareTag(_Constants.WELDING_TAG) && !isWeldingDone && (IsPointOnLeft == machine.IsElectrodeAtLeft))
             {
-                IsWeldingDone = true;
-                _renderer.material = weldingMat;
-                _renderer.enabled = true;
-                OnWeldingDone?.Invoke();
-                if (ShouldShowSlag)
+                if (cor == null)
+                    cor = StartCoroutine(Timer());
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(_Constants.WELDING_TAG) && !isWeldingDone)
+            {
+                if (cor != null)
                 {
-                    GetComponent<Collider>().isTrigger = false;
-                    CheckWeldingElectrodeAngle?.Invoke(IsPointOnLeft);
+                    StopCoroutine(cor);
+                    cor = null;
                 }
             }
         }
+
+        IEnumerator Timer()
+        {
+            while (weldingTimer > 0f)
+            {
+                weldingTimer -= Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            if (weldingTimer <= 0f && !IsWeldingDone)
+                OnWeldingTimerFinish();
+        }
+
+        void OnWeldingTimerFinish()
+        {
+            IsWeldingDone = true;
+            _renderer.material = weldingMat;
+            _renderer.enabled = true;
+            OnWeldingDone?.Invoke();
+            if (ShouldShowSlag)
+            {
+                GetComponent<Collider>().isTrigger = false;
+                CheckWeldingElectrodeAngle?.Invoke(IsPointOnLeft);
+            }
+        }
+
         internal void OnSlagHitWithHammer() => OnHitWithHammer?.Invoke();
     }
 }

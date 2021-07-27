@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TWelding
@@ -14,16 +15,9 @@ namespace TWelding
         [SerializeField, Tooltip("The final job plates which will be shown after the plates are placed in the sockets")]
         List<GameObject> finalJobs;
 
-        [SerializeField] GameObject button;
-        [SerializeField] string _buttonText = "Done";
         [Header("Scriber Marking")]
-        [SerializeField] List<GameObject> markingPoints;
-        [SerializeField] LineRenderer markingLine;
-        [SerializeField] int currentMarking = 0;
-        [SerializeField] List<GameObject> scriberHighlights;
-        [SerializeField] List<MarkingLinePoint> markingLinePoints;
-        int markingLinePointIndex = 0;
-        public int LineMarkingPoint { get => markingLinePointIndex; set => markingLinePointIndex = value; }
+        [SerializeField] List<PiyushUtils.ScriberMarking> scriberMarkings;
+        [SerializeField] int scriberIndex= 0;
 
         //Step 1: Place one job plate at the flat position
         //Step 2: Do the scriber marking
@@ -50,81 +44,35 @@ namespace TWelding
                 }
                 if (index == 0)
                     StartScriberMarking();
-                else if (index == JobPlate.jobPlates.Count - 1)
+                else if (index == 1)
                 {
-                    button.SetActive(true);
-                    button.gameObject.SetActive(true);
-                    button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = _buttonText;
-                    XRGrabInteractable interactable = button.GetComponent<XRGrabInteractable>();
-                    interactable.firstHoverEntered.RemoveAllListeners();
-                    interactable.firstHoverEntered.AddListener(new UnityEngine.Events.UnityAction<HoverEnterEventArgs>(OnButtonClicked));
-
+                    OnTaskCompleted();
                 }
             }
         }
-        public void OnButtonClicked(HoverEnterEventArgs arg)
-        {
-            button.SetActive(false);
-            OnTaskCompleted();
-        }
         public void StartScriberMarking()
         {
-            TurnOnMarkingPoint();
+            scriberMarkings[scriberIndex].StartMarkingProcess();
+            scriberMarkings[scriberIndex].OnMarkingDone += OnScriberMarkingDone;
         }
-
-        void TurnOnMarkingPoint()
+        
+        void OnScriberMarkingDone()
         {
-            markingPoints[currentMarking].SetActive(true);
-            MarkingPoint markingPoint = markingPoints[currentMarking].GetComponentInChildren<MarkingPoint>();
-            if (markingPoint)
-                markingPoint.OnMarkingDone += OnMarkingDone;
-            else if (markingPoints[currentMarking].transform.GetChild(0).GetComponentInChildren<MarkingLinePoint>())
+            scriberIndex++;
+            if (scriberIndex >= scriberMarkings.Count)
             {
-                markingLinePointIndex = 0;
-                markingLine = markingPoints[currentMarking].transform.GetChild(0).GetComponent<LineRenderer>();
-                markingLinePoints = new List<MarkingLinePoint>(markingPoints[currentMarking].transform.GetChild(0).GetComponentsInChildren<MarkingLinePoint>());
-                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+                StartCoroutine(DelayedCalls());
             }
-        }
-
-        internal void OnMarkingDone()
-        {
-            //Turning off highlights
-            markingPoints[currentMarking].transform.GetChild(1).gameObject?.SetActive(false);
-            markingPoints[currentMarking].transform.GetChild(2).gameObject?.SetActive(false);
-            currentMarking++;
-            if (currentMarking < markingPoints.Count)
-                TurnOnMarkingPoint();
             else
-            {
-                jobSockets[1].socketActive = true;
-                jobSockets[1].GetComponent<MeshRenderer>().enabled = true;
-            }
+                StartScriberMarking();
         }
-
-        internal void OnMarkingPointScriberEnter(int index, Vector3 position)
+        IEnumerator DelayedCalls()
         {
-            if (index == LineMarkingPoint)
-            {
-                markingLinePoints[index].gameObject.SetActive(false);
-                OnMarkingDone(position);
-            }
-        }
-
-        internal void OnMarkingDone(Vector3 position)
-        {
-            markingLinePointIndex++;
-            markingLine.positionCount++;
-            markingLine.SetPosition(markingLine.positionCount - 1, position);
-            scriberHighlights.ForEach(highlight => highlight.SetActive(false));
-            if (markingLinePointIndex >= markingLinePoints.Count)
-                OnMarkingDone();
-        }
-
-        public override void OnTaskCompleted()
-        {
-            button.SetActive(false);
-            base.OnTaskCompleted();
+            yield return new WaitForSeconds(.2f);
+            GameObject.FindGameObjectWithTag(_Constants.STEEL_RULER_TAG).GetComponent<PositionResetter>().ResetPos();
+            yield return new WaitForSeconds(1f);
+            jobSockets[1].socketActive = true;
+            jobSockets[1].GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }

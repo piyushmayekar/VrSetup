@@ -37,8 +37,7 @@ namespace Grinding
         /// <param name="other">The Collision data associated with this collision.</param>
         void OnCollisionEnter(Collision other)
         {
-            if (!grinder.IsOn) return;
-            // Debug.Log(other.gameObject.name);
+            if (!GrindingMachine.isMachineOn) return;
             isInContact = true;
             contactPoint = other.GetContact(0).point;
             if (!_ps.isPlaying)
