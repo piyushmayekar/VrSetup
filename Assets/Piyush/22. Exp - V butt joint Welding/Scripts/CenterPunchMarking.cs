@@ -4,16 +4,17 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 
-namespace VWelding
+namespace PiyushUtils
 {
     public class CenterPunchMarking : MonoBehaviour
     {
         public UnityAction OnMarkingDone;
-        [SerializeField] List<GameObject> dotPoints;
-        [SerializeField] List<MarkingPoint> dotMarkingPoints;
+        [SerializeField] List<CPMarkingPoint> dotMarkingPoints;
         [SerializeField] int currentMarkingPointIndex = 0;
         [SerializeField] CenterPunch centerPunch;
 
+        public int TotalPointCount => dotMarkingPoints.Count;
+        public bool IsMarkingDone => currentMarkingPointIndex >= TotalPointCount;
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
@@ -31,25 +32,32 @@ namespace VWelding
 
         public void OnHammerHit()
         {
-            Debug.Log(nameof(OnHammerHit) + " " + dotMarkingPoints[currentMarkingPointIndex].IsCenterPunchInside);
             if (dotMarkingPoints[currentMarkingPointIndex].IsCenterPunchInside)
                 OnDotMarkingDone(dotMarkingPoints[currentMarkingPointIndex]);
         }
 
-        public void OnDotMarkingDone(MarkingPoint markingPoint)
+        public void OnDotMarkingDone(CPMarkingPoint markingPoint)
         {
-            dotPoints[currentMarkingPointIndex].SetActive(true);
             dotMarkingPoints[currentMarkingPointIndex].ToggleHighlight(false);
+            dotMarkingPoints[currentMarkingPointIndex].visiblePoint.SetActive(true);
             currentMarkingPointIndex++;
-            if (currentMarkingPointIndex < dotPoints.Count)
+            if (currentMarkingPointIndex < TotalPointCount)
             {
-                dotMarkingPoints[currentMarkingPointIndex].StartMarking();
+                CancelInvoke();
+                Invoke(nameof(EnableNextMarkingPoint), 1f);
             }
             else
             {
                 CenterPunch.OnHammerHit -= OnHammerHit;
                 OnMarkingDone?.Invoke();
             }
+        }
+
+        private void EnableNextMarkingPoint()
+        {
+            if (currentMarkingPointIndex >= 0 && currentMarkingPointIndex < TotalPointCount)
+                dotMarkingPoints[currentMarkingPointIndex].StartMarking();
+            CancelInvoke();
         }
 
         /// <summary>
@@ -74,5 +82,39 @@ namespace VWelding
                 centerPunch.OnPunchingAreaExit();
             }
         }
+
+        #region EDITOR METHODS
+
+        [ContextMenu("Fill Marking List")]
+        /// <summary>
+        /// Editor Method. Don't use anywhere else
+        /// </summary>
+
+        public void FillMarkingList()
+        {
+            dotMarkingPoints = new List<CPMarkingPoint>(GetComponentsInChildren<CPMarkingPoint>());
+        }
+
+        [ContextMenu("Perform All Markings")]
+        /// <summary>
+        /// Editor Method. Don't use anywhere else
+        /// </summary>
+
+        public void PerformAllMarkings()
+        {
+            dotMarkingPoints.ForEach(point => point.visiblePoint.SetActive(true));
+        }
+
+        [ContextMenu("Remove All Markings")]
+        /// <summary>
+        /// Editor Method. Don't use anywhere else
+        /// </summary>
+
+        public void RemoveAllMarkings()
+        {
+            dotMarkingPoints.ForEach(point => point.visiblePoint.SetActive(false));
+        }
+
+        #endregion
     }
 }

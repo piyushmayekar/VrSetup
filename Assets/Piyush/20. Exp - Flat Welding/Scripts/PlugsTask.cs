@@ -36,6 +36,7 @@ namespace FlatWelding
                 else
                 {
                     CurrentKnob.OnTargetValueSet += OnTaskCompleted;
+                    currentKnob.GetComponent<Outline>().enabled = true;
                 }
             }
         }

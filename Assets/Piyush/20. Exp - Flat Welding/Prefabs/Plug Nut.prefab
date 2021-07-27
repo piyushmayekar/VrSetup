@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 3523232551371785077}
   - component: {fileID: 7222345135310767717}
   - component: {fileID: 2887056595080302970}
+  - component: {fileID: 8593102606899517197}
   m_Layer: 0
   m_Name: Plug Nut
   m_TagString: Untagged
@@ -295,3 +296,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.007205762, y: 0.019777242, z: 0.02257521}
   m_Center: {x: 0, y: 0, z: -0.000000077765435}
+--- !u!114 &8593102606899517197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074738082317584447}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0.048674583, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

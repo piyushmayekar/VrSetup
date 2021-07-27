@@ -20,7 +20,7 @@ namespace LapWelding
         List<XRSocketInteractor> standSockets;
         [SerializeField] int standIndex = 0;
         [SerializeField] Material standMaterial;
-        [SerializeField] ScriberMarking scriberMarking;
+        [SerializeField] PiyushUtils.ScriberMarking scriberMarking;
 
         //Step 1: Place one job plate in the bottom position
         //Step 2: Place the plate stands
@@ -63,12 +63,19 @@ namespace LapWelding
                     scriberMarking.StartMarkingProcess();
                     scriberMarking.OnMarkingDone += () =>
                     {
-                        TogglePlatePlacementPoint(1);
+                        StartCoroutine(DelayedCalls());
                     };
                 }
                 else
                     ToggleStandPlacementPoint(standIndex, true);
             }
+        }
+        IEnumerator DelayedCalls()
+        {
+            yield return new WaitForSeconds(.2f);
+            GameObject.FindGameObjectWithTag(_Constants.STEEL_RULER_TAG).GetComponent<PositionResetter>().ResetPos();
+            yield return new WaitForSeconds(1f);
+            TogglePlatePlacementPoint(1);
         }
 
         public void ToggleStandPlacementPoint(int index, bool on = true)

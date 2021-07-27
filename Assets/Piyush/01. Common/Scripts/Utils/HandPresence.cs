@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -10,6 +11,8 @@ namespace PiyushUtils
 {
     public class HandPresence : MonoBehaviour
     {
+        [SerializeField] UnityEvent OnControllerXButtonPress;
+
         private InputDevice targetDevice;
         public InputDeviceCharacteristics controllerCharacteristics;
 
@@ -18,6 +21,9 @@ namespace PiyushUtils
         [SerializeField] Animator handAnimator;
         [SerializeField] CustomXRGrabInteractable currentGrabInteractable;
         [SerializeField] string toolName = string.Empty;
+        [SerializeField] bool isXButtonPressed=false;
+        bool wasXButtonPressed = false;
+
         public readonly static float gripThreshold = 0.9f;
         //Animator clip names
         const string OPEN = "Open", FIST = "Fist";
@@ -78,6 +84,16 @@ namespace PiyushUtils
         {
             targetDevice.TryGetFeatureValue(CommonUsages.trigger, out triggerValue);
             targetDevice.TryGetFeatureValue(CommonUsages.grip, out gripValue);
+            targetDevice.TryGetFeatureValue(CommonUsages.primaryButton, out isXButtonPressed);
+            if(isXButtonPressed && !wasXButtonPressed)
+            {
+                wasXButtonPressed = true;
+                OnControllerXButtonPress?.Invoke();
+            }
+            else if(!isXButtonPressed && wasXButtonPressed)
+            {
+                wasXButtonPressed = false;
+            }
         }
 
         //When Grabbing First Grab Point - in case the interactable is a two hand grab interactable

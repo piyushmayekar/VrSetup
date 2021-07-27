@@ -6387,7 +6387,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60a5fbef03d656478154a5015760a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCuttingDone:
+    m_PersistentCalls:
+      m_Calls: []
   _collider: {fileID: 482435786}
+  timer: 1
+  bladeInContact: 0
 --- !u!65 &482435786
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10324,7 +10329,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60a5fbef03d656478154a5015760a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCuttingDone:
+    m_PersistentCalls:
+      m_Calls: []
   _collider: {fileID: 770929261}
+  timer: 1
+  bladeInContact: 0
 --- !u!65 &770929261
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17474,6 +17484,10 @@ PrefabInstance:
     - target: {fileID: 6481033523143369854, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6481033523613369811, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6481033523806017613, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: NextStep.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -25130,7 +25144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60a5fbef03d656478154a5015760a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCuttingDone:
+    m_PersistentCalls:
+      m_Calls: []
   _collider: {fileID: 1673258679}
+  timer: 1
+  bladeInContact: 0
 --- !u!65 &1673258679
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ namespace FlatWelding
 
         public override void OnTaskBegin()
         {
+            base.OnTaskBegin();
             pointsParent.SetActive(true);
             weldingPoints = new List<WeldingPoint>(pointsParent.GetComponentsInChildren<WeldingPoint>());
             weldingPoints.ForEach(x =>

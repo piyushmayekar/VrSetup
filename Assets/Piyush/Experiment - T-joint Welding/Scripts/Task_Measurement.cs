@@ -8,27 +8,27 @@ namespace TWelding
 {
     public class Task_Measurement : Task
     {
-        [SerializeField] GameObject button;
-        [SerializeField] string _buttonText = "Done";
+        [SerializeField] List<PiyushUtils.PlateMeasurement> plateMeasurements;
+        [SerializeField] int index = 0;
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            Invoke(nameof(EnableDoneButton), 2f);
+            plateMeasurements = new List<PiyushUtils.PlateMeasurement>(FindObjectsOfType<PiyushUtils.PlateMeasurement>());
+            plateMeasurements[index].StartMeasurement();
+            plateMeasurements[index].OnMeasurementDone.AddListener(OnPlateMeasurementDone);
         }
 
-        private void EnableDoneButton()
+        void OnPlateMeasurementDone()
         {
-            button.gameObject.SetActive(true);
-            button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = _buttonText;
-            XRGrabInteractable interactable = button.GetComponent<XRGrabInteractable>();
-            interactable.firstHoverEntered.RemoveAllListeners();
-            interactable.firstHoverEntered.AddListener(new UnityEngine.Events.UnityAction<HoverEnterEventArgs>(OnButtonClicked));
-        }
+            index++;
+            if (index >= plateMeasurements.Count)
+                OnTaskCompleted();
+            else
+            {
+                plateMeasurements[index].StartMeasurement();
+                plateMeasurements[index].OnMeasurementDone.AddListener(OnPlateMeasurementDone);
+            }
 
-        public void OnButtonClicked(HoverEnterEventArgs arg)
-        {
-            button.SetActive(false);
-            OnTaskCompleted();
         }
 
     }

@@ -13,23 +13,32 @@ namespace FlatWelding
         [SerializeField] List<GameObject> objectsToPlace;
         [SerializeField] int socketIndex;
         [SerializeField] float waitTime = 1f;
-        [SerializeField] PlugNut plugNut;
-        [SerializeField] Transform spannerT;
-        [SerializeField] bool isSpannerInScrewRange = false;
+        [SerializeField] SpannerTrigger nutSpannerTrigger, screwSpannerTrigger;
+        [SerializeField] List<Transform> spanners;
+        [SerializeField] Transform nutFittingSpannerT;
+        [SerializeField] bool isSpannerInNutRange = false, isSpannerInScrewRange = false;
         [SerializeField] float spannerInitAngle = 0f, rotateSpeed = 2f, repositionSpeed = 1f;
         [SerializeField] Vector3 nutFitPos;
         Transform nutTransform => objectsToPlace[objectsToPlace.Count - 1].transform;
         public void StartConnecting()
         {
             sockets[socketIndex].socketActive = true;
+            if (socketIndex == 0)
+                objectsToPlace.ForEach(o => o.GetComponent<Outline>().enabled = true);
         }
 
         public void OnSocketEnter(SelectEnterEventArgs args)
         {
             if (args.interactable.gameObject == objectsToPlace[socketIndex])
             {
+                objectsToPlace[socketIndex].GetComponent<Outline>().enabled = false;
                 args.interactor.selectEntered.RemoveAllListeners();
                 StartCoroutine(TimedSocketEnabler());
+            }
+            else
+            {
+                sockets[socketIndex].socketActive = false;
+                Invoke(nameof(StartConnecting), 1f);
             }
         }
 
@@ -45,38 +54,54 @@ namespace FlatWelding
                 StartConnecting();
             else
             {
+                spanners.ForEach(spanner => spanner.GetComponent<Outline>().enabled = true);
                 //Start screw motion
-                plugNut.OnSpannerEnter += () =>
+                nutSpannerTrigger.OnSpannerEnter += () =>
                 {
-                    isSpannerInScrewRange = true;
+                    isSpannerInNutRange = true;
+                    nutFittingSpannerT = nutSpannerTrigger.spannerT;
                     StartCoroutine(NutFitter());
                 };
-                plugNut.OnSpannerExit += () =>
+                nutSpannerTrigger.OnSpannerExit += () =>
                 {
-                    isSpannerInScrewRange = false;
+                    isSpannerInNutRange = false;
                     StopCoroutine(NutFitter());
                     spannerInitAngle = 0f;
+                };
+                screwSpannerTrigger.OnSpannerEnter += () =>
+                {
+                    isSpannerInScrewRange = true;
+                };
+                nutSpannerTrigger.OnSpannerExit += () =>
+                {
+                    isSpannerInScrewRange = false;
                 };
             }
         }
 
         IEnumerator NutFitter()
         {
-            while (isSpannerInScrewRange)
+            while (isSpannerInNutRange)
             {
-                float angle = Vector3.SignedAngle(transform.right, spannerT.transform.up,
-                 transform.right);
-                if (spannerInitAngle == 0f) spannerInitAngle = angle;
-                else
+                if (isSpannerInScrewRange)
                 {
-                    var dt = angle - spannerInitAngle;
-                    nutTransform.Rotate(new Vector3(Mathf.Abs(dt) * rotateSpeed, 0f, 0f), Space.Self);
-                    nutTransform.localPosition = Vector3.MoveTowards(nutTransform.localPosition,
-                    nutFitPos, dt * repositionSpeed);
-                    spannerInitAngle = angle;
-                    if (nutTransform.localPosition == nutFitPos)
+                    float angle = Vector3.SignedAngle(transform.right, nutFittingSpannerT.transform.up,
+                 transform.right);
+                    if (spannerInitAngle == 0f) spannerInitAngle = angle;
+                    else
                     {
-                        OnNutFittingDone();
+                        var dt = angle - spannerInitAngle;
+                        nutTransform.Rotate(new Vector3(-Mathf.Abs(dt) * rotateSpeed, 0f, 0f), Space.Self);
+                        var newNutPosition = Vector3.MoveTowards(nutTransform.localPosition,
+                        nutFitPos, dt * repositionSpeed);
+                        if (Vector3.Distance(newNutPosition, nutFitPos) < Vector3.Distance(nutTransform.localPosition, nutFitPos))
+                            nutTransform.localPosition = Vector3.MoveTowards(nutTransform.localPosition,
+                            nutFitPos, dt * repositionSpeed);
+                        spannerInitAngle = angle;
+                        if (nutTransform.localPosition == nutFitPos)
+                        {
+                            OnNutFittingDone();
+                        }
                     }
                 }
                 yield return new WaitForEndOfFrame();
@@ -85,7 +110,8 @@ namespace FlatWelding
 
         private void OnNutFittingDone()
         {
-            plugNut.GetComponent<Collider>().enabled = false;
+            nutSpannerTrigger.GetComponent<Collider>().enabled = false;
+            spanners.ForEach(spanner => spanner.GetComponent<Outline>().enabled = false);
             StopAllCoroutines();
             OnConnectionDone?.Invoke();
         }

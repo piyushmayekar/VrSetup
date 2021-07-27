@@ -179,8 +179,10 @@ MonoBehaviour:
   - {fileID: 3727202906768873855}
   socketIndex: 0
   waitTime: 1
-  plugNut: {fileID: 7834868159316643762}
+  nutSpannerTrigger: {fileID: 7834868159316643762}
+  screwSpannerTrigger: {fileID: 566400411075146207}
   spannerT: {fileID: 0}
+  isSpannerInNutRange: 0
   isSpannerInScrewRange: 0
   spannerInitAngle: 0
   rotateSpeed: 1
@@ -459,6 +461,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4320227051367902825, guid: 53b50a2ec371292489909a4925337854, type: 3}
   m_PrefabInstance: {fileID: 598179227724832626}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &566400411075146207 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1121795407828659885, guid: 53b50a2ec371292489909a4925337854, type: 3}
+  m_PrefabInstance: {fileID: 598179227724832626}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81825b862b02ef047a31c9a4205006c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &944216843594139156
 PrefabInstance:
   m_ObjectHideFlags: 0

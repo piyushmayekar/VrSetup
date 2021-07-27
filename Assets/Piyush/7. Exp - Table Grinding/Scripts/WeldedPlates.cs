@@ -1,8 +1,9 @@
+using PiyushUtils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Events;
-using VWelding;
 
 namespace Grinding
 {
@@ -15,8 +16,36 @@ namespace Grinding
         [SerializeField] List<GrindingPlate> plates;
         [SerializeField] List<int> grindTracker = new List<int>() { 0, 0 };
 
+        [Header("Grabbing")]
+        [SerializeField] PiyushUtils.TwoHandGrabInteractable twoHand;
+        [SerializeField] XRSimpleInteractable leftHandInteractable, rightHandInteractable;
+
+        private void Awake()
+        {
+            twoHand.selectEntered.AddListener(OnFirstHandSelectEnter);
+        }
+
+        #region GRABBING
+        void OnFirstHandSelectEnter(SelectEnterEventArgs args)
+        {
+            twoHand.secondHandGrabPoints.ForEach(point =>
+            {
+                point.selectEntered.RemoveAllListeners();
+                point.selectExited.RemoveAllListeners();
+            });
+
+            if (twoHand.grabbedInteractorType == CustomXRGrabInteractable.InteractorType.LeftHand) 
+                twoHand.secondHandGrabPoints = new List<XRSimpleInteractable>() { rightHandInteractable };
+            if (twoHand.grabbedInteractorType == CustomXRGrabInteractable.InteractorType.RightHand) 
+                twoHand.secondHandGrabPoints = new List<XRSimpleInteractable>() { leftHandInteractable };
+
+            twoHand.SubscribeToSecondHandGrabPointEvents();
+        }
+        #endregion
+
         public void StartScriberMarking()
         {
+            scriberMarking.gameObject.SetActive(true);
             scriberMarking.StartMarkingProcess();
             scriberMarking.OnMarkingDone += () =>
             {

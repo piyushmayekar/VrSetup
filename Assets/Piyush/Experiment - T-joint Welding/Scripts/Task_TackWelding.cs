@@ -13,11 +13,12 @@ namespace TWelding
         [SerializeField] XRGrabInteractable jobPlatesGrabInteractable;
         [SerializeField] List<WeldingPoint> weldingPoints;
         [SerializeField] int weldingDoneOnPoints = 0;
-        [SerializeField] GameObject button;
+        [SerializeField] Button button;
         [SerializeField] string _buttonText = "Done";
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
+            button = PiyushUtils.TaskManager.Instance.confirmButton;
             weldingPoints[0].transform.parent.gameObject.SetActive(true);
             weldingPoints.ForEach(point => point.OnWeldingDone += () =>
             {
@@ -35,15 +36,13 @@ namespace TWelding
         {
             button.gameObject.SetActive(true);
             button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = _buttonText;
-            XRGrabInteractable interactable = button.GetComponent<XRGrabInteractable>();
-            interactable.firstHoverEntered.RemoveAllListeners();
-            interactable.firstHoverEntered.AddListener(new UnityEngine.Events.UnityAction<HoverEnterEventArgs>(OnButtonClicked));
+            button.onClick.AddListener(new UnityEngine.Events.UnityAction(OnButtonClicked));
         }
 
-        public void OnButtonClicked(HoverEnterEventArgs arg)
+        public void OnButtonClicked()
         {
             OnTaskCompleted();
-            button.SetActive(false);
+            button.gameObject.SetActive(false);
         }
 
         public override void OnTaskCompleted()

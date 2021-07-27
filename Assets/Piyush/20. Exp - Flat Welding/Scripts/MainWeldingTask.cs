@@ -9,22 +9,22 @@ namespace FlatWelding
     {
 
         [SerializeField] GameObject tackingPointsParent, pointsParent;
-        List<WeldingPoint> weldingPoints;
+        List<CornerWelding.WeldingPoint> weldingPoints;
 
         int weldingDone = 0;
-        public List<WeldingPoint> WeldingPoints { get => weldingPoints; set => weldingPoints = value; }
+        public List<CornerWelding.WeldingPoint> WeldingPoints { get => weldingPoints; set => weldingPoints = value; }
 
         public override void OnTaskBegin()
         {
             pointsParent.SetActive(true);
-            WeldingPoints = new List<WeldingPoint>(pointsParent.GetComponentsInChildren<WeldingPoint>());
+            WeldingPoints = new List<CornerWelding.WeldingPoint>(pointsParent.GetComponentsInChildren<CornerWelding.WeldingPoint>());
             WeldingPoints.ForEach(x =>
             {
                 x.OnWeldingDone += OnPointWeldingDone;
             });
         }
 
-        internal void OnPointWeldingDone()
+        internal void OnPointWeldingDone(CornerWelding.WeldingPoint point)
         {
             weldingDone++;
             if (weldingDone >= WeldingPoints.Count)

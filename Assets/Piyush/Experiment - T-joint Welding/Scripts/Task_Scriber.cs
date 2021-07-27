@@ -11,18 +11,17 @@ namespace TWelding
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            JobPlate.jobPlates[plateIndex].ScriberMarkingStep();
+            JobPlate.jobPlates[plateIndex].StartScriberMarking();
             JobPlate.jobPlates.ForEach(plate => plate.OnScriberMarkingDone += OnScriberMarkingDone);
         }
 
         void OnScriberMarkingDone()
         {
-            Debug.Log(nameof(OnScriberMarkingDone) + plateIndex);
             plateIndex++;
             if (plateIndex >= JobPlate.jobPlates.Count)
                 OnTaskCompleted();
             else
-                JobPlate.jobPlates[plateIndex].ScriberMarkingStep();
+                JobPlate.jobPlates[plateIndex].StartScriberMarking();
         }
 
     }

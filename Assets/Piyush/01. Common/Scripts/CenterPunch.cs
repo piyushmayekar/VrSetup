@@ -8,6 +8,7 @@ public class CenterPunch : MonoBehaviour
 {
     public static event UnityAction OnHammerHit;
     public float hitThreshold = 1f;
+    [SerializeField] SoundPlayer soundPlayer;
 
     Rigidbody rb;
     PiyushUtils.Hammer hammer;
@@ -41,6 +42,8 @@ public class CenterPunch : MonoBehaviour
     {
         if (other.gameObject.CompareTag(_Constants.HAMMER_TAG))
         {
+            if (!soundPlayer.AudioSource.isPlaying)
+                soundPlayer.PlayClip(0);
             if (other.impulse.magnitude >= hitThreshold)
             {
                 OnHammerHit?.Invoke();

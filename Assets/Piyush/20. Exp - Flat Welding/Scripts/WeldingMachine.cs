@@ -16,6 +16,7 @@ namespace FlatWelding
         [SerializeField] ParticleSystem ps;
         [SerializeField] GameObject sparkLight;
         [SerializeField] bool isOn = false, isElectrodePlaced = false, isTipInContact = false;
+        [SerializeField] GameObject fauxElectrode;
         [SerializeField] GameObject tip;
         [SerializeField] SoundPlayer soundPlayer;
         [SerializeField] GameObject indicator;
@@ -23,7 +24,7 @@ namespace FlatWelding
         [SerializeField] ElectrodeType requiredElectrodeType;
         [SerializeField] Electrode currentElectrode;
         [SerializeField] XRSocketInteractor socket_Electrode;
-
+        Rigidbody _rb;
         public ElectrodeType RequiredElectrodeType { get => requiredElectrodeType; set => requiredElectrodeType = value; }
         public bool IsSqueezerTouched { get => isSqueezerTouched; set => isSqueezerTouched = value; }
 
@@ -53,8 +54,19 @@ namespace FlatWelding
                 ToggleGunSqueezers(true);
                 squeezerCollider.enabled = false;
                 // Debug.Log("setting " + (!IsHoldingElectrode));
-                socket_Electrode.socketActive = !IsElectrodePlaced;
 
+                if (currentElectrode != null)
+                {
+                    //Drop the electrode
+                    TurnOnElectrodeGrab();
+                    socket_Electrode.socketActive = false;
+                    fauxElectrode.SetActive(false);
+                    currentElectrode.GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    socket_Electrode.socketActive = true;
+                }
             }
             // Debug.Log("-- " + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
             //If squeezer is touched & is holding an electrode, 
@@ -91,13 +103,18 @@ namespace FlatWelding
         {
             if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
             {
+                _rb.velocity = Vector3.zero;
+                _rb.angularVelocity = Vector3.zero;
                 Electrode electrode = args.interactable.GetComponent<Electrode>();
                 if (electrode.ElectrodeType == RequiredElectrodeType)
                 {
                     IsElectrodePlaced = true;
-                    currentElectrode = electrode;
                     OnElectrodePlacedEvent?.Invoke();
                 }
+                currentElectrode = electrode;
+                fauxElectrode.SetActive(true);
+                currentElectrode.GetComponent<MeshRenderer>().enabled = false;
+                Invoke(nameof(TurnOffElectrodeGrab), 1f);
                 ToggleWeldingTip();
                 ShowErrorIndicator(electrode.ElectrodeType != RequiredElectrodeType, _Constants.ELECTRODE_NOT_CORRECT);
             }
@@ -108,16 +125,43 @@ namespace FlatWelding
             }
         }
 
+        [ContextMenu("Enable Electrode Grab")]
+        public void TurnOnElectrodeGrab()
+        {
+            if (currentElectrode != null)
+                currentElectrode.GetComponent<XRGrabInteractable>().colliders[0].enabled = true;
+        }
+
+        public void TurnOffElectrodeGrab()
+        {
+            if (currentElectrode != null)
+            { 
+                currentElectrode.GetComponent<XRGrabInteractable>().colliders[0].enabled = false;
+            }
+        }
+
         public void OnElectrodeSocketExit(SelectExitEventArgs args)
         {
             if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
             {
+                fauxElectrode.SetActive(false);
+                if (currentElectrode != null)
+                { 
+                    currentElectrode.GetComponent<MeshRenderer>().enabled = true;
+                    Rigidbody rb= currentElectrode.GetComponent<Rigidbody>();
+                    rb.isKinematic = false;
+                    rb.useGravity = true;
+                    XRGrabInteractable grab = args.interactable as XRGrabInteractable;
+                    grab.movementType = XRBaseInteractable.MovementType.VelocityTracking;
+                    grab.colliders.ForEach(collider => collider.isTrigger = false);
+                }
                 currentElectrode = null;
                 IsElectrodePlaced = false;
             }
         }
         void Start()
         {
+            _rb = GetComponent<Rigidbody>();
             ToggleMachine(false);
             ToggleWeldingTip();
         }

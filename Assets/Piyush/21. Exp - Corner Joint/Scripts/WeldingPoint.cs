@@ -13,18 +13,15 @@ namespace CornerWelding
         public event Action<WeldingPoint> OnWeldingDone;
 
         [SerializeField] bool isWeldingDone = false, shouldShowSlag = false;
-        [SerializeField] float breakForceThreshold = 1.5f;
+        [SerializeField] float breakForceThreshold = 1.5f, weldingTimer = 1f;
         [SerializeField] MeshRenderer _renderer;
         [SerializeField] Material weldingMat;
         Rigidbody rb;
-
+        Coroutine cor=null;
         public bool IsWeldingDone { get => isWeldingDone; set => isWeldingDone = value; }
         public bool ShouldShowSlag { get => shouldShowSlag; set => shouldShowSlag = value; }
         public float BreakForceThreshold { get => breakForceThreshold; set => breakForceThreshold = value; }
 
-        static WeldingMachine machine;
-        static ChippingHammer chippingHammer;
-        static WeldingArea weldingArea;
 
         /// <summary>
         /// This function is called when the object becomes enabled and active.
@@ -32,21 +29,48 @@ namespace CornerWelding
         void OnEnable()
         {
             rb = GetComponent<Rigidbody>();
-            machine = WeldingMachine.Instance;
-            chippingHammer = ChippingHammer.Instance;
-            weldingArea = WeldingArea.Instance;
         }
 
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(_Constants.WELDING_TAG) && !isWeldingDone)
             {
-                IsWeldingDone = true;
-                _renderer.material = weldingMat;
-                _renderer.enabled = true;
-                OnWeldingDone?.Invoke(this);
+                if (cor == null)
+                    cor = StartCoroutine(Timer());
             }
         }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(_Constants.WELDING_TAG) && !isWeldingDone)
+            {
+                if (cor != null)
+                { 
+                    StopCoroutine(cor);
+                    cor = null;
+                }
+            }
+        }
+
+        IEnumerator Timer()
+        {
+            while (weldingTimer > 0f)
+            {
+                weldingTimer -= Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            if (weldingTimer <= 0f && !IsWeldingDone)
+                OnWeldingTimerFinish();
+        }
+
+        void OnWeldingTimerFinish()
+        {
+            IsWeldingDone = true;
+            _renderer.material = weldingMat;
+            _renderer.enabled = true;
+            OnWeldingDone?.Invoke(this);
+        }
+
         internal void OnSlagHitWithHammer() => OnHitWithHammer?.Invoke();
     }
 }

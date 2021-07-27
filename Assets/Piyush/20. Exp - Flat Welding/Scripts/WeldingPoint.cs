@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using FlatWelding;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,18 +16,15 @@ namespace FlatWelding
         public event UnityAction OnWeldingDone, OnHitWithHammer;
 
         [SerializeField] bool isWeldingDone = false, shouldShowSlag = false;
-        [SerializeField] float breakForceThreshold = 1.5f;
+        [SerializeField] float breakForceThreshold = 1.5f, weldingTimer = 1f;
         [SerializeField] MeshRenderer _renderer;
         [SerializeField] ParticleSystem residueThrowPS;
         [SerializeField] Material indicatorMaterial, weldingMat, afterHammerHitMat;
         Rigidbody rb;
+        Coroutine cor = null;
 
         public bool IsWeldingDone { get => isWeldingDone; set => isWeldingDone = value; }
         public bool ShouldShowSlag { get => shouldShowSlag; set => shouldShowSlag = value; }
-
-        static WeldingMachine machine;
-        static ChippingHammer chippingHammer;
-        static WeldingArea weldingArea;
 
         /// <summary>
         /// This function is called when the object becomes enabled and active.
@@ -34,24 +32,46 @@ namespace FlatWelding
         void OnEnable()
         {
             rb = GetComponent<Rigidbody>();
-            machine = WeldingMachine.Instance;
-            chippingHammer = ChippingHammer.Instance;
-            weldingArea = WeldingArea.Instance;
         }
 
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(_Constants.WELDING_TAG) && !isWeldingDone)
             {
-                IsWeldingDone = true;
-                _renderer.material = weldingMat;
-                _renderer.enabled = true;
-                OnWeldingDone?.Invoke();
-                if (ShouldShowSlag)
+                if (cor == null)
+                    cor = StartCoroutine(Timer());
+            }
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag(_Constants.WELDING_TAG) && !isWeldingDone)
+            {
+                if (cor != null)
                 {
-                    GetComponent<Collider>().isTrigger = false;
+                    StopCoroutine(cor);
+                    cor = null;
                 }
             }
+        }
+
+        IEnumerator Timer()
+        {
+            while (weldingTimer > 0f)
+            {
+                weldingTimer -= Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            if (weldingTimer <= 0f && !IsWeldingDone)
+                OnWeldingTimerFinish();
+        }
+
+        void OnWeldingTimerFinish()
+        {
+            IsWeldingDone = true;
+            _renderer.material = weldingMat;
+            _renderer.enabled = true;
+            OnWeldingDone?.Invoke();
         }
 
         void OnCollisionEnter(Collision other)
