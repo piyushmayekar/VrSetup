@@ -165,6 +165,8 @@ public class SetUpTrolley : MonoBehaviour
     #region Step 4: Fix regulators on both the cylinders.
     void OnEnableStep4object()
     {
+        readSteps.AddClickEventVideoPlay(0); // regulators video vlip animation
+
         PlayStepAudio(6);// regulators audio
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
@@ -191,7 +193,9 @@ public class SetUpTrolley : MonoBehaviour
     {
         objectOutLines[3].enabled = false; //black cylinder key
         objectOutLines[4].enabled = false; //red cylinder key
-    //    Debug.Log("call end  of regulator");
+                                           //    Debug.Log("call end  of regulator");
+
+        readSteps.AddClickEventVideoPlay(1); // Flashback Arrestor video vlip animation
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_1_confirm);
     }
@@ -215,6 +219,8 @@ public class SetUpTrolley : MonoBehaviour
     }
     public void DoneFlashRed()
     {
+        readSteps.AddClickEventVideoPlay(0); // hose connector video vlip animation
+
         //black connector and outline
         GasTablekitcolliders[6].enabled = true;
         GasTablekitcolliders[6].GetComponent<Outline>().enabled = true;
@@ -223,6 +229,7 @@ public class SetUpTrolley : MonoBehaviour
     }
     public void DoneConnector_R_red()
     {
+        readSteps.videoPlayBtn.gameObject.SetActive(false);
         OnEnableStep5object();
 
     }

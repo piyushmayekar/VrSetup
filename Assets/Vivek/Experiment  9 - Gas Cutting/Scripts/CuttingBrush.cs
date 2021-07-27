@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CuttingBrush : MonoBehaviour
@@ -9,7 +10,8 @@ public class CuttingBrush : MonoBehaviour
     [SerializeField] SoundPlayer soundPlayer;
     [SerializeField] Rigidbody parentBrushRb;
     public experimentType type;
-    public bool isStop;
+    public bool isStop,isCleaning;
+    public TextMeshProUGUI CleanText;
     private void Awake()
     {
         instance = this;
@@ -55,6 +57,7 @@ public class CuttingBrush : MonoBehaviour
                     GasJointweldingManager.instance.cleanBrushFinish();
 
                 }
+                CleanText.text = "";
             }
             else
             {
@@ -67,17 +70,41 @@ public class CuttingBrush : MonoBehaviour
                     GasCuttingManager.instance.cleanBrushFinish();
 
                 }
+                CleanText.text = "";
             }
+            isCleaning = false;
             isStop = true;
         }
         else
         {
             if (!isStop)
             {
+                isCleaning = true;
                 ReadStepsFromJson.instance.tablet.SetActive(true);
-                ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+                if (ReadStepsFromJson.instance.isChangeFont)
+                {
+                    CleanText.text = "";
+                    ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+                }
+                else
+                {
+                    ReadStepsFromJson.instance.stepText.text = "\n sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
+                    CleanText.text = cleanPointCount.ToString() + "/15";
+                }
             }
         }
-
+    }
+    public void BrushFontChanage()
+    {
+        if (ReadStepsFromJson.instance.isChangeFont)
+        {
+            CleanText.text = "";
+            ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+        }
+        else
+        {
+            ReadStepsFromJson.instance.stepText.text = "\n sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
+            CleanText.text = cleanPointCount.ToString() + "/15";
+        }
     }
 }
