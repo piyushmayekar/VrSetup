@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using PiyushUtils;
 
 
-
+//This class needs Corrections and improvement
 public class WeldingFlame_VL : MonoBehaviour
 {
     public List<GameObject> weldingPoints = new List<GameObject>();
@@ -29,6 +29,7 @@ public class WeldingFlame_VL : MonoBehaviour
     private Material currentWeldPointMat;
     public float speed = 50f;
     public bool weldPointHeated = false;
+    public bool flameOnWeldPoint;
 
     public Rigidbody WeldingTorchRb;
 
@@ -82,7 +83,7 @@ public class WeldingFlame_VL : MonoBehaviour
 
         if (fillerRod != null)
         {
-            if (other.tag == "WeldingTorchHighlight")
+            if (other.CompareTag("WeldingTorchHighlight"))
             {
                 HLSound.player.PlayHighlightSnapSound();
                 other.gameObject.SetActive(false);
@@ -103,7 +104,7 @@ public class WeldingFlame_VL : MonoBehaviour
                 WeldingTorchRb.GetComponent<CustomXRGrabInteractable>().trackRotation = false;
             }
 
-            if (other.tag == "FillerRod" && weldPointHeated)
+            if (other.CompareTag("FillerRod") && weldPointHeated)
             {
                 Debug.Log("Filler Rod Entered When headed");
                 if (weldingPoints[currentCount] != null)
@@ -119,7 +120,7 @@ public class WeldingFlame_VL : MonoBehaviour
                         fusionRunDone = true;
                         WeldingTorchRb.constraints = RigidbodyConstraints.None;
                         WeldingTorchRb.GetComponent<CustomXRGrabInteractable>().trackRotation = true;
-
+                        fillerRod.PlayEffect(false);
                         EmptyParams();
                         if (CallMethodOnFusionRunDone != null)
                         {
@@ -139,7 +140,8 @@ public class WeldingFlame_VL : MonoBehaviour
                 }
 
 
-            }else if (other.tag == "GasWeldingPoint" && !fusionRunDone)
+            }
+            else if (other.tag == "GasWeldingPoint" && !fusionRunDone)
             {
                 if (weldingPoints[currentCount] != null)
                 {
@@ -154,9 +156,10 @@ public class WeldingFlame_VL : MonoBehaviour
 
            
 
-        if (other.tag == "FillerRod" && !weldPointHeated)
+
+        if (other.CompareTag("FillerRod") && flameOnWeldPoint)
         {
-            Debug.Log("Filler Rod Entered When Not headed");
+            fillerRod.PlayEffect(true);
         }
        
 
@@ -164,7 +167,7 @@ public class WeldingFlame_VL : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "GasWeldingPoint" && !weldPointHeated)
+        if (other.CompareTag("GasWeldingPoint") && !weldPointHeated)
         {
             
             if (currentWeldPoint != null)
@@ -172,13 +175,17 @@ public class WeldingFlame_VL : MonoBehaviour
                 if (other.gameObject == currentWeldPoint)
                 {
                    weldPointHeated = MeltWeldPoint(other.gameObject);
+                    flameOnWeldPoint = true;
                 }
             }
             
         }
 
-       
+        
+  
     }
+
+    
 
     private bool MeltWeldPoint(GameObject gameObject)
     {
@@ -207,9 +214,15 @@ public class WeldingFlame_VL : MonoBehaviour
 
         if (fillerRod != null)
         {
-            if (other.tag == "GasWeldingPoint")
+            if (other.CompareTag("GasWeldingPoint"))
             {
-                Debug.Log("Flame is NO Contact with fillerRod");
+                flameOnWeldPoint = false;
+                fillerRod.PlayEffect(false);
+            }
+
+            if (other.CompareTag("FillerRod"))
+            {
+                fillerRod.PlayEffect(false);
             }
         }
         

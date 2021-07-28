@@ -14,6 +14,7 @@ public class ScriberMarking_VL : MonoBehaviour
 
     public List<GameObject> markingPoints = new List<GameObject>();
     private UnityEvent CallMethodOnMarkingDone = new UnityEvent();
+    private UnityEvent CallMethodOnMeasuringDone = new UnityEvent();
 
     public int countPoint;
     public int currentcount = 0;
@@ -27,11 +28,30 @@ public class ScriberMarking_VL : MonoBehaviour
     private GameObject SteelRuler;
     private GameObject ScriberHL;
 
+    public int countMeasurePoint;
+    public int currentMeasureCount = 0;
+    public bool isMeasuring;
+    public Material measurePointMat;
     private void Start()
     {
         audio =  GetComponent<AudioSource>();
     }
 
+    public void SetScriberForMeasuremetn(Transform WorkPiece,int _measureCount,int lineNo)
+    {
+        string measureObjName = "MeasurePoint" + lineNo.ToString();
+        GameObject measureObj = WorkPiece.Find(measureObjName).gameObject;
+        measureObj.SetActive(true);
+        countMeasurePoint = _measureCount;
+        isMeasuring = true;
+    }
+
+    public void EmptyParamsForMeaurement()
+    {
+        isMeasuring = false;
+        countMeasurePoint = 0;
+        currentMeasureCount = 0;
+    }
     public void SetScriberMarkingParams(Transform WorkPiece,Transform steelRuler, int indexOfMarkingLineObject,GameObject _ScriberHL)
     {
         string markingLineObjName = "MarkingLine" + indexOfMarkingLineObject.ToString();
@@ -145,9 +165,12 @@ public class ScriberMarking_VL : MonoBehaviour
         SteelRuler = null;
        // Debug.Log("Reseting the params of scriber");
 
+    }
 
-
-
+    public void EmptyParamsForMeasuring()
+    {
+        currentMeasureCount = 0;
+        countMeasurePoint = 0;
     }
 
     public void AssignMethodOnMarkingDone(UnityAction method)
@@ -160,6 +183,14 @@ public class ScriberMarking_VL : MonoBehaviour
         CallMethodOnMarkingDone.AddListener(method);
     }
 
+    public void AssignMethodOnMeasuringDone(UnityAction method)
+    {
+        if (CallMethodOnMeasuringDone != null)
+        {
+            CallMethodOnMeasuringDone.RemoveAllListeners();
+        }
+        CallMethodOnMeasuringDone.AddListener(method);
+    }
     #region InBuilt Methods
     private void OnTriggerExit(Collider other)
     {
@@ -179,6 +210,24 @@ public class ScriberMarking_VL : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+
+        if (isMeasuring)
+        {
+            if (other.tag == "MarkPoint")
+            {
+                other.gameObject.GetComponent<MeshRenderer>().sharedMaterial = measurePointMat;
+                other.tag = "Disable";
+                currentMeasureCount++;
+                if (currentMeasureCount == countMeasurePoint)
+                {
+                    if (CallMethodOnMeasuringDone != null)
+                    {
+                        CallMethodOnMeasuringDone.Invoke();
+                    }
+                    //Invoke method
+                }
+            }
+        }
         if (!readyForOperation)
         {
             return;
@@ -189,7 +238,8 @@ public class ScriberMarking_VL : MonoBehaviour
             {
                 HLSound.player.PlayHighlightSnapSound();
 
-                ScriberHL.SetActive(false);
+                other.gameObject.SetActive(false);
+                //ScriberHL.SetActive(false);
 
             }
 

@@ -12,10 +12,11 @@ public class WireBrush_VL : MonoBehaviour
     private AudioSource Audio;
 
     private UnityEvent CallMethodOnCleaningJobDone = new UnityEvent();
-
+    private Rigidbody rb;
     private void Start()
     {
-        Audio = GetComponent<AudioSource>();   
+        Audio = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
     }
     public void SetWireBrushParams(int _brushCount, string _objectTag)
     {
@@ -24,6 +25,11 @@ public class WireBrush_VL : MonoBehaviour
         currentCount = 0;
     }
 
+
+    private void OnCollisionExit(Collision collision)
+    {
+        rb.freezeRotation = false;
+    }
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -46,8 +52,11 @@ public class WireBrush_VL : MonoBehaviour
             }
             else
             {
+                ReadStepsFromJson.instance.tablet.SetActive(true);
+                ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + currentCount.ToString() + "/10";
                 effect.Play();
                 Audio.Play();
+                rb.freezeRotation = true;
                 //Debug.Log(currentCount);
             }
         }

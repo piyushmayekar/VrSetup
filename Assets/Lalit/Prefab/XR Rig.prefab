@@ -385,6 +385,9 @@ MonoBehaviour:
   confirmbtn: {fileID: 1347877960}
   sceneName: Test
   tablet: {fileID: 1882849223}
+  gujaratiFont: {fileID: 0}
+  englishFont: {fileID: 0}
+  isChangeFont: 0
 --- !u!1 &241381279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,6 +3441,7 @@ MonoBehaviour:
   OnRelease:
     m_PersistentCalls:
       m_Calls: []
+  tablet: {fileID: 0}
 --- !u!1 &5638808379807149304
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
+using PiyushUtils;
 
 
 public class SteelRuler_VL : MonoBehaviour
 {
     private UnityEvent CallMethodOnJobSnap = new UnityEvent();
+    private UnityEvent CallMethodOnSnapForMeasurement = new UnityEvent();
     public bool readyForOperation;
     public GameObject highlight;
     private AudioSource audio;
+    public bool isMeasuring;
+    private Rigidbody rb;
 
     private void Start()
     {
         audio = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -43,6 +49,21 @@ public class SteelRuler_VL : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isMeasuring)
+        {
+            if (other.tag == "MeasurementHL")
+            {
+                transform.position = other.transform.position;
+                transform.eulerAngles = other.transform.eulerAngles;
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+                other.gameObject.SetActive(false);
+                gameObject.GetComponent<CustomXRGrabInteractable>().enabled = false;
+                if (CallMethodOnSnapForMeasurement != null)
+                {
+                    CallMethodOnSnapForMeasurement.Invoke();
+                }
+            }
+        }
         if (!readyForOperation)
         {
             return;
@@ -75,6 +96,15 @@ public class SteelRuler_VL : MonoBehaviour
         }
 
         CallMethodOnJobSnap.AddListener(method);
+    }
+
+    public void AssignMethodOnSnapForMeasurement(UnityAction method)
+    {
+        if (CallMethodOnSnapForMeasurement != null)
+        {
+            CallMethodOnSnapForMeasurement.RemoveAllListeners();
+        }
+        CallMethodOnSnapForMeasurement.AddListener(method);
     }
 
     //No use 

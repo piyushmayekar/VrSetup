@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using PiyushUtils;
 
 
 
@@ -47,7 +48,8 @@ public class Manager : MonoBehaviour
 
     
     public GameObject WireBrushHL,SteelRulerHL, ScriberHL, CenterPunchHL, HammerHL,RodHL1, RodHL2, TorchHL1, TorchHL2,ChipHammerHL, WireBrushHL2;
-
+    public GameObject ScriberHL1, ScriberHL2, ScriberHL3, ScriberHL4, ScriberHL5;
+    public GameObject CenterPunchHL1, HammerHL1;
     #region Tools GameObject
     public GameObject WireBrushGo;
     public GameObject SteelRulerGo;
@@ -94,6 +96,9 @@ public class Manager : MonoBehaviour
 
     public GameObject ZeroMeterred, ZeroMeterBlack;
 
+
+    public GameObject Ruler1, Ruler2;
+    public GameObject MeasureObj1, MeasureObj2;
     public void Awake()
     {
         instance = this;
@@ -196,14 +201,60 @@ public class Manager : MonoBehaviour
         WorkPiece.GetComponentInChildren<Outline>().enabled = false;
         Debug.Log("Cleaning Done");
         readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(EnableMarking);
+        readSteps.AddClickConfirmbtnEvent(EnableMeasuring);
         //EnableJobPlacingForWelding();
     }
 
     #region MarkingMethods
-    public void EnableMarking()
+
+    public void EnableMeasuring()
     {
         readSteps.HideConifmBnt();
+        Ruler1.SetActive(true);
+        ToolsHighlight[1].enabled = true;
+        WorkPiece.GetComponentInChildren<Outline>().enabled = true;
+        SteelRuler.isMeasuring = true;
+        SteelRuler.AssignMethodOnSnapForMeasurement(EnableScriberForMeasureing);
+
+
+    }
+
+    public void EnableScriberForMeasureing()
+    {
+        ToolsHighlight[2].enabled = true;
+        Scriber.isMeasuring = true;
+        Scriber.SetScriberForMeasuremetn(WorkPiece, 6,1);
+        Scriber.AssignMethodOnMeasuringDone(EnableMeasuringAgain);
+    }
+
+    public void EnableMeasuringAgain()
+    {
+        ToolsHighlight[1].enabled = true;
+        SteelRuler.GetComponent<CustomXRGrabInteractable>().enabled = true;
+        SteelRuler.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        Ruler2.SetActive(true);
+        SteelRuler.AssignMethodOnSnapForMeasurement(EnableScriberForMeasureingAgain);
+        Scriber.EmptyParamsForMeasuring();
+
+    }
+
+    public void EnableScriberForMeasureingAgain()
+    {
+        ToolsHighlight[2].enabled = true;
+        
+        Scriber.SetScriberForMeasuremetn(WorkPiece,6, 2);
+        Scriber.AssignMethodOnMeasuringDone(EnableMarking);
+
+
+    }
+    public void EnableMarking()
+    {
+        Scriber.isMeasuring = false;
+        SteelRuler.isMeasuring = false;
+        SteelRuler.GetComponent<CustomXRGrabInteractable>().enabled = true;
+        SteelRuler.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        Scriber.EmptyParamsForMeasuring();
+        SteelRuler.GetComponent<CustomXRGrabInteractable>().enabled = true;
         ToolsHighlight[1].enabled = true;
         WorkPiece.GetComponentInChildren<Outline>().enabled = true;
         SteelRuler.readyForOperation = true;
@@ -214,6 +265,7 @@ public class Manager : MonoBehaviour
 
     public void EnableCenterLineDrawingMech()
     {
+        Scriber.EmptyParamsForMeasuring();
         ToolsHighlight[2].enabled = true;
         SteelRuler_AttachedToJob.gameObject.SetActive(true);
         Scriber.SetScriberMarkingParams(WorkPiece, SteelRuler_AttachedToJob, 0, ScriberHL);
@@ -223,30 +275,35 @@ public class Manager : MonoBehaviour
 
     public void EnableFirstLineDrawing()
     {
+        ScriberHL1.SetActive(true);
         Scriber.SetScriberMarkingParams(WorkPiece, SteelRuler_AttachedToJob, 1);
         Scriber.AssignMethodOnMarkingDone(EnableSecondLineDrawing);
     }
 
     public void EnableSecondLineDrawing()
     {
+        ScriberHL2.SetActive(true);
         Scriber.SetScriberMarkingParams(WorkPiece, SteelRuler_AttachedToJob, 2);
         Scriber.AssignMethodOnMarkingDone(EnableThirdLineDrawing);
     }
 
     public void EnableThirdLineDrawing()
     {
+        ScriberHL3.SetActive(true);
         Scriber.SetScriberMarkingParams(WorkPiece, SteelRuler_AttachedToJob, 3);
         Scriber.AssignMethodOnMarkingDone(EnableFourthLineDrawing);
     }
 
     public void EnableFourthLineDrawing()
     {
+        ScriberHL4.SetActive(true);
         Scriber.SetScriberMarkingParams(WorkPiece, SteelRuler_AttachedToJob, 4);
         Scriber.AssignMethodOnMarkingDone(EnableFifthLineDrawing);
     }
 
     public void EnableFifthLineDrawing()
     {
+        ScriberHL5.SetActive(true);
         Scriber.SetScriberMarkingParams(WorkPiece, SteelRuler_AttachedToJob, 5);
         Scriber.AssignMethodOnMarkingDone(DoneMarking);
     }
@@ -275,6 +332,8 @@ public class Manager : MonoBehaviour
 
     public void EnablePunchingForSecondLine()
     {
+        CenterPunchHL1.SetActive(true);
+        HammerHL1.SetActive(true);
         DotPunch.SetCenterPunchParams(WorkPiece, 2);
         DotPunch.AssignMethodOnPunchingDone(CompleteAllPunchingLine);
     }
@@ -286,7 +345,8 @@ public class Manager : MonoBehaviour
         DotPuchLines[2].SetActive(true);
         ToolsHighlight[3].enabled = false;
         ToolsHighlight[4].enabled = false;
-
+        MeasureObj1.SetActive(false);
+        MeasureObj2.SetActive(false);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableJobPlacingForWelding);
     }
@@ -321,7 +381,7 @@ public class Manager : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
        // readSteps.AddClickConfirmbtnEvent(GasWeldingSetUP.instance.Onclickbtn_s_3_confirm);
-        readSteps.AddClickConfirmbtnEvent(EnableJobPlacingForWelding);
+        readSteps.AddClickConfirmbtnEvent(FlameControlStep);
 
         //readSteps.AddClickConfirmbtnEvent(EnablePPEKitStep);
 
@@ -360,7 +420,7 @@ public class Manager : MonoBehaviour
 
     IEnumerator lighterEnable()
     {
-        GasTableObjectcolliders[0].enabled = false;  //lighter
+        //GasTableObjectcolliders[0].enabled = false;  //lighter
         lighter_Flame.SetActive(false);
         GasTableObjectcolliders[0].GetComponent<SnapGrabbleObject_VL>().enabled = false;
         //GasTableKitColliders[12].gameObject.SetActive(false);
@@ -483,7 +543,7 @@ public class Manager : MonoBehaviour
         readSteps.HideConifmBnt();
         neturel_F.SetActive(false);
         reduce_or_carb_F.SetActive(true); // redus true  1
-                                          //reduce_or_carb_F.GetComponent<AudioSource>().Play();
+        reduce_or_carb_F.GetComponent<AudioSource>().Play();
         isTurnOffFlame = true;
         rotateNozzles[0].enabled = true;
         rotateNozzles[0].RotateValue = 40;
@@ -507,7 +567,7 @@ public class Manager : MonoBehaviour
             oxidizing_F.SetActive(true);
 
             GasTableObjectcolliders[3].enabled = false;
-            //oxidizing_F.GetComponent<AudioSource>().Play();
+            oxidizing_F.GetComponent<AudioSource>().Play();
 
             GasTableObjectcolliders[4].enabled = true; //Green bol oxidizing
             GasTableObjectcolliders[4].transform.gameObject.SetActive(true); //green bol oxidizing
