@@ -9,6 +9,7 @@ namespace PiyushUtils
     {
         [SerializeField] SoundPlayer soundPlayer;
         [SerializeField] string toolAnimToPlayOnSecondHandPoint = "Flat File Top";
+        [SerializeField] CustomXRGrabInteractable grabInteractable;
         /// <summary>
         /// OnCollisionEnter is called when this collider/rigidbody has begun
         /// touching another rigidbody/collider.
@@ -34,7 +35,7 @@ namespace PiyushUtils
         public void OnSecondGrabPointHoverEnter(HoverEnterEventArgs args)
         {
             HandPresence handPresence = args.interactor.GetComponentInChildren<HandPresence>();
-            if (handPresence)
+            if (handPresence && grabInteractable.isSelected)
             {
                 handPresence.OnSecondHandPointHoverEnter(toolAnimToPlayOnSecondHandPoint);
             }

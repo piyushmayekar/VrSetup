@@ -21,7 +21,7 @@ public class TwoHandGrabInteractable : XRGrabInteractable
         foreach (var item in secondHandGrabPoints)
         {
             item.selectEntered.AddListener(OnSecondHandGrab);
-            item.onSelectExited.AddListener(OnSecondHandRelease);
+            item.selectExited.AddListener(OnSecondHandRelease);
         }
     }
 
@@ -63,7 +63,7 @@ public class TwoHandGrabInteractable : XRGrabInteractable
         base.ProcessInteractable(updatePhase);
     }
 
-    private void OnSecondHandRelease(XRBaseInteractor arg0)
+    private void OnSecondHandRelease(SelectExitEventArgs arg0)
     {
         secondInteractor = null;
         // Debug.Log("Second hand release");

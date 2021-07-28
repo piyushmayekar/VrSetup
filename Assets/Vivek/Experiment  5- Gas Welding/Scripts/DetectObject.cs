@@ -17,7 +17,7 @@ public class DetectObject : MonoBehaviour
                 GasWeldingStep.instance.OnEnableStep2object();
             }
             other.gameObject.SetActive(false); 
-        }else if(other.gameObject. name == "Cutting welding tourch")
+        }else if(other.gameObject. name == "Gas Cutting Torch")
         {
             GasCuttingManager.instance.Checktourch90degree();
             this.gameObject.SetActive(false);

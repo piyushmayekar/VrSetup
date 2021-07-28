@@ -4,6 +4,7 @@ using System;
 using FlatWelding;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /// <summary>
 /// Script created by Piyush M.
@@ -16,8 +17,8 @@ public class Task : MonoBehaviour
     [SerializeField, Tooltip("The text that will be displayed on the start of the task")]
     string title, taskDetails;
 
-    [SerializeField, Tooltip("A list of the highlight gameobjects to turn on at the task start")]
-    internal List<GameObject> highlights;
+    [SerializeField, Tooltip("A list of the outlines to turn on & off at the tast start & end respectively.")]
+    internal List<Outline> outlines;
     public UnityEvent EventsOnTaskBegin, EventsOnTaskComplete;
     public bool IsTaskComplete { get => isTaskComplete; set => isTaskComplete = value; }
     public string Title { get => title; set => title = value; }
@@ -26,7 +27,9 @@ public class Task : MonoBehaviour
     public virtual void OnTaskBegin()
     {
         //Turning on highlights
-        highlights.ForEach(x => x.gameObject.SetActive(true));
+        for (int i = 0; i < outlines.Count; i++)
+            if (outlines[i] != null)
+                outlines[i].enabled = true;
         EventsOnTaskBegin?.Invoke();
     }
 
@@ -35,10 +38,25 @@ public class Task : MonoBehaviour
         if (!isTaskComplete)
         {
             isTaskComplete = true;
-            FlatWelding.TaskManager.Instance.OnTaskCompleted(this);
             //Turning off highlights
-            highlights.ForEach(x => x.gameObject.SetActive(false));
+            for (int i = 0; i < outlines.Count; i++)
+                if (outlines[i] != null)
+                    outlines[i].enabled = false;
             EventsOnTaskComplete?.Invoke();
+            EnableButton();
         }
+    }
+
+    public void EnableButton()
+    {
+        Button button = PiyushUtils.TaskManager.Instance.confirmButton;
+        button.gameObject.SetActive(true);
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(OnButtonClick);
+    }
+
+    public void OnButtonClick()
+    {
+        PiyushUtils.TaskManager.Instance.OnTaskCompleted(this);
     }
 }

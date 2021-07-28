@@ -23,12 +23,18 @@ namespace PiyushUtils
         /// </summary>
         void Start()
         {
+            SubscribeToSecondHandGrabPointEvents();
+        }
+
+        public void SubscribeToSecondHandGrabPointEvents()
+        {
             foreach (var grabPoint in secondHandGrabPoints)
             {
                 grabPoint.selectEntered.AddListener(new UnityAction<SelectEnterEventArgs>(OnSecondHandGrab));
                 grabPoint.selectExited.AddListener(new UnityAction<SelectExitEventArgs>(OnSecondHandRelease));
             }
         }
+
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);

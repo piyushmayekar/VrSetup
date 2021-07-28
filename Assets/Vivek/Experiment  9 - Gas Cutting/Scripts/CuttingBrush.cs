@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CuttingBrush : MonoBehaviour
@@ -9,7 +10,8 @@ public class CuttingBrush : MonoBehaviour
     [SerializeField] SoundPlayer soundPlayer;
     [SerializeField] Rigidbody parentBrushRb;
     public experimentType type;
-    public bool isStop;
+    public bool isStop,isCleaning;
+    public TextMeshProUGUI CleanText;
     private void Awake()
     {
         instance = this;
@@ -55,6 +57,7 @@ public class CuttingBrush : MonoBehaviour
                     GasJointweldingManager.instance.cleanBrushFinish();
 
                 }
+                CleanText.text = "";
             }
             else
             {
@@ -67,17 +70,41 @@ public class CuttingBrush : MonoBehaviour
                     GasCuttingManager.instance.cleanBrushFinish();
 
                 }
+                CleanText.text = "";
             }
+            isCleaning = false;
             isStop = true;
         }
         else
         {
             if (!isStop)
             {
-                ReadStepsFromJson.instance.tablet.SetActive(true);
-                ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+                isCleaning = true;
+                ReadStepsAndVideoManager.instance.tablet.SetActive(true);
+                if (ReadStepsAndVideoManager.instance.isChangeFont)
+                {
+                    CleanText.text = "";
+                    ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+                }
+                else
+                {
+                    ReadStepsAndVideoManager.instance.stepText.text = " sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
+                    CleanText.text = cleanPointCount.ToString() + "/15";
+                }
             }
         }
-
+    }
+    public void BrushFontChanage()
+    {
+        if (ReadStepsAndVideoManager.instance.isChangeFont)
+        {
+            CleanText.text = "";
+            ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+        }
+        else
+        {
+            ReadStepsAndVideoManager.instance.stepText.text = " sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
+            CleanText.text = cleanPointCount.ToString() + "/15";
+        }
     }
 }

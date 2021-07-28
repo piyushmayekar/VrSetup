@@ -16,12 +16,14 @@ namespace TWelding
         [SerializeField] GameObject sparkLight;
         [SerializeField] bool isOn = false, isElectrodePlaced = false, isTipInContact = false, isElectrodeAtLeft = false;
         [SerializeField] GameObject tip;
+        [SerializeField] GameObject fauxElectrode;
         [SerializeField] SoundPlayer soundPlayer;
         [SerializeField] GameObject indicator;
         [SerializeField] TMPro.TextMeshProUGUI errorText;
         [SerializeField] ElectrodeType requiredElectrodeType;
         [SerializeField] Electrode currentElectrode;
         [SerializeField] XRSocketInteractor socket_Electrode;
+        Rigidbody _rb;
 
         public bool IsElectrodePlaced { get => isElectrodePlaced; set => isElectrodePlaced = value; }
         #region SINGLETON
@@ -52,7 +54,7 @@ namespace TWelding
                 ToggleGunSqueezers(true);
                 squeezerCollider.enabled = false;
                 // Debug.Log("setting " + (!IsHoldingElectrode));
-                socket_Electrode.socketActive = !IsElectrodePlaced;
+                socket_Electrode.socketActive = currentElectrode == null;
 
             }
             // Debug.Log("-- " + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
@@ -92,6 +94,7 @@ namespace TWelding
         /// </summary>
         void Start()
         {
+            _rb = GetComponent<Rigidbody>();
             ToggleMachine(false);
             ToggleWeldingTip();
             WeldingArea.OnWeldingMachineTipInContact += (bool isTipAtLeft) =>
@@ -144,20 +147,56 @@ namespace TWelding
         {
             if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
             {
+                _rb.velocity = Vector3.zero;
+                _rb.angularVelocity = Vector3.zero;
                 Electrode electrode = args.interactable.GetComponent<Electrode>();
                 if (electrode.ElectrodeType == RequiredElectrodeType)
                 {
                     IsElectrodePlaced = true;
-                    currentElectrode = electrode;
                     OnElectrodePlacedEvent?.Invoke();
                 }
+                currentElectrode = electrode;
+                fauxElectrode.SetActive(true);
+                currentElectrode.GetComponent<MeshRenderer>().enabled = false;
+                Invoke(nameof(TurnOffElectrodeGrab), 1f);
                 ToggleWeldingTip();
                 ShowErrorIndicator(electrode.ElectrodeType != RequiredElectrodeType, _Constants.ELECTRODE_NOT_CORRECT);
             }
-            else
+        }
+
+        public void TurnOnElectrodeGrab()
+        {
+            if (currentElectrode != null)
+                currentElectrode.GetComponent<XRGrabInteractable>().colliders[0].enabled = true;
+        }
+
+        public void TurnOffElectrodeGrab()
+        {
+            if (currentElectrode != null)
+                currentElectrode.GetComponent<XRGrabInteractable>().colliders[0].enabled = false;
+        }
+
+        public void OnElectrodeSocketExit(SelectExitEventArgs args)
+        {
+            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
             {
-                socket_Electrode.socketActive = false;
-                Invoke(nameof(TurnOnElectrodeSocket), 2f);
+                fauxElectrode.SetActive(false);
+                if (currentElectrode != null)
+                {
+                    currentElectrode.GetComponent<MeshRenderer>().enabled = true;
+                    Rigidbody rb = currentElectrode.GetComponent<Rigidbody>();
+                    rb.isKinematic = false;
+                    rb.useGravity = true;
+                    XRGrabInteractable grab = args.interactable as XRGrabInteractable;
+                    grab.movementType = XRBaseInteractable.MovementType.VelocityTracking;
+                    grab.colliders.ForEach(collider =>
+                    {
+                        collider.isTrigger = false;
+                        collider.enabled = true;
+                    });
+                }
+                currentElectrode = null;
+                IsElectrodePlaced = false;
             }
         }
         void TurnOnElectrodeSocket()
@@ -170,15 +209,6 @@ namespace TWelding
         private void ToggleWeldingTip()
         {
             tip.SetActive(IsElectrodePlaced);
-        }
-
-        public void OnElectrodeRemoved(SelectExitEventArgs args)
-        {
-            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
-            {
-                currentElectrode = null;
-                IsElectrodePlaced = false;
-            }
         }
 
         public void ShowErrorIndicator(bool show, string message = null)

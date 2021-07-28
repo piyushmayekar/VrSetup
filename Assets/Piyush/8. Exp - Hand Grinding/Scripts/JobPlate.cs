@@ -1,3 +1,4 @@
+using PiyushUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,9 +12,10 @@ namespace Grinding
     {
         public event UnityAction OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
         public UnityEvent OnGrindingComplete;
+        public UnityEvent OnScriberMarkingIndexChange;
 
         [Header("Scriber Marking")]
-        [SerializeField] List<ScriberMarking> scriberMarkings;
+        [SerializeField] List<PiyushUtils.ScriberMarking> scriberMarkings;
         [SerializeField] int scriberMarkingIndex = 0;
 
         [Header("Center Punch Marking")]
@@ -30,33 +32,54 @@ namespace Grinding
         int grindingStage = 0;
         [SerializeField] int maxGrindingStage = 2;
         [SerializeField] Vector3 _localScale;
-
+        Rigidbody _rb;
 
         public static List<JobPlate> jobPlates = new List<JobPlate>();
         void Awake()
         {
-            if (!jobPlates.Contains(this))
-                jobPlates.Add(this);
+            if (jobPlates == null)
+                jobPlates = new List<JobPlate>();
+            if (gameObject.activeSelf)
+                if (jobPlates.Count == 0 || !jobPlates.Contains(this))
+                    jobPlates.Add(this);
+            _rb = GetComponent<Rigidbody>();
+        }
+
+        private void OnDestroy()
+        {
+            jobPlates.Remove(this);
         }
 
         //SCRIBER MARKING
         public void StartScriberMarking()
         {
-            scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
-            scriberMarkings[scriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
+            if (scriberMarkings[scriberMarkingIndex] != null)
+            {
+                scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
+                scriberMarkings[scriberMarkingIndex].OnMarkingDone += (ScriberMarkingStep);
+            }
         }
 
         void ScriberMarkingStep()
         {
+            OnScriberMarkingIndexChange?.Invoke();
             scriberMarkings[scriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
             scriberMarkingIndex++;
+            ToggleFreezePlate(false);
             if (scriberMarkingIndex < scriberMarkings.Count)
             {
-                scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
-                scriberMarkings[scriberMarkingIndex].OnMarkingDone += ScriberMarkingStep;
+                StartScriberMarking();
             }
             else
+            {
                 OnScriberMarkingDone?.Invoke();
+                ToggleFreezePlate(false);
+            }
+        }
+
+        public void ToggleFreezePlate(bool freeze = true)
+        {
+            _rb.constraints = freeze ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
         }
 
         //CENTER PUNCH

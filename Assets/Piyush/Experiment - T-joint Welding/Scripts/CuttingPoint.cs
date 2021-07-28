@@ -2,25 +2,65 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TWelding
 {
     public class CuttingPoint : MonoBehaviour
     {
-        public Action OnCuttingDone;
+        public UnityEvent<CuttingPoint> OnCuttingDone;
         [SerializeField] Collider _collider;
+        [SerializeField] float timer = 1f;
+        [SerializeField] bool flameInContact = false, disableAllowed = false;
+        [SerializeField] Gradient gradient;
 
-        /// <summary>
-        /// OnTriggerEnter is called when the Collider other enters the trigger.
-        /// </summary>
-        /// <param name="other">The other Collider involved in this collision.</param>
-        void OnTriggerExit(Collider other)
+        MeshRenderer _mesh;
+        Coroutine corTimer = null;
+        int index = 0;
+        float maxTimer = 0f;
+
+        public bool DisableAllowed { get => disableAllowed; set => disableAllowed = value; }
+
+        private void Start()
         {
-            if (other.CompareTag(_Constants.HACKSAW_BLADE_TAG))
+            index = transform.GetSiblingIndex();
+            maxTimer = timer;
+            _mesh = GetComponent<MeshRenderer>();
+        }
+
+        public void OnFlameInContact()
+        {
+            flameInContact = true;
+            StartTimerIfFlameIsInContact();
+        }
+
+        public void OnFlameOutOfContact()
+        {
+            flameInContact = false;
+            corTimer = null;
+        }
+
+        public void StartTimerIfFlameIsInContact()
+        {
+            if (flameInContact && corTimer==null)
+               corTimer = StartCoroutine(Timer());
+        }
+
+        IEnumerator Timer()
+        {
+            while (flameInContact && timer > 0f)
             {
-                _collider.enabled = false;
-                OnCuttingDone?.Invoke();
+                timer -= Time.deltaTime;
+                _mesh.material.color = gradient.Evaluate(Mathf.InverseLerp(maxTimer, 0f, timer));
+                yield return new WaitForEndOfFrame();
             }
+            if (timer <= 0f && DisableAllowed)
+                CuttingDone();
+        }
+
+        void CuttingDone()
+        {
+            OnCuttingDone?.Invoke(this);
         }
 
 

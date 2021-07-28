@@ -10,6 +10,7 @@ public class CuttingLineAtJob : MonoBehaviour
     public GameObject[] DrawLine, cutModel;
     //  public GameObject simpleCutModel;
     public bool iscutting;
+    public ParticleSystem starParticle;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +54,8 @@ public class CuttingLineAtJob : MonoBehaviour
             if (LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).name == other.gameObject.name)
             {
                 countlinePoint--;
+                starParticle.Play();
+                starParticle.GetComponent<AudioSource>().Play();
                 LineCutPoints[CurrentLine].GetComponent<LineRenderer>().positionCount++;
                 LineCutPoints[CurrentLine].GetComponent<LineRenderer>().SetPosition(LineCutPoints[CurrentLine].GetComponent<LineRenderer>().positionCount - 1, other.gameObject.transform.localPosition);
                 other.gameObject.SetActive(false);

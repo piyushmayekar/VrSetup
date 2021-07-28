@@ -26,7 +26,7 @@ public class GasCuttingManager : MonoBehaviour
 
 
     [Header("Read step from json calss")]
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
     //[Header("Counters")]
     int countppekit;
     public bool flameOff = false;

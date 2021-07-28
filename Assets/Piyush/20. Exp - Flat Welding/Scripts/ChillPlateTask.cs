@@ -22,7 +22,6 @@ namespace FlatWelding
             int index = chillPlates.FindIndex(plate => plate.gameObject == args.interactable.gameObject);
             if (index >= 0)
             {
-                highlights.ForEach(x => x.gameObject.SetActive(false));
                 platesPlaced[index] = true;
                 if (platesPlaced.TrueForAll(platePlaced => platePlaced))
                     OnTaskCompleted();

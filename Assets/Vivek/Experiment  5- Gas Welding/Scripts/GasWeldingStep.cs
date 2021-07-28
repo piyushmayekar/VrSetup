@@ -8,7 +8,7 @@ public class GasWeldingStep : MonoBehaviour
 {
     public static GasWeldingStep instance;
     [Header("Canvas ")]
-    public GameObject finishPanel, videoPlayBtn;
+    public GameObject finishPanel;
     public GameObject setPressureRegulatorCanvas, LighterCanvas, lighter_Flame;
     public GameObject creacking_C_key1_canvas, creacking_C_key2_canvas;
 
@@ -39,7 +39,7 @@ public class GasWeldingStep : MonoBehaviour
     public RotateNozzle[] rotateNozzles;
     public bool isPipeRedConnect, isPipeblueConnect;
     [Header("Read step from json calss")]
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;
@@ -226,7 +226,7 @@ public class GasWeldingStep : MonoBehaviour
             objectOutLines[0].enabled = true;
             GasTablekitcolliders[2].gameObject.SetActive(false);
             Debug.Log("VideoComming");
-            videoPlayBtn.SetActive(true);
+          
             OnEnableStep4object();
         }
     }
@@ -245,6 +245,8 @@ public class GasWeldingStep : MonoBehaviour
     #region Step 4: Fix regulators on both the cylinders.
     void OnEnableStep4object()
     {
+        readSteps.AddClickEventVideoPlay(0); // regulators video vlip animation
+
         PlayStepAudio(6);// regulators audio
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
@@ -252,7 +254,7 @@ public class GasWeldingStep : MonoBehaviour
 
     void Onclickbtn_s_4_confirm()
     {
-        videoPlayBtn.SetActive(false);
+        
         objectOutLines[21].enabled = true; //red cylinder key
         GasTablekitcolliders[3].enabled = true; // red gas regulators
         GasTablekitcolliders[3].GetComponent<Outline>().enabled = true;
@@ -288,6 +290,8 @@ public class GasWeldingStep : MonoBehaviour
     }
     public void DoneFlashRed()
     {
+        readSteps.AddClickEventVideoPlay(2); // hose connector video vlip animation
+
         //black connector and outline
         GasTablekitcolliders[23].enabled = true;
         GasTablekitcolliders[23].GetComponent<Outline>().enabled = true;
@@ -296,6 +300,7 @@ public class GasWeldingStep : MonoBehaviour
     }
     public void DoneConnector_R_red()
     {
+        readSteps.videoPlayBtn.gameObject.SetActive(false);
         OnEnableStep5object();
 
     }
@@ -315,6 +320,9 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[20].enabled = false; //red cylinder key
         Debug.Log("call end  of regulator");
         readSteps.onClickConfirmbtn();
+
+        readSteps.AddClickEventVideoPlay(1); // Flashback Arrestor video vlip animation
+
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_1_confirm);
     }
 

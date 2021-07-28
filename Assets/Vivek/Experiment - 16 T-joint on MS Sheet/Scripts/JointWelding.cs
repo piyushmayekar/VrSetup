@@ -1,20 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
+public enum JointTools
+{
+    tPlate, chappingHammer
+}
 public class JointWelding : MonoBehaviour
 {
     public static JointWelding instance;
     public int countdotpoint, CurrentLine, countlinePoint;
     public bool isChappingHammer;
     public GameObject[] WeldingLine;
-    public GameObject weldingModel, tackPoint;
-    public Material RedMaterial, blackMaterial;
+    public GameObject weldingModel, tackPoint,plateRedMat;
+    public Material redMaterial, blackMaterial;
     public GameObject fireRedFilerMesh;
     public SoundPlayer chippingHummer;
     public bool isWelding, isFiller;
     public ParticleSystem starParticle;
     public GameObject sparkLight;
+    public JointTools jointTools;
     public void Awake()
     {
 
@@ -25,20 +30,23 @@ public class JointWelding : MonoBehaviour
     public void Start()
     {
 
-     /* Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
-        tc.a = 0;
-        fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
+        /* Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
+           tc.a = 0;
+           fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
 
-     */   /* loat counter = 0;
-         RedBolt.GetComponent<Renderer>().material.shader = Shader.Find("HDRP/Lit";
-         while (counter < 1)
-         {
-             counter += Time.deltaTime / 3;
-             RedBolt.GetComponent<Renderer>().material.Lerp(materialToChange, materialToChange2, counter);
-             yield return 0;
-         }
- */
-       
+        */   /* loat counter = 0;
+            RedBolt.GetComponent<Renderer>().material.shader = Shader.Find("HDRP/Lit";
+            while (counter < 1)
+            {
+                counter += Time.deltaTime / 3;
+                RedBolt.GetComponent<Renderer>().material.Lerp(materialToChange, materialToChange2, counter);
+                yield return 0;
+            }
+    */
+      //  if (jointTools == JointTools.tPlate)
+        {
+          ///  StartCoroutine(RedPlateFadeIn(3f));
+        }
     }
    
     private void OnTriggerEnter(Collider other)
@@ -77,8 +85,12 @@ public class JointWelding : MonoBehaviour
             if (WeldingLine[CurrentLine].transform.GetChild(countlinePoint).name == other.transform.name)
             {
                 countlinePoint++;
-                if (!isChappingHammer)
+                if (jointTools==JointTools.tPlate)
                 {
+                    if (countlinePoint == 1)
+                    {
+                       // StartCoroutine(RedPlateFadeIn(3f));
+                    }
                     other.transform.GetComponent<MeshRenderer>().enabled = false;
                     other.transform.GetComponent<BoxCollider>().enabled = false;
                     other.transform.GetChild(1).gameObject.SetActive(true);
@@ -95,6 +107,44 @@ public class JointWelding : MonoBehaviour
             }
         }
     }
+    //Fade in Coroutine
+    public IEnumerator RedPlateFadeIn(float fadeSpeed)
+    {
+        Renderer rend = plateRedMat.transform.GetComponent<Renderer>();
+        Color matColor = rend.material.color;
+        float alphaValue = rend.material.color.a;
+
+
+        //while loop to deincrement Alpha value until object is invisible
+        while (rend.material.color.a < 1f)
+        {
+            alphaValue += Time.deltaTime / fadeSpeed;
+            rend.material.color = new Color(matColor.r, matColor.g, matColor.b, alphaValue);
+            yield return null;
+        }
+        //    rend.material.color = new Color(matColor.r, matColor.g, matColor.b, 0f);
+     //   StartCoroutine( RedPlateFadeout(fadeSpeed));
+       
+    }
+    //Fade out Coroutine
+    public IEnumerator RedPlateFadeout(float fadeSpeed)
+    {
+        Renderer rend = plateRedMat.transform.GetComponent<Renderer>();
+        Color matColor = rend.material.color;
+        float alphaValue = rend.material.color.a;
+
+
+        //while loop to deincrement Alpha value until object is invisible
+        while (rend.material.color.a > 0f)
+        {
+            alphaValue -= Time.deltaTime / fadeSpeed;
+            rend.material.color = new Color(matColor.r, matColor.g, matColor.b, alphaValue);
+            yield return null;
+        }
+        //    rend.material.color = new Color(matColor.r, matColor.g, matColor.b, 0f);
+
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.transform.tag == "Electrode")
@@ -155,6 +205,7 @@ public class JointWelding : MonoBehaviour
     {
         if (countlinePoint + 1 <= WeldingLine[CurrentLine].transform.childCount)
         {
+            
             WeldingLine[CurrentLine].transform.GetChild(countlinePoint).gameObject.SetActive(true);
             starParticle.Play();
             starParticle.GetComponent<AudioSource>().Play();
@@ -172,6 +223,7 @@ public class JointWelding : MonoBehaviour
                 weldingModel.SetActive(true);
                 //   FreezeRotation.instance.isFreeze = false;
                 isFiller = true;
+             //   StartCoroutine(RedPlateFadeout(3f));
                 GasJointweldingManager.instance.weldingComplete();
             }
             else

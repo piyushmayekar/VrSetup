@@ -8,7 +8,7 @@ public class ManagerCornerJoint : MonoBehaviour
 {
     public static ManagerCornerJoint instance;
     public GameObject finishPanel;
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
 
     [Header("Tools Highlight")]
     public Outline[] ToolsHighlight;

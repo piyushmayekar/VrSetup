@@ -1,0 +1,286 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1495744609132099306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495744609132099307}
+  - component: {fileID: 1495744609132099304}
+  m_Layer: 0
+  m_Name: Task 5 - Open Cylinder Knobs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495744609132099307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744609132099306}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.323, y: 0.948, z: -1.491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1495744610087524001}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495744609132099304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744609132099306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa738f366ae1f7d42a7ad50b795f9983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTaskComplete: 0
+  title: Open Cylinder Knobs
+  taskDetails: Open the acetylene & oxygen knobs on the gas cylinders.
+  outlines: []
+  EventsOnTaskBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  EventsOnTaskComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  knobs:
+  - {fileID: 0}
+  - {fileID: 0}
+  targetValues:
+  - 0.15
+  - 1.6
+  index: -1
+--- !u!1 &1495744609427827192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495744609427827193}
+  - component: {fileID: 1495744609427827198}
+  m_Layer: 0
+  m_Name: Task 8 - Close Knobs On Torch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495744609427827193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744609427827192}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.323, y: 0.948, z: -1.491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1495744610087524001}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495744609427827198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744609427827192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa738f366ae1f7d42a7ad50b795f9983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTaskComplete: 0
+  title: Close Knobs On Torch
+  taskDetails: Close both the knobs on the cutting torch.
+  outlines: []
+  EventsOnTaskBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  EventsOnTaskComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PiyushUtils.CuttingTorch, Assembly-CSharp
+        m_MethodName: ToggleSwitch
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  knobs:
+  - {fileID: 0}
+  - {fileID: 0}
+  targetValues:
+  - 0
+  - 0
+  index: -1
+--- !u!1 &1495744609809019513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495744609809019518}
+  - component: {fileID: 1495744609809019519}
+  m_Layer: 0
+  m_Name: Task 6 - Torch Lighting Task
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495744609809019518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744609809019513}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.323, y: 0.948, z: -1.491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1495744610087524001}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495744609809019519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744609809019513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5722160eeedc2fc41abb4e7ab87bb25a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTaskComplete: 0
+  title: Torch Lighting Task
+  taskDetails: Open the acetylene knob on the cutting torch & then ignite the flame
+    with a lighter. After that, open the oxygen knob on the torch & close the acetylene
+    knob slightly.
+  outlines: []
+  EventsOnTaskBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  EventsOnTaskComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  acetyleneKnob: {fileID: 0}
+  oxygenKnob: {fileID: 0}
+  targetValue: 1.25
+  torch: {fileID: 0}
+  torchOutline: {fileID: 0}
+  lighterOutline: {fileID: 0}
+--- !u!1 &1495744610087524000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495744610087524001}
+  m_Layer: 0
+  m_Name: Gas Cutting Steps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495744610087524001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744610087524000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1495744609132099307}
+  - {fileID: 1495744609809019518}
+  - {fileID: 1495744610499725263}
+  - {fileID: 1495744609427827193}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1495744610499725262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495744610499725263}
+  - component: {fileID: 1495744610499725260}
+  m_Layer: 0
+  m_Name: Task 7 - Torch Cutting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495744610499725263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744610499725262}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.323, y: 0.948, z: -1.491}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1495744610087524001}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495744610499725260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495744610499725262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10980cc7434294a4cb75bec8bcaa8b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTaskComplete: 0
+  title: Torch Cutting
+  taskDetails: Attach one job plate to the mechanical vise & perform the cutting
+    with the cutting torch. Do the filing with the flat file. Repeat the steps for
+    the other job plate.
+  outlines: []
+  EventsOnTaskBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  EventsOnTaskComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  platesCount: 0
+  mechanicalVise: {fileID: 0}

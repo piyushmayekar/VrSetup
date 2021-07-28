@@ -21,6 +21,8 @@ public static class _Constants
     public const string FILING_POINT_TAG = "FilingPoint";
     public const string LEFT_HAND_TAG = "LeftHand";
     public const string RIGHT_HAND_TAG = "RightHand";
+    public const string STEEL_RULER_TAG = "SteelRuler";
+    public const string LIGHTER_TAG = "Lighter";
 
     //Messages
     public const string ELECTRODE_NOT_CORRECT = "Please insert the correct electrode";
