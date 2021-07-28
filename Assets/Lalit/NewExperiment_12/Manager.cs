@@ -37,7 +37,7 @@ public class Manager : MonoBehaviour
     public static Manager instance;
 
     public GameObject finishPanel;
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
 
     [Header("Tools Highlight")]
     public Outline[] ToolsHighlight;

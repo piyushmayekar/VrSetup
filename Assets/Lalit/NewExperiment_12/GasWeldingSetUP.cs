@@ -25,7 +25,7 @@ public class GasWeldingSetUP : MonoBehaviour
                         HL_T_connectorBlack, HL_T_ClipBlack;
     public bool isPipeRedConnect, isPipeblueConnect, isTurnOffFlame;
     [Header("Read step from json calss")]
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;

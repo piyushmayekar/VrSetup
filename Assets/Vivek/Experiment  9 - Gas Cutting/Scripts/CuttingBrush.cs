@@ -80,15 +80,15 @@ public class CuttingBrush : MonoBehaviour
             if (!isStop)
             {
                 isCleaning = true;
-                ReadStepsFromJson.instance.tablet.SetActive(true);
-                if (ReadStepsFromJson.instance.isChangeFont)
+                ReadStepsAndVideoManager.instance.tablet.SetActive(true);
+                if (ReadStepsAndVideoManager.instance.isChangeFont)
                 {
                     CleanText.text = "";
-                    ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+                    ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
                 }
                 else
                 {
-                    ReadStepsFromJson.instance.stepText.text = "\n sI.ピ. b/x ]paDo Ane spa3Ine saf kro.";
+                    ReadStepsAndVideoManager.instance.stepText.text = " sI.ピ. b/x ]paDo Ane spa3Ine saf kro.";
                     CleanText.text = cleanPointCount.ToString() + "/15";
                 }
             }
@@ -96,14 +96,14 @@ public class CuttingBrush : MonoBehaviour
     }
     public void BrushFontChanage()
     {
-        if (ReadStepsFromJson.instance.isChangeFont)
+        if (ReadStepsAndVideoManager.instance.isChangeFont)
         {
             CleanText.text = "";
-            ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
+            ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
         }
         else
         {
-            ReadStepsFromJson.instance.stepText.text = "\n sI.ピ. b/x ]paDo Ane spa3Ine saf kro.";
+            ReadStepsAndVideoManager.instance.stepText.text = " sI.ピ. b/x ]paDo Ane spa3Ine saf kro.";
             CleanText.text = cleanPointCount.ToString() + "/15";
         }
     }

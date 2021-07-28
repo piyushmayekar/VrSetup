@@ -2889,7 +2889,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60a5fbef03d656478154a5015760a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCuttingDone:
+    m_PersistentCalls:
+      m_Calls: []
   _collider: {fileID: 200358770}
+  timer: 1
+  flameInContact: 0
+  disableAllowed: 0
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!65 &200358770
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4802,7 +4837,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60a5fbef03d656478154a5015760a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCuttingDone:
+    m_PersistentCalls:
+      m_Calls: []
   _collider: {fileID: 316640312}
+  timer: 1
+  flameInContact: 0
+  disableAllowed: 0
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!65 &316640312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9063,6 +9133,10 @@ PrefabInstance:
       value: Gas Bavel
       objectReference: {fileID: 0}
     - target: {fileID: 242221934958556686, guid: 7667749fb3c56eb4384ef9d16b43ad97, type: 3}
+      propertyPath: langManager
+      value: 
+      objectReference: {fileID: 11400000, guid: eeec24a9c07aa774abf30a7f5195c82f, type: 2}
+    - target: {fileID: 242221934958556686, guid: 7667749fb3c56eb4384ef9d16b43ad97, type: 3}
       propertyPath: languagesFont.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -9360,7 +9434,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e39feca7f6c474c86f26cf3a14dfbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 04bc3bcf37bccb340971e6b49566fadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &620255953 stripped
@@ -9381,7 +9455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &620255955 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7855162281842590695, guid: 7667749fb3c56eb4384ef9d16b43ad97, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4777691185112005179, guid: 7667749fb3c56eb4384ef9d16b43ad97, type: 3}
   m_PrefabInstance: {fileID: 620255951}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -18510,6 +18584,10 @@ PrefabInstance:
       propertyPath: Freezeangle
       value: 
       objectReference: {fileID: 1150138264}
+    - target: {fileID: 6149317693276047164, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6162190994119113027, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_Size.y
       value: 1.7338632
@@ -28308,7 +28386,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60a5fbef03d656478154a5015760a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCuttingDone:
+    m_PersistentCalls:
+      m_Calls: []
   _collider: {fileID: 1980773233}
+  timer: 1
+  flameInContact: 0
+  disableAllowed: 0
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!65 &1980773233
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -121,7 +121,7 @@ public class CuttingJobMaterial : MonoBehaviour
     {
         if (index == LineMarkingPoint)
         {
-            Debug.Log("Play sound");
+         //   Debug.Log("Play sound");
             Scibersound.PlayClip(0);
             if (cuttingType == CuttingType.CircularCut)
             {

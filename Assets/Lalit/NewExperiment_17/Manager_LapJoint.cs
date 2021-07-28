@@ -8,7 +8,7 @@ public class Manager_LapJoint : MonoBehaviour
 {
     public static Manager_LapJoint instance;
     public GameObject finishPanel;
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
 
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;

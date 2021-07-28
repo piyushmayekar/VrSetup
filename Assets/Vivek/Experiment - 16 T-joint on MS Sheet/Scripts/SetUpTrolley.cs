@@ -25,7 +25,7 @@ public class SetUpTrolley : MonoBehaviour
                         HL_T_connectorBlack, HL_T_ClipBlack;
     public bool isPipeRedConnect, isPipeblueConnect, isTurnOffFlame;
     [Header("Read step from json calss")]
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;
@@ -219,7 +219,7 @@ public class SetUpTrolley : MonoBehaviour
     }
     public void DoneFlashRed()
     {
-        readSteps.AddClickEventVideoPlay(0); // hose connector video vlip animation
+        readSteps.AddClickEventVideoPlay(2); // hose connector video vlip animation
 
         //black connector and outline
         GasTablekitcolliders[6].enabled = true;

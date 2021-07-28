@@ -19,7 +19,7 @@ public class GasJointweldingManager : MonoBehaviour
     public GameObject finishPanel;
 
     [Header("Read step from json calss")]
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
 
     [Header("Extra objects")]
         public GameObject  neturalFlameCube;

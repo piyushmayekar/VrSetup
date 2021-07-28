@@ -12,7 +12,7 @@ public class ManagerHackSawCutting : MonoBehaviour
     public GameObject finishPanel;
 
     [Header("Read step from json calss")]
-    public ReadStepsFromJson readSteps;
+    public ReadStepsAndVideoManager readSteps;
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
     public AudioClip[] stepsAudioClip;
