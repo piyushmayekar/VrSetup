@@ -68,6 +68,7 @@ public class GasWeldingSetUP : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
+     //  Onclickbtn_s_3_confirm();
     }
     public void Update()
     {

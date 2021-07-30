@@ -12,6 +12,7 @@ public class CustomSocket : MonoBehaviour
     {
         if (other.tag == "Job")
         {
+            Debug.Log("called job");
             HLSound.player.PlayHighlightSnapSound();
             if (other.gameObject.GetComponent<XRGrabInteractable>() != null)
             {

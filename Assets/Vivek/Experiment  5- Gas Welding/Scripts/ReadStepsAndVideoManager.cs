@@ -20,7 +20,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     public TextLangManager langManager;
     [Header("---------------------------------------------------")]
     public GameObject panel;
-    public GameObject tablet;
+    public GameObject tablet,languageButton;
     [SerializeField] int countStep;
 
     public TextMeshProUGUI stepText, languageText;
@@ -76,12 +76,14 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         {
             if (CuttingBrush.instance.isCleaning)
             {
+                Debug.Log("call clean brush");
                 CuttingBrush.instance.BrushFontChanage();
             }
             else
             {
                 if (langManager._stepsText.Steps.Length > countStep)
                 {
+                    Debug.Log("LM callimh;");
                     stepText.text = langManager._stepsText.Steps[countStep - 1];
                 }
             }
@@ -126,6 +128,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     /// <param name="indexOfClip">Pass the index of video clip in button click.</param>
     void OnClickVideoPlayBtn(int indexOfClip)
     {
+        languageButton.SetActive(false);
         videoPlayer.clip = videoClips[indexOfClip];
         videoPlayRawImage.SetActive(true);
     }

@@ -24656,13 +24656,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3642963933671224472}
-  m_LocalRotation: {x: -0.6532815, y: -0.27059802, z: 0.27059802, w: 0.6532815}
-  m_LocalPosition: {x: 0.013, y: 0.024, z: 0.07}
-  m_LocalScale: {x: 0.08000001, y: 0.08000001, z: 0.080000006}
+  m_LocalRotation: {x: -0.7048242, y: -0.7048246, z: 0.056767583, w: 0.05676794}
+  m_LocalPosition: {x: 0.0381, y: -0.0239, z: 0.1006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6808308885434351592}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -170.79, z: 90}
 --- !u!1 &3664544171550299053
 GameObject:
   m_ObjectHideFlags: 0
@@ -58098,9 +58098,9 @@ GameObject:
   - component: {fileID: 6808308885434351592}
   - component: {fileID: 6138450785413064023}
   - component: {fileID: 6138450785413064022}
-  - component: {fileID: 6138450785413064017}
   - component: {fileID: 6138450785413064016}
   - component: {fileID: 6138450785413064019}
+  - component: {fileID: 3774510800095442627}
   m_Layer: 0
   m_Name: Gas Cutting Torch
   m_TagString: Untagged
@@ -58172,7 +58172,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6138450785413064017
+--- !u!114 &6138450785413064016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6138450785413064018}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &6138450785413064019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58181,7 +58199,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6138450785413064018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d2f6c683c7426248bad1c7c12a71faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Freezeangle: {fileID: 0}
+  isFreeze: 0
+--- !u!114 &3774510800095442627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6138450785413064018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc9a178c47a54846a19046e5c12ba48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -58189,7 +58221,7 @@ MonoBehaviour:
   - {fileID: 6138450785413064023}
   m_InteractionLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4294967295
   m_CustomReticle: {fileID: 0}
   m_FirstHoverEntered:
     m_PersistentCalls:
@@ -58266,7 +58298,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 6481033522520114337}
+  m_AttachTransform: {fileID: 0}
   m_AttachEaseInTime: 0.15
   m_MovementType: 1
   m_VelocityDamping: 0.4
@@ -58302,38 +58334,10 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
---- !u!114 &6138450785413064016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6138450785413064018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &6138450785413064019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6138450785413064018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2f6c683c7426248bad1c7c12a71faf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Freezeangle: {fileID: 0}
-  isFreeze: 0
+  grabbedInteractorType: 0
+  leftHandAttachTransform: {fileID: 6481033522520114337}
+  rightHandAttachTransform: {fileID: 2787529928033908545}
+  shouldUseDefaultFistAnim: 0
 --- !u!1 &6149317693276047164
 GameObject:
   m_ObjectHideFlags: 0
@@ -60057,13 +60061,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6481033522520114336}
-  m_LocalRotation: {x: -0.6532815, y: -0.27059802, z: 0.27059802, w: 0.6532815}
-  m_LocalPosition: {x: -0.0106, y: 0.0004, z: 0.07}
-  m_LocalScale: {x: 0.08000001, y: 0.08000001, z: 0.080000006}
+  m_LocalRotation: {x: -0.7048242, y: -0.7048246, z: 0.056767583, w: 0.05676794}
+  m_LocalPosition: {x: 0.0259, y: 0.0065, z: 0.1251}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6808308885434351592}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -170.79, z: 90}
 --- !u!1 &6481033522545046819
 GameObject:
   m_ObjectHideFlags: 0

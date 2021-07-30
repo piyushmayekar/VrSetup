@@ -81,16 +81,7 @@ public class CuttingBrush : MonoBehaviour
             {
                 isCleaning = true;
                 ReadStepsAndVideoManager.instance.tablet.SetActive(true);
-                if (ReadStepsAndVideoManager.instance.isChangeFont)
-                {
-                    CleanText.text = "";
-                    ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
-                }
-                else
-                {
-                    ReadStepsAndVideoManager.instance.stepText.text = " sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
-                    CleanText.text = cleanPointCount.ToString() + "/15";
-                }
+                BrushFontChanage();
             }
         }
     }
@@ -99,10 +90,12 @@ public class CuttingBrush : MonoBehaviour
         if (ReadStepsAndVideoManager.instance.isChangeFont)
         {
             CleanText.text = "";
+            Debug.Log("LM!1");
             ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
         }
         else
         {
+            Debug.Log("LM!2");
             ReadStepsAndVideoManager.instance.stepText.text = " sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
             CleanText.text = cleanPointCount.ToString() + "/15";
         }
