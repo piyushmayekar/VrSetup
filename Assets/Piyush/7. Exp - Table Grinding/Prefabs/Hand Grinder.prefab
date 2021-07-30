@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d880b73d1d64dd4fb57f0a98c05d50e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grinder: {fileID: 1640257303361045261}
+  grinder: {fileID: 1242340187496853412}
   isInContact: 0
   contactPoint: {x: 0, y: 0, z: 0}
   sparksT: {fileID: 2834452806940492468}
@@ -346,7 +346,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.0055001155, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.03815272, y: -0.026576715, z: 0.07236236}
+  m_ConnectedAnchor: {x: 0.038152732, y: -0.026576715, z: 0.072362415}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -632,7 +632,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1640257303361045256}
-  - component: {fileID: 1640257303361045261}
+  - component: {fileID: 1242340187496853412}
   - component: {fileID: 1640257303361045259}
   - component: {fileID: 1640257303361045258}
   - component: {fileID: 1640257303361045263}
@@ -665,7 +665,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 180}
---- !u!114 &1640257303361045261
+--- !u!114 &1242340187496853412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -674,18 +674,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1640257303361045257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 577162a74000b334ca7036640a91265b, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c15d08ab2425c44964cd18d82e18d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isOn: 0
-  maxRotateSpeed: 4000
+  maxRotateSpeed: 2000
   currRotateSpeed: 0
-  speedDelta: 10
-  wheelRotationAxis: {x: 0, y: 1, z: 0}
+  speedDelta: 0.1
+  wheelRotationAxis: {x: 1, y: 0, z: 0}
   wheels:
   - {fileID: 6293870886242731083}
   switchAnimator: {fileID: 8477889338022029417}
   soundPlayer: {fileID: 1640257303361045263}
+  handDistanceThreshold: 1
+  handMessageCanvases: []
+  hands: []
+  grindingRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &1640257303361045259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2480,7 +2484,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1640257303361045261}
+      - m_Target: {fileID: 1242340187496853412}
         m_TargetAssemblyTypeName: Grinding.GrindingMachine, Assembly-CSharp
         m_MethodName: OnSwitchSelectEnter
         m_Mode: 0

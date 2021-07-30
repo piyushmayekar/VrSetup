@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using VWelding;
 
 namespace PiyushUtils
 {
@@ -19,6 +18,7 @@ namespace PiyushUtils
         {
             if (args.interactable.CompareTag(_Constants.JOB_TAG))
             {
+                ToggleAttentionGrab(false);
                 if (isScriberMarkingBeingDone)
                 {
                     Transform parentT = args.interactable.GetComponentInChildren<ScriberMarking>().transform.parent;
@@ -48,9 +48,12 @@ namespace PiyushUtils
             }
             else
             {
-                socket.socketActive = false;
-                waitForObjectToExitTrigger = args.interactable.gameObject;
-                StartCoroutine(WaitForObjectToExitTrigger());
+                if (!(args.interactable is XRSimpleInteractable))
+                {
+                    socket.socketActive = false;
+                    waitForObjectToExitTrigger = args.interactable.gameObject;
+                    StartCoroutine(WaitForObjectToExitTrigger());
+                }
             }
         }
 

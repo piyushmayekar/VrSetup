@@ -87,7 +87,7 @@ namespace PiyushUtils
         [ContextMenu("Complete current Task")]
         public void CompleteCurrentTask()
         {
-            tasks[currentTaskIndex].OnTaskCompleted();
+            tasks[currentTaskIndex].OnButtonClick();
         }
 
     }

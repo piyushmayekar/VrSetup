@@ -13,7 +13,9 @@ namespace Grinding
         [SerializeField] int grindingDone = 0;
         [SerializeField] string toolAnimToPlayOnSecondHandPoint = "Cutting Tool";
         [SerializeField] CustomXRGrabInteractable _XRGrabInteractable;
+        [SerializeField] XRSimpleInteractable secondHandInteractable;
         public Tooltips leftToolTips, rightToolTips;
+        [SerializeField] XRDirectInteractor mainInteractor;
         
         void Awake()
         {
@@ -37,7 +39,7 @@ namespace Grinding
         public void OnSecondGrabPointHoverEnter(HoverEnterEventArgs args)
         {
             PiyushUtils.HandPresence handPresence = args.interactor.GetComponentInChildren<PiyushUtils.HandPresence>();
-            if (handPresence && _XRGrabInteractable.isSelected)
+            if (handPresence && _XRGrabInteractable.isSelected && args.interactor != mainInteractor)
             {
                 handPresence.OnSecondHandPointHoverEnter(toolAnimToPlayOnSecondHandPoint);
             }
@@ -46,10 +48,21 @@ namespace Grinding
         public void OnSecondGrabPointHoverExit(HoverExitEventArgs args)
         {
             PiyushUtils.HandPresence handPresence = args.interactor.GetComponentInChildren<PiyushUtils.HandPresence>();
-            if (handPresence)
+            if (handPresence && args.interactor != mainInteractor)
             {
                 handPresence.OnSecondHandPointHoverExit();
             }
+        }
+
+        public void VisualCheckTask()
+        {
+            _XRGrabInteractable.selectEntered.AddListener(OnGrabStart);
+        }
+
+        public void OnGrabStart(SelectEnterEventArgs args)
+        {
+            _XRGrabInteractable.selectEntered.RemoveListener(OnGrabStart);
+            FindObjectOfType<OneActionTask>().OnActionDone();
         }
     }
 

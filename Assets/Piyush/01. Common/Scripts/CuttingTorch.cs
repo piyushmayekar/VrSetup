@@ -130,5 +130,7 @@ namespace PiyushUtils
             }
         }
 
+        [ContextMenu(nameof(ToggleSwitch))]
+        public void HackToggleSwitch() => ToggleSwitch(!isFlameOn);
     }
 }

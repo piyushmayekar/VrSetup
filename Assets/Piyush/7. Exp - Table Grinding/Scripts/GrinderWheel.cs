@@ -16,6 +16,7 @@ namespace Grinding
         [SerializeField] GrindingWheelType type;
         [SerializeField] float warmDownTime = 0.5f;
         [SerializeField] GameObject platesAnimation;
+
         SoundPlayer soundPlayer;
         public bool IsWheelSpinning => grinder.IsOn;
         public GrindingWheelType Type { get => type; set => type = value; }
@@ -28,7 +29,10 @@ namespace Grinding
         {
             soundPlayer = GetComponent<SoundPlayer>();
             grinder.OnMachineToggleOff += StopVFX;
+            
         }
+
+        
 
         /// <summary>
         /// OnCollisionEnter is called when this collider/rigidbody has begun
