@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.SceneManagement;
+using PiyushUtils;
+
 public class GasCuttingManager : MonoBehaviour
 {
     public static GasCuttingManager instance;
@@ -280,7 +282,19 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
     public void Checktourch90degree()
     {
         torch90degree.SetActive(false);
-        GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = true;
+       // GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = true;
+
+        Vector3 pos = GasTableObjectcolliders[6].transform.localPosition;
+        pos = torch90degree.transform.localPosition;
+        GasTableObjectcolliders[6].transform.localPosition = pos;
+
+       
+            GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+       
+        GasTableObjectcolliders[6].transform.localEulerAngles = torch90degree.transform.localEulerAngles;
+        GasTableObjectcolliders[6].GetComponent<CustomXRGrabInteractable>().trackRotation = false;
+
+
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s12_confirm);
     }
