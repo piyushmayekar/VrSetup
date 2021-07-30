@@ -36,6 +36,8 @@ public class GasWeldingSetUP : MonoBehaviour
     public Transform[] toolToReset;
     public List<Vector3> toolToResetPosition, toolToResetRotate;
 
+    public bool isRedCrecking, isBlackCrecking;
+    public AudioClip creckykeyClip;
     public void Awake()
     {
         instance = this;
@@ -103,6 +105,8 @@ public class GasWeldingSetUP : MonoBehaviour
     }
     void HighLightCylinderCrack()
     {
+
+
         objectOutLines[0].enabled = true;
         GasTablekitcolliders[0].enabled = true;//red crecking  cylinder key
         rotateNozzles[0].enabled = true; //red crecking  cylinder key
@@ -110,18 +114,46 @@ public class GasWeldingSetUP : MonoBehaviour
     }
     public void Onclickcreacking_C_key1_canvas_btn()
     {
-        objectOutLines[0].enabled = false;
+        if (!isRedCrecking)
+        {
+            isRedCrecking = true;
+            GasTablekitcolliders[0].enabled = true;//red crecking  cylinder key
+            rotateNozzles[0].enabled = true; //red crecking  cylinder key
+            rotateNozzles[0].isclockwise = false;
+            rotateNozzles[0].RotateValue = 20;
 
-        objectOutLines[1].enabled = true;
-        GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
-        rotateNozzles[1].enabled = true; //black crecking  cylinder key
+            stepAudioSource.PlayOneShot(creckykeyClip);
+
+        }
+        else
+        {
+            objectOutLines[0].enabled = false;
+            objectOutLines[1].enabled = true;
+            GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
+            rotateNozzles[1].enabled = true; //black crecking  cylinder key
+        }
+
+        
     }
     public void Onclickcreacking_C_key2_canvas_btn()
     {
-        objectOutLines[1].enabled = false;
-        objectOutLines[0].enabled = false;
+        if (!isBlackCrecking)
+        {
+            isBlackCrecking = true;
+            GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
+            rotateNozzles[1].enabled = true; //black crecking  cylinder key
+            rotateNozzles[1].isclockwise = false; //black crecking  cylinder key
+            rotateNozzles[1].RotateValue = 20;
+            stepAudioSource.PlayOneShot(creckykeyClip);
+        }
+        else
+        {
+            objectOutLines[1].enabled = false;
+            objectOutLines[0].enabled = false;
 
-        OnEnableStep4object();
+            OnEnableStep4object();
+        }
+        
     }
     public void CheckCylinderCrack(GameObject go)
     {

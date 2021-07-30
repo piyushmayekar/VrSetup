@@ -22,6 +22,10 @@ public class FillerRod_VL : MonoBehaviour
 
     public bool freezXPos;
     public bool freezZPos;
+
+
+    public GameObject light;
+    public ParticleSystem effect;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -116,6 +120,31 @@ public class FillerRod_VL : MonoBehaviour
         transform.localScale = scale;
         MeltPart.sharedMaterial = redMat;
         _time = timeToCoolDown;
+
+        //StartCoroutine(PlayEffect());
+    }
+
+    public void  PlayEffect(bool on)
+    {
+        if (light)
+        {
+            light.SetActive(on);
+        }
+
+        if (effect)
+        {
+            if (on)
+            {
+                effect.Play();
+            }
+            else
+            {
+                effect.Stop();
+            }
+            
+        }
+
+       
     }
 
 

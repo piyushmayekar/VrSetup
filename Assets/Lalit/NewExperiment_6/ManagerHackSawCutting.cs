@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using PiyushUtils;
 
 
 public class ManagerHackSawCutting : MonoBehaviour
@@ -21,7 +22,7 @@ public class ManagerHackSawCutting : MonoBehaviour
     public Collider[] ppekitcolliders;
     public int countppekit;
 
-    public GameObject FlatFileHL,CSBottleHL,SteelRulerHL,BrushHL, ScriberHL, CenterPunchHL, HammerHL, HackSawHL;
+    public GameObject FlatFileHL,CSBottleHL,SteelRulerHL,BrushHL, ScriberHL, ScriberHL1, CenterPunchHL, CenterPunchHL1, HammerHL, HammerHL1, HackSawHL;
 
     #region WorkPieceObjects
     public Transform WorkPiece;
@@ -68,6 +69,10 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public GameObject SteelRulePrefab;
     public GameObject markingPlane;
+    public GameObject ClockWiseSprite, AntiClockWiseSprite;
+    public GameObject MeasureHL1, MeasureHL2;
+    public GameObject MeasureObj;
+    public GameObject[] JobEdges;
     public void Awake()
     {
         instance = this;
@@ -230,6 +235,7 @@ public class ManagerHackSawCutting : MonoBehaviour
         FillingSocket.SetActive(false);
         WorkPiece.GetComponent<XRGrabInteractable>().enabled = false;
         JobPlateOnStart.GetComponent<Outline>().enabled = false;
+        ClockWiseSprite.SetActive(true);
         BenchWise.jaw.disable = false;
         BenchWise.SetRotationDirection(true);
         BenchWise.AssignMethodOnJobFit(OnJobFittedForFillling);
@@ -257,9 +263,15 @@ public class ManagerHackSawCutting : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(OnClickConfirmForMarkingPlacing);
-        markingPlane.SetActive(false);
+        for (int i = 0; i < JobEdges.Length; i++)
+        {
+            JobEdges[i].SetActive(false);
+        }
+        //markingPlane.SetActive(false);
         JobPlateOnStart.GetComponent<Outline>().enabled = true;
         WorkPiece.GetComponent<XRGrabInteractable>().enabled = true;
+        ClockWiseSprite.SetActive(false);
+        AntiClockWiseSprite.SetActive(true);
         BenchWise.SetRotationDirection(false);
         BenchWise.jaw.disable = true;
         MarkingSocket.SetActive(true);
@@ -273,7 +285,7 @@ public class ManagerHackSawCutting : MonoBehaviour
     public void OnJobSanpForMarking()
     {
         readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(EnableOperationBeforeMarking);
+        readSteps.AddClickConfirmbtnEvent(EnableMarkingMediaStep);
         WorkPiece.GetComponent<XRGrabInteractable>().enabled = false;
         MarkingSocket.SetActive(false);
         BenchWise.handle.CanMove = false;
@@ -281,27 +293,57 @@ public class ManagerHackSawCutting : MonoBehaviour
         
     }
 
-    public void EnableOperationBeforeMarking()
+    
+
+    public void EnableMarkingMediaStep()
     {
         readSteps.HideConifmBnt();
-
         ToolsOutlines[7].enabled = true;
         CSBottleHL.SetActive(true);
-        markingPlane.SetActive(true);
+        //markingPlane.SetActive(true);
+        markingPlane.tag = "Job";
         CSBottle.AssignMethodOnPoringDone(OnPoringDone);
     }
-
     public void OnPoringDone()
     {
         ToolsOutlines[7].enabled = false;
         ToolsOutlines[6].enabled = true;
         BrushHL.SetActive(true);
         MarkingBrush.SetBrushParams(10, "Job");
-        MarkingBrush.AssignMethodOnBrushJobDone(EnableMarking);
+        MarkingBrush.AssignMethodOnBrushJobDone(EnableOperationBeforeMarking);
         markingPlane.GetComponent<BoxCollider>().isTrigger = true;
         markingPlane.tag = "MarkingPlate";
 
     }
+
+    public void EnableOperationBeforeMarking()
+    {
+        ToolsOutlines[6].enabled = false;
+        ToolsOutlines[1].enabled = true;
+        MeasureHL1.SetActive(true);
+        SteelRuler.isMeasuring = true;
+        SteelRuler.AssignMethodOnSnapForMeasurement(EnableSecondSteelMeasuring);
+
+    }
+
+    public void EnableSecondSteelMeasuring()
+    {
+        ToolsOutlines[1].enabled = true;
+        SteelRuler.GetComponent<CustomXRGrabInteractable>().enabled = true;
+        SteelRuler.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        MeasureHL2.SetActive(true);
+        SteelRuler.AssignMethodOnSnapForMeasurement(EnableScriberForMeasuring);
+    }
+
+    public void EnableScriberForMeasuring()
+    {
+        ToolsOutlines[2].enabled = true;
+        Scriber.isMeasuring = true;
+        Debug.Log("Update Workpiece");
+        Scriber.SetScriberForMeasuremetn(WorkPiece, 2, 1);
+        Scriber.AssignMethodOnMeasuringDone(EnableMarking);
+    }
+
 
     public void DryMarkingPlane()
     {
@@ -313,10 +355,17 @@ public class ManagerHackSawCutting : MonoBehaviour
     }
     public void EnableMarking()
     {
-        readSteps.HideConifmBnt();
+        Scriber.isMeasuring = false;
+        SteelRuler.isMeasuring = false;
+        SteelRuler.GetComponent<CustomXRGrabInteractable>().enabled = true;
+        SteelRuler.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        Scriber.EmptyParamsForMeasuring();
+
         DryMarkingPlane();
-        ToolsOutlines[6].enabled = false;
+        
         ToolsOutlines[1].enabled = true;
+        SteelRuler.readyForOperation = true;
+
         SteelRuler.AssignHighlight(SteelRulerHL);
         SteelRuler.AssignMethodOnSnapToJob(EnableMarkingOnFirstLine);    
     }
@@ -330,6 +379,7 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public void EnableSecondLineMarking()
     {
+        ScriberHL1.SetActive(true);
         Scriber.SetScriberMarkingParams(WorkPiece, SteelRuler_AattachedToJob, 2);
         Scriber.AssignMethodOnMarkingDone(OnMarkingDone);
     }
@@ -355,6 +405,8 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public void EnableSecondLinePunching()
     {
+        CenterPunchHL1.SetActive(true);
+        HammerHL1.SetActive(true);
         DotPunch.SetCenterPunchParams(WorkPiece, 2);
         DotPunch.AssignMethodOnPunchingDone(OnPunchingdone);
     }
@@ -364,6 +416,7 @@ public class ManagerHackSawCutting : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableCuttingSocket);
         markingPlane.SetActive(false);
+        MeasureObj.SetActive(false);
     }
 
     public void EnableCuttingSocket()
@@ -377,6 +430,8 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public void EnableBenchWiseForHoldJob()
     {
+        ClockWiseSprite.SetActive(true);
+        AntiClockWiseSprite.SetActive(false);
         BenchWise.jaw.disable = false;
         BenchWise.SetRotationDirection(true);
         BenchWise.AssignMethodOnJobFit(OnEnableCutting);
@@ -442,6 +497,8 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public void OnSecondCutSnap()
     {
+        AntiClockWiseSprite.SetActive(true);
+        ClockWiseSprite.SetActive(false);
         BenchWise.SetRotationDirection(false);
         BenchWise.jaw.disable = true;
         SecondCut.GetComponent<Outline>().enabled = false;

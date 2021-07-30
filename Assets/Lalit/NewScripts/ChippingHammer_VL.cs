@@ -11,6 +11,7 @@ public class ChippingHammer_VL : MonoBehaviour
 
     private UnityEvent CallMethodOnRemoveSlagDone = new UnityEvent();
     private AudioSource Audio;
+    public ParticleSystem effect;
 
     private void Start()
     {
@@ -34,6 +35,11 @@ public class ChippingHammer_VL : MonoBehaviour
         if (other.tag == "Slag")
         {
             Audio.Play();
+            if (effect)
+            {
+                effect.transform.position = other.transform.position;
+                effect.Play();
+            }
             currentCount++;
             other.gameObject.GetComponent<MeshRenderer>().sharedMaterial = weldMat;
             other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
