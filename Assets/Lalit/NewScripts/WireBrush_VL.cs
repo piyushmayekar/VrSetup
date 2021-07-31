@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +14,8 @@ public class WireBrush_VL : MonoBehaviour
 
     private UnityEvent CallMethodOnCleaningJobDone = new UnityEvent();
     private Rigidbody rb;
+    public TextMeshProUGUI CleanText;
+
     private void Start()
     {
         Audio = GetComponent<AudioSource>();
@@ -52,8 +55,21 @@ public class WireBrush_VL : MonoBehaviour
             }
             else
             {
-                ReadStepsFromJson.instance.tablet.SetActive(true);
-                ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + currentCount.ToString() + "/10";
+                if (CleanText)
+                {
+                    //Need to improve
+                    //ReadStepsAndVideoManager.instance.tablet.SetActive(true);
+                    //if (ReadStepsAndVideoManager.instance.isChangeFont)
+                    //{
+                    //    CleanText.text = "";
+                    //    ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + currentCount.ToString() + "/10";
+                    //}
+                    //else
+                    //{
+                    //    ReadStepsAndVideoManager.instance.stepText.text = " sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
+                    //    CleanText.text = currentCount.ToString() + "/10";
+                    //}
+                }
                 effect.Play();
                 Audio.Play();
                 rb.freezeRotation = true;
