@@ -22,6 +22,8 @@ namespace Grinding
         [SerializeField] bool isTaskOn = false;
         [SerializeField] GameObject weldedPlatesGO;
 
+        HandGrinder handGrinder;
+
         public void OnTaskToggle(bool on) => isTaskOn = on;
         public void OnHandleSelectEnter() => StartCoroutine(TrackHandleRotation());
         public void OnHandleSelectExit() => StopCoroutine(TrackHandleRotation());
@@ -34,6 +36,7 @@ namespace Grinding
         {
             slider.localPosition = openPos;
             currClosedPos = closedPosFull;
+            handGrinder = FindObjectOfType<HandGrinder>();
         }
 
         IEnumerator TrackHandleRotation()
@@ -80,6 +83,22 @@ namespace Grinding
             {
                 currClosedPos = closedPosFull;
                 weldedPlatesGO = null;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject==handGrinder.gameObject)
+            {
+                handGrinder.FreezeGrinder();
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject == handGrinder.gameObject)
+            {
+                handGrinder.UnFreezeGrinder();
             }
         }
     }

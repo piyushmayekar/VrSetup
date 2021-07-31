@@ -25,6 +25,7 @@ namespace PiyushUtils
         [SerializeField] List<Vector3> linePositions=new List<Vector3>();
         [SerializeField] float tipDist = 0f;
         [SerializeField] Collider detectorCollider;
+        [SerializeField] SoundPlayer soundPlayer;
         
         Transform tipT;
         Scriber scriber;
@@ -79,6 +80,7 @@ namespace PiyushUtils
             {
                 scriber.OnMarkingAreaExit();
                 isScriberTipOnPlate = false;
+                soundPlayer.StopPlayingAllSounds();
             }
             if (other.CompareTag(_Constants.STEEL_RULER_TAG))
             {
@@ -125,6 +127,8 @@ namespace PiyushUtils
                         if (tipDist <= lineDistThreshold)
                         {
                             lineRenderer.SetPosition(1, linePositions[linePointIndex]);
+                            if (!soundPlayer.AudioSource.isPlaying)
+                                soundPlayer.PlayClip(soundPlayer.Clips[0], true);
                             linePointIndex++;
                             if (linePointIndex >= linePositions.Count)
                             {
@@ -141,10 +145,11 @@ namespace PiyushUtils
         {
             IsLineMarkingDone = true;
             detectorCollider.enabled = false;
+            steelRuleHighlights[dotPointIndex].TurnOnRulerGrab();
             OnMarkingDone?.Invoke();
             scriber.OnMarkingAreaExit();
-            steelRuleHighlights[dotPointIndex].TurnOnRulerGrab();
             StopAllCoroutines();
+            soundPlayer.StopPlayingAllSounds();
         }
 
         [ContextMenu("Set Scriber Highlight Positions")]

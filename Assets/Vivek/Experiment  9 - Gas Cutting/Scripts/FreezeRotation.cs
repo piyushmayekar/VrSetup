@@ -26,7 +26,7 @@ public class FreezeRotation : MonoBehaviour
     {
         if(isFreeze)
         {
-            transform.localEulerAngles = Freezeangle.localEulerAngles;
+            transform.localRotation = Freezeangle.localRotation;
         }
     }
 }

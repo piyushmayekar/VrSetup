@@ -13,6 +13,7 @@ namespace PiyushUtils
         [SerializeField] Collider _collider;
         [SerializeField] MeshRenderer _mesh;
         [SerializeField] Material rulerMat, highlightMat;
+        [SerializeField] bool shouldEnableSimpleInteractable=false;
         [SerializeField] XRSimpleInteractable simpleInteractable;
 
         public static GameObject steelRuler = null;
@@ -31,7 +32,7 @@ namespace PiyushUtils
                 _mesh.material = rulerMat;
                 _collider.isTrigger = false;
                 OnSteelRulerEnter?.Invoke();
-                simpleInteractable.enabled = true;
+                simpleInteractable.enabled = shouldEnableSimpleInteractable;
             }    
         }
 

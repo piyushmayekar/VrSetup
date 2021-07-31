@@ -20,7 +20,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     public TextLangManager langManager;
     [Header("---------------------------------------------------")]
     public GameObject panel;
-    public GameObject tablet;
+    public GameObject tablet, languageButton;
     [SerializeField] int countStep;
 
     public TextMeshProUGUI stepText, languageText;
@@ -37,6 +37,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     [HideInInspector]
     public bool isChangeFont, isStep;
 
+    private string[] indexGuj = new string[] { "Ò", "Ó", "Ô", "Õ", "Ö", "×", "Ø", "Ù", "Ú", "Û" };
 
     void Awake()
     {
@@ -50,7 +51,8 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         if (langManager._stepsText.Steps.Length > countStep)
         {
             isStep = true;
-            stepText.text = langManager._stepsText.Steps[countStep];
+            stepText.text = GetStepIndex(countStep); // ***************************** CHANGES DONE HERE
+            stepText.text += langManager._stepsText.Steps[countStep]; // ***************************** CHANGES DONE HERE
             countStep++;
         }
     }
@@ -76,17 +78,54 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         {
             if (CuttingBrush.instance.isCleaning)
             {
+                Debug.Log("call clean brush");
                 CuttingBrush.instance.BrushFontChanage();
             }
             else
             {
                 if (langManager._stepsText.Steps.Length > countStep)
                 {
-                    stepText.text = langManager._stepsText.Steps[countStep - 1];
+                    Debug.Log("LM callimh;");
+                    stepText.text = GetStepIndex(countStep - 1); // ***************************** CHANGES DONE HERE
+                    stepText.text += langManager._stepsText.Steps[countStep - 1];// ***************************** CHANGES DONE HERE
                 }
             }
         }
     }
+
+    // Get Step Number title...
+    private string GetStepIndex(int cntNum)
+    {
+        cntNum++;
+        if (isChangeFont)
+        {
+            return "Step - " + cntNum + "\n";
+        }
+        else
+        {
+            string stepNumString = "";
+            if (cntNum > 9)
+            {
+                List<int> temp = new List<int>();
+                while (cntNum > 0)
+                {
+                    temp.Add(cntNum % 10);
+                    cntNum = cntNum / 10;
+                }
+                temp.Reverse();
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    stepNumString += indexGuj[temp[i]];
+                }
+            }
+            else
+            {
+                stepNumString = indexGuj[cntNum];
+            }
+            return "pglu> à " + stepNumString + "\n";
+        }
+    }
+
     /// <summary>
     ///Load new text or msg on canvas.
     /// </summary>
@@ -126,6 +165,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     /// <param name="indexOfClip">Pass the index of video clip in button click.</param>
     void OnClickVideoPlayBtn(int indexOfClip)
     {
+        languageButton.SetActive(false);
         videoPlayer.clip = videoClips[indexOfClip];
         videoPlayRawImage.SetActive(true);
     }

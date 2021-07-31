@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 239378781582670930, guid: 0e714ea4b3b87f94abf7055b92955051, type: 3}
+  - {fileID: 2100000, guid: eff98ad9ec1821745b3a027170414b48, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,13 +149,11 @@ MonoBehaviour:
   scriberMarkingIndex: 0
   centerPunchMarkings: []
   cpMarkingIndex: 0
-  centerPunchTaskParent: {fileID: 0}
   scriberTaskParent: {fileID: 0}
   elongatedPlate: {fileID: 0}
   ogPlate: {fileID: 3219573372667544853}
   extraPlate: {fileID: 0}
-  cuttingPoints: []
-  currentCuttingPoints: 0
+  cuttingArea: {fileID: 0}
   isCuttingDone: 1
   isFilingDone: 1
   roughEdge: {fileID: 0}

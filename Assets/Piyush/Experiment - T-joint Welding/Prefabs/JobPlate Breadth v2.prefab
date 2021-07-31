@@ -433,7 +433,7 @@ BoxCollider:
   m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 1.0000001, z: 1.0000002}
-  m_Center: {x: -0.000015258789, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7926575213500824300
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,6 +965,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7926575213500824301}
     m_Modifications:
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerRemovedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerRemovedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7926575213500824208}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerRemovedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7926575213500824208}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFreezePlate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerRemovedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerRemovedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFreezePlate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PiyushUtils.SMAWJobPlate, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerRemovedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PiyushUtils.SMAWJobPlate, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerPlacedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969426075434835990, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
+      propertyPath: OnSteelRulerRemovedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3301785602539598251, guid: b279dfa471fe24b4283672e0721458ba, type: 3}
       propertyPath: m_RootOrder
       value: 6

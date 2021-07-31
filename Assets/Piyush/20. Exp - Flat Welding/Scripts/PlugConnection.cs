@@ -23,6 +23,7 @@ namespace FlatWelding
         public void StartConnecting()
         {
             sockets[socketIndex].socketActive = true;
+            sockets[socketIndex].transform.GetChild(0).gameObject.SetActive(true);
             if (socketIndex == 0)
                 objectsToPlace.ForEach(o => o.GetComponent<Outline>().enabled = true);
         }
@@ -32,6 +33,7 @@ namespace FlatWelding
             if (args.interactable.gameObject == objectsToPlace[socketIndex])
             {
                 objectsToPlace[socketIndex].GetComponent<Outline>().enabled = false;
+                sockets[socketIndex].transform.GetChild(0).gameObject.SetActive(false);
                 args.interactor.selectEntered.RemoveAllListeners();
                 StartCoroutine(TimedSocketEnabler());
             }
