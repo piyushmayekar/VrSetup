@@ -17,7 +17,7 @@ namespace TWelding
         [SerializeField] List<WeldingPoint> weldingPoints;
         [SerializeField] CurrentKnob currentKnob;
         [SerializeField] ElectrodeType requiredElectrodeType = ElectrodeType._4mm;
-        [SerializeField] bool is4mmElectrodePlaced = false, isCurrentSet = false;
+        [SerializeField] bool electrodePlaced = false, isCurrentSet = false;
         [SerializeField] GameObject weldingGunHighlights;
 
         WeldingMachine weldingMachine;
@@ -29,26 +29,37 @@ namespace TWelding
             weldingMachine.ToggleMachine(false);
             weldingArea.SetActive(false); //To not let the user weld without setting the correct current
             currentKnob.TargetValue = 170f;
-            CurrentKnob.OnTargetValueSet += () =>
-            {
-                isCurrentSet = true;
-                if (isCurrentSet && is4mmElectrodePlaced)
-                    InitializeEverything();
-            };
+            CurrentKnob.OnTargetValueSet += OnKnobTargetValueSet;
             weldingMachine.RequiredElectrodeType = requiredElectrodeType;
-            is4mmElectrodePlaced = weldingMachine.CheckIfRequiredElectrodePlaced(requiredElectrodeType);
-            weldingMachine.OnElectrodePlacedEvent += () =>
-            {
-                is4mmElectrodePlaced = weldingMachine.IsElectrodePlaced;
-                if (isCurrentSet && is4mmElectrodePlaced)
-                    InitializeEverything();
-            };
+            electrodePlaced = weldingMachine.CheckIfRequiredElectrodePlaced(requiredElectrodeType);
+            weldingMachine.OnElectrodePlacedEvent += OnElectrodePlaced;
         }
 
+        void OnElectrodePlaced()
+        {
+            electrodePlaced = true;
+            CheckIfMiniTasksCompleted();
+        }
+
+        void OnKnobTargetValueSet()
+        {
+            isCurrentSet = true;
+            CheckIfMiniTasksCompleted();
+        }
+        void CheckIfMiniTasksCompleted()
+        {
+            if (isCurrentSet && electrodePlaced) InitializeEverything();
+        }
         private void InitializeEverything()
         {
+            weldingMachine.OnElectrodePlacedEvent -= OnElectrodePlaced;
+            CurrentKnob.OnTargetValueSet -= OnKnobTargetValueSet;
             weldingPoints = new List<WeldingPoint>(
                 pointsParent.GetComponentsInChildren<WeldingPoint>());
+            if (weldingArea == null || weldingArea.gameObject == null)
+            {
+                weldingArea = FindObjectOfType<CornerWelding.WeldingArea>(true).gameObject;
+            }
             weldingArea.SetActive(true);
             pointsParent.SetActive(true);
             weldingGunHighlights.SetActive(true);

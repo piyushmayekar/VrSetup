@@ -65,8 +65,13 @@ namespace LapWelding
             pointsParents[parentCounter].gameObject.SetActive(true);
             points = new List<WeldingPoint>(pointsParents[parentCounter].
             GetComponentsInChildren<WeldingPoint>());
+            if (weldingArea == null || weldingArea.gameObject == null)
+            {
+                weldingArea = FindObjectOfType<WeldingArea>(true).gameObject;
+            }
             weldingArea.SetActive(true);
-            gunHighlight.SetActive(true);
+            if (parentCounter == 0)
+                gunHighlight.SetActive(true);
             pointCounter = 0;
             points.ForEach(point =>
             {

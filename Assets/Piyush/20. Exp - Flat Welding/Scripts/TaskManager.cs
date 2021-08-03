@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,16 +13,24 @@ namespace PiyushUtils
 {
     public class TaskManager : MonoBehaviour
     {
-        [SerializeField, Header("Json file to read Steps")] TextAsset jsonFile;
+        [SerializeField, Range(0, 20)] int currentTaskIndex = 0;
         [SerializeField] List<Task> tasks;
-        [SerializeField, Range(0, 15)] int currentTaskIndex = 0;
         [SerializeField] TMPro.TextMeshProUGUI taskDetailsText;
         [SerializeField] public Button confirmButton;
         [SerializeField] Tablet tablet;
-        ReadSteps readSteps;
+
+        [Header("Language")]
+        [SerializeField] _Language currentLanguage;
+        [SerializeField, Header("Json file to read Steps")] List<TextAsset> jsonFiles;
+        [SerializeField] TextLangManager textLangManager;
+        List<ReadSteps> readSteps;
         public static TaskManager Instance => instance;
 
         public int CurrentTaskIndex { get => currentTaskIndex; set => currentTaskIndex = value; }
+        public int CurrentLangIndex => (int)currentLanguage;
+
+        private string[] indexGuj = new string[] { "Ò", "Ó", "Ô", "Õ", "Ö", "×", "Ø", "Ù", "Ú", "Û" };
+
         #region SINGLETON
         static TaskManager instance = null;
 
@@ -45,7 +55,10 @@ namespace PiyushUtils
             confirmButton = tablet.confirmButton;
             confirmButton.gameObject.SetActive(false);
             tasks = new List<Task>(GetComponentsInChildren<Task>());
-            readSteps = JsonUtility.FromJson<ReadSteps>(jsonFile.text);
+            currentLanguage = FetchCurrentLanguage();
+            SetTaskInfoFont();
+            readSteps = new List<ReadSteps>(textLangManager.readSteps);
+            tablet.OnLanguageButtonClick.AddListener(OnLanguageButtonClick);
             yield return new WaitForSeconds(1f);
             StartTask(CurrentTaskIndex);
         }
@@ -57,7 +70,7 @@ namespace PiyushUtils
                 Task task = tasks[currentTaskIndex];
 
                 //Assigning the task title & details to the task displayer.
-                taskDetailsText.text = currentTaskIndex==0 ? readSteps.ExperimentTitle : readSteps.Steps[currentTaskIndex-1];
+                SetTaskInfoTextAccToLanguage(currentTaskIndex);
                 task.OnTaskBegin();
             }
         }
@@ -70,10 +83,81 @@ namespace PiyushUtils
                 StartTask(CurrentTaskIndex);
             else //Current Task index reached out of the task list index. ie. Tasks are done
             {
-                // taskTitleText.text = string.Empty;
-                taskDetailsText.text = "Congratulations you finished the job";
+                taskDetailsText.text = CurrentLangIndex==0 ? "Congratulations you finished the job" : "Aiwn>dn tme p/yog smaPt kyoR";
             }
         }
+
+        private void SetTaskInfoTextAccToLanguage(int currentTaskIndex)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (currentTaskIndex == 0)
+                sb.Append(readSteps[CurrentLangIndex].ExperimentTitle);
+            else
+            {
+                sb.Append(GetStepIndex(currentTaskIndex));
+                sb.AppendLine(readSteps[CurrentLangIndex].Steps[currentTaskIndex - 1]);
+            }
+            taskDetailsText.text = sb.ToString();
+        }
+        private string GetStepIndex(int cntNum)
+        {
+            //cntNum++;
+            if (CurrentLangIndex==0)
+            {
+                return "Step - " + cntNum + "\n";
+            }
+            else
+            {
+                string stepNumString = "";
+                if (cntNum > 9)
+                {
+                    List<int> temp = new List<int>();
+                    while (cntNum > 0)
+                    {
+                        temp.Add(cntNum % 10);
+                        cntNum = cntNum / 10;
+                    }
+                    temp.Reverse();
+                    for (int i = 0; i < temp.Count; i++)
+                    {
+                        stepNumString += indexGuj[temp[i]];
+                    }
+                }
+                else
+                {
+                    stepNumString = indexGuj[cntNum];
+                }
+                return "pglu> à " + stepNumString + "\n";
+            }
+        }
+
+
+        _Language FetchCurrentLanguage()
+        {
+            return (_Language)PlayerPrefs.GetInt(nameof(_Language), (int)_Language.English);
+        }
+
+        void SaveCurrentLanguageToMemory()
+        {
+            PlayerPrefs.SetInt(nameof(_Language), (int)currentLanguage);
+        }
+
+        void OnLanguageButtonClick()
+        {
+            int totalLanguagesCount = Enum.GetNames(typeof(_Language)).Length;
+            int nextLanguageIndex = (CurrentLangIndex + 1) % totalLanguagesCount;
+            currentLanguage = (_Language)nextLanguageIndex;
+
+            SaveCurrentLanguageToMemory();
+            SetTaskInfoFont();
+            SetTaskInfoTextAccToLanguage(currentTaskIndex);
+        }
+
+        private void SetTaskInfoFont()
+        {
+            taskDetailsText.font = tablet.languagesFont[CurrentLangIndex];
+        }
+
         [ContextMenu("Rename Tasks")]
         public void RenameChildTasks()
         {
@@ -87,8 +171,34 @@ namespace PiyushUtils
         [ContextMenu("Complete current Task")]
         public void CompleteCurrentTask()
         {
+            tasks[currentTaskIndex].EventsOnTaskComplete?.Invoke();
             tasks[currentTaskIndex].OnButtonClick();
         }
 
+        [ContextMenu("Import English Steps To SO")]
+        public void ImportEnglishSteps() => ImportStepsToSO((int)(_Language.English));
+
+        [ContextMenu("Import Gujrati Steps To SO")]
+        public void ImportGujratiSteps() => ImportStepsToSO((int)(_Language.Gujrati));
+
+        public void ImportStepsToSO(int languageIndex = 0)
+        {
+            ReadSteps _readSteps = JsonUtility.FromJson<ReadSteps>(jsonFiles[languageIndex].text);
+
+            for (int i = 0; i < _readSteps.Steps.Length; i++)
+            {
+                string info = _readSteps.Steps[i];
+                int index = info.IndexOf("\n");
+                info = info.Substring(index + 2);
+                _readSteps.Steps[i] = info;
+            }
+            textLangManager.readSteps[languageIndex] = _readSteps;
+        }
     }
+}
+
+[Serializable]
+public enum _Language
+{
+    English, Gujrati
 }

@@ -1276,7 +1276,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2297098194911489934}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.8345013, y: 1.3546679, z: -1.1353}
+  m_LocalPosition: {x: -2.8293, y: 1.4459, z: -1.1353}
   m_LocalScale: {x: 0.04953919, y: 0.04953919, z: 0.04953919}
   m_Children: []
   m_Father: {fileID: 2522639028612041520}
@@ -3581,6 +3581,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &1913579629476182273
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8279516084674057378}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4701864571993836626, guid: 66b147327c6e35441bc4c2e06e5ea07a, type: 3}
 --- !u!114 &452530356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3704,20 +3718,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!64 &1913579629476182273
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8279516084674057378}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4701864571993836626, guid: 66b147327c6e35441bc4c2e06e5ea07a, type: 3}
 --- !u!1 &3916569693541953629
 GameObject:
   m_ObjectHideFlags: 0
@@ -5114,7 +5114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6669923192022324560}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.8345013, y: 1.4436716, z: -1.1353}
+  m_LocalPosition: {x: -2.8345013, y: 1.3535, z: -1.1353}
   m_LocalScale: {x: 0.04953919, y: 0.04953919, z: 0.04953919}
   m_Children: []
   m_Father: {fileID: 2522639028612041520}
@@ -6674,6 +6674,10 @@ PrefabInstance:
     - target: {fileID: 3554010510604280002, guid: 22a98223b85658f44b5478e97e655697, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7902346877077028698, guid: 22a98223b85658f44b5478e97e655697, type: 3}
+      propertyPath: m_text
+      value: 240.0V
       objectReference: {fileID: 0}
     - target: {fileID: 8735867099759217905, guid: 22a98223b85658f44b5478e97e655697, type: 3}
       propertyPath: m_Name

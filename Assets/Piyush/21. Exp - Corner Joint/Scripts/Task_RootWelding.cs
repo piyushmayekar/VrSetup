@@ -23,6 +23,10 @@ namespace CornerWelding
 
         private void InitializeEverything()
         {
+            if (weldingArea == null || weldingArea.gameObject == null)
+            {
+                weldingArea = FindObjectOfType<WeldingArea>(true).gameObject;
+            }
             weldingArea.SetActive(true);
             weldingPoints[0].transform.parent.gameObject.SetActive(true);
             machineAnimation.SetActive(true);

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6933052116412644746}
   - component: {fileID: 6933052116412644790}
   - component: {fileID: 6933052116412644791}
-  - component: {fileID: 6933052116412644744}
   - component: {fileID: 732811049796830646}
+  - component: {fileID: 643923458232810396}
   m_Layer: 0
   m_Name: Slag
   m_TagString: Untagged
@@ -51,12 +51,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weldingPoint: {fileID: 8702093886928696939}
   _renderer: {fileID: 6933052116412644790}
-  _rb: {fileID: 0}
+  _rb: {fileID: 732811049796830646}
   slagPrefabs:
   - {fileID: 4215481590328644941}
   - {fileID: 4215481588566375652}
   residueThrowForce: {x: 1, y: 1.5}
-  _collider: {fileID: 6933052116412644744}
+  _collider: {fileID: 643923458232810396}
   autoDestructTimer: 20
 --- !u!23 &6933052116412644790
 MeshRenderer:
@@ -107,19 +107,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6933052116412644748}
   m_Mesh: {fileID: 4300000, guid: b8ba9cfb9857cfb47a50aeba9dbce801, type: 3}
---- !u!65 &6933052116412644744
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6933052116412644748}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.568308, y: 0.22990957, z: 0.21604246}
-  m_Center: {x: 0.18041627, y: 0.017137025, z: 0.035480127}
 --- !u!54 &732811049796830646
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -136,6 +123,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &643923458232810396
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933052116412644748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: b8ba9cfb9857cfb47a50aeba9dbce801, type: 3}
 --- !u!1 &8702093886928696940
 GameObject:
   m_ObjectHideFlags: 0
