@@ -52,6 +52,7 @@ MonoBehaviour:
       m_Calls: []
   steelRuleHighlights: []
   index: 0
+  _collider: {fileID: 0}
 --- !u!65 &6375168911583649813
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,6 +73,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8894613954547222014}
     m_Modifications:
+    - target: {fileID: 1879567729, guid: 457dcfd6b08b0fc42aa79d4964d6a6d9, type: 3}
+      propertyPath: shouldEnableSimpleInteractable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1879567729, guid: 457dcfd6b08b0fc42aa79d4964d6a6d9, type: 3}
       propertyPath: OnSteelRulerEnter.m_PersistentCalls.m_Calls.Array.size
       value: 0
@@ -167,6 +172,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 8894613954547222014}
     m_Modifications:
     - target: {fileID: 1879567729, guid: 457dcfd6b08b0fc42aa79d4964d6a6d9, type: 3}
+      propertyPath: shouldEnableSimpleInteractable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879567729, guid: 457dcfd6b08b0fc42aa79d4964d6a6d9, type: 3}
       propertyPath: OnSteelRulerEnter.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -260,6 +269,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8894613954547222014}
     m_Modifications:
+    - target: {fileID: 1879567729, guid: 457dcfd6b08b0fc42aa79d4964d6a6d9, type: 3}
+      propertyPath: shouldEnableSimpleInteractable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1879567729, guid: 457dcfd6b08b0fc42aa79d4964d6a6d9, type: 3}
       propertyPath: OnSteelRulerEnter.m_PersistentCalls.m_Calls.Array.size
       value: 0

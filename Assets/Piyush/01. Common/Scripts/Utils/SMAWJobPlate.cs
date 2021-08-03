@@ -23,7 +23,6 @@ namespace PiyushUtils
         [SerializeField] int cpMarkingIndex = 0;
 
         [Header("Hacksaw cutting")]
-        [SerializeField] GameObject centerPunchTaskParent;
         [SerializeField] GameObject scriberTaskParent;
         [SerializeField] GameObject elongatedPlate, ogPlate, extraPlate;
         [SerializeField] CuttingArea cuttingArea;
@@ -51,21 +50,16 @@ namespace PiyushUtils
         //SCRIBER MARKING
         public void StartScriberMarking()
         {
-            if (scriberMarkings[scriberMarkingIndex] != null)
-            {
-                scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
-                scriberMarkings[scriberMarkingIndex].OnMarkingDone += (ScriberMarkingStep);
-            }
-            else
-            {
-                Debug.Log("scriberMarkings found null");
-            }
+            scriberMarkings[scriberMarkingIndex].StartMarkingProcess();
+            scriberMarkings[scriberMarkingIndex].OnMarkingDone += (ScriberMarkingStep);
         }
 
         void ScriberMarkingStep()
         {
             scriberMarkings[scriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
             scriberMarkingIndex++;
+            if (scriberMarkingIndex == 1 && scriberMarkings.Count > 1)
+                FindObjectOfType<PlateMarkingSocket>().ToggleAttentionGrab();
             if (scriberMarkingIndex < scriberMarkings.Count)
             {
                 StartScriberMarking();
@@ -80,6 +74,8 @@ namespace PiyushUtils
         public void ToggleFreezePlate(bool freeze = true)
         {
             _rb.constraints = freeze ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
         }
 
         //CENTER PUNCH
@@ -92,6 +88,8 @@ namespace PiyushUtils
         void CenterPunchStep()
         {
             centerPunchMarkings[cpMarkingIndex].OnMarkingDone -= CenterPunchStep;
+            if (cpMarkingIndex == 1 && centerPunchMarkings.Count > 1)
+                FindObjectOfType<PlateMarkingSocket>().ToggleAttentionGrab();
             cpMarkingIndex++;
             if (cpMarkingIndex < centerPunchMarkings.Count)
             {
@@ -132,6 +130,7 @@ namespace PiyushUtils
             GetComponent<Collider>().enabled = true;
         }
 
+        [ContextMenu(nameof(CuttingDone))]
         public void CuttingDone()
         {
             IsCuttingDone = true;
@@ -145,7 +144,6 @@ namespace PiyushUtils
             extraPlateRB.useGravity = true;
             extraPlateRB.isKinematic = false;
             scriberTaskParent?.SetActive(false);
-            centerPunchTaskParent?.SetActive(false);
             OnGasCuttingDone?.Invoke();
 
             //Rough edge

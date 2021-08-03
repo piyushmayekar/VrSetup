@@ -10,7 +10,7 @@ namespace LapWelding
 {
     public class Task_WeldingRun : Task
     {
-
+        [SerializeField] GameObject gunHighlight;
         [SerializeField] GameObject weldingArea;
         [SerializeField] int parentCounter = 0, pointCounter = 0, slagRemaining = 0; //Exterior points
         [SerializeField] List<Transform> pointsParents;
@@ -65,7 +65,13 @@ namespace LapWelding
             pointsParents[parentCounter].gameObject.SetActive(true);
             points = new List<WeldingPoint>(pointsParents[parentCounter].
             GetComponentsInChildren<WeldingPoint>());
+            if (weldingArea == null || weldingArea.gameObject == null)
+            {
+                weldingArea = FindObjectOfType<WeldingArea>(true).gameObject;
+            }
             weldingArea.SetActive(true);
+            if (parentCounter == 0)
+                gunHighlight.SetActive(true);
             pointCounter = 0;
             points.ForEach(point =>
             {
@@ -81,6 +87,7 @@ namespace LapWelding
                 {
                     int sibIndex = point.transform.GetSiblingIndex();
                     pointCounter++;
+                    gunHighlight.SetActive(false);
                     CheckIfTaskCompleted();
                 };
             });

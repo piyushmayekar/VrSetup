@@ -170,6 +170,7 @@ public class GasWeldingSetUP : MonoBehaviour
     #region Step 4: Fix regulators on both the cylinders.
     void OnEnableStep4object()
     {
+        readSteps.AddClickEventVideoPlay(0);
         PlayStepAudio(6);// regulators audio
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
@@ -194,6 +195,7 @@ public class GasWeldingSetUP : MonoBehaviour
     }
     public void CallRegulatorDone()
     {
+        readSteps.AddClickEventVideoPlay(1);
         objectOutLines[3].enabled = false; //black cylinder key
         objectOutLines[4].enabled = false; //red cylinder key
                                            //    Debug.Log("call end  of regulator");
@@ -220,6 +222,8 @@ public class GasWeldingSetUP : MonoBehaviour
     }
     public void DoneFlashRed()
     {
+        readSteps.AddClickEventVideoPlay(2); // hose connector video vlip animation
+
         //black connector and outline
         GasTablekitcolliders[6].enabled = true;
         GasTablekitcolliders[6].GetComponent<Outline>().enabled = true;

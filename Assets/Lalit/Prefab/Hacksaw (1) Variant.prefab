@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &5448643325606863100
+--- !u!65 &4585987394743090337
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,42 +13,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.17523052, y: 0.012230873, z: 0.0007647273}
   m_Center: {x: -0.1290724, y: 0.0018440946, z: -0.000041912906}
---- !u!114 &635490781756402855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6563476380381197535}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0.09710693, g: 1, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &3100776143460127954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6563476380381197535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df1a158bb9e8b4a4e889fd8c5fb51f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cuttingPoints: []
-  punchPoints: []
-  cutPointCount: 0
-  currentCount: 0
-  cuttingDone: 0
-  speed: 2
 --- !u!82 &2279678393236633304
 AudioSource:
   m_ObjectHideFlags: 0
@@ -145,6 +109,43 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &635490781756402855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563476380381197535}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.09710693, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &3100776143460127954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563476380381197535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1a158bb9e8b4a4e889fd8c5fb51f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cuttingPoints: []
+  punchPoints: []
+  cutPointCount: 0
+  currentCount: 0
+  cuttingDone: 0
+  readyForOperation: 0
+  speed: 2
 --- !u!1001 &8035539123164571868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ PrefabInstance:
     - target: {fileID: 2895924445327014120, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 6593015318476418686}
+      objectReference: {fileID: 0}
     - target: {fileID: 3789179562260421634, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -186,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3789179562260421635, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
       propertyPath: m_Name
-      value: Hacksaw (1)
+      value: Hacksaw
       objectReference: {fileID: 0}
     - target: {fileID: 5174577693974386991, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
       propertyPath: m_LocalScale.y
@@ -242,14 +243,10 @@ PrefabInstance:
     - {fileID: 2895924445327014120, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
     - {fileID: 7920405029862927292, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
     - {fileID: 3654596186159152484, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
+    - {fileID: 5775668055135671421, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
 --- !u!1 &6563476380381197535 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3789179562260421635, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
-  m_PrefabInstance: {fileID: 8035539123164571868}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &6593015318476418686 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 3818173708443616930, guid: 42bd2388c609c304c94dc3f3e2a0f7aa, type: 3}
   m_PrefabInstance: {fileID: 8035539123164571868}
   m_PrefabAsset: {fileID: 0}

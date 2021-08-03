@@ -24,35 +24,35 @@ namespace PiyushUtils
         Vector2 angleLimits = new Vector2(-125f, 125f);
 
         [SerializeField, Tooltip("Slider positions")]
-        Vector3 openPos, closedPos, closedPosFull;
-        [SerializeField] List<Vector3> sliderClosedPositions;
-        [SerializeField] bool isViseOpen = true, shouldSwitchAttachTransforms = true, allowViseOpening = true;
+        Vector3 currClosedPos;
+        Vector3 maxOpenPos=new Vector3(0, 0.048f, -0.045f), closedPosFull = new Vector3(0, 0.048f, -0.1855f), closedPosPlate = new Vector3(0, 0.048f, -0.1755f);
+        [SerializeField] bool isViseOpen = true, shouldSwitchAttachTransforms = true, allowViseOpening = true, shouldAllowFiling = false;
 
+        [ContextMenu(nameof(TrackHandleRotation))]
         public void OnHandleSelectEnter() => StartCoroutine(TrackHandleRotation());
         public void OnHandleSelectExit() => StopCoroutine(TrackHandleRotation());
 
         public bool ShouldSwitchAttachTransforms { get => shouldSwitchAttachTransforms; set => shouldSwitchAttachTransforms = value; }
+        public bool ShouldAllowFiling { get => shouldAllowFiling; set => shouldAllowFiling = value; }
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
         void Awake()
         {
-            slider.localPosition = openPos;
+            currClosedPos = closedPosFull;
+            slider.localPosition = maxOpenPos;
         }
 
         internal void OnTaskBegin()
         {
-            // jobPlateHighlight.SetActive(true);
-            // _collider.enabled = true;
             jobSocket.socketActive = true;
+            ShouldAllowFiling = false;
         }
 
         internal void OnTaskCompleted()
         {
-            // jobPlateHighlight.SetActive(false);
-            // jobSocket.socketActive = false;
-            // _collider.enabled = false;
+            allowViseOpening = true;
             TurnOffHacksawAnimations();
         }
 
@@ -62,7 +62,7 @@ namespace PiyushUtils
             {
                 float angle = Vector3.SignedAngle(Vector3.forward, handle.right, Vector3.left);
                 sliderParameter = Mathf.InverseLerp(angleLimits.x, angleLimits.y, angle);
-                slider.transform.localPosition = Vector3.Lerp(openPos, closedPos, sliderParameter);
+                slider.transform.localPosition = Vector3.Lerp(maxOpenPos, currClosedPos, sliderParameter);
                 isViseOpen = sliderParameter <= 0.98f;
                 yield return null;
             }
@@ -74,34 +74,30 @@ namespace PiyushUtils
             if (args.interactable.CompareTag(_Constants.JOB_TAG))
             {
                 SMAWJobPlate plate = args.interactable.GetComponent<SMAWJobPlate>();
+                currClosedPos = closedPosPlate;
                 int index = (int)plate.PlateType;
                 float invokeInterval = 0.1f;
                 // jobPlateHighlight.SetActive(false);
                 if (ShouldSwitchAttachTransforms)
                 {
-                    if (plate.IsCuttingDone && !plate.IsFilingDone)
+                    if (plate.IsCuttingDone && !plate.IsFilingDone) //Filing
                     {
                         jobSocket.attachTransform = filingTransforms[index];
-                        plate.SetupForFiling();
-                        closedPos = sliderClosedPositions[1];
+                        //plate.SetupForFiling();
                         ToggleFilingCanvas(false);
-                        plate.OnFilingDone += () => { ToggleViseOpening(); };
+                        //plate.OnFilingDone += () => { ToggleViseOpening(); };
                         InvokeRepeating(nameof(KeepCheckingForViseClosing), invokeInterval, invokeInterval);
                     }
-                    else if (!plate.IsCuttingDone)
+                    else if (!plate.IsCuttingDone) //Cutting
                     {
-                        plate.SetupForCutting();
-                        //hacksawAnimators[index].SetActive(true);
-                        plate.OnGasCuttingDone += TurnOffHacksawAnimations;
+                        //plate.SetupForCutting();
+                        //plate.OnGasCuttingDone += TurnOffHacksawAnimations;
                         if (index >= 0 && index < jobTransforms.Count)
                             jobSocket.attachTransform = jobTransforms[index];
-                        if (index <= sliderClosedPositions.Count)
-                            closedPos = sliderClosedPositions[index];
-                        plate.OnGasCuttingDone += () =>
-                        {
-                            ToggleViseOpening();
-                            ToggleFilingCanvas();
-                        };
+                        //plate.OnGasCuttingDone += () =>
+                        //{
+                        //    ToggleViseOpening();
+                        //};
                         InvokeRepeating(nameof(KeepCheckingForViseClosing), invokeInterval, invokeInterval);
                     }
                     currentHoldingPlate = plate;
@@ -110,19 +106,39 @@ namespace PiyushUtils
             }
         }
 
+        /// <summary>
+        /// Responsible for not letting the user open the vise after placing a job plate to perform actions on.
+        /// </summary>
         void KeepCheckingForViseClosing()
         {
             if (!isViseOpen)
             {
                 ToggleViseOpening(false);
                 CancelInvoke(nameof(KeepCheckingForViseClosing));
+                if (currentHoldingPlate != null)
+                {
+                    SMAWJobPlate plate = currentHoldingPlate;
+                    if (plate.IsCuttingDone && !plate.IsFilingDone) //Filing
+                    {
+                        plate.SetupForFiling();
+                        ToggleFilingCanvas(false);
+                        plate.OnFilingDone += () => { ToggleViseOpening(); };
+                    }
+                    else if (!plate.IsCuttingDone) //Cutting
+                    {
+                        plate.SetupForCutting();
+                        plate.OnGasCuttingDone += TurnOffHacksawAnimations;
+                        plate.OnGasCuttingDone += () =>
+                        {
+                            ToggleViseOpening();
+                        };
+                    }
+                }
             }
         }
 
         public void OnSocketExit(SelectExitEventArgs args)
         {
-            // if (ShouldSwitchAttachTransforms)
-            //     jobPlateHighlight.SetActive(true);
             if (args.interactable.CompareTag(_Constants.JOB_TAG))
             {
                 SMAWJobPlate plate = args.interactable.GetComponent<SMAWJobPlate>();

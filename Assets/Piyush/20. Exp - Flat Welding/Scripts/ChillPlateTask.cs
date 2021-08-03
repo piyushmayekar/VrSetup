@@ -7,25 +7,58 @@ namespace FlatWelding
 {
     public class ChillPlateTask : Task
     {
+        [SerializeField] int plateCount = -1;
+        [SerializeField] List<XRSocketInteractor> plateSockets;
+        [SerializeField] List<GameObject> placedPlates = new List<GameObject>();
+        [SerializeField] List<MeshRenderer> socketRenderers=new List<MeshRenderer>();
+        [SerializeField] Material chillPlateMat;
 
-        [SerializeField, Tooltip("List of all the chill plates")] List<GameObject> chillPlates;
-        [SerializeField, Tooltip("Keeping track of the the plate placed in the desired socket")] List<bool> platesPlaced;
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            chillPlates.ForEach(plate => platesPlaced.Add(false));
+            plateSockets.ForEach(socket => socketRenderers.Add(socket.GetComponent<MeshRenderer>()));
+            Step();
         }
 
-
-        public void OnChillPlateSelect(SelectEnterEventArgs args)
+        void Step()
         {
-            int index = chillPlates.FindIndex(plate => plate.gameObject == args.interactable.gameObject);
-            if (index >= 0)
+            plateCount++;
+            if (plateCount < plateSockets.Count)
             {
-                platesPlaced[index] = true;
-                if (platesPlaced.TrueForAll(platePlaced => platePlaced))
-                    OnTaskCompleted();
+                plateSockets[plateCount].socketActive = true;
+                socketRenderers[plateCount].enabled = true;
             }
+            else
+            {
+                OnTaskCompleted();
+            }
+        }
+
+        public void OnChillPlateEnterSocket(SelectEnterEventArgs args)
+        {
+            if (plateSockets[plateCount] == args.interactor)
+            {
+                //Turn off chill plate grabbable
+                GameObject _plate = args.interactable.gameObject;
+                _plate.SetActive(false);
+                placedPlates.Add(_plate);
+                _plate.transform.SetPositionAndRotation(plateSockets[plateCount].transform.position, plateSockets[plateCount].transform.rotation);
+
+                //Mesh renderer change material
+                socketRenderers[plateCount].material = chillPlateMat;
+
+                //Socket collider non trigger
+                plateSockets[plateCount].socketActive = false;
+                plateSockets[plateCount].GetComponent<Collider>().isTrigger = false;
+
+                Step();
+            }
+        }
+
+        public void TurnOnGrabbableChillPlates()
+        {
+            plateSockets.ForEach(socket => socket.gameObject.SetActive(false));
+            placedPlates.ForEach(plate => plate.SetActive(true));
         }
     }
 }

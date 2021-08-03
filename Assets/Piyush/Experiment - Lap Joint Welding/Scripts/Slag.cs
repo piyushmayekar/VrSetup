@@ -37,6 +37,7 @@ namespace LapWelding
         {
             if (other.gameObject.CompareTag(_Constants.CHIPPING_HAMMER_TAG))
             {
+                _collider.enabled = false;
                 _renderer.enabled = false;
                 slagPrefabs.ForEach(prefab =>
                 {

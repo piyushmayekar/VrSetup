@@ -33,6 +33,7 @@ namespace Grinding
         [SerializeField] int maxGrindingStage = 2;
         [SerializeField] Vector3 _localScale;
         Rigidbody _rb;
+        HandGrinder grinder;
 
         public static List<JobPlate> jobPlates = new List<JobPlate>();
         void Awake()
@@ -106,6 +107,7 @@ namespace Grinding
         public void StartGrinding()
         {
             if (grindingStage >= maxGrindingStage) return;
+            grinder = FindObjectOfType<HandGrinder>();
             Invoke(nameof(TurnOffMainCollider), 1f);
             elongatedPlate.SetActive(false);
             ogPlate.SetActive(true);

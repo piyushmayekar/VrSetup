@@ -19,6 +19,7 @@ namespace TWelding
         [SerializeField] float targetCurrent = 130f;
         [SerializeField] ElectrodeType requiredElectrodeType = ElectrodeType._315mm;
         [SerializeField] bool isElectrodePlaced = false, isCurrentSet = false;
+        [SerializeField] GameObject weldingGunHighlights;
         WeldingMachine machine;
 
         public override void OnTaskBegin()
@@ -55,8 +56,10 @@ namespace TWelding
         {
             weldingPoints = new List<WeldingPoint>(
                 pointsParent.GetComponentsInChildren<WeldingPoint>());
+            weldingArea = FindObjectOfType<WeldingArea>(true).gameObject;
             weldingArea.SetActive(true);
             pointsParent.SetActive(true);
+            weldingGunHighlights.SetActive(true);
             weldingPoints.ForEach(point =>
             {
                 if (point.ShouldShowSlag)
@@ -70,6 +73,7 @@ namespace TWelding
                 point.OnWeldingDone += () =>
                     {
                         weldingRemainingCount--;
+                        weldingGunHighlights.SetActive(false);
                         CheckIfTaskCompleted();
                     };
             });

@@ -29,15 +29,26 @@ namespace CornerWelding
             machine = WeldingMachine.Instance;
             machine.RequiredElectrodeType = requiredElectrodeType;
             electrodePlaced = machine.CheckIfRequiredElectrodePlaced(requiredElectrodeType);
-            if (!electrodePlaced) machine.OnElectrodePlacedEvent += () => { electrodePlaced = true; };
+            if (!electrodePlaced) machine.OnElectrodePlacedEvent += OnElectrodePlaced;
             knob.TargetValue = targetCurrentValue;
             if (knob.CurrentValue != targetCurrentValue)
-                CurrentKnob.OnTargetValueSet += () => { currentSet = true; CheckIfMiniTasksCompleted(); };
+                CurrentKnob.OnTargetValueSet += OnKnobTargetValueSet;
             else
                 currentSet = true;
             CheckIfMiniTasksCompleted();
         }
 
+        void OnElectrodePlaced()
+        {
+            electrodePlaced = true;
+            CheckIfMiniTasksCompleted();
+        }
+
+        void OnKnobTargetValueSet()
+        {
+            currentSet = true;
+            CheckIfMiniTasksCompleted();
+        }
         void CheckIfMiniTasksCompleted()
         {
             if (currentSet && electrodePlaced) InitializeEverything();
@@ -45,6 +56,12 @@ namespace CornerWelding
 
         private void InitializeEverything()
         {
+            machine.OnElectrodePlacedEvent -= OnElectrodePlaced;
+            CurrentKnob.OnTargetValueSet -= OnKnobTargetValueSet;
+            if (weldingArea == null || weldingArea.gameObject == null)
+            {
+                weldingArea = FindObjectOfType<CornerWelding.WeldingArea>(true).gameObject;
+            }
             weldingArea.SetActive(true);
             allPoints[0].transform.parent.gameObject.SetActive(true);
             machineAnimation.SetActive(true);

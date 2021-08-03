@@ -11,6 +11,7 @@ namespace FlatWelding
         public UnityEvent OnConnectionDone;
         [SerializeField] List<XRSocketInteractor> sockets;
         [SerializeField] List<GameObject> objectsToPlace;
+        [SerializeField] List<GameObject> spannerHighlights;
         [SerializeField] int socketIndex;
         [SerializeField] float waitTime = 1f;
         [SerializeField] SpannerTrigger nutSpannerTrigger, screwSpannerTrigger;
@@ -23,6 +24,7 @@ namespace FlatWelding
         public void StartConnecting()
         {
             sockets[socketIndex].socketActive = true;
+            sockets[socketIndex].transform.GetChild(0).gameObject.SetActive(true);
             if (socketIndex == 0)
                 objectsToPlace.ForEach(o => o.GetComponent<Outline>().enabled = true);
         }
@@ -32,6 +34,7 @@ namespace FlatWelding
             if (args.interactable.gameObject == objectsToPlace[socketIndex])
             {
                 objectsToPlace[socketIndex].GetComponent<Outline>().enabled = false;
+                sockets[socketIndex].transform.GetChild(0).gameObject.SetActive(false);
                 args.interactor.selectEntered.RemoveAllListeners();
                 StartCoroutine(TimedSocketEnabler());
             }
@@ -54,12 +57,14 @@ namespace FlatWelding
                 StartConnecting();
             else
             {
+                spannerHighlights.ForEach(spanner => spanner.SetActive(true));
                 spanners.ForEach(spanner => spanner.GetComponent<Outline>().enabled = true);
                 //Start screw motion
                 nutSpannerTrigger.OnSpannerEnter += () =>
                 {
                     isSpannerInNutRange = true;
                     nutFittingSpannerT = nutSpannerTrigger.spannerT;
+                    spannerHighlights.ForEach(spanner => spanner.SetActive(false));
                     StartCoroutine(NutFitter());
                 };
                 nutSpannerTrigger.OnSpannerExit += () =>

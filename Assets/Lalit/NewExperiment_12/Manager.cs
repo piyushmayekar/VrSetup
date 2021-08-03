@@ -381,9 +381,9 @@ public class Manager : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
        // readSteps.AddClickConfirmbtnEvent(GasWeldingSetUP.instance.Onclickbtn_s_3_confirm);
-        readSteps.AddClickConfirmbtnEvent(FlameControlStep);
+        //readSteps.AddClickConfirmbtnEvent(FlameControlStep);
 
-        //readSteps.AddClickConfirmbtnEvent(EnablePPEKitStep);
+        readSteps.AddClickConfirmbtnEvent(EnablePPEKitStep);
 
         //PlayStepAudio(3);// kit audio
     }

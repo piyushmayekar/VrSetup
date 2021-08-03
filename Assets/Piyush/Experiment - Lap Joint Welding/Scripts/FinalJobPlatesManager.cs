@@ -36,5 +36,7 @@ namespace LapWelding
             StartCoroutine(RigidbodyNullifier());
             isBeingHeld = false;
         }
+        [ContextMenu("Toggle Grab")]
+        void _ToggleGrab() => ToggleGrab();
     }
 }
