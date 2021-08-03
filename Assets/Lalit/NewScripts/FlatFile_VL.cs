@@ -38,8 +38,8 @@ public class FlatFile_VL : MonoBehaviour
             }
             else
             {
-                ReadStepsFromJson.instance.tablet.SetActive(true);
-                ReadStepsFromJson.instance.stepText.text = "\nDo filling on Job Edges.\n" + currentCount.ToString() + "/10";
+                //ReadStepsFromJson.instance.tablet.SetActive(true);
+                //ReadStepsFromJson.instance.stepText.text = "\nDo filling on Job Edges.\n" + currentCount.ToString() + "/10";
                 Audio.Play();
                 Debug.Log(currentCount);
             }

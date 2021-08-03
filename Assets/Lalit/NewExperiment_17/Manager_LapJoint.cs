@@ -114,7 +114,8 @@ public class Manager_LapJoint : MonoBehaviour
         Weldingflame = WeldingNuetralFlame.GetComponent<WeldingFlame_VL>();
         ChippingHammer = ChippingHammerGo.GetComponent<ChippingHammer_VL>();
         //EnableMarkingOnFirstJobSecongLine();
-      ///  PlaceJobFlatePos1_socket1_job();
+        ///  PlaceJobFlatePos1_socket1_job();
+      //  OnEnableMarking();
       //  PlaceJobFlatePos2_socket2_job();
     }
 

@@ -52,8 +52,8 @@ public class WireBrush_VL : MonoBehaviour
             }
             else
             {
-                ReadStepsFromJson.instance.tablet.SetActive(true);
-                ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + currentCount.ToString() + "/10";
+                //ReadStepsFromJson.instance.tablet.SetActive(true);
+                //ReadStepsFromJson.instance.stepText.text = "\nPick up C.S. brush and clean the surface.\n" + currentCount.ToString() + "/10";
                 effect.Play();
                 Audio.Play();
                 rb.freezeRotation = true;

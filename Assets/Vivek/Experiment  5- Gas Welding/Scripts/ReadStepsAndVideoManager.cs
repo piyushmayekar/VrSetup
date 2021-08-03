@@ -20,7 +20,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     public TextLangManager langManager;
     [Header("---------------------------------------------------")]
     public GameObject panel;
-    public GameObject tablet,languageButton;
+    public GameObject tablet, languageButton;
     [SerializeField] int countStep;
 
     public TextMeshProUGUI stepText, languageText;
@@ -35,13 +35,15 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     public GameObject videoPlayRawImage;
     public Button videoPlayBtn;
     [HideInInspector]
-    public bool isChangeFont, isStep;
+    public bool isChangeFont, isStep, isBrushCleaning;
+
+    private string[] indexGuj = new string[] { "р", "с", "т", "у", "ж", "в", "ь", "ы", "з", "ш" };
+    //"ср", "сс","ст","су","сж","св","сь","сы","сз","сш","тр"};  // ***** ANKITA CHANGES *****
 
 
     void Awake()
     {
         instance = this;
-
         isStep = false;
         OnClickLanguagesBtn();
     }
@@ -50,7 +52,8 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         if (langManager._stepsText.Steps.Length > countStep)
         {
             isStep = true;
-            stepText.text = langManager._stepsText.Steps[countStep];
+            stepText.text = GetStepIndex(countStep); // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
+            stepText.text += langManager._stepsText.Steps[countStep]; // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
             countStep++;
         }
     }
@@ -62,10 +65,14 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         {
             stepText.font = languagesFont[0];
             langManager._stepsText = langManager.readSteps[0];
+          //  stepText.fontSize = 15.5f;
+            //stepText.autoSizeTextContainer = true;
         }
         else //Gujarati font load
         {
             stepText.font = languagesFont[1];
+           // stepText.fontSize = 17.5f;
+          //  stepText.autoSizeTextContainer = false;
             langManager._stepsText = langManager.readSteps[1];
         }
         if (!isStep)
@@ -74,21 +81,57 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         }
         else
         {
-            if (CuttingBrush.instance.isCleaning)
+            if (isBrushCleaning)
             {
                 Debug.Log("call clean brush");
                 CuttingBrush.instance.BrushFontChanage();
             }
             else
             {
-                if (langManager._stepsText.Steps.Length > countStep)
+                if (langManager._stepsText.Steps.Length >= countStep)
                 {
                     Debug.Log("LM callimh;");
-                    stepText.text = langManager._stepsText.Steps[countStep - 1];
+                    stepText.text = GetStepIndex(countStep - 1); // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
+                    stepText.text += langManager._stepsText.Steps[countStep - 1];// ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
                 }
             }
         }
     }
+    // Get Step Number title... ***** ANKITA CHANGES *****
+    private string GetStepIndex(int cntNum)
+    {
+        cntNum++;
+        if (isChangeFont)
+        {
+            return "Step - " + cntNum + "\n";
+        }
+        else
+        {
+            string stepNumString = "";
+            if (cntNum > 9)
+            {
+                List<int> temp = new List<int>();
+                while (cntNum > 0)
+                {
+                    temp.Add(cntNum % 10);
+                    cntNum = cntNum / 10;
+                }
+                temp.Reverse();
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    stepNumString += indexGuj[temp[i]];
+                }
+            }
+            else
+            {
+                stepNumString = indexGuj[cntNum];
+            }
+            return "pglu> Ю " + stepNumString + "\n";
+        }
+    }
+
+    // END OF CHANGE ***** ANKITA CHANGES *****
+
     /// <summary>
     ///Load new text or msg on canvas.
     /// </summary>
@@ -144,9 +187,16 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         videoPlayBtn.onClick.AddListener(() => OnClickVideoPlayBtn(indexOfClip));
     }
     #endregion
+    /// <summary>
+    ///Retry  scene. in this method the "sceneName" string variable load scene to pass in this variable.
+    /// </summary>
     public void onClickRetryButton()
     {
         SceneManager.LoadScene(sceneName);
+    }
+    public void onClickHomeButton(string homeScene)
+    {
+        SceneManager.LoadScene(homeScene);
     }
 }
 [System.Serializable]

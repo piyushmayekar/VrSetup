@@ -42,7 +42,6 @@ public class GasWeldingStep : MonoBehaviour
     public ReadStepsAndVideoManager readSteps;
     [Header("Steps audio clips")]
     public AudioSource stepAudioSource;
-    public AudioClip[] stepsAudioClip;
     public AudioClip creckykeyClip;
 
     public Vector3 blueStartpos, redStartpos;
@@ -93,19 +92,14 @@ public class GasWeldingStep : MonoBehaviour
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
         StartCoroutine(PlayGasWeldingStartAudio());
-       // Onclickbtn_s_3_confirm();
-        //   Onclickbtn_s_5_confirm();
-        //  ConfirmSatrtbtn();
+       
     }
     IEnumerator PlayGasWeldingStartAudio()
     {
         yield return new WaitForSeconds(2f);
+        //EXP title audio clip (0)
         PlayStepAudio(0);
         yield return new WaitForSeconds(0.2f + stepAudioSource.clip.length);
-        PlayStepAudio(1);
-        yield return new WaitForSeconds(0.2f + stepAudioSource.clip.length);
-        PlayStepAudio(2);
-
     }
     public void Update()
     {
@@ -128,7 +122,8 @@ public class GasWeldingStep : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_1_confirm);
-        PlayStepAudio(3);// kit audio
+        //EXP kit audio  clip (1)
+        PlayStepAudio(1);
     }
     #region step1 Step 1: Wear PPE Kit
     void Onclickbtn_s_1_confirm()
@@ -156,7 +151,8 @@ public class GasWeldingStep : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_2_confirm);
-        PlayStepAudio(4);// Chain audio
+        //EXP Chain audio  clip (2)
+        PlayStepAudio(2);
     }
     #endregion
     #region step2 gas cylinder on the trolley with chain.
@@ -175,7 +171,8 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[17].enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_3_confirm);
-        PlayStepAudio(5);// Cracking audio
+        //EXP Cracking audio  clip (3)
+        PlayStepAudio(3);
     }
 
     void Onclickbtn_s_3_confirm()
@@ -247,7 +244,8 @@ public class GasWeldingStep : MonoBehaviour
     {
         readSteps.AddClickEventVideoPlay(0); // regulators video vlip animation
 
-        PlayStepAudio(6);// regulators audio
+        //EXP regulators fix audio  clip (4)
+        PlayStepAudio(4);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
     }
@@ -324,6 +322,8 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.AddClickEventVideoPlay(1); // Flashback Arrestor video vlip animation
 
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_1_confirm);
+        //EXP regulators Flashback and hos connector audio  clip (5)
+        PlayStepAudio(5);
     }
 
     #endregion
@@ -337,7 +337,8 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[3].enabled = false; //red cylinder key
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
-        PlayStepAudio(7);// hose pipe connection audio
+        //EXP regulators  hose PIP  connector audio  clip (6)
+        PlayStepAudio(6);
     }
     void Onclickbtn_s_5_confirm()
     {
@@ -383,6 +384,9 @@ public class GasWeldingStep : MonoBehaviour
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_2_confirm);
         // readSteps.HideConifmBnt();
 
+        //EXP regulators hos CLIP  audio  clip (7)
+        PlayStepAudio(7);
+
     }
     public void DoneBlackClip_R() //hose clip 
     {
@@ -402,7 +406,8 @@ public class GasWeldingStep : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_part2_confirm);
-        PlayStepAudio(8);// tourch connection with pipe audio
+        //EXP welding torch hose clip and connector audio  clip (8)
+        PlayStepAudio(8);
     }
     void Onclickbtn_s_5_part2_confirm()
     {
@@ -497,6 +502,8 @@ public class GasWeldingStep : MonoBehaviour
     public void DoneRedClip_T()
     {
         onEnableStep6Object();
+        //EXP set preseegor on regulator audio  clip (9)
+        PlayStepAudio(9);
     }
     #endregion
     #region Step 6: Set the gas pressure on the regulator as per nozzle size.
@@ -504,7 +511,7 @@ public class GasWeldingStep : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_6_confirm);
-        PlayStepAudio(9);// Nozzle set audio
+     
     }
     void Onclickbtn_s_6_confirm()
     {
@@ -537,6 +544,8 @@ public class GasWeldingStep : MonoBehaviour
     {
         Onclickbtn_s_7_confirm_p2();
         objectOutLines[3].enabled = false;
+        //EXP Check likej on regulator acetylene  shop water audio  clip (11)
+        PlayStepAudio(11);
     }
 
     void Onclickbtn_s_7_confirm_p2() //acetylene  shop water
@@ -550,6 +559,9 @@ public class GasWeldingStep : MonoBehaviour
     }
     public void onEnableStep_7_part3_object()
     {
+        //EXP Check likej on regulator oxygen  shop water audio  clip (10)
+        PlayStepAudio(10);
+
         //red glass reset
         GasTablekitcolliders[15].gameObject.SetActive(true);
         SetObjectRestPos_Rotate(0);
@@ -596,7 +608,7 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[5].enabled = false;  //blue   regulators outline
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_7_3_confirm);
-        PlayStepAudio(10);// fix nozzle  torch audio
+      
     }
     public void Onclickbtn_s_7_3_confirm()
     {
@@ -608,6 +620,9 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[8].enabled = true;//red pipe sphere
         objectOutLines[11].enabled = true;
         nozzelSnapPoint.gameObject.SetActive(true);
+
+        //EXP Check fix  welding nozzle on torch audio  clip (12)
+        PlayStepAudio(12);
     }
 
     public void onEnableStep8Object()
@@ -618,7 +633,9 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[11].enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_8_confirm);
-        PlayStepAudio(11);// open flam audio
+
+        //EXP Check fix  welding nozzle on torch audio  clip (13)
+        PlayStepAudio(13);
     }
 
     #endregion
@@ -633,6 +650,9 @@ public class GasWeldingStep : MonoBehaviour
         LighterCanvas.SetActive(true);
         objectOutLines[8].enabled = true;
         readSteps.HideConifmBnt();
+        //EXP Check fix  Open acetylene control valve on torch audio  clip (14)
+        PlayStepAudio(14);
+
     }
     public void LighterSnap_true()
     {
@@ -667,7 +687,8 @@ public class GasWeldingStep : MonoBehaviour
         GasTablekitcolliders[13].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_9_confirm);
-        PlayStepAudio(12);// open flam audio
+        //EXP Check Flame Setting. audio  clip (15)
+        PlayStepAudio(15);
     }
     #endregion
     #region Step 9: Flame Setting.
@@ -689,13 +710,20 @@ public class GasWeldingStep : MonoBehaviour
         rotateNozzles[2].GetComponent<Outline>().enabled = true; //RED  bol  out linereduse or crbarn
 
         readSteps.HideConifmBnt();
+
+        //EXP reduce_or_carb_ Flame Setting. audio  clip (16)
+        PlayStepAudio(16);
     }
     public void PlayFlamsParticle1_Flam()//17   13  //first step flame  green
     {
         if (!isTurnOffFlame)
         {
+            //EXP oxidizing _ Flame Setting. audio  clip (17)
+            PlayStepAudio(17);
+
             // oldRedBol.GetComponent<Outline>().enabled = false;
             readSteps.onClickConfirmbtn();
+
             reduce_or_carb_F.SetActive(true);
             reduce_or_carb_F.GetComponent<AudioSource>().Play();
             GasTablekitcolliders[19].enabled = true;  //green
@@ -721,6 +749,8 @@ public class GasWeldingStep : MonoBehaviour
             objectOutLines[15].GetComponent<BoxCollider>().enabled = false;
             objectOutLines[16].GetComponent<BoxCollider>().enabled = true;
 
+            //EXP netural _ Flame Setting. audio  clip (18)
+            PlayStepAudio(18);
 
             readSteps.onClickConfirmbtn();
             oxidizing_F.SetActive(true);
@@ -737,6 +767,7 @@ public class GasWeldingStep : MonoBehaviour
             //GasTablekitcolliders[20].transform.parent.GetComponent<RotateNozzle>().enabled = true;
             rotateNozzles[4].enabled = true; // netural flame 
             rotateNozzles[4].GetComponent<Outline>().enabled = true; //red  bol  out line natural
+
         }
     }
     public void PlayFlamsParticle3_flam() // netural flame
@@ -752,6 +783,8 @@ public class GasWeldingStep : MonoBehaviour
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_10_confirm);
             //   Onclickbtn_s_10_confirm();
+            //EXP  Turning off Flame audio  clip (19)
+            PlayStepAudio(19);
         }
     }
     #endregion
@@ -824,7 +857,8 @@ public class GasWeldingStep : MonoBehaviour
             rotateNozzles[3].enabled = false; //GREEN  bol oxidizing
                                               //    Onclickbtn_s_10_1confirm();
             callCloseCylinderValves();
-            Debug.Log("1dsds0");
+            //EXP  Close Cylinder Valves audio  clip (120)
+            PlayStepAudio(20);
         }
     }
     public void callCloseCylinderValves()
@@ -902,11 +936,12 @@ public class GasWeldingStep : MonoBehaviour
     }
     void PlayStepAudio(int index)
     {
-        if (stepAudioSource.clip != null)
+        /*if (stepAudioSource.clip != null)
         {
             stepAudioSource.Stop();
             stepAudioSource.PlayOneShot(stepsAudioClip[index]);
-        }
+        }*/
+        AudioManagerWithLanguage.Instance.PlayStepAudio(index);
     }
     public void SetObjectRestPos_Rotate(int indexOfReset)
     {

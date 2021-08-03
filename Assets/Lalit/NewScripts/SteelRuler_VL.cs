@@ -81,6 +81,7 @@ public class SteelRuler_VL : MonoBehaviour
                 audio.Play();
                 highlight.SetActive(false);
                 this.transform.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
+             //   this.transform.gameObject.GetComponentInChildren<Rigidbody>().isKinematic = true;
                 this.transform.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
                 this.transform.GetComponent<XRGrabInteractable>().enabled = false;
 
