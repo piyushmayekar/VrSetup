@@ -23,6 +23,9 @@ namespace PiyushUtils
         [SerializeField] _Language currentLanguage;
         [SerializeField, Header("Json file to read Steps")] List<TextAsset> jsonFiles;
         [SerializeField] TextLangManager textLangManager;
+        [SerializeField] VoiceOverDataHolder voiceOverData;
+        
+        AudioSource _voAudioSource;
         List<ReadSteps> readSteps;
         public static TaskManager Instance => instance;
 
@@ -59,6 +62,8 @@ namespace PiyushUtils
             SetTaskInfoFont();
             readSteps = new List<ReadSteps>(textLangManager.readSteps);
             tablet.OnLanguageButtonClick.AddListener(OnLanguageButtonClick);
+            _voAudioSource = gameObject.AddComponent<AudioSource>();
+            _voAudioSource.spatialBlend = 0f;
             yield return new WaitForSeconds(1f);
             StartTask(CurrentTaskIndex);
         }
@@ -71,6 +76,8 @@ namespace PiyushUtils
 
                 //Assigning the task title & details to the task displayer.
                 SetTaskInfoTextAccToLanguage(currentTaskIndex);
+
+                PlayStepVO();
                 task.OnTaskBegin();
             }
         }
@@ -99,6 +106,20 @@ namespace PiyushUtils
             }
             taskDetailsText.text = sb.ToString();
         }
+
+        public void PlayStepVO()
+        {
+            if (voiceOverData != null && CurrentLangIndex==(int)_Language.Gujrati)
+            {
+                if (voiceOverData.voiceOvers[CurrentTaskIndex] != null && _voAudioSource != null)
+                {
+                    _voAudioSource.PlayOneShot(voiceOverData.voiceOvers[CurrentTaskIndex]);
+                }
+            }
+            else
+                Debug.Log("Voice over data not assigned");
+        }
+
         private string GetStepIndex(int cntNum)
         {
             //cntNum++;
