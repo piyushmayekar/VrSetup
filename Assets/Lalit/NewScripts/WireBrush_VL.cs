@@ -15,11 +15,20 @@ public class WireBrush_VL : MonoBehaviour
     private UnityEvent CallMethodOnCleaningJobDone = new UnityEvent();
     private Rigidbody rb;
     public TextMeshProUGUI CleanText;
+    private Vector3 StartPos;
+    private Vector3 StartRot;
 
+    private void Awake()
+    {
+        StartPos = transform.position;
+        StartRot = transform.localEulerAngles;
+    }
     private void Start()
     {
         Audio = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+
+       
     }
     public void SetWireBrushParams(int _brushCount, string _objectTag)
     {
@@ -76,6 +85,13 @@ public class WireBrush_VL : MonoBehaviour
                 //Debug.Log(currentCount);
             }
         }
+
+        if (collision.gameObject.name == "Floor")
+        {
+            Debug.Log("inside");
+            transform.position = StartPos;
+            transform.localEulerAngles = StartRot;
+        }
     }
 
     private void EmptyParams()
@@ -103,4 +119,6 @@ public class WireBrush_VL : MonoBehaviour
             other.gameObject.SetActive(false);
         }
     }
+
+    
 }

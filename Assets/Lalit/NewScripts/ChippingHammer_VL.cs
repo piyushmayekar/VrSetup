@@ -44,7 +44,7 @@ public class ChippingHammer_VL : MonoBehaviour
             other.gameObject.GetComponent<MeshRenderer>().sharedMaterial = weldMat;
             other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
-            if (currentCount == countPoint)
+            if (currentCount >= countPoint)
             {
                 EmptyParams();
                 if (CallMethodOnRemoveSlagDone != null)

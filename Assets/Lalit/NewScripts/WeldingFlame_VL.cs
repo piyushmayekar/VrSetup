@@ -58,7 +58,13 @@ public class WeldingFlame_VL : MonoBehaviour
     }
 
    
-
+    public void DisableEffect()
+    {
+        if (fillerRod != null)
+        {
+            fillerRod.PlayEffect(false);
+        }
+    }
     private void EmptyParams()
     {
         weldingPoints.Clear();

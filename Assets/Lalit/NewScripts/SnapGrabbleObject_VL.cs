@@ -129,6 +129,10 @@ public class SnapGrabbleObject_VL : MonoBehaviour
         {
             ManagerCornerJoint.instance.lighter_Flame.SetActive(true);
         }
+        else if (Manager_LapJoint.instance != null)
+        {
+            Manager_LapJoint.instance.lighter_Flame.SetActive(true);
+        }
         
     }
 }
