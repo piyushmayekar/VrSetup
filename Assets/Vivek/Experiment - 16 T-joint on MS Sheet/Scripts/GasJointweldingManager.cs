@@ -1,3 +1,4 @@
+using PiyushUtils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,20 +23,21 @@ public class GasJointweldingManager : MonoBehaviour
     public ReadStepsAndVideoManager readSteps;
 
     [Header("Extra objects")]
-        public GameObject  neturalFlameCube;
+    public GameObject neturalFlameCube;
     public GameObject netural_flame, jointTackPoint, hummerhighlight, blacksmoke,
-                      highlighttriSquare,torch35D,torch_m_35d,lighterFlame, supportPlat,supportCube1,supportcube2;
+                      highlighttriSquare, torch35D, torch_m_35d, lighterFlame, supportPlat, supportCube1, supportcube2;
     public GameObject[] weldingLine1, weldingLine2;
-     [Header("          ")]
+    [Header("          ")]
     public RotateNozzle redBol, blueBol, blackValve, redValve;
 
-   // [Header("Counters")]
-     int countppekit;
+    // [Header("Counters")]
+    int countppekit;
     public bool flameOff = false, step10Call, isTurnOffFlame, IsEnableFlame;
     [Header("Object Position Resetter ")]
     public Transform[] toolToReset;
     public List<Vector3> toolToResetPosition, toolToResetRotate;
-
+    [Header("xr hand Object")]
+    public GameObject leftHand, RightHand;
     void Awake()
     {
         instance = this;
@@ -65,19 +67,25 @@ public class GasJointweldingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-      //  checkChappingHummer();
-        //  SecondTourchPlateRotate();
-        //   Onclickbtn_s_2_confirm();
+        StartCoroutine(PlayGasWeldingStartAudio());
     }
+    IEnumerator PlayGasWeldingStartAudio()
+    {
+        yield return new WaitForSeconds(2f);
+        //EXP title audio clip (0)
+        PlayStepAudio(0);
+        yield return new WaitForSeconds(0.2f + AudioManagerWithLanguage.Instance.stepsAudioSource.clip.length);
 
+    }
     public void ConfirmSatrtbtn()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_1_confirm);
-        PlayStepAudio(3);// kit audio
+        //EXP kit audio  clip (1)
+        PlayStepAudio(1);
     }
     #region step1 Step 1: Wear PPE Kit
-     void Onclickbtn_s_1_confirm()
+    void Onclickbtn_s_1_confirm()
     {
         readSteps.HideConifmBnt();
         for (int i = 0; i < ppekitcolliders.Length; i++)
@@ -101,7 +109,8 @@ public class GasJointweldingManager : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_2_confirm);
-        PlayStepAudio(4);//       
+        //EXP clean the job surface wire brush audio  clip (2)
+        PlayStepAudio(2);
     }
     #endregion
     #region  Step2 : Clean the job surface with wire brush and remove burrs by filing.
@@ -120,11 +129,11 @@ public class GasJointweldingManager : MonoBehaviour
         objectOutLines[9].enabled = false;
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false; // job plate outline
                                                                                                   //  GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
-        Debug.Log("call brush");
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_3_confirm);
 
-        // Onclickbtn_s_4_confirm();
+        //EXP  Keep the job on welding table in “T” Position audio  clip (3)
+        PlayStepAudio(3);
     }
 
 
@@ -138,7 +147,7 @@ public class GasJointweldingManager : MonoBehaviour
         readSteps.HideConifmBnt();
         OnEnableStep3object();
     }
-     void OnEnableStep3object()
+    void OnEnableStep3object()
     {
         /*GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
         objectOutLines[9].enabled = true;
@@ -154,7 +163,7 @@ public class GasJointweldingManager : MonoBehaviour
     {
         //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//objectOutLines[1].transform.position;// job plate material
-                                                                                                  //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
+                                                                                                      //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
         GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f, 0f);//objectOutLines[1].transform.position;// job plate material
 
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
@@ -168,19 +177,22 @@ public class GasJointweldingManager : MonoBehaviour
         readSteps.onClickConfirmbtn();
         //    readSteps.AddClickConfirmbtnEvent(Onclickbtn_s4_confirm);
         readSteps.AddClickConfirmbtnEvent(SetUpTrolley.instance.Onclickbtn_s_3_confirm);
-
-        PlayStepAudio(4);// 
-
-   //     Onclickbtn_s_3_confirm();
+        SetUpTrolley.instance.PlayCrackingKeyAudio();
     }
 
     #endregion
     #region Step 10Open acetylene control valve and light the flame with spark lighter.
-  
+
     public void Onclickbtn_s10_confirm()
     {
         onEnableStep10Object();
         readSteps.HideConifmBnt();
+    }
+    public void EndMethodAudio()
+    {
+        //EXP Open acetylene control valve lighter  audio  clip (4)
+        PlayStepAudio(4);
+
     }
 
     //carburing flame
@@ -211,10 +223,34 @@ public class GasJointweldingManager : MonoBehaviour
         lighterFlame.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.5f);
 
+        //EXP do track welding   audio  clip (5)
+        PlayStepAudio(5);
+
         readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10_2_confirm);
 
         GasTableObjectcolliders[2].GetComponent<Outline>().enabled = false;
+    }
+    void Onclickbtn_s10_2_confirm()
+    {
+        //Debug.Log("clickConfirm ");
+        readSteps.HideConifmBnt();
+        openOxgenValve();
+
+    }
+    public void onDoneBlueBol_2_oxygen()
+    {
+              readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
+        //EXP Keep the gas cutting torch audio  clip (6)
+        PlayStepAudio(6);
+    }
+    void openOxgenValve()
+    {
+        GasTableObjectcolliders[9].GetComponent<RotateNozzle>().enabled = true; //blue 2  bol reduse or crbarn
+
+        GasTableObjectcolliders[9].enabled = true;
+        GasTableObjectcolliders[9].GetComponent<Outline>().enabled = true;
     }
     //netural flame
     //netural flame with oxygen cutting flame
@@ -230,7 +266,7 @@ public class GasJointweldingManager : MonoBehaviour
 
 
     #region Step 9: Do tack welding on both ends and centre of the job.
-     void Onclickbtn_s9_confirm()
+    void Onclickbtn_s9_confirm()
     {
         flameOff = true;
         jointTackPoint.SetActive(true);
@@ -244,7 +280,7 @@ public class GasJointweldingManager : MonoBehaviour
 
         readSteps.HideConifmBnt();
     }
-   
+
     public void CheckTackPoint()
     {
         supportPlat.SetActive(false);
@@ -252,8 +288,8 @@ public class GasJointweldingManager : MonoBehaviour
         objectOutLines[10].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10__confirm);
-
-     //   Onclickbtn_s8_0_confirm();
+        //EXP try square check   audio  clip (6)
+        PlayStepAudio(7);
     }
     public void OnPressLever()
     {
@@ -292,12 +328,14 @@ public class GasJointweldingManager : MonoBehaviour
 
         objectOutLines[5].enabled = false;
         objectOutLines[6].enabled = false;
+        //EXP Start Welding by Leftward Technique audio  clip (7)
+        PlayStepAudio(8);
         //   Onclickbtn_s8_confirm();
     }
 
     #endregion
     #region step 11 : Start Welding by Leftward Technique.
-     void Onclickbtn_s11_confirm()
+    void Onclickbtn_s11_confirm()
     {
         SetObjectRestPos_Rotate(3); //try squre  tool
 
@@ -307,7 +345,7 @@ public class GasJointweldingManager : MonoBehaviour
         weldingLine1[0].transform.GetChild(0).gameObject.SetActive(true);
 
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4209f, -0.0036f, -0.0978f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles =new Vector3(0,0,-10);
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 0, -10);
         supportCube1.SetActive(true);
         supportcube2.SetActive(false);
 
@@ -318,7 +356,7 @@ public class GasJointweldingManager : MonoBehaviour
     }
     public void SecondTourchPlateRotate()
     {
-        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
+        //  GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
 
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4709f, -0.0044f, -0.0978f);//objectOutLines[1].transform.position;// job plate material
         GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 0, 10);
@@ -327,8 +365,8 @@ public class GasJointweldingManager : MonoBehaviour
     }
     public void weldingComplete()
     {
-        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
-      //  GasTableObjectcolliders[8].GetComponent<FreezeRotation>().isFreeze = false;
+        // GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
+        //  GasTableObjectcolliders[8].GetComponent<FreezeRotation>().isFreeze = false;
         //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//objectOutLines[1].transform.position;// job plate material
                                                                                                       //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
@@ -340,30 +378,67 @@ public class GasJointweldingManager : MonoBehaviour
         objectOutLines[10].GetComponent<Outline>().enabled = false;
         GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectEntered = null;
         GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectExited = null;
-    //  Destroy(  GasTableObjectcolliders[8].GetComponent<FreezeRotation>());
+        //  Destroy(  GasTableObjectcolliders[8].GetComponent<FreezeRotation>());
+        GasTableObjectcolliders[5].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        GasTableObjectcolliders[5].GetComponent<CustomXRGrabInteractable>().trackRotation = true;
+
+        leftHand.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        RightHand.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_12_1_confirm);
-
-//       Onclickbtn_s9_confirm();
+        //EXP turn off flame audio  clip (8)
+        PlayStepAudio(9);
     }
+    public Transform tempTransform;
+    public Quaternion temprotation;
+    public bool temptrue;
+    public GameObject rightTempobject, handPresistRight;
     public void CheckWelding_rot(GameObject weldingTorch)
     {
 
         weldingTorch.SetActive(false);
-        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().Freezeangle = weldingTorch.transform;
+        //  GasTableObjectcolliders[5].GetComponent<FreezeRotation>().Freezeangle = weldingTorch.transform;
 
-        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = true;
-       // FreezeRotation.instance.isFreeze = true;
+        // GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = true;
+
+        Vector3 pos = GasTableObjectcolliders[5].transform.localPosition;
+        pos = weldingTorch.transform.localPosition;
+
+        GasTableObjectcolliders[5].transform.localPosition = pos;
+
+        // GasTableObjectcolliders[5].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+
+        GasTableObjectcolliders[5].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
+        GasTableObjectcolliders[5].transform.localEulerAngles = weldingTorch.transform.localEulerAngles;
+        //    GasTableObjectcolliders[5].GetComponent<CustomXRGrabInteractable>().trackRotation = false;
+
+        //   temprotation = RightHand.transform.localRotation;
+        /* leftHand.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+         RightHand.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+         temptrue = true;*/
+        //RightHandtransform.GetChild(0).gameObject.SetActive(false);
+        //  handPresistRight.SetActive(false);
+        //rightTempobject.SetActive(true);
+        // FreezeRotation.instance.isFreeze = true;
         neturalFlameCube.GetComponent<JointWelding>().isWelding = true;
     }
     #endregion
 
+    private void Update()
+    {
+        /* if (temptrue)
+         {
+             RightHand.transform.localRotation = temprotation;
+         }*/
+    }
     #region Step 12.1: Turning off Flame
     public GameObject dummyRedBol;
     void Onclickbtn_s_12_1_confirm()
     {
         SetObjectRestPos_Rotate(2); //filler  tool
+
 
         Debug.Log("Call end flame");
         readSteps.HideConifmBnt();
@@ -375,7 +450,7 @@ public class GasJointweldingManager : MonoBehaviour
         SetUpTrolley.instance.isTurnOffFlame = true;
         redBol.enabled = true; //RED  bol reduse or crbarn
         redBol.RotateValue = 30; //RED  bol reduse or crbarn
-       // redBol.speed = 25;
+                                 // redBol.speed = 25;
         redBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         redBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         redBol.isclockwise = false; //RED  bol reduse or crbarn
@@ -410,7 +485,8 @@ public class GasJointweldingManager : MonoBehaviour
             lighterFlame.SetActive(false);
             blueBol.GetComponent<Outline>().enabled = false;
             callCloseCylinderValves();
-
+            //EXP callCloseCylinderValves audio  clip (9)
+            PlayStepAudio(10);
         }
     }
     //close valve
@@ -436,7 +512,7 @@ public class GasJointweldingManager : MonoBehaviour
         blackValve.otherMeterobject = ZeroMeterBlack;               // black valve
         blackValve.MeterObject.SetActive(true);                   // black valve
         blackValve.RotateValue = 15;                              // black valve
-    //    blackValve.speed = 20;
+                                                                  //    blackValve.speed = 20;
     }
     public void callBlackValve_Bol()
     {
@@ -468,6 +544,8 @@ public class GasJointweldingManager : MonoBehaviour
             GasTableObjectcolliders[7].GetComponent<Outline>().enabled = false;// blue valve nozzel
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s13_confirm);
+            //EXP Clean the job surface with wire brush audio  clip (10)
+            PlayStepAudio(11);
         }
     }
 
@@ -481,7 +559,7 @@ public class GasJointweldingManager : MonoBehaviour
         objectOutLines[9].enabled = true;
         CuttingBrush.instance.cleanPointCount = 15;
         CuttingBrush.instance.isStop = false;
-     //   Debug.Log("Call bursh out line");
+        //   Debug.Log("Call bursh out line");
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
         netural_flame.SetActive(false);
     }
@@ -494,13 +572,14 @@ public class GasJointweldingManager : MonoBehaviour
         objectOutLines[9].enabled = true;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s14_confirm);
-
-   ///     Onclickbtn_s10_confirm();
+        //EXP check the defects audio  clip (11)
+        PlayStepAudio(12);
+        ///     Onclickbtn_s10_confirm();
 
     }
     #endregion
     #region step 14 Check the defects.
-     void Onclickbtn_s14_confirm()
+    void Onclickbtn_s14_confirm()
     {
         SetObjectRestPos_Rotate(0); //brush tool
 
@@ -539,11 +618,7 @@ public class GasJointweldingManager : MonoBehaviour
     }
     void PlayStepAudio(int index)
     {
-        /*if (stepAudioSource.clip != null)
-        {
-            stepAudioSource.Stop();
-            stepAudioSource.PlayOneShot(stepsAudioClip[index]);
-        }*/
+        AudioManagerWithLanguage.Instance.PlayStepAudio(index);
     }
     #endregion
 }

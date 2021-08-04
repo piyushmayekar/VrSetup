@@ -162,6 +162,8 @@ namespace FlatWelding
         void Start()
         {
             _rb = GetComponent<Rigidbody>();
+            ps = GetComponentInChildren<ParticleSystem>();
+            sparkLight = ps.transform.GetChild(0).gameObject;
             ToggleMachine(false);
             ToggleWeldingTip();
         }

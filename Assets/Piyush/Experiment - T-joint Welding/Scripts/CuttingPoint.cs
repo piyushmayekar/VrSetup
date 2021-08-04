@@ -10,7 +10,7 @@ namespace TWelding
     {
         public UnityEvent<CuttingPoint> OnCuttingDone;
         [SerializeField] Collider _collider;
-        [SerializeField] float timer = 1f;
+        [SerializeField] internal float timer = 1f;
         [SerializeField] bool flameInContact = false, disableAllowed = false;
         [SerializeField] Gradient gradient;
 

@@ -7,8 +7,9 @@ namespace VWelding
 {
     public class Task_ScriberMarking : Task
     {
-        [SerializeField] List<PiyushUtils.SMAWJobPlate> jobPlates;
         [SerializeField] int platesScribed = 0;
+        List<PiyushUtils.SMAWJobPlate> jobPlates;
+
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();

@@ -83,22 +83,21 @@ namespace PiyushUtils
                     if (plate.IsCuttingDone && !plate.IsFilingDone) //Filing
                     {
                         jobSocket.attachTransform = filingTransforms[index];
-                        plate.SetupForFiling();
+                        //plate.SetupForFiling();
                         ToggleFilingCanvas(false);
-                        plate.OnFilingDone += () => { ToggleViseOpening(); };
+                        //plate.OnFilingDone += () => { ToggleViseOpening(); };
                         InvokeRepeating(nameof(KeepCheckingForViseClosing), invokeInterval, invokeInterval);
                     }
                     else if (!plate.IsCuttingDone) //Cutting
                     {
-                        plate.SetupForCutting();
-                        //hacksawAnimators[index].SetActive(true);
-                        plate.OnGasCuttingDone += TurnOffHacksawAnimations;
+                        //plate.SetupForCutting();
+                        //plate.OnGasCuttingDone += TurnOffHacksawAnimations;
                         if (index >= 0 && index < jobTransforms.Count)
                             jobSocket.attachTransform = jobTransforms[index];
-                        plate.OnGasCuttingDone += () =>
-                        {
-                            ToggleViseOpening();
-                        };
+                        //plate.OnGasCuttingDone += () =>
+                        //{
+                        //    ToggleViseOpening();
+                        //};
                         InvokeRepeating(nameof(KeepCheckingForViseClosing), invokeInterval, invokeInterval);
                     }
                     currentHoldingPlate = plate;
@@ -107,19 +106,39 @@ namespace PiyushUtils
             }
         }
 
+        /// <summary>
+        /// Responsible for not letting the user open the vise after placing a job plate to perform actions on.
+        /// </summary>
         void KeepCheckingForViseClosing()
         {
             if (!isViseOpen)
             {
                 ToggleViseOpening(false);
                 CancelInvoke(nameof(KeepCheckingForViseClosing));
+                if (currentHoldingPlate != null)
+                {
+                    SMAWJobPlate plate = currentHoldingPlate;
+                    if (plate.IsCuttingDone && !plate.IsFilingDone) //Filing
+                    {
+                        plate.SetupForFiling();
+                        ToggleFilingCanvas(false);
+                        plate.OnFilingDone += () => { ToggleViseOpening(); };
+                    }
+                    else if (!plate.IsCuttingDone) //Cutting
+                    {
+                        plate.SetupForCutting();
+                        plate.OnGasCuttingDone += TurnOffHacksawAnimations;
+                        plate.OnGasCuttingDone += () =>
+                        {
+                            ToggleViseOpening();
+                        };
+                    }
+                }
             }
         }
 
         public void OnSocketExit(SelectExitEventArgs args)
         {
-            // if (ShouldSwitchAttachTransforms)
-            //     jobPlateHighlight.SetActive(true);
             if (args.interactable.CompareTag(_Constants.JOB_TAG))
             {
                 SMAWJobPlate plate = args.interactable.GetComponent<SMAWJobPlate>();

@@ -72,14 +72,14 @@ public class CuttingBrush : MonoBehaviour
                 }
                 CleanText.text = "";
             }
-            isCleaning = false;
+           ReadStepsAndVideoManager.instance.isBrushCleaning = false;
             isStop = true;
         }
         else
         {
             if (!isStop)
             {
-                isCleaning = true;
+                ReadStepsAndVideoManager.instance.isBrushCleaning  = true;
                 ReadStepsAndVideoManager.instance.tablet.SetActive(true);
                 BrushFontChanage();
             }

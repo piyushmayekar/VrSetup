@@ -116,5 +116,12 @@ namespace Grinding
                             rb.isKinematic = true;
                         });
         }
+
+        [ContextMenu("Hide Slag")]
+        public void HideSlag()
+        {
+            List<CornerWelding.WeldingPoint> weldingPoints = new List<CornerWelding.WeldingPoint>(GetComponentsInChildren<CornerWelding.WeldingPoint>());
+            weldingPoints.ForEach(point => point.transform.GetChild(0).gameObject.SetActive(false));
+        }
     }
 }

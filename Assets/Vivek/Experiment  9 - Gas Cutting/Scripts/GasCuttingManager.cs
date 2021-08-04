@@ -35,12 +35,11 @@ public class GasCuttingManager : MonoBehaviour
     [Header("Object Position Resetter ")]
     public Transform[] toolToReset;
     public List<Vector3> toolToResetPosition, toolToResetRotate;
-    // Start is called before the first frame update
-    public void Awake()
+     public void Awake()
     {
         instance = this;
         Application.targetFrameRate = 60;
-        Debug.Log("Call cutting");
+        
     }
     public void Start()
     {
@@ -58,24 +57,30 @@ public class GasCuttingManager : MonoBehaviour
             GasTableObjectcolliders[i].enabled = false;
         }
         readSteps.panel.SetActive(true);
-       readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
+        readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
         for (int i = 0; i < toolToReset.Length; i++)
         {
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-      //  CheckJobFlatPlace();
-        //   checkStep5();
-        //     Onclickbtn_s_2_confirm();
-        //    CheckJobFlatPlace();
+        StartCoroutine(PlayGasWeldingStartAudio());
+      //  Onclickbtn_s10_2_confirm();
     }
+    IEnumerator PlayGasWeldingStartAudio()
+    {
+        yield return new WaitForSeconds(2f);
+        //EXP title audio clip (0)
+        PlayStepAudio(0);
+        yield return new WaitForSeconds(0.2f + AudioManagerWithLanguage.Instance.stepsAudioSource.clip.length);
 
+    }
     public void ConfirmSatrtbtn()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_1_confirm);
-        PlayStepAudio(3);// kit audio
+        //EXP kit audio  clip (1)
+        PlayStepAudio(1);
     }
 
     #region step1 Step 1: Wear PPE Kit
@@ -103,7 +108,9 @@ public class GasCuttingManager : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_2_confirm);
-        PlayStepAudio(4);//       
+
+        //EXP Keep raw material given drawing audio  clip (2)
+        PlayStepAudio(2);
     }
     #endregion
     #region Step 2: Keep raw material ready as per the given drawing.
@@ -120,7 +127,8 @@ public class GasCuttingManager : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_3_confirm);
-        PlayStepAudio(4);//
+        //EXP job plate mateial place position audio  clip (3)
+        PlayStepAudio(3);
     }
 
     #endregion
@@ -144,16 +152,16 @@ public class GasCuttingManager : MonoBehaviour
         GasTableObjectcolliders[0].enabled = false;
         //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.338f, 0.016f, -0.094f);//objectOutLines[1].transform.position;// job plate material
-                                                                                                    //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
-GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);//objectOutLines[1].transform.position;// job plate material
+                                                                                                   //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f, 0f);//objectOutLines[1].transform.position;// job plate material
 
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
         readSteps.onClickConfirmbtn();
         objectOutLines[1].enabled = false;// job flat position
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
-        PlayStepAudio(4);// 
-                         // Onclickbtn_s_4_confirm();
+        //EXP Clean the job surface with wire brush audio  clip (4)
+        PlayStepAudio(4);
     }
     #endregion
     #region Step 4: Clean the job surface with wire brush and remove burrs by filing.
@@ -179,7 +187,8 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
-        //  Onclickbtn_s_5_confirm();
+        //EXP  marked and punched audio  clip (5)
+        PlayStepAudio(5);
     }
     #endregion
     #region Step 5: As per the drawing, the surfaces of the job should be marked and punched.
@@ -192,7 +201,7 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
         CuttingJobMaterial.instance.StartCenterPunchMarking();
         objectOutLines[3].enabled = true;
         objectOutLines[4].enabled = true;
-     //   GasTableObjectcolliders[1].GetComponent<Rigidbody>().isKinematic = true;// brush collider
+        //   GasTableObjectcolliders[1].GetComponent<Rigidbody>().isKinematic = true;// brush collider
     }
     void Onclickbtn_s_5_confirm()
     {
@@ -203,7 +212,7 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
     public void checkStep5()
     {
         readSteps.onClickConfirmbtn();
-        //readSteps.AddClickConfirmbtnEvent(Onclickbtn_s7_confirm);
+        SetUpTrolley.instance.PlayCrackingKeyAudio();
         readSteps.AddClickConfirmbtnEvent(SetUpTrolley.instance.Onclickbtn_s_3_confirm);
         readSteps.confirmbtn.onClick.AddListener(() => checkCenterPunchHummer());
         objectOutLines[3].enabled = false;
@@ -215,14 +224,20 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
         SetObjectRestPos_Rotate(3); //Hummar tool
     }
     #endregion    
-    #region Step 10Open acetylene control valve and light the flame with spark lighter.
+    #region Step 10 Open acetylene control valve and light the flame with spark lighter.
     public bool IsEnableFlame, step10Call;
     public void Onclickbtn_s10_confirm()
     {
         onEnableStep10Object();
         readSteps.HideConifmBnt();
+        /*//EXP Open acetylene control valve audio  clip (3)
+        PlayStepAudio(3);*/
     }
-
+    public void EndMethodAudio()
+    {
+        //EXP Open acetylene control valve lighter  audio  clip (6)
+        PlayStepAudio(6);
+    }
     //carburing flame
     public void OpenFlameRedBol()
     {
@@ -235,6 +250,7 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
         }
 
     }
+
     public void LighterSnap_true()
     {
         objectOutLines[5].enabled = false;
@@ -250,12 +266,35 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
         lighterFlame.SetActive(true);
         lighterFlame.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.5f);
+        GasTableObjectcolliders[3].GetComponent<Outline>().enabled = false;
+        Debug.Log(" add clickConfirm ");
 
         readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10_2_confirm);
+
+        //EXP Open oxyzen control valve lighter  audio  clip (7)
+        PlayStepAudio(7);
+    }
+    void Onclickbtn_s10_2_confirm()
+    {
+        //Debug.Log("clickConfirm ");
+        readSteps.HideConifmBnt();
+        openOxgenValve();
+
+    }
+    void openOxgenValve()
+    {
+        GasTableObjectcolliders[9].GetComponent<RotateNozzle>().enabled = true; //blue 2  bol reduse or crbarn
+        
+        GasTableObjectcolliders[9].enabled = true;
+        GasTableObjectcolliders[9].GetComponent<Outline>().enabled = true;
+    }
+    public void onDoneBlueBol_2_oxygen()
+    {
+        readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
-        GasTableObjectcolliders[3].GetComponent<Outline>().enabled = false;
-
-
+        //EXP Keep the gas cutting torch audio  clip (8)
+        PlayStepAudio(8);
     }
     //netural flame
     //netural flame with oxygen cutting flame
@@ -282,26 +321,31 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
     public void Checktourch90degree()
     {
         torch90degree.SetActive(false);
-       // GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = true;
+        // GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = true;
 
         Vector3 pos = GasTableObjectcolliders[6].transform.localPosition;
         pos = torch90degree.transform.localPosition;
         GasTableObjectcolliders[6].transform.localPosition = pos;
 
-       
-            GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
-       
+
         GasTableObjectcolliders[6].transform.localEulerAngles = torch90degree.transform.localEulerAngles;
+        GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+        GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         GasTableObjectcolliders[6].GetComponent<CustomXRGrabInteractable>().trackRotation = false;
 
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s12_confirm);
+        //EXP cherry red  audio  clip (9)
+        PlayStepAudio(9);
     }
     #endregion
     #region Step 12: Heat one end of the marking line till it turns cherry red.Keep a distance of 5mm between the job and the nozzle.
     void Onclickbtn_s12_confirm()
     {
+        GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        GasTableObjectcolliders[6].GetComponent<CustomXRGrabInteractable>().trackRotation = true;
+
         readSteps.HideConifmBnt();
         onEnableStep12Object();
         //   Debug.Log("1c");
@@ -310,6 +354,8 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s13_confirm);
+        //EXP Press oxygen lever and slowly proceed  audio  clip (10)
+        PlayStepAudio(10);
     }
 
     #endregion
@@ -356,6 +402,8 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
             CuttingBrush.instance.isStop = false;
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_14_1_confirm);
+            //EXP Turning off Flame  audio  clip (11)
+            PlayStepAudio(11);
         }
     }
 
@@ -409,7 +457,8 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
             step10Call = false;
             netural_flame.SetActive(false);
             blueBol.GetComponent<Outline>().enabled = false;
-
+            //EXP callCloseCylinderValves audio  clip (12)
+            PlayStepAudio(12);
             callCloseCylinderValves();
 
         }
@@ -470,6 +519,9 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
             GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;// blue valve nozzel
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s14_confirm);
+
+            //EXP C.S. brush and clean the surface audio  clip (13)
+            PlayStepAudio(13);
         }
     }
 
@@ -503,11 +555,7 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
     #region Others methods
     void PlayStepAudio(int index)
     {
-        /*if (stepAudioSource.clip != null)
-        {
-            stepAudioSource.Stop();
-            stepAudioSource.PlayOneShot(stepsAudioClip[index]);
-        }*/
+        AudioManagerWithLanguage.Instance.PlayStepAudio(index);
     }
     public void SetObjectRestPos_Rotate(int indexOfReset)
     {
@@ -516,6 +564,6 @@ GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f,0f);/
         toolToReset[indexOfReset].transform.localEulerAngles = toolToResetRotate[indexOfReset];
         toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = true;
     }
-    
+
     #endregion
 }

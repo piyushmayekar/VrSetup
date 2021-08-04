@@ -18,7 +18,7 @@ namespace PiyushUtils
 
         public void Step()
         {
-            if (index > 0) knobs[index].OnTargetValueReached.RemoveAllListeners();
+            if (index >= 0 && index<knobs.Count) knobs[index].OnTargetValueReached.RemoveAllListeners();
             index++;
             if (index >= knobs.Count)
             {
@@ -27,6 +27,7 @@ namespace PiyushUtils
             else
             {
                 knobs[index].EnableTurning(targetValues[index], true);
+                knobs[index].OnTargetValueReached.RemoveAllListeners();
                 knobs[index].OnTargetValueReached.AddListener(Step);
             }
         }

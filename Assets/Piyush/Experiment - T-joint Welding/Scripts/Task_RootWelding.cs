@@ -56,6 +56,7 @@ namespace TWelding
         {
             weldingPoints = new List<WeldingPoint>(
                 pointsParent.GetComponentsInChildren<WeldingPoint>());
+            weldingArea = FindObjectOfType<WeldingArea>(true).gameObject;
             weldingArea.SetActive(true);
             pointsParent.SetActive(true);
             weldingGunHighlights.SetActive(true);

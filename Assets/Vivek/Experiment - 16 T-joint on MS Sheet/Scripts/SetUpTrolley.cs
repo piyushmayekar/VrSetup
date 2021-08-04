@@ -26,19 +26,23 @@ public class SetUpTrolley : MonoBehaviour
     public bool isPipeRedConnect, isPipeblueConnect, isTurnOffFlame;
     [Header("Read step from json calss")]
     public ReadStepsAndVideoManager readSteps;
-    [Header("Steps audio clips")]
+    [Header("--------Steps audio clips------cracking  to nozzel fit clips --")]
     public AudioSource stepAudioSource;
-    public AudioClip[] stepsAudioClip;
+    
+    [SerializeField, Tooltip("List of audio clips English and Gujarati")]
+    List<AudioClip> englishClips, gujaratiClips;
+
     public AudioClip creckykeyClip;
-    [Header("Step End Method ")]
-    public UnityEvent CallEndMethod;
+
     int countCrackTab;
-    [Header("Object Position Resetter ")]
-    public Transform[] toolToReset;
+    [Header("----------------------------------")]
+    public Transform[] toolToReset;//Object Position Resetter 
     public List<Vector3> toolToResetPosition, toolToResetRotate;
     public Vector3 blueStartpos, redStartpos;
 
     public bool isRedCrecking, isBlackCrecking;
+    [Header("----------------Step End Method ------------------")]
+    public UnityEvent CallEndMethod,EndMethodAudio;
     public void Awake()
     {
         instance = this;
@@ -95,9 +99,15 @@ public class SetUpTrolley : MonoBehaviour
        
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_3_confirm);
-        PlayStepAudio(5);// Cracking audio
+        //EXP Cracking audio  clip (1)
+        PlayStepAudio(1);
     }
+    public void PlayCrackingKeyAudio()
+    {
 
+        //EXP Cracking fix audio  clip (1)
+        PlayStepAudio(0);
+    }
   public void Onclickbtn_s_3_confirm()
     {
       
@@ -167,7 +177,8 @@ public class SetUpTrolley : MonoBehaviour
     {
         readSteps.AddClickEventVideoPlay(0); // regulators video vlip animation
 
-        PlayStepAudio(6);// regulators audio
+        //EXP regulators fix audio  clip (1)
+        PlayStepAudio(1);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
     }
@@ -193,7 +204,10 @@ public class SetUpTrolley : MonoBehaviour
     {
         objectOutLines[3].enabled = false; //black cylinder key
         objectOutLines[4].enabled = false; //red cylinder key
-                                           //    Debug.Log("call end  of regulator");
+
+        //EXP regulators Flashback and hos connector audio  clip (2)
+        PlayStepAudio(2);
+
 
         readSteps.AddClickEventVideoPlay(1); // Flashback Arrestor video vlip animation
         readSteps.onClickConfirmbtn();
@@ -249,7 +263,8 @@ public class SetUpTrolley : MonoBehaviour
       
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
-        PlayStepAudio(7);// hose pipe connection audio
+        //EXP regulators  hose PIP  connector audio  clip (3)
+        PlayStepAudio(3);
     }
     void Onclickbtn_s_5_confirm()
     {
@@ -293,7 +308,8 @@ public class SetUpTrolley : MonoBehaviour
         //  Debug.Log("*");
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_2_confirm);
-        // readSteps.HideConifmBnt();
+        //EXP regulators hos CLIP  audio  clip (4)
+        PlayStepAudio(4);
 
     }
     public void DoneBlackClip_R() //hose clip 
@@ -315,7 +331,8 @@ public class SetUpTrolley : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_part2_confirm);
-        PlayStepAudio(8);// tourch connection with pipe audio
+        //EXP welding torch hose clip and connector audio  clip (5)
+        PlayStepAudio(5);
     }
     void Onclickbtn_s_5_part2_confirm()
     {
@@ -415,6 +432,8 @@ public class SetUpTrolley : MonoBehaviour
     public void DoneRedClip_T()
     {
         onEnableStep6Object();
+        //EXP set preseegor on regulator audio  clip (6)
+        PlayStepAudio(6);
     }
     #endregion
     #region Step 6: Set the gas pressure on the regulator as per nozzle size.
@@ -422,7 +441,7 @@ public class SetUpTrolley : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_6_confirm);
-        PlayStepAudio(9);// Nozzle set audio
+      
     }
     void Onclickbtn_s_6_confirm()
     {
@@ -458,7 +477,9 @@ public class SetUpTrolley : MonoBehaviour
             objectOutLines[12].enabled = false; // red reguletor
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_8_confirm_p2);
-          //  Debug.Log("call water");
+            //  Debug.Log("call water");
+            //EXP Check likej on regulator acetylene  shop water audio  clip (7)
+            PlayStepAudio(7);
         }
     }
     #endregion
@@ -499,6 +520,8 @@ public class SetUpTrolley : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
+        //EXP Check fix  welding nozzle on torch audio  clip (8)
+        PlayStepAudio(8);
     }
 
     #endregion
@@ -521,6 +544,7 @@ public class SetUpTrolley : MonoBehaviour
     }
     public void CheckNozzelConnected()
     {
+        EndMethodAudio.Invoke();
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(CallEndMethod.Invoke);
     }
@@ -530,7 +554,17 @@ public class SetUpTrolley : MonoBehaviour
         if (stepAudioSource.clip != null)
         {
             stepAudioSource.Stop();
-            stepAudioSource.PlayOneShot(stepsAudioClip[index]);
+
+            if (ReadStepsAndVideoManager.instance.isChangeFont)
+            {
+                //English audio Clips
+                stepAudioSource.PlayOneShot(englishClips[index]);
+            }
+            else
+            {
+                //Gujarati audio clips
+                stepAudioSource.PlayOneShot(gujaratiClips[index]);
+            }
         }
     }
     public void SetObjectRestPos_Rotate(int indexOfReset)

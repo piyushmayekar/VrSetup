@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using PiyushUtils;
 
-[System.Serializable]
-public class ToolOrigin
-{
-    public Vector3 pos;
-    public Vector3 rot;
-}
+
 public class Manager_LapJoint : MonoBehaviour
 {
     public static Manager_LapJoint instance;
@@ -24,13 +18,12 @@ public class Manager_LapJoint : MonoBehaviour
     public Collider[] ppekitcolliders;
     public int countppekit;
 
-    public GameObject SteelRulerHL, ScriberHL, ScriberHL1, ScriberHL2, CenterPunchHL, CenterPunchHL1, CenterPunchHL2, HammerHL, HammerHL1, HammerHL2, HackSawHL1, HackSawHL2,
-        WireBrushHL, WireBrushHL1, WeldingTorchHL, FillerRodHL, ChippingHammerHL,socketFlat1_job,socketFlat2_job, lastScale,ChippingHammerHL1;
+    public GameObject SteelRulerHL,FlatFileHL, ScriberHL, CenterPunchHL, HammerHL, HackSawHL1, HackSawHL2,
+        WireBrushHL, WeldingTorchHL, FillerRodHL, ChippingHammerHL,socketFlat1_job,socketFlat2_job, lastScale;
 
     #region WorkPieceObjects
     public Transform WorkPiece1;
     public Transform WorkPiece2;
-    public Transform FinalWorkPiece;
 
     public GameObject Job1PlateOnStart;
     public GameObject Job1PlateOnFirstCut;
@@ -58,7 +51,6 @@ public class Manager_LapJoint : MonoBehaviour
     public GameObject WireBrushGo;
     public GameObject ChippingHammerGo;
     public GameObject WeldingNuetralFlame;
-    public GameObject TrySquareGo;
     public GameObject[] FillerRod;
 
     #endregion
@@ -81,35 +73,9 @@ public class Manager_LapJoint : MonoBehaviour
     private WireBrush_VL WireBrush;
     private ChippingHammer_VL ChippingHammer;
     private WeldingFlame_VL Weldingflame;
-    private TrySquare_VL TrySquare;
 
     public GameObject Job1Socket, Job2Scoket, Job1Socket2, Job2Scoket2;
-    public GameObject ClockWiseSprite, AntiClockWiseSprite;
 
-    [Header("Table uper gas kit")]
-    public Collider[] GasTableObjectcolliders;
-
-    [Header("outLine Object to HighLight")]
-    public Outline[] ObjectOutlines;
-
-    public GameObject lighter_Flame, blackSmoke, oxidizing_F, reduce_or_carb_F, neturel_F;
-    public GameObject Step8flame, Step9flame, extraRedBol, oldRedBol;
-
-    public bool isTurnOffFlame;
-
-    public RotateNozzle[] rotateNozzles;
-    public GameObject ZeroMeterred, ZeroMeterBlack;
-
-    public GameObject RodHL1, RodHL2, RodHL3, TorchHL1, TorchHL2, TorchHL3, WeldingTorch;
-    public GameObject[] SlagLines;
-    public GameObject RightAngleSocket, FinalWeldingSocket,TrySquareHL, FinalWeldingSocket1;
-    public Transform FlipTranform;
-
-    public Transform BrushOT, SteelRulerOT, ScriberOT, DotPunchOT, HammerOT, HackSawOT, ChippingHammerOT;
-    public Vector3 StartPos;
-    public Vector3 StartRot;
-
-    public Dictionary<string, ToolOrigin> ToolsOrigin = new Dictionary<string, ToolOrigin>();
     public void Awake()
     {
         instance = this;
@@ -126,46 +92,6 @@ public class Manager_LapJoint : MonoBehaviour
         {
             ToolsOutlines[i].enabled = false;
         }
-
-        
-    }
-
-
-
-    public ToolOrigin SetToolsOrigin(Transform T)
-    {
-        ToolOrigin To = new ToolOrigin();
-        To.pos = T.position;
-        To.rot = T.localEulerAngles;
-
-        return To;
-    }
-
-    public void AssignToolOriginToDictionay()
-    {
-        ToolOrigin WTO = SetToolsOrigin(WireBrushGo.transform);
-        ToolsOrigin.Add("WireBrush", WTO);
-
-        ToolOrigin SRTO = SetToolsOrigin(SteelRulerGo.transform);
-        ToolsOrigin.Add("SteelRuler", SRTO);
-
-        ToolOrigin STO = SetToolsOrigin(ScriberGo.transform);
-        ToolsOrigin.Add("Scriber", STO);
-
-        ToolOrigin DPTO = SetToolsOrigin(CenterPunchGo.transform);
-        ToolsOrigin.Add("CenterPunch", DPTO);
-
-        ToolOrigin HTO = SetToolsOrigin(HammerGo.transform);
-        ToolsOrigin.Add("Hammer", HTO);
-
-        ToolOrigin HSTO = SetToolsOrigin(HackSawGo.transform);
-        ToolsOrigin.Add("HackSaw", HSTO);
-
-        ToolOrigin TSTO = SetToolsOrigin(TrySquareGo.transform);
-        ToolsOrigin.Add("TrySquare", TSTO);
-
-        ToolOrigin CHTO = SetToolsOrigin(ChippingHammer.transform);
-        ToolsOrigin.Add("ChippingHammer", CHTO);
 
     }
 
@@ -187,29 +113,16 @@ public class Manager_LapJoint : MonoBehaviour
         BenchWise = BenchWiseGo.GetComponent<BenchWise_VL>();
         Weldingflame = WeldingNuetralFlame.GetComponent<WeldingFlame_VL>();
         ChippingHammer = ChippingHammerGo.GetComponent<ChippingHammer_VL>();
-        TrySquare = TrySquareGo.GetComponent<TrySquare_VL>();
         //EnableMarkingOnFirstJobSecongLine();
         ///  PlaceJobFlatePos1_socket1_job();
-        //  PlaceJobFlatePos2_socket2_job();
-
-        //OnCompleteWelding();
-
-        AssignToolOriginToDictionay();
-
-        //StartPos = WireBrushGo.transform.position;
-        //StartRot = WireBrushGo.transform.localEulerAngles;
-
-        
+      //  OnEnableMarking();
+      //  PlaceJobFlatePos2_socket2_job();
     }
 
     public void ConfirmStartBtn()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnablePPEKitStep);
-        //readSteps.AddClickConfirmbtnEvent(GasWeldingSetUP.instance.Onclickbtn_s_3_confirm);
-        //readSteps.AddClickConfirmbtnEvent(EnabletagWelding);
-
-        
     }
 
 
@@ -232,12 +145,11 @@ public class Manager_LapJoint : MonoBehaviour
             OnEnableCleaningStep();
 
         }
-        //Debug.Log("call grab"+ selectGameObject.name);
+        Debug.Log("call grab"+ selectGameObject.name);
         selectGameObject.SetActive(false);
     }
     #endregion
 
-    #region JobReadyMethod
     public void OnEnableCleaningStep()
     {
         readSteps.onClickConfirmbtn();
@@ -257,8 +169,8 @@ public class Manager_LapJoint : MonoBehaviour
 
     public void EnableCleaningOnSecondJob()
     {
-        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = false;
-        WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = true;
+        WorkPiece1.GetChild(0).GetComponent<Outline>().enabled = false;
+        WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = true;
         WireBrush.SetWireBrushParams(10, "Job");
         WireBrush.AssignMethodOnCleaningJobDone(OnCleaningDone);
     }
@@ -266,46 +178,40 @@ public class Manager_LapJoint : MonoBehaviour
     public void OnCleaningDone()
     {
         readSteps.HideConifmBnt();
-        WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = false;
+        WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(OnEnableMarking);
-        
     }
 
     public void OnEnableMarking()
     {
-       
         readSteps.HideConifmBnt();
         ToolsOutlines[1].enabled = true;
 
         SteelRuler.AssignHighlight(SteelRulerHL);
         SteelRuler.readyForOperation = true;
-        SteelRuler.AssignMethodOnSnapToJob(EnableMarkingOnFirstJobSecongLine);
-        ResetToolPosition(WireBrushGo.transform,ToolsOrigin["WireBrush"]);
+        SteelRuler.AssignMethodOnSnapToJob(EnableMarkingOnFirstJobFirstLine);
     }
 
     public void EnableMarkingOnFirstJobFirstLine()
     {
-        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = true;
-        //Debug.Log("2");
+        WorkPiece1.GetChild(0).GetComponent<Outline>().enabled = true;
+        Debug.Log("2");
         ToolsOutlines[2].enabled = true;
-        Scriber.SetScriberMarkingParams(WorkPiece1, SteelRuler1_AattachedToJob1, 0, ScriberHL);
+        Scriber.SetScriberMarkingParams(WorkPiece1, SteelRuler1_AattachedToJob1, 0,ScriberHL);
         Scriber.AssignMethodOnMarkingDone(EnableMarkingOnFirstJobSecongLine);
-    }
+    } 
 
     public void EnableMarkingOnFirstJobSecongLine()
     {
-        ToolsOutlines[2].enabled = true;
-        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = true;
-        ScriberHL1.SetActive(true);
+        Debug.Log("!");
         Scriber.SetScriberMarkingParams(WorkPiece1, SteelRuler2_AattachedToJob1, 1);
-        Scriber.AssignMethodOnMarkingDone(OnMarkingDone);
+        Scriber.AssignMethodOnMarkingDone(EnableMarkingOnSecondJobFirstLine);
     }
 
     public void EnableMarkingOnSecondJobFirstLine()
     {
         Debug.Log("3");
-        ScriberHL2.SetActive(true);
         WorkPiece1.GetChild(0).GetComponent<Outline>().enabled = false;
         WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = true;
         Scriber.SetScriberMarkingParams(WorkPiece2, SteelRuler2_AattachedToJob2, 0);
@@ -316,19 +222,12 @@ public class Manager_LapJoint : MonoBehaviour
     {
         //readSteps.onClickConfirmbtn();
         //readSteps.AddClickConfirmbtnEvent(EnablePunching);
-        WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = false;
-        //EnablePunching();
-        EnablePunchingOnSecondLineFirstJob();
+        WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = false;
+        EnablePunching();
         lastScale.SetActive(true);
-        SteelRulerGo.SetActive(false);
         Debug.Log("call last scale");
     }
 
-    public void ResetScriberAndScalePos()
-    {
-        ResetToolPosition(ScriberGo.transform, ToolsOrigin["Scriber"]);
-        //ResetToolPosition(SteelRulerGo.transform, ToolsOrigin["SteelRuler"]);
-    }
     public void EnablePunching()
     {
         //readSteps.HideConifmBnt();
@@ -339,21 +238,13 @@ public class Manager_LapJoint : MonoBehaviour
         DotPunch.SetCenterPunchParams(WorkPiece1, 1, CenterPunchHL, HammerHL);
         DotPunch.AssignMethodOnPunchingDone(EnablePunchingOnSecondLineFirstJob);
 
-        //ResetToolPosition(ScriberGo.transform, ToolsOrigin["Scriber"]);
-        //ResetToolPosition(SteelRulerGo.transform, ToolsOrigin["SteelRuler"]);
-
 
     }
 
     public void EnablePunchingOnSecondLineFirstJob()
     {
-        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = true;
-        ToolsOutlines[3].enabled = true;
-        ToolsOutlines[4].enabled = true;
-        CenterPunchHL1.SetActive(true);
-        HammerHL1.SetActive(true);
         DotPunch.SetCenterPunchParams(WorkPiece1, 2);
-        DotPunch.AssignMethodOnPunchingDone(OnJobReadyStepComplete);
+        DotPunch.AssignMethodOnPunchingDone(EnablePunchingOnSecondJob);
     }
 
     public void EnablePunchingOnSecondJob()
@@ -361,16 +252,14 @@ public class Manager_LapJoint : MonoBehaviour
         WorkPiece1.GetChild(0).GetComponent<Outline>().enabled = false;
         WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = true;
 
-        CenterPunchHL2.SetActive(true);
-        HammerHL2.SetActive(true);
         DotPunch.SetCenterPunchParams(WorkPiece2, 1);
         DotPunch.AssignMethodOnPunchingDone(DonePunching);
     }
 
     public void DonePunching()
     {
-        WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = false;
-        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = true;
+        WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = false;
+        WorkPiece1.GetChild(0).GetComponent<Outline>().enabled = true;
         WorkPiece1.GetComponent<XRGrabInteractable>().enabled = true;
 
         Job1Socket.SetActive(true);
@@ -386,29 +275,23 @@ public class Manager_LapJoint : MonoBehaviour
         BenchWise.jaw.disable = false;
         BenchWise.SetRotationDirection(true);
         BenchWise.AssignMethodOnJobFit(EnableCuttingOnJob1);
-
-
+       
     }
 
     public void EnableCuttingOnJob1()
     {
-        ToolsOutlines[5].enabled = true;
+        ToolsOutlines[6].enabled = true;
         HackSawHL1.SetActive(true);
         HackSaw.SetHackSawCuttingParams(WorkPiece1, 1);
         HackSaw.AssignMethodOnCuttingDone(EnableBenchWiseForUnMounting);
         ReadyJobForFirstCutting();
-
-        ResetToolPosition(CenterPunchGo.transform, ToolsOrigin["CenterPunch"]);
-        ResetToolPosition(HammerGo.transform, ToolsOrigin["Hammer"]);
-
-
     }
 
     public void DropCutObj(GameObject cutobj)
     {
         cutobj.transform.parent = null;
         cutobj.AddComponent<Rigidbody>();
-
+        
 
         cutobj.AddComponent<XRGrabInteractable>();
         cutobj.GetComponent<Outline>().enabled = true;
@@ -437,15 +320,13 @@ public class Manager_LapJoint : MonoBehaviour
     }
     public void EnableBenchWiseForUnMounting()
     {
-        //ToolsOutlines[5].enabled = false;
 
         DropCutObj(Job1Cut);
         WorkPiece1.GetComponent<XRGrabInteractable>().enabled = true;
         WorkPiece1.GetComponent<BoxCollider>().enabled = true;
         WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = true;
 
-        ClockWiseSprite.SetActive(false);
-        AntiClockWiseSprite.SetActive(true);
+
         BenchWise.SetRotationDirection(false);
         BenchWise.jaw.disable = true;
 
@@ -461,25 +342,21 @@ public class Manager_LapJoint : MonoBehaviour
         WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = false;
         WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = true;
 
-        ResetToolPosition(HackSawGo.transform, ToolsOrigin["HackSaw"]);
 
 
-
-        // BenchWise.handle.CanMove = false;
-        // BenchWise.handle.SetHighDefaultMat();
+       // BenchWise.handle.CanMove = false;
+       // BenchWise.handle.SetHighDefaultMat();
 
         Job1Socket2.SetActive(false);
         Job2Scoket.SetActive(true);
         Job2Scoket.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(EnableBenhWiseForCuttingOnSecondJob);
-
+        
 
     }
 
     public void EnableBenhWiseForCuttingOnSecondJob()
     {
         Job2Scoket.SetActive(false);
-        ClockWiseSprite.SetActive(true);
-        AntiClockWiseSprite.SetActive(false);
         BenchWise.jaw.disable = false;
         BenchWise.SetRotationDirection(true);
         BenchWise.AssignMethodOnJobFit(EnableCuttingOnSecondJob);
@@ -491,7 +368,7 @@ public class Manager_LapJoint : MonoBehaviour
     public void EnableCuttingOnSecondJob()
     {
         ReadySecondJobForCutting();
-        ToolsOutlines[5].enabled = true;
+        ToolsOutlines[6].enabled = true;
         HackSaw.EmptyParams();
         HackSawHL2.SetActive(true);
         HackSaw.SetHackSawCuttingParams(WorkPiece2, 1);
@@ -504,610 +381,428 @@ public class Manager_LapJoint : MonoBehaviour
         WorkPiece2.GetComponent<XRGrabInteractable>().enabled = true;
         WorkPiece2.GetComponent<BoxCollider>().enabled = true;
         WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = true;
-        ClockWiseSprite.SetActive(false);
-        AntiClockWiseSprite.SetActive(true);
         BenchWise.SetRotationDirection(false);
         BenchWise.jaw.disable = true;
 
 
         Job2Scoket2.SetActive(true);
-        Job2Scoket2.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(OnJobReadyStepComplete);
+        Job2Scoket2.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(PlaceJobAfterCuttingDone);
     }
 
-
-    public void OnJobReadyStepComplete()
+    public void PlaceJobAfterCuttingDone()
     {
         Job2Scoket2.SetActive(false);
         WorkPiece2.GetComponent<XRGrabInteractable>().enabled = false;
 
-        BenchWise.handle.CanMove = false;
-        BenchWise.handle.SetHighDefaultMat();
-        //ResetToolPosition(HackSawGo.transform, ToolsOrigin["HackSaw"]);
-
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(OnJobPlacementForWelding);
-    }
-
-
-    public void OnJobPlacementForWelding()
-    {
-
-        readSteps.HideConifmBnt();
-
-        ResetToolPosition(CenterPunchGo.transform, ToolsOrigin["CenterPunch"]);
-        ResetToolPosition(HammerGo.transform, ToolsOrigin["Hammer"]);
-
-        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = true;
-        WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = false;
-        WorkPiece1.GetComponent<XRGrabInteractable>().enabled = true;
+        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = true; //2
+        WorkPiece1.GetComponent<XRGrabInteractable>().enabled =true;
 
         socketFlat1_job.SetActive(true);
-        socketFlat1_job.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(OnSecondJobPlacementForWelding);
+        socketFlat1_job.transform.GetChild(0).GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(PlaceJobFlatePos1_socket1_job);
 
+        BenchWise.handle.CanMove = false;
+        BenchWise.handle.SetHighDefaultMat();
 
+        Debug.Log("Cutting Done");
     }
-    public void OnSecondJobPlacementForWelding()
+    public void PlaceJobFlatePos1_socket1_job()
     {
+        socketFlat1_job.SetActive(false);
 
-
-        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = false;
+        WorkPiece1.GetChild(1).GetComponent<Outline>().enabled = false; 
         WorkPiece1.GetComponent<XRGrabInteractable>().enabled = false;
-        WorkPiece1.GetComponent<BoxCollider>().enabled = false;
-        //WorkPiece1.transform.localPosition = socketFlat1_job.transform.localPosition;
-        //WorkPiece1.transform.localRotation = socketFlat1_job.transform.localRotation;
+        WorkPiece1.transform.localPosition = socketFlat1_job.transform.localPosition;
+        WorkPiece1.transform.localRotation = socketFlat1_job.transform.localRotation;
 
         WorkPiece2.GetComponent<XRGrabInteractable>().enabled = true;
         WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = true;
-        socketFlat1_job.SetActive(false);
         socketFlat2_job.SetActive(true);
-        socketFlat2_job.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(OnCompleteJobPlacementForWelding);
+        socketFlat2_job.transform.GetChild(0).GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(PlaceJobFlatePos2_socket2_job);
 
     }
-    public void OnCompleteJobPlacementForWelding()
+    public void PlaceJobFlatePos2_socket2_job()
     {
         WorkPiece2.GetComponent<XRGrabInteractable>().enabled = false;
         WorkPiece2.GetChild(1).GetComponent<Outline>().enabled = false;
-        //WorkPiece2.transform.localPosition = socketFlat2_job.transform.localPosition;
-        //WorkPiece2.transform.localRotation = socketFlat2_job.transform.localRotation;
+        WorkPiece2.transform.localPosition = socketFlat2_job.transform.localPosition;
+        WorkPiece2.transform.localRotation = socketFlat2_job.transform.localRotation;
         socketFlat2_job.SetActive(false);
         readSteps.onClickConfirmbtn();
         //readSteps.AddClickConfirmbtnEvent(Onclickbtn_s7_confirm);
         readSteps.AddClickConfirmbtnEvent(GasWeldingSetUP.instance.Onclickbtn_s_3_confirm);
 
     }
-    #endregion
-
-
     public void callGasSetupEnd()
     {
-        // readSteps.onClickConfirmbtn();
-        //readSteps.AddClickConfirmbtnEvent(FlameControlStep);
-        FlameControlStep();
+        Debug.Log("Called the end");
     }
-
-    public void FlameControlStep()
+    public Collider[] GasTableObjectcolliders;
+    public GameObject blacksmoke, lighterFlame, jointTackPoint, neturalFlameCube, netural_flame;
+    public GameObject highlighttriSquare, hummerhighlight;
+    public GameObject[] weldingLine1, weldingLine2;
+    public RotateNozzle redBol, blueBol, blackValve, redValve;
+    bool isTurnOffFlame, IsEnableFlame, flameOff, step10Call;
+    #region Step 10Open acetylene control valve and light the flame with spark lighter.
+    public void Onclickbtn_s10_confirm()
     {
+        onEnableStep10Object();
         readSteps.HideConifmBnt();
-        GasTableObjectcolliders[0].enabled = true; //lighter
-        GasTableObjectcolliders[0].GetComponent<SnapGrabbleObject_VL>().enabled = true;
-        GasTableObjectcolliders[0].GetComponent<Outline>().enabled = true;
-
-        ObjectOutlines[0].enabled = true; // torch nozel part 
     }
 
+    //carburing flame
+    public void OpenFlameRedBol()
+    {
+        if (!isTurnOffFlame)
+        {
+            ToolsOutlines[8].enabled = true;
+            GasTableObjectcolliders[0].enabled = true;
+            GasTableObjectcolliders[0].GetComponent<Outline>().enabled = true;
+            GasTableObjectcolliders[0].GetComponent<SnapGrabbleObject>().enabled = true;
+        }
+
+    }
     public void LighterSnap_true()
     {
-        GasTableObjectcolliders[0].GetComponent<SnapGrabbleObject_VL>().enabled = false;
-        ObjectOutlines[0].enabled = false; // torch nozel part 
-        lighter_Flame.SetActive(false);
-        GasTableObjectcolliders[0].GetComponent<Outline>().enabled = false;
-
-        GasTableObjectcolliders[1].enabled = true; //red bol at gas torch
-        GasTableObjectcolliders[1].GetComponent<Outline>().enabled = true;
+        ToolsOutlines[8].enabled = false;
         StartCoroutine(lighterEnable());
     }
-
     IEnumerator lighterEnable()
     {
-        //GasTableObjectcolliders[0].enabled = false;  //lighter
-        lighter_Flame.SetActive(false);
-        GasTableObjectcolliders[0].GetComponent<SnapGrabbleObject_VL>().enabled = false;
-        //GasTableKitColliders[12].gameObject.SetActive(false);
-        PlayFlamsParticle1();   //new 22
-        yield return new WaitForSeconds(1.5f);
-        PlayFlamsParticle2();  //new 22
-    }
+        blacksmoke.SetActive(true); // black smoke
+        yield return new WaitForSeconds(0.5f);
+        blacksmoke.SetActive(false); // black smoke
 
-    void PlayFlamsParticle1()
-    {
-        blackSmoke.SetActive(true); // black smoke
-        GasTableObjectcolliders[1].GetComponent<Outline>().enabled = false;
-    }
+        IsEnableFlame = true;
+        lighterFlame.SetActive(true);
+        lighterFlame.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.5f);
 
-    void PlayFlamsParticle2()
-    {
-        blackSmoke.SetActive(false);
-        reduce_or_carb_F.SetActive(true); // simple reduce
-        reduce_or_carb_F.GetComponent<AudioSource>().Play();
-        GasTableObjectcolliders[2].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(EnableFlameControls);
-        //PlayStepAudio(12);// open flam audio
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
 
-        //Need a ui step for setting up the flame
-
+        GasTableObjectcolliders[0].GetComponent<Outline>().enabled = false;
     }
-
-    public void EnableFlameControls()
+    //netural flame
+    //netural flame with oxygen cutting flame
+    //oxidizing flame
+    void onEnableStep10Object()
     {
-        //readSteps.onClickConfirmbtn();
+        redBol.enabled = true; //RED  bol reduse or crbarn
+        redBol.GetComponent<Outline>().enabled = true;
+        GasTableObjectcolliders[1].enabled = true;
 
-        Debug.Log("Enable flame control");
-
-        reduce_or_carb_F.SetActive(true);
-        Step8flame.SetActive(false);
-        Step9flame.SetActive(true);
-        reduce_or_carb_F.GetComponent<AudioSource>().Play();
-
-        GasTableObjectcolliders[3].enabled = true; // red bol reduce carbon //15
-        rotateNozzles[0].enabled = true; //red bol  reduce carbon
-
-        ObjectOutlines[1].GetComponent<BoxCollider>().enabled = true; //red bol  reduce carbon
-        ObjectOutlines[2].GetComponent<BoxCollider>().enabled = false; //green bol oxidizing
-        ObjectOutlines[3].GetComponent<BoxCollider>().enabled = false; //red bol netural
-
-        rotateNozzles[0].GetComponent<Outline>().enabled = true; //red bol reduce carbon
-        readSteps.HideConifmBnt();
     }
-
-    public void PlayFlamsParticle1_Flame() //first step flame green
-    {
-        if (!isTurnOffFlame)
-        {
-            // readSteps.onClickConfirmbtn();
-            reduce_or_carb_F.SetActive(true);
-            reduce_or_carb_F.GetComponent<AudioSource>().Play();
-            GasTableObjectcolliders[4].enabled = true; //green bol oxidizing //16
-            rotateNozzles[1].enabled = true; //green bol oxidizing 
-            GasTableObjectcolliders[3].enabled = false; // red bol reduce carbon
-
-            rotateNozzles[0].GetComponent<Outline>().enabled = false; //red bol reduce carbon
-
-            ObjectOutlines[1].GetComponent<BoxCollider>().enabled = false; //red bol  reduce carbon
-            ObjectOutlines[2].GetComponent<BoxCollider>().enabled = true; //green bol oxidizing
-            ObjectOutlines[3].GetComponent<BoxCollider>().enabled = false; //red bol netural
-
-            rotateNozzles[1].GetComponent<Outline>().enabled = true; //green bol oxidizing
-            Debug.Log("flame 1");
-        }
-    }
-
-    public void PlayFlameparticle2_Flam() //second step flame red
-    {
-        if (!isTurnOffFlame)
-        {
-            ObjectOutlines[1].GetComponent<BoxCollider>().enabled = false; //red bol  reduce carbon
-            ObjectOutlines[2].GetComponent<BoxCollider>().enabled = false; //green bol oxidizing
-            ObjectOutlines[3].GetComponent<BoxCollider>().enabled = true; //red bol netural
-
-            //readSteps.onClickConfirmbtn();
-            oxidizing_F.SetActive(true);
-            oxidizing_F.GetComponent<AudioSource>().Play();
-            reduce_or_carb_F.SetActive(false);
-            GasTableObjectcolliders[4].enabled = false; //green bol oxidizing
-
-            extraRedBol.SetActive(true);
-            oldRedBol.SetActive(false);
-
-            rotateNozzles[1].GetComponent<Outline>().enabled = false; //green bol oxidizing
-            GasTableObjectcolliders[5].enabled = true; //red bol neutral red sphere sphere //17
-            rotateNozzles[2].enabled = true; // neutral flame
-            rotateNozzles[2].GetComponent<Outline>().enabled = true; // red bol neutral outline
-            Debug.Log("flame 2");
-        }
-    }
-
-    public void PlayFlamsParticle3_flame() // neutral flame
-    {
-        if (!isTurnOffFlame)
-        {
-            GasTableObjectcolliders[5].enabled = false;
-            neturel_F.SetActive(true);
-            neturel_F.GetComponent<AudioSource>().Play();
-            oxidizing_F.SetActive(false);
-            rotateNozzles[2].GetComponent<Outline>().enabled = false; // red bol neutral outline
-            Debug.Log("end");
-
-            readSteps.onClickConfirmbtn();
-            readSteps.AddClickConfirmbtnEvent(EnabletagWelding);
-            //readSteps.AddClickConfirmbtnEvent(OnTurningOffFlameStep1);
-        }
-    }
-
-
-
-    #region GasSetUp turning off Procedure
-    public void OnTurningOffFlameStep1()
-    {
-        Debug.Log("Starting turning off");
-        readSteps.HideConifmBnt();
-        neturel_F.SetActive(false);
-        reduce_or_carb_F.SetActive(true); // redus true  1
-        reduce_or_carb_F.GetComponent<AudioSource>().Play();
-        isTurnOffFlame = true;
-        rotateNozzles[0].enabled = true;
-        rotateNozzles[0].RotateValue = 40;
-        rotateNozzles[0].transform.localRotation = Quaternion.Euler(0, 0, 0);
-        rotateNozzles[0].OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        rotateNozzles[0].isclockwise = false;
-
-        GasTableObjectcolliders[3].transform.gameObject.SetActive(true);
-        GasTableObjectcolliders[5].transform.parent.gameObject.SetActive(true);
-        GasTableObjectcolliders[3].enabled = true;
-
-        ObjectOutlines[1].enabled = true;
-        ObjectOutlines[2].enabled = false;
-    }
-
-    public void TurnOffFlame_Step_2()
-    {
-        if (isTurnOffFlame)
-        {
-            reduce_or_carb_F.SetActive(false);
-            oxidizing_F.SetActive(true);
-
-            GasTableObjectcolliders[3].enabled = false;
-            oxidizing_F.GetComponent<AudioSource>().Play();
-
-            GasTableObjectcolliders[4].enabled = true; //Green bol oxidizing
-            GasTableObjectcolliders[4].transform.gameObject.SetActive(true); //green bol oxidizing
-            rotateNozzles[2].transform.localRotation = Quaternion.Euler(0, 0, 0);// Green bol oxidizing
-            rotateNozzles[2].OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            rotateNozzles[2].RotateValue = 40; //GREEN  bol oxidizing
-            rotateNozzles[2].enabled = true; //GREEN  bol oxidizing
-            rotateNozzles[2].isclockwise = false; //GREEN  bol oxidizing
-
-            GasTableObjectcolliders[3].enabled = false;
-
-            ObjectOutlines[1].enabled = false;
-            ObjectOutlines[2].enabled = true;
-        }
-    }
-
-    public void CallFlameOff()
-    {
-        if (isTurnOffFlame)
-        {
-            oxidizing_F.SetActive(false);
-            neturel_F.SetActive(false);
-            reduce_or_carb_F.SetActive(false);
-            GasTableObjectcolliders[4].enabled = false;
-            ObjectOutlines[1].enabled = false;
-            ObjectOutlines[2].enabled = false;
-            rotateNozzles[2].enabled = false; //Green bol oxidizing
-            Debug.Log("Flame off");
-
-            OnEnableTurnOfRegulator();
-        }
-    }
-
-    //turnig of regulator Steps
-
-    public void OnEnableTurnOfRegulator()
-    {
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(CloseCylinderValves);
-    }
-
-    public void CloseCylinderValves()
-    {
-        readSteps.HideConifmBnt();
-        GasTableObjectcolliders[6].enabled = true; //blue valve nozzole(1)
-        ObjectOutlines[6].enabled = true; //blue valve nozzole(1)
-
-        ObjectOutlines[8].enabled = true; //Black regulator
-
-        rotateNozzles[3].isclockwise = false;  //blue valve nozzole(1)
-        rotateNozzles[3].enabled = true; //blue valve nozzole(1)
-        rotateNozzles[3].otherMeterobject.SetActive(false); //blue valve nozzole(1)
-        rotateNozzles[3].otherMeterobject = ZeroMeterBlack; //blue valve nozzole(1)
-        rotateNozzles[3].MeterObject.SetActive(true); //blue valve nozzole(1)
-        rotateNozzles[3].RotateValue = 10; //blue valve nozzole(1)
-    }
-
-    public void callBlackValve()
-    {
-        if (isTurnOffFlame)
-        {
-            GasTableObjectcolliders[6].enabled = false; //blue valve nozzole
-
-            ObjectOutlines[8].enabled = false; //black regulator
-            ObjectOutlines[9].enabled = true;  //red regulator 
-            ObjectOutlines[6].enabled = false; //blue valve nozzole
-            GasTableObjectcolliders[7].enabled = true; //red valve nozzole
-
-            ObjectOutlines[7].enabled = true; //red valve nozzole
-
-            rotateNozzles[4].isclockwise = false; // red valve nozzle
-            rotateNozzles[4].enabled = true;
-            rotateNozzles[4].otherMeterobject.SetActive(false);
-            rotateNozzles[4].otherMeterobject = ZeroMeterred;
-            rotateNozzles[4].MeterObject.SetActive(true);
-            rotateNozzles[4].RotateValue = 10;
-
-        }
-    }
-
-    public void CallRedValve()
-    {
-        if (isTurnOffFlame)
-        {
-            ObjectOutlines[9].enabled = false;  //red regulator 
-            rotateNozzles[4].enabled = false; //red nozzole
-            GasTableObjectcolliders[7].enabled = false; //red valve nozzole
-            Debug.Log("Closed valve");
-            ///finishPanel.SetActive(true);
-            //readSteps.panel.SetActive(false);
-            //OnTurnOffDone(); start cleaning method
-            OnClenaingProcessStart();
-        }
-    }
-
     #endregion
-    public void SetFillerRod(GameObject fillerRod)
+    #region Step 9: Do tack welding on both ends and centre of the job.
+    void Onclickbtn_s9_confirm()
     {
-        if (Weldingflame)
-        {
-            Weldingflame.SetFillerRod(fillerRod);
-        }
-    }
+        flameOff = true;
+        jointTackPoint.SetActive(true);
+        neturalFlameCube.SetActive(true);
+        step10Call = true;
 
-    #region Welding Methods
-    public void EnabletagWelding()
-    {
+     //   SetObjectRestPos_Rotate(1); //lighter tool
+
+        GasTableObjectcolliders[2].enabled = true;
+        ToolsOutlines[9].GetComponent<Outline>().enabled = true;
+
         readSteps.HideConifmBnt();
-        WorkPiece1.gameObject.SetActive(false);
-        WorkPiece2.gameObject.SetActive(false);
-        FinalWorkPiece.gameObject.SetActive(true);
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = false;
-
-       // WeldingTorch.GetComponent<BoxCollider>().enabled = true;
-        //WeldingTorch.GetComponent<CustomXRGrabInteractable>().enabled = true;
-
-        WeldingNuetralFlame.SetActive(true);
-        WeldingNuetralFlame.GetComponent<CapsuleCollider>().enabled = true;
-
-        RodHL1.SetActive(true);
-        TorchHL1.SetActive(true);
-        
-        for (int i = 0; i < FillerRod.Length; i++)
-        {
-            FillerRod[i].GetComponent<Outline>().enabled = true;
-            FillerRod[i].GetComponent<XRGrabInteractable>().enabled = true;
-        }
-
-        Weldingflame.SetWeldingFlameParams(FinalWorkPiece, 0);
-        Weldingflame.AssignMethodOnFusionRunDone(OnTriSquareStep);
-
-
     }
 
-    public void OnTriSquareStep()
+    public void CheckTackPoint()
     {
+   //     supportPlat.SetActive(false);
+        // GasTableObjectcolliders[8].enabled = false;
+        ToolsOutlines[9].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(RemoveTagWeldSlag);
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10__confirm);
 
-        //Weldingflame.DisableEffect();
-        //WeldingNuetralFlame.SetActive(false);
+        //   Onclickbtn_s8_0_confirm();
     }
-
-    public void RemoveTagWeldSlag()
+    public void OnPressLever()
     {
-
-        readSteps.HideConifmBnt();
-        WeldingNuetralFlame.SetActive(false);
-
-        int count = 0;
-        for (int i = 0; i < FillerRod.Length; i++)
+        if (step10Call)
         {
-            FillerRod[i].GetComponent<Outline>().enabled = false;
-
+            netural_flame.SetActive(true);
+            netural_flame.GetComponent<AudioSource>().Play();
         }
-
-       
-            for (int j = 0; j < SlagLines[0].transform.childCount; j++)
+        else
+        {
+            if (IsEnableFlame)
             {
-                count++;
-                SlagLines[0].transform.GetChild(j).gameObject.SetActive(true);
-                SlagLines[0].transform.GetChild(j).GetComponent<CapsuleCollider>().enabled = true;
-                SlagLines[0].transform.GetChild(j).tag = "Slag";
+                lighterFlame.SetActive(true);
+                lighterFlame.GetComponent<AudioSource>().Play();
             }
-        
-
-        ToolsOutlines[7].enabled = true;
-        ChippingHammerHL.SetActive(true);
-        ChippingHammer.SetChippingHammerParams(count);
-        ChippingHammer.AssignMethodOnSlagRemoveDone(CheckAngleWithTrySqure);
-        //WeldingNuetralFlame.SetActive(false);
-    }
-
-    public void CheckAngleWithTrySqure()
-    {
-        FinalWorkPiece.GetComponent<XRGrabInteractable>().enabled = true;
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = true;
-        //Enable the oulline
-
-        RightAngleSocket.SetActive(true);
-        if (RightAngleSocket.GetComponent<CustomSocket>() != null)
-        {
-            RightAngleSocket.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(OnJobSnapForCheckRightAngle);
         }
     }
+    #endregion
 
-    public void OnJobSnapForCheckRightAngle()
+    #region step10:  With the help of tri square, check the alignment of the job and clean the tag weld.
+    void Onclickbtn_s10__confirm()
     {
-        RightAngleSocket.SetActive(false);
-        FinalWorkPiece.GetComponent<XRGrabInteractable>().enabled = false;
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = false;
+      //  SetObjectRestPos_Rotate(2); //filler  tool
 
-
-        ToolsOutlines[8].enabled = true;
-        TrySquareHL.SetActive(true);
-        TrySquare.AssignMethodOnCheckRightAngle(OnWeldingFusionRunForLapJoint);
-    }
-
-    public void OnWeldingFusionRunForLapJoint()
-    {
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(PlaceJobForFinalWelding);
-    }
-
-    public void PlaceJobForFinalWelding()
-    {
         readSteps.HideConifmBnt();
-        FinalWorkPiece.GetComponent<XRGrabInteractable>().enabled = true;
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = true;
+        highlighttriSquare.SetActive(true);
 
-        FinalWeldingSocket.SetActive(true);
-        FinalWeldingSocket.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(JobSnapForWeldingFirstRun);
+        ToolsOutlines[10].enabled = true;
+        //ToolsOutlines[6].enabled = true;
     }
-
-    public void JobSnapForWeldingFirstRun()
+    public void checkTriSquare()
     {
-        WeldingNuetralFlame.SetActive(true);
-        WeldingNuetralFlame.GetComponent<AudioSource>().Play();
-
-
-        FinalWeldingSocket.SetActive(false);
-        FinalWorkPiece.GetComponent<XRGrabInteractable>().enabled = false;
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = false;
-        RodHL2.SetActive(true);
-        TorchHL2.SetActive(true);
-        Weldingflame.SetWeldingFlameParams(FinalWorkPiece, 1);
-        Weldingflame.AssignMethodOnFusionRunDone(OnFirstSideWeldingComplete);
-    }
-
-    public void OnFirstSideWeldingComplete()
-    {
-        FinalWeldingSocket1.SetActive(true);
-        FinalWeldingSocket1.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(EnableWeldingOnSecondLine);
-        FinalWorkPiece.GetComponent<XRGrabInteractable>().enabled = true;
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = true;
-    }
-
-    public void EnableWeldingOnSecondLine()
-    {
-        FinalWeldingSocket1.SetActive(false);
-
-        FinalWorkPiece.GetComponent<XRGrabInteractable>().enabled = true;
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = true;
-        RodHL3.SetActive(true);
-        TorchHL3.SetActive(true);
-       // FinalWorkPiece.position = FlipTranform.position;
-        //FinalWorkPiece.eulerAngles = FlipTranform.eulerAngles;
-        Weldingflame.SetWeldingFlameParams(FinalWorkPiece, 2);
-        Weldingflame.AssignMethodOnFusionRunDone(OnCompleteWelding);
-    }
-
-    public void OnCompleteWelding()
-    {
-        FinalWorkPiece.GetComponent<XRGrabInteractable>().enabled = true;
-        FinalWorkPiece.GetComponent<Rigidbody>().useGravity = true;
-        FinalWorkPiece.GetComponent<Rigidbody>().isKinematic = false;
-        int count = 0;
-        for (int i = 0; i < FillerRod.Length; i++)
-        {
-            FillerRod[i].GetComponent<Outline>().enabled = false;
-
-        }
-
-        for (int i = 0; i < SlagLines[0].transform.childCount; i++)
-        {
-            SlagLines[0].transform.GetChild(i).gameObject.SetActive(false);
-        }
-
-        for (int j = 0; j < SlagLines[1].transform.childCount; j++)
-        {
-            count++;
-            SlagLines[1].transform.GetChild(j).gameObject.SetActive(true);
-            SlagLines[1].transform.GetChild(j).GetComponent<CapsuleCollider>().enabled = true;
-            SlagLines[1].transform.GetChild(j).tag = "Slag";
-        }
-
-        for (int k = 0; k < SlagLines[2].transform.childCount; k++)
-        {
-            count++;
-            SlagLines[2].transform.GetChild(k).gameObject.SetActive(true);
-            SlagLines[2].transform.GetChild(k).GetComponent<CapsuleCollider>().enabled = true;
-            SlagLines[2].transform.GetChild(k).tag = "Slag";
-        }
-
-
-        //OnTurningOffFlameStep1
         readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(OnTurningOffFlameStep1);
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
+        highlighttriSquare.SetActive(false);
 
-        
-
+        ToolsOutlines[10].enabled = false;
+        //ToolsOutlines[6].enabled = false;
+        //   Onclickbtn_s8_confirm();
     }
 
+    #endregion
+    #region step 11 : Start Welding by Leftward Technique.
+    void Onclickbtn_s11_confirm()
+    {
+       // SetObjectRestPos_Rotate(3); //try squre  tool
+
+        readSteps.HideConifmBnt();
+
+        weldingLine1[0].SetActive(true);
+        weldingLine1[0].transform.GetChild(0).gameObject.SetActive(true);
+
+       // GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4209f, -0.0036f, -0.0978f);//ToolsOutlines[1].transform.position;// job plate material
+      //  GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 0, -10);
+       // supportCube1.SetActive(true);
+      //  supportcube2.SetActive(false);
+
+        GasTableObjectcolliders[2].enabled = true;
+        ToolsOutlines[9].GetComponent<Outline>().enabled = true;
+        // JointWelding.instance.WeldingEnable();
+    //    torch35D.SetActive(true);
+    }
+    public void SecondTourchPlateRotate()
+    {
+      /*  GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
+
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4709f, -0.0044f, -0.0978f);//ToolsOutlines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 0, 10);
+        supportCube1.SetActive(false);
+        supportcube2.SetActive(true);*/
+    }
+    public void weldingComplete()
+    {
+        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = false;
+        //  GasTableObjectcolliders[8].GetComponent<FreezeRotation>().isFreeze = false;
+        //job plat posion set
+        /*GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//ToolsOutlines[1].transform.position;// job plate material
+                                                                                                      //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//ToolsOutlines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f, 0f);//ToolsOutlines[1].transform.position;// job plate material
+
+        supportCube1.SetActive(true);
+        supportcube2.SetActive(true);*/
+
+        ToolsOutlines[9].GetComponent<Outline>().enabled = false;
+        GasTableObjectcolliders[2].GetComponent<XRGrabInteractable>().selectEntered = null;
+        GasTableObjectcolliders[2].GetComponent<XRGrabInteractable>().selectExited = null;
+        //  Destroy(  GasTableObjectcolliders[8].GetComponent<FreezeRotation>());
+
+        readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_12_1_confirm);
+
+        //       Onclickbtn_s9_confirm();
+    }
+    public void CheckWelding_rot(GameObject weldingTorch)
+    {
+
+        weldingTorch.SetActive(false);
+        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().Freezeangle = weldingTorch.transform;
+
+        GasTableObjectcolliders[5].GetComponent<FreezeRotation>().isFreeze = true;
+        // FreezeRotation.instance.isFreeze = true;
+        neturalFlameCube.GetComponent<JointWelding>().isWelding = true;
+    }
+    #endregion
+
+    #region Step 12.1: Turning off Flame
+    public GameObject dummyRedBol;
+    void Onclickbtn_s_12_1_confirm()
+    {
+        //SetObjectRestPos_Rotate(2); //filler  tool
+
+        Debug.Log("Call end flame");
+        readSteps.HideConifmBnt();
+        redBol.gameObject.SetActive(false);
+        dummyRedBol.gameObject.SetActive(true);
+        redBol = dummyRedBol.GetComponent<RotateNozzle>();
+
+        isTurnOffFlame = true;
+        SetUpTrolley.instance.isTurnOffFlame = true;
+        redBol.enabled = true; //RED  bol reduse or crbarn
+        redBol.RotateValue = 30; //RED  bol reduse or crbarn
+                                 // redBol.speed = 25;
+        redBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
+        redBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
+        redBol.isclockwise = false; //RED  bol reduse or crbarn
+
+        redBol.GetComponent<Outline>().enabled = true;
+
+    }
+    public void callTurnOff2_flame()//oxidiz
+    {
+        if (isTurnOffFlame)
+        {
+            redBol.GetComponent<BoxCollider>().enabled = false;
+            redBol.enabled = false; //RED  bol reduse or crbarn
+            GasTableObjectcolliders[4].enabled = true;  //GREEN  bol oxidizing
+
+            blueBol.enabled = true; //GREEN  bol oxidizing
+            blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
+            blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
+            blueBol.RotateValue = 30; //GREEN  bol oxidizing
+            blueBol.isclockwise = false; //GREEN  bol oxidizing
+
+            blueBol.GetComponent<Outline>().enabled = true;
+        }
+    }
+    public void callFalmeOff()
+    {
+        if (isTurnOffFlame)
+        {
+            step10Call = false;
+            netural_flame.SetActive(false);
+            IsEnableFlame = false;
+            lighterFlame.SetActive(false);
+            blueBol.GetComponent<Outline>().enabled = false;
+            callCloseCylinderValves();
+
+        }
+    }
+    //close valve
+    public void callCloseCylinderValves()
+    {
+
+        readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_12_2_1confirm);
+
+    }
+    public GameObject ZeroMeterred, ZeroMeterBlack;
+    void Onclickbtn_s_12_2_1confirm()
+    {
+        Debug.Log("10");
+        readSteps.HideConifmBnt();
+        GasTableObjectcolliders[1].enabled = true;// blue valve nozzel
+
+       ToolsOutlines[13].enabled = true;// blue valve nozzel
+      /* WorkPiece1
+            workPiece2*/
+
+        blackValve.enabled = true;                                // black valve
+        blackValve.isclockwise = false;                           // black valve
+        blackValve.otherMeterobject.SetActive(false);             // black valve
+        blackValve.otherMeterobject = ZeroMeterBlack;               // black valve
+        blackValve.MeterObject.SetActive(true);                   // black valve
+        blackValve.RotateValue = 15;                              // black valve
+                                                                  //    blackValve.speed = 20;
+    }
+    public void callBlackValve_Bol()
+    {
+        if (isTurnOffFlame)
+        {
+            Debug.Log("10eer");
+            GasTableObjectcolliders[1].enabled = false;// blue valve nozzel
+                                                       //   GasTableObjectcolliders[9].GetComponent<Outline>().enabled = true;// blue valve nozzel
+            ToolsOutlines[13].enabled = false;// blue regulator
+
+            GasTableObjectcolliders[4].enabled = true;// red valve nozzel
+                                                      //   GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;// blue valve nozzel
+            ToolsOutlines[11].enabled = true;// red regulator
+
+            redValve.enabled = true;                          // red valve
+            redValve.isclockwise = false;  // red valve
+            redValve.otherMeterobject.SetActive(false);       // red valve
+            redValve.otherMeterobject = ZeroMeterred;       // red valve
+            redValve.MeterObject.SetActive(true);             // red valve
+            redValve.RotateValue = 10;                         // red valve
+        }
+    }
+    public void CallRedValve_bol()
+    {
+        if (isTurnOffFlame)
+        {
+            ToolsOutlines[11].enabled = false;// red regulator
+            GasTableObjectcolliders[4].enabled = false;// blue valve nozzel
+            GasTableObjectcolliders[4].GetComponent<Outline>().enabled = false;// blue valve nozzel
+            readSteps.onClickConfirmbtn();
+            readSteps.AddClickConfirmbtnEvent(Onclickbtn_s13_confirm);
+        }
+    }
 
     #endregion
 
-    #region CleaningMethod
 
-    public void OnClenaingProcessStart()
-    {
-        readSteps.onClickConfirmbtn();
-        readSteps.AddClickConfirmbtnEvent(StartSlagRemovalStep);
-
-        
-    }
-
-    public void StartSlagRemovalStep()
+    #region step 13 Clean the job surface with wire brush and remove distortion.
+    void Onclickbtn_s13_confirm()
     {
         readSteps.HideConifmBnt();
-        ToolsOutlines[7].enabled = true;
-        ChippingHammerHL1.SetActive(true);
-        ChippingHammer.SetChippingHammerParams(88);
-        ChippingHammer.AssignMethodOnSlagRemoveDone(CleanWeldPlaceWithBrush);
-    }
-    public void CleanWeldPlaceWithBrush()
-    {
-        FinalWorkPiece.GetComponent<BoxCollider>().enabled = true;
         ToolsOutlines[0].enabled = true;
-        WireBrushHL1.SetActive(true);
+        /*CuttingBrush.instance.cleanPointCount = 15;
+        CuttingBrush.instance.isStop = false;*/
+
+        WorkPiece1.GetChild(0).GetComponent<Outline>().enabled = true;
+        WorkPiece2.GetChild(0).GetComponent<Outline>().enabled = true;
+
+
+        //   Debug.Log("Call bursh out line");
+        //   GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        netural_flame.SetActive(false);
+
+        WireBrushHL.SetActive(true);
         WireBrush.SetWireBrushParams(10, "Job");
-        WireBrush.AssignMethodOnCleaningJobDone(CleanWeldingLine);
+        WireBrush.AssignMethodOnCleaningJobDone(cleanBrushFinish);
     }
-
-    public void CleanWeldingLine()
+    public void cleanBrushFinish()
     {
-        
+        ToolsOutlines[0].enabled = false;
 
-        for (int i = 0; i < SlagLines[1].transform.childCount; i++)
+    
+
+        ToolsOutlines[0].enabled = true;
+        readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s14_confirm);
+
+        ///     Onclickbtn_s10_confirm();
+
+    }
+    #endregion
+    #region step 14 Check the defects.
+    void Onclickbtn_s14_confirm()
+    {
+     //   SetObjectRestPos_Rotate(0); //brush tool
+
+        hummerhighlight.SetActive(true);
+        ToolsOutlines[12].enabled = true;
+        ToolsOutlines[12].transform.parent.GetComponent<JointWelding>().isWelding = true;
+        ToolsOutlines[12].transform.parent.GetComponent<JointWelding>().isFiller = true;
+        for (int i = 0; i < weldingLine1.Length; i++)
         {
-            SlagLines[1].transform.GetChild(i).GetComponent<MeshRenderer>().sharedMaterial = WeldFinishMat;
-            SlagLines[1].transform.GetChild(i).GetComponent<CapsuleCollider>().enabled = false;
+            weldingLine1[i].SetActive(false);
+            weldingLine2[i].SetActive(true);
         }
-
-        for (int j = 0; j < SlagLines[2].transform.childCount; j++)
-        {
-            SlagLines[2].transform.GetChild(j).GetComponent<MeshRenderer>().sharedMaterial = WeldFinishMat;
-            SlagLines[2].transform.GetChild(j).GetComponent<CapsuleCollider>().enabled = false;
-        }
-
+        weldingLine2[0].transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
+        weldingLine2[0].transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = true;
+        ToolsOutlines[0].enabled = false;
+        readSteps.HideConifmBnt();
+    }
+    public void checkChappingHummer()
+    {
         finishPanel.SetActive(true);
         readSteps.tablet.SetActive(true);
         readSteps.panel.SetActive(false);
+        ToolsOutlines[12].enabled = false;
+      //  SetObjectRestPos_Rotate(4); //chapping hummer tool
+        Debug.Log("call end");
     }
+
     #endregion
-
-    public void ResetToolPosition(Transform tool,ToolOrigin TO)
-    {
-        
-        tool.position = TO.pos;
-        tool.localEulerAngles = TO.rot;
-    }
-
+   
 }

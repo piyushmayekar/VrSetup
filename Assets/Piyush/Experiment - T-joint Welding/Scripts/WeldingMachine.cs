@@ -25,6 +25,8 @@ namespace TWelding
         [SerializeField] XRSocketInteractor socket_Electrode;
         Rigidbody _rb;
 
+        Vector3 _resetPos = new Vector3(-0.898199975f, 1.12199998f, -1.28900003f), _resetRot = new Vector3(-45, 0f, 0f);
+
         public bool IsElectrodePlaced { get => isElectrodePlaced; set => isElectrodePlaced = value; }
         #region SINGLETON
         public static WeldingMachine Instance => instance;
@@ -67,6 +69,12 @@ namespace TWelding
             IsSqueezerTouched = false;
             ToggleGunSqueezers(IsSqueezerTouched);
             Invoke(nameof(EnableSqueezerCollider), 1f);
+            ResetTransform();
+        }
+
+        public void ResetTransform()
+        {
+            transform.SetPositionAndRotation(_resetPos, Quaternion.Euler(_resetRot));
         }
 
         void EnableSqueezerCollider()
@@ -95,6 +103,8 @@ namespace TWelding
         void Start()
         {
             _rb = GetComponent<Rigidbody>();
+            ps = GetComponentInChildren<ParticleSystem>();
+            sparkLight = ps.transform.GetChild(0).gameObject;
             ToggleMachine(false);
             ToggleWeldingTip();
             WeldingArea.OnWeldingMachineTipInContact += (bool isTipAtLeft) =>
@@ -106,6 +116,7 @@ namespace TWelding
             {
                 TipInContact(false);
             };
+            ResetTransform();
         }
 
         public void TipInContact(bool inContact)
