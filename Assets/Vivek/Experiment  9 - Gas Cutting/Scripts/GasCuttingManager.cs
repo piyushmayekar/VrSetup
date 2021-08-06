@@ -29,20 +29,24 @@ public class GasCuttingManager : MonoBehaviour
 
     [Header("Read step from json calss")]
     public ReadStepsAndVideoManager readSteps;
-    //[Header("Counters")]
+
     int countppekit;
+
     public bool flameOff = false;
+
     [Header("Object Position Resetter ")]
     public Transform[] toolToReset;
+
     public List<Vector3> toolToResetPosition, toolToResetRotate;
-     public void Awake()
+    public void Awake()
     {
         instance = this;
         Application.targetFrameRate = 60;
-        
+
     }
     public void Start()
     {
+        //Hide all the collider and outline
         for (int i = 0; i < ppekitcolliders.Length; i++)
         {
             ppekitcolliders[i].enabled = false;
@@ -64,23 +68,14 @@ public class GasCuttingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-        StartCoroutine(PlayGasWeldingStartAudio());
-      //  Onclickbtn_s10_2_confirm();
+        //   Onclickbtn_s10_confirm();
+    //   TempTorchStep();
     }
-    IEnumerator PlayGasWeldingStartAudio()
-    {
-        yield return new WaitForSeconds(2f);
-        //EXP title audio clip (0)
-        PlayStepAudio(0);
-        yield return new WaitForSeconds(0.2f + AudioManagerWithLanguage.Instance.stepsAudioSource.clip.length);
 
-    }
     public void ConfirmSatrtbtn()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_1_confirm);
-        //EXP kit audio  clip (1)
-        PlayStepAudio(1);
     }
 
     #region step1 Step 1: Wear PPE Kit
@@ -108,9 +103,6 @@ public class GasCuttingManager : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_2_confirm);
-
-        //EXP Keep raw material given drawing audio  clip (2)
-        PlayStepAudio(2);
     }
     #endregion
     #region Step 2: Keep raw material ready as per the given drawing.
@@ -127,8 +119,6 @@ public class GasCuttingManager : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_3_confirm);
-        //EXP job plate mateial place position audio  clip (3)
-        PlayStepAudio(3);
     }
 
     #endregion
@@ -150,25 +140,24 @@ public class GasCuttingManager : MonoBehaviour
     public void CheckJobFlatPlace()
     {
         GasTableObjectcolliders[0].enabled = false;
-        //job plat posion set
+        //job plat position set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.338f, 0.016f, -0.094f);//objectOutLines[1].transform.position;// job plate material
                                                                                                    //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
         GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f, 0f);//objectOutLines[1].transform.position;// job plate material
 
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
-        readSteps.onClickConfirmbtn();
         objectOutLines[1].enabled = false;// job flat position
+
+        readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
-        //EXP Clean the job surface with wire brush audio  clip (4)
-        PlayStepAudio(4);
+
     }
     #endregion
     #region Step 4: Clean the job surface with wire brush and remove burrs by filing.
     void OnEnableStep4object()
     {
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-        // GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = true;// brush out line
         GasTableObjectcolliders[1].enabled = true;// brush collider
         objectOutLines[2].enabled = true;
     }
@@ -181,14 +170,11 @@ public class GasCuttingManager : MonoBehaviour
     public void checkBrushStep()
     {
         objectOutLines[2].enabled = false;
-        //   GasTableObjectcolliders[1].transform.GetChild(0).GetComponent<Outline>().enabled = false;// Brushout line
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false; // job plate outline
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
-        //EXP  marked and punched audio  clip (5)
-        PlayStepAudio(5);
     }
     #endregion
     #region Step 5: As per the drawing, the surfaces of the job should be marked and punched.
@@ -201,7 +187,6 @@ public class GasCuttingManager : MonoBehaviour
         CuttingJobMaterial.instance.StartCenterPunchMarking();
         objectOutLines[3].enabled = true;
         objectOutLines[4].enabled = true;
-        //   GasTableObjectcolliders[1].GetComponent<Rigidbody>().isKinematic = true;// brush collider
     }
     void Onclickbtn_s_5_confirm()
     {
@@ -212,7 +197,7 @@ public class GasCuttingManager : MonoBehaviour
     public void checkStep5()
     {
         readSteps.onClickConfirmbtn();
-        SetUpTrolley.instance.PlayCrackingKeyAudio();
+        // SetUpTrolley.instance.PlayCrackingKeyAudio();
         readSteps.AddClickConfirmbtnEvent(SetUpTrolley.instance.Onclickbtn_s_3_confirm);
         readSteps.confirmbtn.onClick.AddListener(() => checkCenterPunchHummer());
         objectOutLines[3].enabled = false;
@@ -226,17 +211,31 @@ public class GasCuttingManager : MonoBehaviour
     #endregion    
     #region Step 10 Open acetylene control valve and light the flame with spark lighter.
     public bool IsEnableFlame, step10Call;
+    void TempTorchStep()
+    {
+        GasTableObjectcolliders[6].enabled = true;
+
+        readSteps.onClickConfirmbtn();
+        readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10_confirm);
+    }
+
     public void Onclickbtn_s10_confirm()
     {
-        onEnableStep10Object();
+          onEnableStep10Object();
         readSteps.HideConifmBnt();
-        /*//EXP Open acetylene control valve audio  clip (3)
-        PlayStepAudio(3);*/
+    }    //netural flame
+    //netural flame with oxygen cutting flame
+    //oxidizing flame
+    void onEnableStep10Object()
+    {
+        redBol.enabled = true; //RED  bol reduse or crbarn
+        redBol.GetComponent<Outline>().enabled = true;
+        GasTableObjectcolliders[4].enabled = true;
     }
     public void EndMethodAudio()
     {
         //EXP Open acetylene control valve lighter  audio  clip (6)
-        PlayStepAudio(6);
+        //PlayStepAudio(6);
     }
     //carburing flame
     public void OpenFlameRedBol()
@@ -244,11 +243,10 @@ public class GasCuttingManager : MonoBehaviour
         if (!isTurnOffFlame)
         {
             objectOutLines[5].enabled = true;
-            GasTableObjectcolliders[3].enabled = true;
+            GasTableObjectcolliders[3].enabled = true; //Lighter
             GasTableObjectcolliders[3].GetComponent<Outline>().enabled = true;
             GasTableObjectcolliders[3].GetComponent<SnapGrabbleObject>().enabled = true;
         }
-
     }
 
     public void LighterSnap_true()
@@ -267,14 +265,13 @@ public class GasCuttingManager : MonoBehaviour
         lighterFlame.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.5f);
         GasTableObjectcolliders[3].GetComponent<Outline>().enabled = false;
-        Debug.Log(" add clickConfirm ");
+        SetObjectRestPos_Rotate(4); //lighter tool
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s10_2_confirm);
-
-        //EXP Open oxyzen control valve lighter  audio  clip (7)
-        PlayStepAudio(7);
+     //   Onclickbtn_s10_2_confirm();
     }
+    //Open oxygen control valve 
     void Onclickbtn_s10_2_confirm()
     {
         //Debug.Log("clickConfirm ");
@@ -285,32 +282,21 @@ public class GasCuttingManager : MonoBehaviour
     void openOxgenValve()
     {
         GasTableObjectcolliders[9].GetComponent<RotateNozzle>().enabled = true; //blue 2  bol reduse or crbarn
-        
         GasTableObjectcolliders[9].enabled = true;
         GasTableObjectcolliders[9].GetComponent<Outline>().enabled = true;
     }
     public void onDoneBlueBol_2_oxygen()
     {
+        Destroy(GasTableObjectcolliders[9].GetComponent<RotateNozzle>());
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s11_confirm);
-        //EXP Keep the gas cutting torch audio  clip (8)
-        PlayStepAudio(8);
+    //    Onclickbtn_s11_confirm();
     }
-    //netural flame
-    //netural flame with oxygen cutting flame
-    //oxidizing flame
-    void onEnableStep10Object()
-    {
-        redBol.enabled = true; //RED  bol reduse or crbarn
-        redBol.GetComponent<Outline>().enabled = true;
-        GasTableObjectcolliders[4].enabled = true;
 
-    }
     #endregion
     #region Step 11: Keep the gas cutting torch (blow pipe) at 90° on job surface and the cutting line.
     void Onclickbtn_s11_confirm()
     {
-        SetObjectRestPos_Rotate(4); //lighter tool
         onEnableStep11Object();
         readSteps.HideConifmBnt();
     }
@@ -321,8 +307,6 @@ public class GasCuttingManager : MonoBehaviour
     public void Checktourch90degree()
     {
         torch90degree.SetActive(false);
-        // GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = true;
-
         Vector3 pos = GasTableObjectcolliders[6].transform.localPosition;
         pos = torch90degree.transform.localPosition;
         GasTableObjectcolliders[6].transform.localPosition = pos;
@@ -333,11 +317,8 @@ public class GasCuttingManager : MonoBehaviour
         GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         GasTableObjectcolliders[6].GetComponent<CustomXRGrabInteractable>().trackRotation = false;
 
-
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s12_confirm);
-        //EXP cherry red  audio  clip (9)
-        PlayStepAudio(9);
     }
     #endregion
     #region Step 12: Heat one end of the marking line till it turns cherry red.Keep a distance of 5mm between the job and the nozzle.
@@ -348,19 +329,15 @@ public class GasCuttingManager : MonoBehaviour
 
         readSteps.HideConifmBnt();
         onEnableStep12Object();
-        //   Debug.Log("1c");
     }
     void onEnableStep12Object()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s13_confirm);
-        //EXP Press oxygen lever and slowly proceed  audio  clip (10)
-        PlayStepAudio(10);
     }
 
     #endregion
     #region Step 13: Press oxygen lever and slowly proceed in the direction of cutting
-
     void Onclickbtn_s13_confirm()
     {
         objectOutLines[6].enabled = true;
@@ -394,21 +371,16 @@ public class GasCuttingManager : MonoBehaviour
     {
         if (flameOff)
         {
-
             objectOutLines[6].enabled = false;
-            // netural_flame.SetActive(false);
             GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = false;
             CuttingBrush.instance.cleanPointCount = 15;
             CuttingBrush.instance.isStop = false;
+
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_14_1_confirm);
-            //EXP Turning off Flame  audio  clip (11)
-            PlayStepAudio(11);
         }
     }
-
     #endregion
-
 
     #region Step 14: Turning off Flame
     public GameObject dummyRedBol;
@@ -439,9 +411,9 @@ public class GasCuttingManager : MonoBehaviour
             redBol.enabled = false; //RED  bol reduse or crbarn
             GasTableObjectcolliders[5].enabled = true;  //GREEN  bol oxidizing
 
-            blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            blueBol.RotateValue = 60; //GREEN  bol oxidizing
+           // blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
+           // blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
+         //   blueBol.RotateValue = 60; //GREEN  bol oxidizing
             blueBol.enabled = true; //GREEN  bol oxidizing
             blueBol.isclockwise = false; //GREEN  bol oxidizing
 
@@ -457,8 +429,7 @@ public class GasCuttingManager : MonoBehaviour
             step10Call = false;
             netural_flame.SetActive(false);
             blueBol.GetComponent<Outline>().enabled = false;
-            //EXP callCloseCylinderValves audio  clip (12)
-            PlayStepAudio(12);
+
             callCloseCylinderValves();
 
         }
@@ -466,7 +437,6 @@ public class GasCuttingManager : MonoBehaviour
     //close valve
     public void callCloseCylinderValves()
     {
-
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_10_1confirm);
 
@@ -474,13 +444,12 @@ public class GasCuttingManager : MonoBehaviour
     public GameObject ZeroMeterred, ZeroMeterBlack;
     void Onclickbtn_s_10_1confirm()
     {
-        Debug.Log("10");
         readSteps.HideConifmBnt();
         GasTableObjectcolliders[7].enabled = true;// blue valve nozzel
 
         objectOutLines[9].enabled = true;// black regulator
 
-        blackValve.isclockwise = false;                           // black valve
+        blackValve.isclockwise = true;                           // black valve
         blackValve.enabled = true;                                // black valve
         blackValve.otherMeterobject.SetActive(false);             // black valve
         blackValve.otherMeterobject = ZeroMeterBlack;               // black valve
@@ -501,7 +470,7 @@ public class GasCuttingManager : MonoBehaviour
                                                       //   GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;// blue valve nozzel
             objectOutLines[10].enabled = true;// red regulator
 
-            redValve.isclockwise = false;  // red valve
+            redValve.isclockwise = true;  // red valve
             redValve.enabled = true;                          // red valve
             redValve.otherMeterobject.SetActive(false);       // red valve
             redValve.otherMeterobject = ZeroMeterred;       // red valve
@@ -517,11 +486,9 @@ public class GasCuttingManager : MonoBehaviour
 
             GasTableObjectcolliders[8].enabled = false;// blue valve nozzel
             GasTableObjectcolliders[8].GetComponent<Outline>().enabled = false;// blue valve nozzel
+
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s14_confirm);
-
-            //EXP C.S. brush and clean the surface audio  clip (13)
-            PlayStepAudio(13);
         }
     }
 
@@ -548,15 +515,14 @@ public class GasCuttingManager : MonoBehaviour
         objectOutLines[2].enabled = false;
         finishPanel.SetActive(true);
         readSteps.panel.SetActive(false);
-        // SetObjectRestPos_Rotate(0); //Brush tool
     }
     #endregion
 
     #region Others methods
-    void PlayStepAudio(int index)
-    {
-        AudioManagerWithLanguage.Instance.PlayStepAudio(index);
-    }
+    /* void //PlayStepAudio(int index)
+     {
+         AudioManagerWithLanguage.Instance.//PlayStepAudio(index);
+     }*/
     public void SetObjectRestPos_Rotate(int indexOfReset)
     {
         toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = false;

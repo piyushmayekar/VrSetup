@@ -10,7 +10,7 @@ public class CuttingBrush : MonoBehaviour
     [SerializeField] SoundPlayer soundPlayer;
     [SerializeField] Rigidbody parentBrushRb;
     public experimentType type;
-    public bool isStop,isCleaning;
+    public bool isStop, isCleaning;
     public TextMeshProUGUI CleanText;
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class CuttingBrush : MonoBehaviour
     {
         if (other.CompareTag(_Constants.CLEANPOINT_TAG))
         {
-        PlayBrushStrokeSound();
+            PlayBrushStrokeSound();
 
             dustPS.Play();
             EdgeBrushed();
@@ -72,14 +72,14 @@ public class CuttingBrush : MonoBehaviour
                 }
                 CleanText.text = "";
             }
-           ReadStepsAndVideoManager.instance.isBrushCleaning = false;
+            ReadStepsAndVideoManager.instance.isBrushCleaning = false;
             isStop = true;
         }
         else
         {
             if (!isStop)
             {
-                ReadStepsAndVideoManager.instance.isBrushCleaning  = true;
+                ReadStepsAndVideoManager.instance.isBrushCleaning = true;
                 ReadStepsAndVideoManager.instance.tablet.SetActive(true);
                 BrushFontChanage();
             }
@@ -87,17 +87,14 @@ public class CuttingBrush : MonoBehaviour
     }
     public void BrushFontChanage()
     {
-        if (ReadStepsAndVideoManager.instance.isChangeFont)
+        if (ReadStepsAndVideoManager.instance.currentLanguage == _Language.English)
         {
             CleanText.text = "";
-            Debug.Log("LM!1");
-            ReadStepsAndVideoManager.instance.stepText.text = "Pick up C.S. brush and clean the surface.\n" + cleanPointCount.ToString() + "/15";
         }
         else
         {
-            Debug.Log("LM!2");
-            ReadStepsAndVideoManager.instance.stepText.text = " sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
             CleanText.text = cleanPointCount.ToString() + "/15";
         }
+        ReadStepsAndVideoManager.instance.stepText.text = ReadStepsAndVideoManager.instance.currentLanguage == 0 ? "Pick up C.S. brush and clean the surface." : "sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
     }
 }

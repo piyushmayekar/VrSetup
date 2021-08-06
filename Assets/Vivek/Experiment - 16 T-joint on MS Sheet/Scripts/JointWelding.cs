@@ -12,8 +12,8 @@ public class JointWelding : MonoBehaviour
     public int countdotpoint, CurrentLine, countlinePoint;
     public bool isChappingHammer;
     public GameObject[] WeldingLine;
-    public GameObject weldingModel, tackPoint,plateRedMat;
-    public Material redMaterial, blackMaterial;
+    public GameObject weldingModel, tackPoint, plateRedMat;
+    public Material  blackMaterial;
     public GameObject fireRedFilerMesh;
     public SoundPlayer chippingHummer;
     public bool isWelding, isFiller;
@@ -22,7 +22,6 @@ public class JointWelding : MonoBehaviour
     public JointTools jointTools;
     public void Awake()
     {
-
         instance = this;
         CurrentLine = 0;
         countlinePoint = 0;// WeldingLine[CurrentLine].transform.childCount;
@@ -30,39 +29,23 @@ public class JointWelding : MonoBehaviour
     public void Start()
     {
 
-        /* Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
-           tc.a = 0;
-           fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
-
-        */   /* loat counter = 0;
-            RedBolt.GetComponent<Renderer>().material.shader = Shader.Find("HDRP/Lit";
-            while (counter < 1)
-            {
-                counter += Time.deltaTime / 3;
-                RedBolt.GetComponent<Renderer>().material.Lerp(materialToChange, materialToChange2, counter);
-                yield return 0;
-            }
-    */
-      //  if (jointTools == JointTools.tPlate)
-        {
-          ///  StartCoroutine(RedPlateFadeIn(3f));
-        }
     }
-   
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Electrode")
         {
             isFiller = true;
         }
-
-        if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
+        if (jointTools == JointTools.tPlate)
         {
-            starParticle.Play();
-            starParticle.GetComponent<AudioSource>().Play();
-            sparkLight.SetActive(true);
+            if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
+            {
+                starParticle.Play();
+                starParticle.GetComponent<AudioSource>().Play();
+                sparkLight.SetActive(true);
+            }
         }
-
         if (other.transform.tag == "DotPoint" && isFiller)
         {
             countdotpoint++;
@@ -85,12 +68,9 @@ public class JointWelding : MonoBehaviour
             if (WeldingLine[CurrentLine].transform.GetChild(countlinePoint).name == other.transform.name)
             {
                 countlinePoint++;
-                if (jointTools==JointTools.tPlate)
+                if (jointTools == JointTools.tPlate)
                 {
-                    if (countlinePoint == 1)
-                    {
-                       // StartCoroutine(RedPlateFadeIn(3f));
-                    }
+
                     other.transform.GetComponent<MeshRenderer>().enabled = false;
                     other.transform.GetComponent<BoxCollider>().enabled = false;
                     other.transform.GetChild(1).gameObject.SetActive(true);
@@ -123,8 +103,8 @@ public class JointWelding : MonoBehaviour
             yield return null;
         }
         //    rend.material.color = new Color(matColor.r, matColor.g, matColor.b, 0f);
-     //   StartCoroutine( RedPlateFadeout(fadeSpeed));
-       
+        //   StartCoroutine( RedPlateFadeout(fadeSpeed));
+
     }
     //Fade out Coroutine
     public IEnumerator RedPlateFadeout(float fadeSpeed)
@@ -151,17 +131,18 @@ public class JointWelding : MonoBehaviour
         {
             isFiller = false;
             sparkLight.SetActive(false);
-          //  starParticle.GetComponent<AudioSource>().Stop();
-        //    starParticle.Stop();
         }
     }
     private void OnTriggerStay(Collider other)//Add By GP
     {
-      if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
+        if (jointTools == JointTools.tPlate)
         {
-            starParticle.Play();
-            starParticle.GetComponent<AudioSource>().Play();
-            sparkLight.SetActive(true);
+            if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
+            {
+                starParticle.Play();
+                starParticle.GetComponent<AudioSource>().Play();
+                sparkLight.SetActive(true);
+            }
         }
     }
     public IEnumerator HammerBreakpoint(GameObject other)
@@ -205,7 +186,7 @@ public class JointWelding : MonoBehaviour
     {
         if (countlinePoint + 1 <= WeldingLine[CurrentLine].transform.childCount)
         {
-            
+
             WeldingLine[CurrentLine].transform.GetChild(countlinePoint).gameObject.SetActive(true);
             starParticle.Play();
             starParticle.GetComponent<AudioSource>().Play();
@@ -223,8 +204,11 @@ public class JointWelding : MonoBehaviour
                 weldingModel.SetActive(true);
                 //   FreezeRotation.instance.isFreeze = false;
                 isFiller = true;
-             //   StartCoroutine(RedPlateFadeout(3f));
+                //   StartCoroutine(RedPlateFadeout(3f));
                 GasJointweldingManager.instance.weldingComplete();
+                Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
+                tc.a = 0.0f;
+                fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
             }
             else
             {

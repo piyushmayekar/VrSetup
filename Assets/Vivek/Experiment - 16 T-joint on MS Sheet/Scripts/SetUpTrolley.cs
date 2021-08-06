@@ -26,11 +26,11 @@ public class SetUpTrolley : MonoBehaviour
     public bool isPipeRedConnect, isPipeblueConnect, isTurnOffFlame;
     [Header("Read step from json calss")]
     public ReadStepsAndVideoManager readSteps;
-    [Header("--------Steps audio clips------cracking  to nozzel fit clips --")]
+    [Header("-------------cracking  to nozzel fit clips --")]
     public AudioSource stepAudioSource;
-    
+   /* 
     [SerializeField, Tooltip("List of audio clips English and Gujarati")]
-    List<AudioClip> englishClips, gujaratiClips;
+    List<AudioClip> englishClips, gujaratiClips;*/
 
     public AudioClip creckykeyClip;
 
@@ -42,7 +42,7 @@ public class SetUpTrolley : MonoBehaviour
 
     public bool isRedCrecking, isBlackCrecking;
     [Header("----------------Step End Method ------------------")]
-    public UnityEvent CallEndMethod,EndMethodAudio;
+    public UnityEvent CallEndMethod;
     public void Awake()
     {
         instance = this;
@@ -100,13 +100,13 @@ public class SetUpTrolley : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_3_confirm);
         //EXP Cracking audio  clip (1)
-        PlayStepAudio(1);
+        //PlayStepAudio(1);
     }
     public void PlayCrackingKeyAudio()
     {
 
         //EXP Cracking fix audio  clip (1)
-        PlayStepAudio(0);
+        //PlayStepAudio(0);
     }
   public void Onclickbtn_s_3_confirm()
     {
@@ -178,7 +178,7 @@ public class SetUpTrolley : MonoBehaviour
         readSteps.AddClickEventVideoPlay(0); // regulators video vlip animation
 
         //EXP regulators fix audio  clip (1)
-        PlayStepAudio(1);
+        //PlayStepAudio(1);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
     }
@@ -206,7 +206,7 @@ public class SetUpTrolley : MonoBehaviour
         objectOutLines[4].enabled = false; //red cylinder key
 
         //EXP regulators Flashback and hos connector audio  clip (2)
-        PlayStepAudio(2);
+        //PlayStepAudio(2);
 
 
         readSteps.AddClickEventVideoPlay(1); // Flashback Arrestor video vlip animation
@@ -264,7 +264,7 @@ public class SetUpTrolley : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
         //EXP regulators  hose PIP  connector audio  clip (3)
-        PlayStepAudio(3);
+        //PlayStepAudio(3);
     }
     void Onclickbtn_s_5_confirm()
     {
@@ -309,7 +309,7 @@ public class SetUpTrolley : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_2_confirm);
         //EXP regulators hos CLIP  audio  clip (4)
-        PlayStepAudio(4);
+        //PlayStepAudio(4);
 
     }
     public void DoneBlackClip_R() //hose clip 
@@ -332,7 +332,7 @@ public class SetUpTrolley : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_part2_confirm);
         //EXP welding torch hose clip and connector audio  clip (5)
-        PlayStepAudio(5);
+        //PlayStepAudio(5);
     }
     void Onclickbtn_s_5_part2_confirm()
     {
@@ -390,8 +390,7 @@ public class SetUpTrolley : MonoBehaviour
         bluePipEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
         bluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         bluePipEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
-        bluePipEndPoint.transform.GetChild(0).transform.localPosition = blueStartpos;//new Vector3(0, 600, 0);
-        //13 ,-250,105
+        bluePipEndPoint.transform.GetChild(1).transform.localPosition = blueStartpos;//new Vector3(0, 600, 0);
 
         //  BluePipEndPoint.transform.GetChild(1).gameObject.SetActive(false);
         isPipeblueConnect = true;
@@ -409,7 +408,7 @@ public class SetUpTrolley : MonoBehaviour
         RedPipeEndPoint.transform.localPosition = Vector3.zero;
         RedPipeEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         RedPipeEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        RedPipeEndPoint.transform.GetChild(0).transform.localPosition = redStartpos;// new Vector3(0, 13, 0);
+        RedPipeEndPoint.transform.GetChild(1).transform.localPosition = redStartpos;// new Vector3(0, 13, 0);
         //-0.3,1.79,3
         //RedPipeEndPoint.transform.GetChild(1).gameObject.SetActive(false);
         // RedPipeEndPoint.transform.localScale = new Vector3(0.044504f, 0.03f, 0.03f);
@@ -433,7 +432,7 @@ public class SetUpTrolley : MonoBehaviour
     {
         onEnableStep6Object();
         //EXP set preseegor on regulator audio  clip (6)
-        PlayStepAudio(6);
+        //PlayStepAudio(6);
     }
     #endregion
     #region Step 6: Set the gas pressure on the regulator as per nozzle size.
@@ -479,7 +478,7 @@ public class SetUpTrolley : MonoBehaviour
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_8_confirm_p2);
             //  Debug.Log("call water");
             //EXP Check likej on regulator acetylene  shop water audio  clip (7)
-            PlayStepAudio(7);
+            //PlayStepAudio(7);
         }
     }
     #endregion
@@ -521,7 +520,7 @@ public class SetUpTrolley : MonoBehaviour
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
         //EXP Check fix  welding nozzle on torch audio  clip (8)
-        PlayStepAudio(8);
+        //PlayStepAudio(8);
     }
 
     #endregion
@@ -544,12 +543,12 @@ public class SetUpTrolley : MonoBehaviour
     }
     public void CheckNozzelConnected()
     {
-        EndMethodAudio.Invoke();
+      //  EndMethodAudio.Invoke();
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(CallEndMethod.Invoke);
     }
     #endregion
-    void PlayStepAudio(int index)
+   /* void ////PlayStepAudio(int index)
     {
         if (stepAudioSource.clip != null)
         {
@@ -566,7 +565,7 @@ public class SetUpTrolley : MonoBehaviour
                 stepAudioSource.PlayOneShot(gujaratiClips[index]);
             }
         }
-    }
+    }*/
     public void SetObjectRestPos_Rotate(int indexOfReset)
     {
         toolToReset[indexOfReset].GetComponent<XRGrabInteractable>().enabled = false;

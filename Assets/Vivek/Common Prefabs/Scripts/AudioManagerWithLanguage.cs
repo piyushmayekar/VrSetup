@@ -18,12 +18,6 @@ public class AudioManagerWithLanguage : MonoBehaviour
         if (stepsAudioSource == null)
             stepsAudioSource = GetComponent<AudioSource>();
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     /// <summary>
     ///Play audio clip english and gujarati with compare of ReadStepsAndVideoManager bool variable "isChangeFont".
     /// </summary>
@@ -34,13 +28,15 @@ public class AudioManagerWithLanguage : MonoBehaviour
         if (stepsAudioSource.clip != null)
         {
             stepsAudioSource.Stop();
-            if (ReadStepsAndVideoManager.instance.isChangeFont)
+            if (ReadStepsAndVideoManager.instance.currentLanguage ==_Language.English)
             {
+      //  Debug.Log(" English call");
                 //English audio Clips
                 stepsAudioSource.PlayOneShot(englishClips[index]);
             }
             else
             {
+              //  Debug.Log(" Gujarati call");
                 //Gujarati audio clips
                 stepsAudioSource.PlayOneShot(gujaratiClips[index]);
             }
