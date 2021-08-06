@@ -72,7 +72,7 @@ public class LapjointWelding : MonoBehaviour
             fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
             if (countdotpoint == 2)
             {
-                Manager_LapJoint .instance.CheckTackPoint();
+               // Manager_LapJoint .instance.CheckTackPoint();
             }
         }
 
@@ -183,7 +183,7 @@ public class LapjointWelding : MonoBehaviour
            // if (CurrentLine == 1)
             {
                 tackPoint.SetActive(false);
-                Manager_LapJoint.instance.checkChappingHummer();
+                //Manager_LapJoint.instance.checkChappingHummer();
             }
           /*  else
             {
@@ -220,7 +220,7 @@ public class LapjointWelding : MonoBehaviour
                 //   FreezeRotation.instance.isFreeze = false;
                 isFiller = true;
                 //   StartCoroutine(RedPlateFadeout(3f));
-                Manager_LapJoint.instance.weldingComplete();
+               // Manager_LapJoint.instance.weldingComplete();
             }
            /* else
             {

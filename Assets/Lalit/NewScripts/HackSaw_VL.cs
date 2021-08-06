@@ -54,7 +54,7 @@ public class HackSaw_VL : MonoBehaviour
 
         string punchPointObjName = "PunchPoints" + indexOfCuttingLineObject.ToString();
         GameObject punchPointObject = workPiece.Find(punchPointObjName).gameObject;
-        punchPointObject.SetActive(true);
+        punchPointObject.SetActive(false);
 
         if (punchPointObject)
         {
@@ -132,7 +132,11 @@ public class HackSaw_VL : MonoBehaviour
                             if (CallMethodOnCuttingDone != null)
                             {
                                 ReduceLineSize(index);
-                                punchPoints[currentCount].SetActive(false);
+                                //if (punchPoints[currentCount] != null)
+                                //{
+                                //    punchPoints[currentCount].SetActive(false);
+                                //}
+                                
                                 cuttingPoints[currentCount].gameObject.GetComponent<MeshRenderer>().enabled = false;
                                 cuttingPoints[currentCount].gameObject.GetComponent<BoxCollider>().enabled = false;
                                 CallMethodOnCuttingDone.Invoke();
@@ -142,7 +146,11 @@ public class HackSaw_VL : MonoBehaviour
                         else
                         {
                             ReduceLineSize(index);
-                            punchPoints[currentCount].SetActive(false);
+                            //if (punchPoints[currentCount] != null)
+                            //{
+                            //    punchPoints[currentCount].SetActive(false);
+                            //}
+                            
                             cuttingPoints[currentCount].gameObject.GetComponent<MeshRenderer>().enabled = false;
                             cuttingPoints[currentCount].gameObject.GetComponent<BoxCollider>().enabled = false;
                             currentCount++;

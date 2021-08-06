@@ -520,19 +520,33 @@ public class GasWeldingSetUP : MonoBehaviour
         GasTablekitcolliders[23].GetComponent<Outline>().enabled = true;
         if (Manager.instance)
         {
-            Manager.instance.ObjectOutlines[0].enabled = true;
+            Manager.instance.ObjectOutlines[0].enabled = true; //Torch nozzle part HL to snap
         }
         else if(ManagerCornerJoint.instance)
         {
-            ManagerCornerJoint.instance.ObjectOutlines[0].enabled = true;
+            ManagerCornerJoint.instance.ObjectOutlines[0].enabled = true; //Torch nozzle part HL to snap
+        }
+        else if (Manager_LapJoint.instance)
+        {
+            Manager_LapJoint.instance.ObjectOutlines[0].enabled = true;//Torch nozzle part HL to snap
         }
     }
     public void CheckNozzelConnected()
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(CallEndMethod.Invoke);
-        Manager.instance.ObjectOutlines[0].enabled = false;
-        //Manager.instance.OnSetUpDone();
+        if (Manager.instance)
+        {
+            Manager.instance.ObjectOutlines[0].enabled = false; //Torch nozzle part HL to snap
+        }
+        else if (ManagerCornerJoint.instance)
+        {
+            ManagerCornerJoint.instance.ObjectOutlines[0].enabled = false; //Torch nozzle part HL to snap
+        }
+        else if (Manager_LapJoint.instance)
+        {
+            Manager_LapJoint.instance.ObjectOutlines[0].enabled = false;//Torch nozzle part HL to snap
+        }
     }
     #endregion
     void PlayStepAudio(int index)
