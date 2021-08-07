@@ -35,5 +35,11 @@ namespace FlatWelding
                 OnTaskCompleted();
             }
         }
+
+        [ContextMenu(nameof(FinishWelding))]
+        public void FinishWelding()
+        {
+            WeldingPoints.ForEach(p => p.OnWeldingTimerFinish());
+        }
     }
 }

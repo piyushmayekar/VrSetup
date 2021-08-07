@@ -127,7 +127,7 @@ namespace PiyushUtils
                         if (tipDist <= lineDistThreshold)
                         {
                             lineRenderer.SetPosition(1, linePositions[linePointIndex]);
-                            if (!soundPlayer.AudioSource.isPlaying)
+                            //if (!soundPlayer.AudioSource.isPlaying)
                                 soundPlayer.PlayClip(soundPlayer.Clips[0], true);
                             linePointIndex++;
                             if (linePointIndex >= linePositions.Count)

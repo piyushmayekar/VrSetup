@@ -20,7 +20,6 @@ namespace Grinding
         [SerializeField] List<Vector3> sliderClosedPositions;
         [SerializeField] bool isViseOpen = true;
         [SerializeField] bool isTaskOn = false;
-        [SerializeField] GameObject weldedPlatesGO;
 
         HandGrinder handGrinder;
 
@@ -53,53 +52,26 @@ namespace Grinding
 
         public void OnSocketEnter(SelectEnterEventArgs args)
         {
-            WeldedPlates weldedPlates = args.interactable.GetComponent<WeldedPlates>();
-            if (weldedPlates)
-            {
-                currClosedPos = sliderClosedPositions[0];
-                weldedPlatesGO = args.interactable.gameObject;
-                if (isTaskOn)
-                {
-                    Invoke(nameof(TurnOffWeldedPlatesCollider), 1f);
-                    OnJobPlatesEnterSocket?.Invoke();
-                }
-            }
             JobPlate jobPlate = args.interactable.GetComponent<JobPlate>();
             if (jobPlate && isTaskOn)
             {
                 currClosedPos = sliderClosedPositions[0];
                 jobPlate.StartGrinding();
+                if (isTaskOn)
+                {
+                    OnJobPlatesEnterSocket?.Invoke();
+                }
             }
         }
 
-        public void TurnOffWeldedPlatesCollider()
-        {
-            weldedPlatesGO.GetComponent<Collider>().enabled = false;
-        }
 
         public void OnSocketExit(SelectExitEventArgs args)
         {
             if (args.interactable.CompareTag(_Constants.JOB_TAG))
             {
                 currClosedPos = closedPosFull;
-                weldedPlatesGO = null;
             }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject==handGrinder.gameObject)
-            {
-                handGrinder.FreezeGrinder();
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject == handGrinder.gameObject)
-            {
-                handGrinder.UnFreezeGrinder();
-            }
-        }
     }
 }

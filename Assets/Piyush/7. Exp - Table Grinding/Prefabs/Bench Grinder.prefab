@@ -2066,8 +2066,9 @@ MonoBehaviour:
   contactPoint: {x: 0, y: 0, z: 0}
   sparksT: {fileID: 7693152805062141982}
   _ps: {fileID: 7693152805062141976}
+  sparkLight: {fileID: 0}
   type: 1
-  warmDownTime: 0.5
+  warmDownTime: 0.2
   platesAnimation: {fileID: 6581222692554613833}
 --- !u!33 &444594818319347910
 MeshFilter:
@@ -2314,8 +2315,9 @@ MonoBehaviour:
   contactPoint: {x: 0, y: 0, z: 0}
   sparksT: {fileID: 7693152804860453000}
   _ps: {fileID: 7693152804860453006}
+  sparkLight: {fileID: 0}
   type: 0
-  warmDownTime: 0.5
+  warmDownTime: 0.2
   platesAnimation: {fileID: 6581222692500666648}
 --- !u!33 &4265432999476066404
 MeshFilter:

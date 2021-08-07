@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 5841768328954318116}
   - component: {fileID: 380497863372475448}
   - component: {fileID: 3045025172157779048}
+  - component: {fileID: 4683198792191062046}
   m_Layer: 0
   m_Name: 3.15mm Electrode
   m_TagString: Electrode
@@ -265,3 +266,21 @@ CapsuleCollider:
   m_Height: 0.16154605
   m_Direction: 2
   m_Center: {x: -0.00020254421, y: -0.000000072499695, z: 0.077219285}
+--- !u!114 &4683198792191062046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045025172157779050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a244b12a4cd9a0944a2e418519af783f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldReset: 1
+  shouldUpdateStablePos: 1
+  lastStablePos: {x: 0, y: 0, z: 0}
+  lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
+  stableVelocityThreshold: 1
+  rb: {fileID: 0}

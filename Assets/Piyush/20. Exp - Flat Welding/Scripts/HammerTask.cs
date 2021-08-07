@@ -20,7 +20,6 @@ namespace FlatWelding
 
         public void OnWeldingPointHit()
         {
-            outlines.ForEach(x => x.gameObject.SetActive(false));
             pointsHit++;
             if (pointsHit >= weldingTask.WeldingPoints.Count)
                 OnTaskCompleted();

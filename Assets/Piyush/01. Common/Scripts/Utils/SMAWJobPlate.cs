@@ -88,9 +88,9 @@ namespace PiyushUtils
         void CenterPunchStep()
         {
             centerPunchMarkings[cpMarkingIndex].OnMarkingDone -= CenterPunchStep;
+            cpMarkingIndex++;
             if (cpMarkingIndex == 1 && centerPunchMarkings.Count > 1)
                 FindObjectOfType<PlateMarkingSocket>().ToggleAttentionGrab();
-            cpMarkingIndex++;
             if (cpMarkingIndex < centerPunchMarkings.Count)
             {
                 centerPunchMarkings[cpMarkingIndex].StartMarkingProcess();

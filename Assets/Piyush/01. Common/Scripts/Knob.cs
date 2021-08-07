@@ -40,6 +40,7 @@ namespace PiyushUtils
         void Start()
         {
             isDialPresent = dialHandT != null;
+            SetKnobRotation();
             SetDialHandRotation();
             interactable.selectEntered.AddListener(OnKnobGrabStart);
             interactable.selectExited.AddListener(OnKnobGrabEnd);
@@ -57,7 +58,7 @@ namespace PiyushUtils
         void SetKnobRotation()
         {
             float t = Mathf.InverseLerp(MinValue, MaxValue, currentValue);
-            float angle = Mathf.Lerp(k_minRot, k_maxRot, t);
+            float angle = Mathf.Lerp(k_maxRot, k_minRot, t);
             knobT.localEulerAngles = knobRotAxis * angle;
         }
 

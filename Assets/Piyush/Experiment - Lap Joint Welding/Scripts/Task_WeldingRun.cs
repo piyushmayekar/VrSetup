@@ -117,5 +117,12 @@ namespace LapWelding
                 OnTaskCompleted();
             }
         }
+
+        [ContextMenu("Lessen Time For Welding")]
+        public void LessenTimeForWelding()
+        {
+            List<WeldingPoint> _points = new List<WeldingPoint>(FindObjectsOfType<WeldingPoint>(true));
+            _points.ForEach(p => p.WeldingTimer = .5f);
+        }
     }
 }

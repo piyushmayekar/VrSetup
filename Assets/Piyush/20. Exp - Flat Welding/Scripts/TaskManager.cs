@@ -13,7 +13,8 @@ namespace PiyushUtils
 {
     public class TaskManager : MonoBehaviour
     {
-        [SerializeField, Range(0, 20)] int currentTaskIndex = 0;
+        [SerializeField] float startDelay = 1f;
+        [SerializeField, Range(0, 22)] int currentTaskIndex = 0;
         [SerializeField] List<Task> tasks;
         [SerializeField] TMPro.TextMeshProUGUI taskDetailsText;
         [SerializeField] public Button confirmButton;
@@ -64,7 +65,7 @@ namespace PiyushUtils
             tablet.OnLanguageButtonClick.AddListener(OnLanguageButtonClick);
             _voAudioSource = gameObject.AddComponent<AudioSource>();
             _voAudioSource.spatialBlend = 0f;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(startDelay);
             StartTask(CurrentTaskIndex);
         }
 
@@ -91,6 +92,8 @@ namespace PiyushUtils
             else //Current Task index reached out of the task list index. ie. Tasks are done
             {
                 taskDetailsText.text = CurrentLangIndex==0 ? "Congratulations you finished the job" : "Aiwn>dn tme p/yog smaPt kyoR";
+                tablet.relearnButton.gameObject.SetActive(true);
+                tablet.homeButton.gameObject.SetActive(true);
             }
         }
 
@@ -109,15 +112,20 @@ namespace PiyushUtils
 
         public void PlayStepVO()
         {
-            if (voiceOverData != null && CurrentLangIndex==(int)_Language.Gujrati)
+            if (voiceOverData != null)
             {
                 if (voiceOverData.voiceOvers[CurrentTaskIndex] != null && _voAudioSource != null)
                 {
-                    _voAudioSource.PlayOneShot(voiceOverData.voiceOvers[CurrentTaskIndex]);
+                    if (_voAudioSource.isPlaying) 
+                        _voAudioSource.Stop();
+                    if (CurrentLangIndex == (int)_Language.Gujrati)
+                        _voAudioSource.PlayOneShot(voiceOverData.voiceOvers[CurrentTaskIndex]);
                 }
             }
             else
+            {
                 Debug.Log("Voice over data not assigned");
+            }
         }
 
         private string GetStepIndex(int cntNum)
@@ -149,13 +157,14 @@ namespace PiyushUtils
                     stepNumString = indexGuj[cntNum];
                 }
                 return "pglu> à " + stepNumString + "\n";
+                //return "";
             }
         }
 
 
         _Language FetchCurrentLanguage()
         {
-            return (_Language)PlayerPrefs.GetInt(nameof(_Language), (int)_Language.English);
+            return (_Language)PlayerPrefs.GetInt(nameof(_Language), (int)_Language.Gujrati);
         }
 
         void SaveCurrentLanguageToMemory()
@@ -172,6 +181,7 @@ namespace PiyushUtils
             SaveCurrentLanguageToMemory();
             SetTaskInfoFont();
             SetTaskInfoTextAccToLanguage(currentTaskIndex);
+            PlayStepVO();
         }
 
         private void SetTaskInfoFont()
