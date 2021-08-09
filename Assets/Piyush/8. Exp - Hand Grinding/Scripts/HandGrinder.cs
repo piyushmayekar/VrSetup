@@ -7,6 +7,7 @@ namespace Grinding
     public class HandGrinder : GrindingMachine
     {
         [SerializeField] Vector3 grindingRotation;
+        [SerializeField] Outline switchOutline;
         Rigidbody _rb;
         XRGrabInteractable grabInteractable;
 
@@ -15,19 +16,18 @@ namespace Grinding
         {
             grabInteractable = GetComponent<XRGrabInteractable>();
             _rb = wheels[0].GetComponent<Rigidbody>();
-        }
-        public void FreezeGrinder()
-        {
-            grabInteractable.trackRotation = false;
-            grabInteractable.movementType = XRBaseInteractable.MovementType.Kinematic;
-            transform.rotation = Quaternion.Euler(grindingRotation);
-            //_rb.isKinematic = true;
+            grabInteractable.selectEntered.AddListener(OnGrinderSelectEnter);
+            grabInteractable.selectExited.AddListener(OnGrinderSelectExit);
         }
 
-        public void UnFreezeGrinder()
+        void OnGrinderSelectEnter(SelectEnterEventArgs args)
         {
-            grabInteractable.trackRotation = true;
-            grabInteractable.movementType = XRBaseInteractable.MovementType.VelocityTracking;
+            switchOutline.enabled = !IsOn;
+        }
+
+        void OnGrinderSelectExit(SelectExitEventArgs args)
+        {
+            switchOutline.enabled = IsOn;
         }
     }
 }

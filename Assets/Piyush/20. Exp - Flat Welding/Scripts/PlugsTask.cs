@@ -11,6 +11,7 @@ namespace FlatWelding
         [SerializeField] List<PlugConnection> plugs;
         [SerializeField] int plugIndex = 0;
         [SerializeField] CurrentKnob currentKnob;
+        [SerializeField] List<PositionResetter> spannerResetters;
 
         public override void OnTaskBegin()
         {
@@ -39,6 +40,12 @@ namespace FlatWelding
                     currentKnob.GetComponent<Outline>().enabled = true;
                 }
             }
+        }
+
+        public override void OnTaskCompleted()
+        {
+            spannerResetters.ForEach(s => s.ResetPos());
+            base.OnTaskCompleted();
         }
 
     }

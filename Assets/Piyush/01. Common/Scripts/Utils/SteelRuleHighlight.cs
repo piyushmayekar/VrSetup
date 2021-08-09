@@ -40,6 +40,7 @@ namespace PiyushUtils
         {
             steelRuler.transform.SetPositionAndRotation(transform.position, transform.rotation);
             steelRuler.SetActive(true);
+            steelRuler.GetComponent<Rigidbody>().AddForce(Vector3.right * 2f, ForceMode.Impulse);
             gameObject.SetActive(false);
         }
 

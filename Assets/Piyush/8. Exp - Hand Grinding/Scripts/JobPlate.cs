@@ -12,7 +12,6 @@ namespace Grinding
     {
         public event UnityAction OnScriberMarkingDone, OnCenterPunchMarkingDone, OnHacksawCuttingDone, OnFilingDone;
         public UnityEvent OnGrindingComplete;
-        public UnityEvent OnScriberMarkingIndexChange;
 
         [Header("Scriber Marking")]
         [SerializeField] List<PiyushUtils.ScriberMarking> scriberMarkings;
@@ -63,9 +62,10 @@ namespace Grinding
 
         void ScriberMarkingStep()
         {
-            OnScriberMarkingIndexChange?.Invoke();
             scriberMarkings[scriberMarkingIndex].OnMarkingDone -= ScriberMarkingStep;
             scriberMarkingIndex++;
+            if (scriberMarkingIndex == 1 && scriberMarkings.Count > 1)
+                FindObjectOfType<PlateMarkingSocket>().ToggleAttentionGrab();
             ToggleFreezePlate(false);
             if (scriberMarkingIndex < scriberMarkings.Count)
             {
@@ -94,6 +94,8 @@ namespace Grinding
         {
             centerPunchMarkings[cpMarkingIndex].OnMarkingDone -= CenterPunchStep;
             cpMarkingIndex++;
+            if (cpMarkingIndex == 1 && centerPunchMarkings.Count > 1)
+                FindObjectOfType<PlateMarkingSocket>().ToggleAttentionGrab();
             if (cpMarkingIndex < centerPunchMarkings.Count)
             {
                 centerPunchMarkings[cpMarkingIndex].StartMarkingProcess();

@@ -12,7 +12,7 @@ public class RotateNozzle : MonoBehaviour
     [Header("Freeze Rotation")]
     public bool x, y, z, ishideMesh;
     public GameObject MeterObject, otherMeterobject;
-    public Transform leftHand,grabObject;
+    public Transform leftHand, grabObject;
     public GameObject OtherRotate;
     public MeshRenderer HideMesh;
     public UnityEvent NextStep;
@@ -43,8 +43,8 @@ public class RotateNozzle : MonoBehaviour
 
     public void callEnterGrabObject()
     {
-        // Debug.Log("call grab enter");
-        
+        //  Debug.Log(OtherRotate.name + "  OtherRotate call grab enter **** " + this.gameObject.name);
+
         this.transform.localPosition = initPos;
         if (isclockwise)
         {
@@ -69,11 +69,11 @@ public class RotateNozzle : MonoBehaviour
             HideMesh.enabled = false;
         }
         OtherRotate.SetActive(true);
-        // OtherRotate.transform.localRotation =Quaternion.Inverse(Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z));
         OtherRotate.transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
         if (ismeter)
         {
-            MeterObject.transform.localRotation = OtherRotate.transform.localRotation;
+            MeterObject.transform.localRotation = Quaternion.Inverse(Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z));
+            // MeterObject.transform.localRotation = OtherRotate.transform.localRotation;
         }
         if (isclockwise)
         {
@@ -122,7 +122,7 @@ public class RotateNozzle : MonoBehaviour
             else if (x)
             {
                 transform.localRotation = Quaternion.Euler(-t_rotate.x, t_rotate.y, t_rotate.z);
-             //   transform.localRotation = Quaternion.Euler(-t_rotate.x, t_rotate.y, t_rotate.z);
+                //   transform.localRotation = Quaternion.Euler(-t_rotate.x, t_rotate.y, t_rotate.z);
 
                 if (transform.localEulerAngles.x > RotateValue && transform.localEulerAngles.x < (RotateValue + 20))
                 {
@@ -169,14 +169,14 @@ public class RotateNozzle : MonoBehaviour
     {
         leftHandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val);
         righthandDevices[0].TryGetFeatureValue(CommonUsages.gripButton, out bool val1);
-        
+
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
             //print("ENter.................");
             //leftHand.GetChild(0).transform.parent = grabObject.transform;
             if (val || val1)
             {
-                callEnterGrabObject();  
+                callEnterGrabObject();
             }
         }
     }

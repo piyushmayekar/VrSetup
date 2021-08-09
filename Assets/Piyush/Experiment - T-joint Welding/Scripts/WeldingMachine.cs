@@ -24,6 +24,7 @@ namespace TWelding
         [SerializeField] Electrode currentElectrode;
         [SerializeField] XRSocketInteractor socket_Electrode;
         Rigidbody _rb;
+        Outline squeezerOutline;
 
         Vector3 _resetPos = new Vector3(-0.898199975f, 1.12199998f, -1.28900003f), _resetRot = new Vector3(-45, 0f, 0f);
 
@@ -67,6 +68,7 @@ namespace TWelding
         public void OnGunHoldEnd(SelectExitEventArgs args)
         {
             IsSqueezerTouched = false;
+            squeezerOutline.enabled = false;
             ToggleGunSqueezers(IsSqueezerTouched);
             Invoke(nameof(EnableSqueezerCollider), 1f);
             ResetTransform();
@@ -88,6 +90,7 @@ namespace TWelding
             if (args.interactor)
             {
                 IsSqueezerTouched = true;
+                squeezerOutline.enabled = true;
             }
         }
 
@@ -105,6 +108,7 @@ namespace TWelding
             _rb = GetComponent<Rigidbody>();
             ps = GetComponentInChildren<ParticleSystem>();
             sparkLight = ps.transform.GetChild(0).gameObject;
+            squeezerOutline = squeezerCollider.transform.GetComponentInParent<Outline>();
             ToggleMachine(false);
             ToggleWeldingTip();
             WeldingArea.OnWeldingMachineTipInContact += (bool isTipAtLeft) =>
@@ -224,11 +228,18 @@ namespace TWelding
 
         public void ShowErrorIndicator(bool show, string message = null)
         {
+            CancelInvoke(nameof(DisableIndicator));
             if (indicator)
             {
                 indicator.SetActive(show);
                 if (show) errorText.text = message;
+                if (show)
+                {
+                    Invoke(nameof(DisableIndicator), 2f);
+                }
             }
         }
+        void DisableIndicator() => ShowErrorIndicator(false);
+
     }
 }

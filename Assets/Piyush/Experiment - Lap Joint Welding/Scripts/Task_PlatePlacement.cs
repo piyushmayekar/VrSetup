@@ -63,6 +63,7 @@ namespace LapWelding
                     scriberMarking.StartMarkingProcess();
                     scriberMarking.OnMarkingDone += () =>
                     {
+                        GameObject.FindGameObjectWithTag(_Constants.STEEL_RULER_TAG).SetActive(false);
                         StartCoroutine(DelayedCalls());
                     };
                 }
@@ -73,7 +74,7 @@ namespace LapWelding
         IEnumerator DelayedCalls()
         {
             yield return new WaitForSeconds(.2f);
-            GameObject.FindGameObjectWithTag(_Constants.STEEL_RULER_TAG).GetComponent<PositionResetter>().ResetPos();
+            //GameObject.FindGameObjectWithTag(_Constants.STEEL_RULER_TAG).GetComponent<PositionResetter>().ResetPos();
             yield return new WaitForSeconds(1f);
             TogglePlatePlacementPoint(1);
         }

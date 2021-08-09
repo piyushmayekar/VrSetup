@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PositionResetter : MonoBehaviour
 {
-    public bool shouldReset = true;
+    public bool shouldReset = true, shouldUpdateStablePos = true;
     public Vector3 lastStablePos, lastStableRotEulerAngles;
     public float stableVelocityThreshold = 1f;
     public Rigidbody rb;
@@ -33,13 +33,16 @@ public class PositionResetter : MonoBehaviour
     /// <param name="other">The Collision data associated with this collision.</param>
     void OnCollisionEnter(Collision other)
     {
-        if (other.collider.gameObject.name == _Constants.TABLE_TAG && rb.velocity.sqrMagnitude <= stableVelocityThreshold
-        && rb.angularVelocity.sqrMagnitude <= stableVelocityThreshold)
+        if (shouldUpdateStablePos)
         {
-            lastStablePos = transform.position;
-            lastStableRotEulerAngles = transform.rotation.eulerAngles;
+            if (other.collider.gameObject.name == _Constants.TABLE_TAG && rb.velocity.sqrMagnitude <= stableVelocityThreshold
+            && rb.angularVelocity.sqrMagnitude <= stableVelocityThreshold)
+            {
+                lastStablePos = transform.position;
+                lastStableRotEulerAngles = transform.rotation.eulerAngles;
+            }
         }
-        if (other.collider.gameObject.name == _Constants.FLOOR_TAG)
+        if (other.collider.gameObject.name == _Constants.FLOOR_TAG && shouldReset)
         {
             ResetPos();
         }
@@ -47,7 +50,6 @@ public class PositionResetter : MonoBehaviour
 
     public void ResetPos()
     {
-        if (!shouldReset) return;
         if (rb)
         {
             rb.MovePosition(lastStablePos);

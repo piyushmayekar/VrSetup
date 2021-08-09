@@ -37,7 +37,7 @@ namespace PiyushUtils
                         {
                             socket.attachTransform = attachTransforms[i];
                             _plateHighlightIndex = i;
-                            plateHighlights[i].SetActive(false);
+                            plateHighlights.ForEach(hlt => hlt.SetActive(false));
                             break;
                         }
                     }
@@ -52,7 +52,7 @@ namespace PiyushUtils
                         {
                             socket.attachTransform = attachTransforms[i];
                             _plateHighlightIndex = i;
-                            plateHighlights[i].SetActive(false);
+                            plateHighlights.ForEach(hlt => hlt.SetActive(false));
                             break;
                         }
                     }
@@ -60,12 +60,12 @@ namespace PiyushUtils
             }
             else
             {
-                if (!(args.interactable is XRSimpleInteractable))
-                {
-                    socket.socketActive = false;
-                    waitForObjectToExitTrigger = args.interactable.gameObject;
-                    StartCoroutine(WaitForObjectToExitTrigger());
-                }
+                //if (!(args.interactable is XRSimpleInteractable))
+                //{
+                //    socket.socketActive = false;
+                //    waitForObjectToExitTrigger = args.interactable.gameObject;
+                //    StartCoroutine(WaitForObjectToExitTrigger());
+                //}
             }
         }
 
