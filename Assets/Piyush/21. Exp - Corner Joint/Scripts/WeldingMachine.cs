@@ -25,6 +25,7 @@ namespace CornerWelding
         [SerializeField] Electrode currentElectrode;
         [SerializeField] XRSocketInteractor socket_Electrode;
         Rigidbody _rb;
+        Outline squeezerOutline;
 
         //Reset pos
         Vector3 _resetPos = new Vector3(-0.898199975f, 1.12199998f, -1.28900003f), _resetRot = new Vector3(-45, 0f, 0f);
@@ -70,9 +71,9 @@ namespace CornerWelding
         public void OnGunHoldEnd(SelectExitEventArgs args)
         {
             IsSqueezerTouched = false;
+            squeezerOutline.enabled = false;
             ToggleGunSqueezers(IsSqueezerTouched);
             Invoke(nameof(EnableSqueezerCollider), 1f);
-
             ResetTransform();
         }
         public void ResetTransform()
@@ -91,6 +92,7 @@ namespace CornerWelding
             if (args.interactor)
             {
                 IsSqueezerTouched = true;
+                squeezerOutline.enabled = true;
             }
         }
 
@@ -165,6 +167,7 @@ namespace CornerWelding
         {
             _rb = GetComponent<Rigidbody>();
             ps = GetComponentInChildren<ParticleSystem>();
+            squeezerOutline = squeezerCollider.transform.GetComponentInParent<Outline>();
             sparkLight = ps.transform.GetChild(0).gameObject;
             ToggleMachine(false);
             ToggleWeldingTip();
@@ -220,13 +223,20 @@ namespace CornerWelding
             tip.SetActive(IsElectrodePlaced);
         }
 
-        public void ShowErrorIndicator(bool show, string message = null)
+        public void ShowErrorIndicator(bool show=false, string message = null)
         {
+            CancelInvoke(nameof(DisableIndicator));
             if (indicator)
             {
                 indicator.SetActive(show);
                 if (show) errorText.text = message;
+                if (show)
+                {
+                    Invoke(nameof(DisableIndicator), 2f);
+                }
             }
         }
+
+        void DisableIndicator() => ShowErrorIndicator(false);
     }
 }

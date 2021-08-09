@@ -22,6 +22,7 @@ namespace VWelding
         [SerializeField] bool turnOnJobGrabAfterJobComplete = false;
         [SerializeField] GameObject weavingImage;
         [SerializeField] Vector2 weldingAngleLimits = new Vector2(95f, 115f);
+        [SerializeField] float currentAngleOfElectrode;
         CornerWelding.WeldingMachine machine;
         bool isWeldingTipInsideWeldingArea = false;
         public override void OnTaskBegin()
@@ -129,11 +130,18 @@ namespace VWelding
         {
             while (isWeldingTipInsideWeldingArea)
             {
-                float angle = Vector3.Angle(weldingTipT.up, pointsParent.forward);
-                machine.ShowErrorIndicator(angle <= weldingAngleLimits.x || angle >= weldingAngleLimits.y,
+                currentAngleOfElectrode = Vector3.Angle(weldingTipT.up, pointsParent.forward);
+                machine.ShowErrorIndicator(currentAngleOfElectrode <= weldingAngleLimits.x || currentAngleOfElectrode >= weldingAngleLimits.y,
                 _Constants.ELECTRODE_NOT_AT_CORRECT_ANGLE);
                 yield return new WaitForEndOfFrame();
             }
+        }
+
+        [ContextMenu(nameof(DebugMode))]
+        public void DebugMode()
+        {
+            List<CornerWelding.WeldingPoint> points = new List<CornerWelding.WeldingPoint>(FindObjectsOfType<CornerWelding.WeldingPoint>(true));
+            points.ForEach(p => p.WeldingTimer = 0.1f);
         }
     }
 }

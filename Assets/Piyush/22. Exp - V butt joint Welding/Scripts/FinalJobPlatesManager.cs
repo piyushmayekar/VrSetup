@@ -35,5 +35,12 @@ namespace VWelding
         }
 
         public void ToggleGrab(bool enable = true) => grabInteractable.enabled = enable;
+
+        public void OnJobWeldingDone()
+        {
+            grabInteractable.enabled = true;
+            GetComponent<Collider>().isTrigger = false;
+            GetComponent<Rigidbody>().isKinematic = false;
+        }
     }
 }

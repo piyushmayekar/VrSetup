@@ -12,6 +12,7 @@ namespace FlatWelding
     public class WearApparelTask : Task
     {
         [SerializeField] List<GameObject> objectsToPick;
+        [SerializeField] int _index = 0;
         [SerializeField] AudioClip pickSound;
 
         public override void OnTaskBegin()
@@ -19,26 +20,33 @@ namespace FlatWelding
             //TODO
             objectsToPick.ForEach(o =>
             {
-                o.GetComponent<XRGrabInteractable>().selectEntered.RemoveAllListeners();
-                o.GetComponent<XRGrabInteractable>().selectEntered.AddListener(OnObjectSelect);
-                o.GetComponent<Outline>().enabled = true;
+                o.GetComponent<XRGrabInteractable>().enabled = false;
+                o.GetComponent<Outline>().enabled = false;
             });
+            EnableObjectPick();
+        }
+
+        void EnableObjectPick()
+        {
+            XRGrabInteractable grab = objectsToPick[_index].GetComponent<XRGrabInteractable>();
+            grab.enabled = true;
+            grab.selectEntered.RemoveAllListeners();
+            grab.selectEntered.AddListener(OnObjectSelect);
+            objectsToPick[_index].GetComponent<Outline>().enabled = true;
         }
 
         public void OnObjectSelect(SelectEnterEventArgs args)
         {
-            OnObjectSelect(args.interactable.gameObject);
-        }
-
-        public void OnObjectSelect(GameObject _obj)
-        {
+            GameObject _obj = args.interactable.gameObject;
             if (objectsToPick.Contains(_obj))
             {
-                objectsToPick.Remove(_obj);
                 _obj.SetActive(false);
                 AudioSource.PlayClipAtPoint(pickSound, _obj.transform.position);
-                if (objectsToPick.Count == 0)
+                _index++;
+                if (_index >= objectsToPick.Count)
                     OnTaskCompleted();
+                else
+                    EnableObjectPick();
             }
         }
         

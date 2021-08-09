@@ -526,10 +526,10 @@ public class GasWeldingSetUP : MonoBehaviour
         {
             ManagerCornerJoint.instance.ObjectOutlines[0].enabled = true; //Torch nozzle part HL to snap
         }
-        //else if (Manager_LapJoint.instance)
-        //{
-        //    Manager_LapJoint.instance.ObjectOutlines[0].enabled = true;//Torch nozzle part HL to snap
-        //}
+        else if (Manager_LapJoint.instance)
+        {
+            //Manager_LapJoint.instance.ObjectOutlines[0].enabled = true;//Torch nozzle part HL to snap
+        }
     }
     public void CheckNozzelConnected()
     {
@@ -543,10 +543,10 @@ public class GasWeldingSetUP : MonoBehaviour
         {
             ManagerCornerJoint.instance.ObjectOutlines[0].enabled = false; //Torch nozzle part HL to snap
         }
-        //else if (Manager_LapJoint.instance)
-        //{
-        //    Manager_LapJoint.instance.ObjectOutlines[0].enabled = false;//Torch nozzle part HL to snap
-        //}
+        else if (Manager_LapJoint.instance)
+        {
+            //Manager_LapJoint.instance.ObjectOutlines[0].enabled = false;//Torch nozzle part HL to snap
+        }
     }
     #endregion
     void PlayStepAudio(int index)

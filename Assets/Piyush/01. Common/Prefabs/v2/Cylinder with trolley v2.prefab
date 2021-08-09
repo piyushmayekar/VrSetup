@@ -2705,7 +2705,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 47f092eb6ac34b146a52f2487c11edc6, type: 3}
   m_Color: {r: 0.9607843, g: 0.4627451, b: 0.2901961, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 8.6, y: 9.07}
@@ -4052,8 +4052,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5334706987326120030}
-  - component: {fileID: 5334706987326120027}
   - component: {fileID: 618159218}
+  - component: {fileID: 5334706987326120027}
   - component: {fileID: 618159217}
   - component: {fileID: 618159216}
   m_Layer: 6
@@ -4078,24 +4078,6 @@ Transform:
   m_Father: {fileID: 5334706988415922741}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5334706987326120027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5334706987326120031}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!114 &618159218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4141,6 +4123,24 @@ MonoBehaviour:
   d_maxRot: 290
   dialRotAxis: {x: 0, y: 0, z: 1}
   dialHandT: {fileID: 5334706987565042273}
+--- !u!114 &5334706987326120027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334706987326120031}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.20714569, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!54 &618159217
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4898,10 +4898,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5334706987775192982}
+  - component: {fileID: 408637146}
   - component: {fileID: 5334706987775192977}
   - component: {fileID: 408637152}
   - component: {fileID: 408637150}
-  - component: {fileID: 408637146}
   - component: {fileID: 408637149}
   m_Layer: 6
   m_Name: Acetylene Knob
@@ -4925,6 +4925,51 @@ Transform:
   m_Father: {fileID: 5334706988637188303}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &408637146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334706987775192983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb512cc752d672428a94d911b403988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnTargetValueReached:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5334706987775192977}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  currentValue: 0
+  targetValue: 0.3
+  minValue: 0
+  maxValue: 0.8
+  valueIncreaseSpeed: 0.1
+  shouldIncreaseValueOnGrab: 1
+  allowGrab: 0
+  k_minRot: 0
+  k_maxRot: 230
+  knobRotAxis: {x: 0, y: 0, z: 1}
+  knobT: {fileID: 5334706987775192982}
+  interactable: {fileID: 408637149}
+  outline: {fileID: 5334706987775192977}
+  isDialPresent: 1
+  d_minRot: 21.56
+  d_maxRot: 291.279
+  dialRotAxis: {x: 0, y: 0, z: 1}
+  dialHandT: {fileID: 5334706988813573048}
 --- !u!114 &5334706987775192977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4972,51 +5017,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &408637146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5334706987775192983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bb512cc752d672428a94d911b403988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnTargetValueReached:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5334706987775192977}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  currentValue: 0
-  targetValue: 0.3
-  minValue: 0
-  maxValue: 0.8
-  valueIncreaseSpeed: 0.1
-  shouldIncreaseValueOnGrab: 1
-  allowGrab: 0
-  k_minRot: 0
-  k_maxRot: 230
-  knobRotAxis: {x: 0, y: 0, z: 1}
-  knobT: {fileID: 5334706987775192982}
-  interactable: {fileID: 408637149}
-  outline: {fileID: 5334706987775192977}
-  isDialPresent: 1
-  d_minRot: 21.56
-  d_maxRot: 291.279
-  dialRotAxis: {x: 0, y: 0, z: 1}
-  dialHandT: {fileID: 5334706988813573048}
 --- !u!114 &408637149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9235,7 +9235,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 47f092eb6ac34b146a52f2487c11edc6, type: 3}
   m_Color: {r: 0.9607843, g: 0.4627451, b: 0.2901961, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 8.6, y: 9.07}

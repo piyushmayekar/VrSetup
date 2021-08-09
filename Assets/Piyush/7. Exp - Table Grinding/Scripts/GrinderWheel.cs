@@ -13,6 +13,7 @@ namespace Grinding
         [SerializeField] Vector3 contactPoint;
         [SerializeField] Transform sparksT;
         [SerializeField] ParticleSystem _ps;
+        [SerializeField] Light sparkLight;
         [SerializeField] GrindingWheelType type;
         [SerializeField] float warmDownTime = 0.5f;
         [SerializeField] GameObject platesAnimation;
@@ -29,7 +30,9 @@ namespace Grinding
         {
             soundPlayer = GetComponent<SoundPlayer>();
             grinder.OnMachineToggleOff += StopVFX;
-            
+            sparkLight = sparksT.GetComponent<Light>();
+            if(sparkLight!=null)
+            sparkLight.enabled = false;
         }
 
         
@@ -44,6 +47,8 @@ namespace Grinding
             if (!GrindingMachine.isMachineOn) return;
             isInContact = true;
             contactPoint = other.GetContact(0).point;
+            if (sparkLight != null)
+                sparkLight.enabled = true;
             if (!_ps.isPlaying)
                 _ps.Play();
             if (!soundPlayer.AudioSource.isPlaying)
@@ -80,6 +85,8 @@ namespace Grinding
         public void StopVFX()
         {
             _ps.Stop();
+            if (sparkLight != null)
+                sparkLight.enabled = false;
             soundPlayer.StopPlayingAllSounds();
         }
     }

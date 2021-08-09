@@ -12,7 +12,7 @@ namespace PiyushUtils
 
         [SerializeField] public TMP_FontAsset[] languagesFont;
         [SerializeField] public TextMeshProUGUI taskDetailText;
-        [SerializeField] public UnityEngine.UI.Button confirmButton;
+        [SerializeField] public UnityEngine.UI.Button confirmButton, relearnButton, homeButton;
         [SerializeField] bool onState = true;
         [SerializeField] GameObject tablet;
 
