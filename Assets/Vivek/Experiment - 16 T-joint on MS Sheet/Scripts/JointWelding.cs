@@ -13,7 +13,7 @@ public class JointWelding : MonoBehaviour
     public bool isChappingHammer;
     public GameObject[] WeldingLine;
     public GameObject weldingModel, tackPoint, plateRedMat;
-    public Material  blackMaterial;
+    public Material blackMaterial;
     public GameObject fireRedFilerMesh;
     public SoundPlayer chippingHummer;
     public bool isWelding, isFiller;
@@ -57,8 +57,15 @@ public class JointWelding : MonoBehaviour
             Color tc = fireRedFilerMesh.GetComponent<Renderer>().material.color;
             tc.a += 0.02f;
             fireRedFilerMesh.GetComponent<Renderer>().material.SetColor("_BaseColor", tc);
+
+            if (countdotpoint == 1)
+            {
+                GasJointweldingManager.instance.supportPlat.SetActive(false);
+                GasJointweldingManager.instance.RotateJobPlate_SecondSide();
+            }
             if (countdotpoint == 3)
             {
+
                 GasJointweldingManager.instance.CheckTackPoint();
             }
         }
@@ -127,10 +134,13 @@ public class JointWelding : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.tag == "Electrode")
+        if (jointTools == JointTools.tPlate)
         {
-            isFiller = false;
-            sparkLight.SetActive(false);
+            if (other.transform.tag == "Electrode")
+            {
+                isFiller = false;
+                sparkLight.SetActive(false);
+            }
         }
     }
     private void OnTriggerStay(Collider other)//Add By GP
@@ -214,11 +224,11 @@ public class JointWelding : MonoBehaviour
             {
                 WeldingLine[CurrentLine].SetActive(true);
                 countlinePoint = 0;
-                isWelding = false;
+                isWelding = true;
                 //    FreezeRotation.instance.isFreeze = false;
                 //  FreezeRotation.instance.Freezeangle = GasJointweldingManager.instance.torch_m_35d.transform;
-                GasJointweldingManager.instance.torch_m_35d.SetActive(true);
-                GasJointweldingManager.instance.SecondTourchPlateRotate();
+               // GasJointweldingManager.instance.torch_m_35d.SetActive(true);
+                GasJointweldingManager.instance.RotateJobPlate_SecondSide();
                 WeldingLine[CurrentLine].transform.GetChild(0).gameObject.SetActive(true);
             }
         }

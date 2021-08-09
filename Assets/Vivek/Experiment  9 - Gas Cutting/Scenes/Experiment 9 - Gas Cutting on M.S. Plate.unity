@@ -26894,11 +26894,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1316036011}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1317406566 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2613788712829589753, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
-  m_PrefabInstance: {fileID: 6481033522555391450}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1318496034
 GameObject:
   m_ObjectHideFlags: 0
@@ -28560,11 +28555,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368570770}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1375186894 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2863226564965509065, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
-  m_PrefabInstance: {fileID: 6481033522555391450}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1378081393
 GameObject:
   m_ObjectHideFlags: 0
@@ -49020,6 +49010,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1307597550207360115, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1226571294}
+    - target: {fileID: 1307597550207360115, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayClip
+      objectReference: {fileID: 0}
     - target: {fileID: 1320626707382810550, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_RootOrder
       value: 35
@@ -49248,18 +49246,6 @@ PrefabInstance:
       propertyPath: stepAudioSource
       value: 
       objectReference: {fileID: 242221934938232126}
-    - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
-      propertyPath: toolToReset.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
-      propertyPath: toolToReset.Array.data[0]
-      value: 
-      objectReference: {fileID: 1375186894}
-    - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
-      propertyPath: toolToReset.Array.data[1]
-      value: 
-      objectReference: {fileID: 1317406566}
     - target: {fileID: 5404364124110508927, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: GasTablekitcolliders.Array.data[2]
       value: 
@@ -49616,6 +49602,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5465732661332098844, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5465732661353199132, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -49695,6 +49685,14 @@ PrefabInstance:
     - target: {fileID: 5465732661634932063, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayClip
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465732661668272369, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_Name
+      value: blue Rotate sprite On
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465732661668272369, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5465732661698026740, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_InteractionManager
@@ -49859,6 +49857,14 @@ PrefabInstance:
     - target: {fileID: 5465732662695107974, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayClip
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465732662757089406, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_Name
+      value: red Rotate sprite On
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465732662757089406, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5465732662794314577, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_InteractionManager
@@ -50127,6 +50133,14 @@ PrefabInstance:
     - target: {fileID: 5735337663375664758, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735337663881371103, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1226571294}
+    - target: {fileID: 5735337663881371103, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayClip
       objectReference: {fileID: 0}
     - target: {fileID: 5852707639103143996, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target

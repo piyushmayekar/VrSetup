@@ -68,8 +68,7 @@ public class GasCuttingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-        //   Onclickbtn_s10_confirm();
-    //   TempTorchStep();
+     //   CheckJobFlatPlace();
     }
 
     public void ConfirmSatrtbtn()
@@ -456,6 +455,9 @@ public class GasCuttingManager : MonoBehaviour
         blackValve.MeterObject.SetActive(true);                   // black valve
         blackValve.RotateValue = 15;                              // black valve
                                                                   //   blackValve.speed = 20;
+
+        SetUpTrolley.instance.blackRotatespriteOn.SetActive(false);
+        SetUpTrolley.instance.blackRotatespriteOff.SetActive(true);
     }
     public void callBlackValve_Bol()
     {
@@ -476,6 +478,9 @@ public class GasCuttingManager : MonoBehaviour
             redValve.otherMeterobject = ZeroMeterred;       // red valve
             redValve.MeterObject.SetActive(true);             // red valve
             redValve.RotateValue = 10;                         // red valve
+
+            SetUpTrolley.instance.redRotateSpriteOn.SetActive(false);
+            SetUpTrolley.instance.redRotateSpriteOff.SetActive(true);
         }
     }
     public void CallRedValve_bol()

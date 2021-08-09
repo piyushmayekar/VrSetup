@@ -23,8 +23,12 @@ public class GasWeldingStep : MonoBehaviour
                         HL_R_ClipBlack, HL_T_connectorRed, HL_T_ClipRed, HL_T_connectorBlack, HL_T_ClipBlack;
     [Header("     bol     ")]
     public GameObject step8Flame;
-    public GameObject Step9flame, extraRedBol, oldRedBol, redRotateSprite, BlueRotatesprite;
+    public GameObject Step9flame, extraRedBol, oldRedBol;
 
+    [Header("     Roatate vales at regulator     ")]
+    public GameObject redRotateSpriteOn;
+    public GameObject BlueRotatespriteOn,redRotateSpriteOff, BlueRotatespriteOff;
+    public GameObject snapGlassRed, snapGlassBlack;
 
     [Header("ppeCollider")]
     public Collider[] ppekitcolliders;
@@ -491,13 +495,13 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[4].enabled = false;
         objectOutLines[9].enabled = true;
         readSteps.HideConifmBnt();
-        BlueRotatesprite.SetActive(true);
+        BlueRotatespriteOn.SetActive(true);
     }
     public void OnEnableRedValeNozzel()
     {
         if (!isTurnOffFlame)
         {
-            redRotateSprite.SetActive(true);
+            redRotateSpriteOn.SetActive(true);
             objectOutLines[9].enabled = false;
             objectOutLines[10].enabled = true;
             GasTablekitcolliders[10].enabled = true;// red  valve nozzel
@@ -522,9 +526,17 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[12].enabled = true; // glass red outline
         readSteps.HideConifmBnt();
     }
+    public void Done_acetylene_shop_water() //oxygen  shop water
+    {
+        //  Snap red glass object true
+        GasTablekitcolliders[15].GetComponent<SnapGrabbleObject>().enabled = true; //Glass object for red
+        snapGlassRed.SetActive(true);
+
+    }
     public void onEnableStep_7_part3_object()
     {
-
+        GasTablekitcolliders[15].GetComponent<SnapGrabbleObject>().enabled = false; //Glass object for red
+        GasTablekitcolliders[15].enabled = false;
         //red glass reset
         GasTablekitcolliders[15].gameObject.SetActive(true);
         SetObjectRestPos_Rotate(0);
@@ -545,6 +557,13 @@ public class GasWeldingStep : MonoBehaviour
         objectOutLines[13].enabled = true; // glass object blue
         readSteps.HideConifmBnt();
     }
+    public void Done_oxygen_shop_water() //oxygen  shop water
+    {
+        //  Snap black glass object true
+        GasTablekitcolliders[16].GetComponent<SnapGrabbleObject>().enabled = true; //Glass object for black
+        snapGlassBlack.SetActive(true);
+    }
+
     public void onEnableStep7Object()
     {
         if (!isTurnOffFlame)
@@ -565,6 +584,9 @@ public class GasWeldingStep : MonoBehaviour
     {
         //blue glass reset
         GasTablekitcolliders[16].gameObject.SetActive(true);
+        GasTablekitcolliders[16].enabled = false;
+        GasTablekitcolliders[16].GetComponent<SnapGrabbleObject>().enabled = false; //Glass object for black
+
         SetObjectRestPos_Rotate(1);
 
         objectOutLines[5].enabled = false;  //blue   regulators outline
@@ -612,6 +634,8 @@ public class GasWeldingStep : MonoBehaviour
     {
 
         GasTablekitcolliders[14].GetComponent<SnapGrabbleObject>().enabled = false;//lighter outline
+
+        GasTablekitcolliders[14].GetComponent<Outline>().enabled = false;//lighter outline
         LighterCanvas.SetActive(false);
         objectOutLines[8].enabled = false;
         GasTablekitcolliders[12].enabled = true; // red bol at gas tourch
@@ -838,16 +862,20 @@ public class GasWeldingStep : MonoBehaviour
     public void Onclickbtn_s_10_1confirm()
     {
         readSteps.HideConifmBnt();
-        GasTablekitcolliders[9].enabled = true;// blue valve nozzel
+        GasTablekitcolliders[9].enabled = true;                  // blue valve nozzel
         objectOutLines[9].enabled = true;
 
         objectOutLines[5].enabled = true;
-        rotateNozzles[5].isclockwise = true;  // red valve
-        rotateNozzles[5].enabled = true;                          // red valve
-        rotateNozzles[5].otherMeterobject.SetActive(false);       // red valve
-        rotateNozzles[5].otherMeterobject = ZeroMeterBlack;       // red valve
-        rotateNozzles[5].MeterObject.SetActive(true);             // red valve
-        rotateNozzles[5].RotateValue = 10;                         // red valve
+        rotateNozzles[5].isclockwise = true;                      // blue valve nozzel
+        rotateNozzles[5].enabled = true;                          // blue valve nozzel
+        rotateNozzles[5].otherMeterobject.SetActive(false);       // blue valve nozzel
+        rotateNozzles[5].otherMeterobject = ZeroMeterBlack;       // blue valve nozzel
+        rotateNozzles[5].MeterObject.SetActive(true);             // blue valve nozzel
+        rotateNozzles[5].RotateValue = 10;                        // blue valve nozzel
+
+        BlueRotatespriteOn.SetActive(false);
+        BlueRotatespriteOff.SetActive(true);
+            
     }
     public void callBlackValve()
     {
@@ -862,12 +890,15 @@ public class GasWeldingStep : MonoBehaviour
 
             objectOutLines[10].enabled = true;
 
-            rotateNozzles[6].isclockwise = true;                           // black valve
-            rotateNozzles[6].enabled = true;                                // black valve
-            rotateNozzles[6].otherMeterobject.SetActive(false);             // black valve
-            rotateNozzles[6].otherMeterobject = ZeroMeterred;               // black valve
-            rotateNozzles[6].MeterObject.SetActive(true);                   // black valve
-            rotateNozzles[6].RotateValue = 10;                              // black valve
+            rotateNozzles[6].isclockwise = true;                            // Red valve nozzel
+            rotateNozzles[6].enabled = true;                                // Red valve nozzel
+            rotateNozzles[6].otherMeterobject.SetActive(false);             // Red valve nozzel
+            rotateNozzles[6].otherMeterobject = ZeroMeterred;               // Red valve nozzel
+            rotateNozzles[6].MeterObject.SetActive(true);                   // Red valve nozzel
+            rotateNozzles[6].RotateValue = 10;                              // Red valve nozzel
+
+            redRotateSpriteOn.SetActive(false);
+            redRotateSpriteOff.SetActive(true);
         }
     }
     public void CallRedValve()

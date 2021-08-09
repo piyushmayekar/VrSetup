@@ -16,23 +16,24 @@ public class SetUpTrolley : MonoBehaviour
     public RotateNozzle[] rotateNozzles;
     [Header("          ")]
     public GameObject bluePipEndPoint;
-    public GameObject RedPipeEndPoint, ParentBluePipEndPoint, ParentRedPipeEndPoint, nozzelSnapPoint;
-    public GameObject redPipeRop, bluePipeRop, blacksmoke, redRotateSprite, BlueRotatesprite;
+    public GameObject RedPipeEndPoint, ParentBluePipEndPoint, ParentRedPipeEndPoint, nozzelSnapPoint, blacksmoke;
+    [Header("   Rotate valves at reguletor       ")]
+    public GameObject redRotateSpriteOn;
+    public GameObject blackRotatespriteOn, redRotateSpriteOff, blackRotatespriteOff;
     [Header("          ")]
     public GameObject HL_flashbackred;
     public GameObject HL_connectorRed, HL_R_ClipRed, HL_flashbackBlack, HL_connectorBlack,
                         HL_R_ClipBlack, HL_T_connectorRed, HL_T_ClipRed,
                         HL_T_connectorBlack, HL_T_ClipBlack;
+    public GameObject snapGlassRed, snapGlassBlack;
+
     public bool isPipeRedConnect, isPipeblueConnect, isTurnOffFlame;
+
     [Header("Read step from json calss")]
     public ReadStepsAndVideoManager readSteps;
     [Header("-------------cracking  to nozzel fit clips --")]
     public AudioSource stepAudioSource;
-   /* 
-    [SerializeField, Tooltip("List of audio clips English and Gujarati")]
-    List<AudioClip> englishClips, gujaratiClips;*/
-
-    public AudioClip creckykeyClip;
+     public AudioClip creckykeyClip;
 
     int countCrackTab;
     [Header("----------------------------------")]
@@ -68,28 +69,29 @@ public class SetUpTrolley : MonoBehaviour
         nozzelSnapPoint.gameObject.SetActive(false);
         GasTablekitcolliders[11].GetComponent<SnapGrabbleObject>().enabled = false;
         GasTablekitcolliders[14].GetComponent<SnapGrabbleObject>().enabled = false;
-        bluePipeRop.GetComponent<CapsuleCollider>().enabled = false;
-        redPipeRop.GetComponent<CapsuleCollider>().enabled = false;
+        bluePipEndPoint.GetComponent<CapsuleCollider>().enabled = false;
+        RedPipeEndPoint.GetComponent<CapsuleCollider>().enabled = false;
         for (int i = 0; i < toolToReset.Length; i++)
         {
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-      //  Onclickbtn_s_3_confirm();
+     //   Onclickbtn_s_8_confirm_p2(); //acetylene  shop water
+
     }
     public void Update()
     {
         if (isPipeblueConnect)
         {
-            bluePipeRop.transform.parent = ParentBluePipEndPoint.gameObject.transform; // new 22
-            bluePipeRop.transform.localPosition = Vector3.zero;
-            bluePipeRop.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            bluePipEndPoint.transform.parent = ParentBluePipEndPoint.gameObject.transform; // new 22
+            bluePipEndPoint.transform.localPosition = Vector3.zero;
+            bluePipEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
         if (isPipeRedConnect)
         {
-            redPipeRop.transform.parent = ParentRedPipeEndPoint.gameObject.transform;//red pipe sphere welding Tourch   //new 22
-            redPipeRop.transform.localPosition = Vector3.zero;
-            redPipeRop.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            RedPipeEndPoint.transform.parent = ParentRedPipeEndPoint.gameObject.transform;//red pipe sphere welding Tourch   //new 22
+            RedPipeEndPoint.transform.localPosition = Vector3.zero;
+            RedPipeEndPoint.transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
 
     }
@@ -361,7 +363,7 @@ public class SetUpTrolley : MonoBehaviour
     {
 
         GasTablekitcolliders[17].enabled = true;// blue pipe sphere welding Tourch 
-        bluePipeRop.GetComponent<CapsuleCollider>().enabled = true;
+        bluePipEndPoint.GetComponent<CapsuleCollider>().enabled = true;
         bluePipEndPoint.GetComponent<SnapGrabbleObject>().enabled = true;
 
         objectOutLines[7].enabled = true;// blue pipe sphere outline
@@ -380,7 +382,7 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[18].enabled = true; // red pipe sphere welding Tourch 
         RedPipeEndPoint.GetComponent<SnapGrabbleObject>().enabled = true;
 
-        redPipeRop.GetComponent<CapsuleCollider>().enabled = true;
+        bluePipEndPoint.GetComponent<CapsuleCollider>().enabled = true;
 
         bluePipEndPoint.GetComponent<SnapGrabbleObject>().enabled = false;
 
@@ -453,13 +455,14 @@ public class SetUpTrolley : MonoBehaviour
         objectOutLines[4].enabled = false;
         objectOutLines[11].enabled = true;// blue valve
         readSteps.HideConifmBnt();
-        BlueRotatesprite.SetActive(true);
+
+        blackRotatespriteOn.SetActive(true);
     }
     public void OnEnableRedValeNozzel()
     {
         if (!isTurnOffFlame)
         {
-            redRotateSprite.SetActive(true);
+            redRotateSpriteOn.SetActive(true);
             objectOutLines[11].enabled = false;
             objectOutLines[12].enabled = true;
             GasTablekitcolliders[20].enabled = true;// red  valve nozzel
@@ -495,7 +498,14 @@ public class SetUpTrolley : MonoBehaviour
 
     public void Done_acetylene_shop_water() //oxygen  shop water
     {
-        //  Debug.Log("call 6 ");
+        //  Snap red glass object true
+        GasTablekitcolliders[21].GetComponent<SnapGrabbleObject>().enabled = true; //Glass object for red
+        snapGlassRed.SetActive(true);
+
+    }
+    public void Snap_Red_ShopWaterGlass()
+    {
+        GasTablekitcolliders[21].GetComponent<SnapGrabbleObject>().enabled = false; //Glass object for red
         GasTablekitcolliders[21].enabled = false; //Glass object for red
         GasTablekitcolliders[21].GetComponent<Outline>().enabled = false; //Glass object for red
         objectOutLines[4].enabled = false;//regulator red
@@ -505,12 +515,16 @@ public class SetUpTrolley : MonoBehaviour
         GasTablekitcolliders[22].enabled = true; //Glass object for black
         GasTablekitcolliders[22].GetComponent<Outline>().enabled = true; //Glass object for black
         objectOutLines[5].enabled = true; //regulator black
-       
-
     }
     public void Done_oxygen_shop_water() //oxygen  shop water
     {
-        //  Debug.Log("call 6 ");
+        //  Snap black glass object true
+        GasTablekitcolliders[22].GetComponent<SnapGrabbleObject>().enabled = true; //Glass object for black
+        snapGlassBlack.SetActive(true);
+    }
+    public void Snap_Black_ShopWaterGlass()
+    {
+        GasTablekitcolliders[22].GetComponent<SnapGrabbleObject>().enabled = false; //Glass object for black
         GasTablekitcolliders[22].enabled = false; //Glass object for black
         GasTablekitcolliders[22].GetComponent<Outline>().enabled = false; //Glass object for black
         objectOutLines[5].enabled = false;//regulator black
@@ -519,8 +533,7 @@ public class SetUpTrolley : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
-        //EXP Check fix  welding nozzle on torch audio  clip (8)
-        //PlayStepAudio(8);
+
     }
 
     #endregion

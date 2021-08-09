@@ -25,7 +25,7 @@ public class GasJointweldingManager : MonoBehaviour
     [Header("Extra objects")]
     public GameObject neturalFlameCube;
     public GameObject netural_flame, jointTackPoint, hummerhighlight, blacksmoke,
-                      highlighttriSquare, torch35D, torch_m_35d, lighterFlame, supportPlat, supportCube1, supportcube2;
+                      highlighttriSquare, torch35D, torch_m_35d, lighterFlame, supportPlat, supportCube1, supportcube2,jobSupport1,jobSupport2;
     public GameObject[] weldingLine1, weldingLine2;
     [Header("          ")]
     public RotateNozzle redBol, blueBol, blackValve, redValve;
@@ -67,6 +67,7 @@ public class GasJointweldingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
+    //    Onclickbtn_s14_confirm();
     }
     public void ConfirmSatrtbtn()
     {
@@ -246,14 +247,21 @@ public class GasJointweldingManager : MonoBehaviour
         SetObjectRestPos_Rotate(1); //lighter tool
 
         GasTableObjectcolliders[8].enabled = true;
-        objectOutLines[10].GetComponent<Outline>().enabled = true;
+        objectOutLines[10].GetComponent<Outline>().enabled = true;       
+      
+
+        supportCube1.SetActive(false);
+        supportcube2.SetActive(false);
+        RotateJobPlate_FirstSide();
 
         readSteps.HideConifmBnt();
     }
 
     public void CheckTackPoint()
     {
-        supportPlat.SetActive(false);
+        ResetRotateJobPlate();
+
+       
         // GasTableObjectcolliders[8].enabled = false;
         objectOutLines[10].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
@@ -311,33 +319,43 @@ public class GasJointweldingManager : MonoBehaviour
         weldingLine1[0].SetActive(true);
         weldingLine1[0].transform.GetChild(0).gameObject.SetActive(true);
 
-        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4209f, -0.0036f, -0.0978f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 0, -10);
-        supportCube1.SetActive(true);
+        supportCube1.SetActive(false);
         supportcube2.SetActive(false);
+        RotateJobPlate_FirstSide();
 
-        GasTableObjectcolliders[8].enabled = true;
+          GasTableObjectcolliders[8].enabled = true;
         objectOutLines[10].GetComponent<Outline>().enabled = true;
         // JointWelding.instance.WeldingEnable();
         torch35D.SetActive(true);
     }
-    public void SecondTourchPlateRotate()
+    public void RotateJobPlate_SecondSide()
     {
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4709f, -0.0044f, -0.0978f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 0, 10);
-        supportCube1.SetActive(false);
-        supportcube2.SetActive(true);
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, -90, 10);
+        jobSupport1.SetActive(false);
+        jobSupport2.SetActive(true);
     }
-    public void weldingComplete()
+    public void RotateJobPlate_FirstSide()
     {
-
-        //job plat posion set
+        GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4209f, -0.0036f, -0.0978f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0,90, -10);
+        jobSupport1.SetActive(true);
+        jobSupport2.SetActive(false);
+    }
+    public void ResetRotateJobPlate()
+    {   //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//objectOutLines[1].transform.position;// job plate material
                                                                                                       //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
         GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f, 0f);//objectOutLines[1].transform.position;// job plate material
 
         supportCube1.SetActive(true);
         supportcube2.SetActive(true);
+        jobSupport1.SetActive(false);
+        jobSupport2.SetActive(false);
+    }
+    public void weldingComplete()
+    {
+        ResetRotateJobPlate();    
 
         objectOutLines[10].GetComponent<Outline>().enabled = false;
         GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectEntered = null;
@@ -459,7 +477,9 @@ public class GasJointweldingManager : MonoBehaviour
         blackValve.otherMeterobject = ZeroMeterBlack;               // black valve
         blackValve.MeterObject.SetActive(true);                   // black valve
         blackValve.RotateValue = 15;                              // black valve
-                                                                  //    blackValve.speed = 20;
+                                                                  //    blackValve.speed = 
+        SetUpTrolley.instance.blackRotatespriteOn.SetActive(false);
+        SetUpTrolley.instance.blackRotatespriteOff.SetActive(true);
     }
     public void callBlackValve_Bol()
     {
@@ -479,6 +499,9 @@ public class GasJointweldingManager : MonoBehaviour
             redValve.otherMeterobject = ZeroMeterred;       // red valve
             redValve.MeterObject.SetActive(true);             // red valve
             redValve.RotateValue = 10;                         // red valve
+
+            SetUpTrolley.instance.redRotateSpriteOn.SetActive(false);
+            SetUpTrolley.instance.redRotateSpriteOff.SetActive(true);
         }
     }
     public void CallRedValve_bol()
