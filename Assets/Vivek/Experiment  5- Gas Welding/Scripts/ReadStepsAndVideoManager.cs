@@ -45,7 +45,9 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     {
         instance = this;
         isStep = false;
+        isChangeFont = true;
         OnClickLanguagesBtn();
+        
     }
     void LoadNextStepText()
     {
@@ -77,7 +79,11 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         }
         if (!isStep)
         {
-            stepText.text = langManager._stepsText.ExperimentTitle;
+           
+                stepText.text = langManager._stepsText.ExperimentTitle;
+            
+
+
         }
         else
         {

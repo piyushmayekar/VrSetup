@@ -3910,13 +3910,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779594042835821769}
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.5343523, w: 0.8452619}
   m_LocalPosition: {x: 0.009, y: -0.009, z: 0.096}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 5167567217517525596}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 64.6}
 --- !u!212 &6285259202661782422
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5287,6 +5287,9 @@ MonoBehaviour:
   isRedCrecking: 0
   isBlackCrecking: 0
   creckykeyClip: {fileID: 8300000, guid: 7adef8f67628d3649926c3a195910ef4, type: 3}
+  clipIndex: 0700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000
+  glass1: {fileID: 4310084997543639332}
+  glass2: {fileID: 4310084998888088952}
 --- !u!1 &1107667264836030558
 GameObject:
   m_ObjectHideFlags: 0
@@ -30048,7 +30051,7 @@ Transform:
   - {fileID: 9106656701439037233}
   - {fileID: 8021019912620519985}
   m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3527559700926033668
 GameObject:
@@ -36126,7 +36129,7 @@ MonoBehaviour:
   RotateValue: 50
   ismeter: 0
   isRegulator: 0
-  isclockwise: 1
+  isclockwise: 0
   speed: 30
 --- !u!1 &4310084996956206732
 GameObject:
@@ -39624,13 +39627,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4310084997369934147}
-  m_LocalRotation: {x: 0.5803113, y: -0.39954355, z: 0.49781904, w: -0.505747}
-  m_LocalPosition: {x: -0.3984318, y: 0.84857124, z: 0.11779851}
-  m_LocalScale: {x: 0.018476408, y: 0.018476415, z: 0.018476423}
+  m_LocalRotation: {x: -0.000000055879354, y: -0, z: 0.7199684, w: 0.69400686}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.045042448, y: 0.045042478, z: 0.045042507}
   m_Children: []
-  m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: -10.905, y: 89.579, z: 260.08002}
+  m_Father: {fileID: 4310084997718690107}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 92.104}
 --- !u!212 &4310084997369934145
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41105,8 +41108,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4310084997543639332}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0.0304}
-  m_LocalScale: {x: 0.023972431, y: 0.026381927, z: 0.023972431}
+  m_LocalPosition: {x: -0, y: 0, z: 0.0234}
+  m_LocalScale: {x: 0.023972431, y: 0.019903844, z: 0.023972431}
   m_Children: []
   m_Father: {fileID: 4310084998620685357}
   m_RootOrder: 0
@@ -46684,7 +46687,7 @@ MonoBehaviour:
   RotateValue: 50
   ismeter: 0
   isRegulator: 0
-  isclockwise: 1
+  isclockwise: 0
   speed: 30
 --- !u!1 &4310084997690362818
 GameObject:
@@ -46720,6 +46723,7 @@ Transform:
   - {fileID: 4310084996776239286}
   - {fileID: 4310084997885334680}
   - {fileID: 4310084996973926251}
+  - {fileID: 4310084998593481155}
   m_Father: {fileID: 4310084997548835097}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47082,6 +47086,7 @@ Transform:
   - {fileID: 4310084998763622767}
   - {fileID: 4310084998809934672}
   - {fileID: 4310084996874875345}
+  - {fileID: 4310084997369934146}
   m_Father: {fileID: 4310084997477990189}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47602,7 +47607,7 @@ Transform:
   - {fileID: 4310084997477990189}
   - {fileID: 4349006116181243830}
   m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4310084997845513238
 GameObject:
@@ -48531,7 +48536,7 @@ MonoBehaviour:
   RotateValue: 20
   ismeter: 1
   isRegulator: 0
-  isclockwise: 1
+  isclockwise: 0
   speed: 20
 --- !u!114 &4310084997885334687
 MonoBehaviour:
@@ -50761,7 +50766,7 @@ RectTransform:
   m_Children:
   - {fileID: 4310084997949575125}
   m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 13
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 39.708, y: -90, z: 1.233}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -52861,7 +52866,7 @@ Transform:
   - {fileID: 4310084997181325053}
   - {fileID: 4349006116997279604}
   m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4310084998567708045
 GameObject:
@@ -53080,13 +53085,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4310084998593481164}
-  m_LocalRotation: {x: 0.5764992, y: -0.4050242, z: 0.502589, w: -0.5010073}
-  m_LocalPosition: {x: -0.3904676, y: 0.70703, z: -0.47636846}
-  m_LocalScale: {x: 0.01716535, y: 0.017165348, z: 0.017165357}
+  m_LocalRotation: {x: 0, y: 0, z: 0.6845471, w: 0.7289686}
+  m_LocalPosition: {x: -0.006, y: 0.001, z: -0.003}
+  m_LocalScale: {x: 0.041846316, y: 0.04184631, z: 0.041846335}
   m_Children: []
-  m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: -9.819, y: 89.581, z: 260.07098}
+  m_Father: {fileID: 4310084997690362817}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 86.4}
 --- !u!212 &4310084998593481154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55045,7 +55050,7 @@ RectTransform:
   m_Children:
   - {fileID: 4310084998139025681}
   m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 39.708, y: -90, z: 1.233}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -55356,7 +55361,7 @@ MonoBehaviour:
   RotateValue: 20
   ismeter: 1
   isRegulator: 0
-  isclockwise: 1
+  isclockwise: 0
   speed: 20
 --- !u!114 &4310084998809934677
 MonoBehaviour:
@@ -55485,8 +55490,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4310084998888088952}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0.0304}
-  m_LocalScale: {x: 0.023972431, y: 0.026381927, z: 0.023972431}
+  m_LocalPosition: {x: -0, y: 0, z: 0.0234}
+  m_LocalScale: {x: 0.023972431, y: 0.019903844, z: 0.023972431}
   m_Children: []
   m_Father: {fileID: 4310084998356916085}
   m_RootOrder: 0
@@ -58924,13 +58929,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000810977377700320}
-  m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalRotation: {x: -0.61290723, y: -0.7901549, z: 0, w: -0}
   m_LocalPosition: {x: 0.009, y: -0.009, z: 0.096}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 3463464695195387139}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: -284.4}
 --- !u!212 &9144776608238183246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -60530,7 +60535,19 @@ MonoBehaviour:
       m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SoundPlayer, Assembly-CSharp
+        m_MethodName: PlayClip
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverExited:
     m_PersistentCalls:
       m_Calls: []
@@ -69103,7 +69120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6854971502065735215
 Transform:
   m_ObjectHideFlags: 0
@@ -70493,7 +70510,7 @@ BoxCollider:
   m_GameObject: {fileID: 6854971502741325533}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.008619711, y: 0.013484774, z: 0.057871234}
   m_Center: {x: 0.009391485, y: -0.002738565, z: 0.05680025}
@@ -70530,7 +70547,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SoundPlayer, Assembly-CSharp
+        m_MethodName: PlayClip
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -78137,7 +78166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6854971503769934935
 Transform:
   m_ObjectHideFlags: 0
@@ -88867,7 +88896,7 @@ Transform:
   - {fileID: 2074266396309729152}
   - {fileID: 4423485793635505812}
   m_Father: {fileID: 9138667980168858875}
-  m_RootOrder: 16
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7738239148013648019
 GameObject:
@@ -100197,7 +100226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9138667979434472324
 Transform:
   m_ObjectHideFlags: 0
@@ -102846,7 +102875,19 @@ MonoBehaviour:
       m_Calls: []
   m_HoverExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6854971503149759057}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -103009,8 +103050,6 @@ Transform:
   - {fileID: 9138667980034311788}
   - {fileID: 9138667980246745217}
   - {fileID: 651359462037559664}
-  - {fileID: 4310084998593481155}
-  - {fileID: 4310084997369934146}
   - {fileID: 4310084998564979688}
   - {fileID: 4310084997835477428}
   - {fileID: 4310084998224109317}

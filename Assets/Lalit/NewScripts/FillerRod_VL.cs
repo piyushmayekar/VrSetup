@@ -26,6 +26,7 @@ public class FillerRod_VL : MonoBehaviour
 
     public GameObject light;
     public ParticleSystem effect;
+    public AudioSource weldingSound;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -142,6 +143,19 @@ public class FillerRod_VL : MonoBehaviour
                 effect.Stop();
             }
             
+        }
+
+        if (weldingSound)
+        {
+            if (on)
+            {
+                weldingSound.Play();
+            }
+            else
+            {
+                weldingSound.Stop();
+            }
+
         }
 
        
