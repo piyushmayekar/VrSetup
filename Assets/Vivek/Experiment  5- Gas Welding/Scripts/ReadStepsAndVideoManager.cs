@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
-using System;
 
 public class ReadStepsAndVideoManager : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     /*[Header("---------------------------------------------------")]
     public ReadSteps englishSteps, gujaratiSteps;*/
     // ReadSteps readSteps;
-    public string sceneName;
     [Header("---------------------------------------------------")]
     public TextLangManager langManager;
     [Header("---------------------------------------------------")]
@@ -27,6 +25,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
 
     public TextMeshProUGUI stepText, languageText;
     [SerializeField] public Button confirmbtn;
+    public string sceneName;
     public delegate void OnClickBtnEvent();
     [Header("---------------------------------------------------")]
     [SerializeField, Header("Attach TMP_FontAsset Refernce as index of languages json file")] TMP_FontAsset[] languagesFont;
@@ -40,36 +39,51 @@ public class ReadStepsAndVideoManager : MonoBehaviour
 
     private string[] indexGuj = new string[] { "р", "с", "т", "у", "ж", "в", "ь", "ы", "з", "ш" };
     //"ср", "сс","ст","су","сж","св","сь","сы","сз","сш","тр"};  // ***** ANKITA CHANGES *****
-    [Header("Language")]
-    public _Language currentLanguage;
-    public int CurrentLangIndex => (int)currentLanguage;
 
-    [Header("---------------------------------------------------")]
-    public AudioManagerWithLanguage audioWithStep;
+
     void Awake()
     {
         instance = this;
         isStep = false;
-       // isStep = true;
+        isChangeFont = true;
+        OnClickLanguagesBtn();
+        
     }
-    private void Start()
+    void LoadNextStepText()
     {
+<<<<<<< HEAD
         currentLanguage = FetchCurrentLanguage();
        Debug.Log("Current languages" + countStep);
         TitleTextLoad();
+=======
+        if (langManager._stepsText.Steps.Length > countStep)
+        {
+            isStep = true;
+            stepText.text = GetStepIndex(countStep); // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
+            stepText.text += langManager._stepsText.Steps[countStep]; // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
+            countStep++;
+        }
+>>>>>>> 226442dd220adba05d826c9b7f9278f997c0c2df
     }
-    void TitleTextLoad()
+    #region Load all Step on Tablet
+    public void OnClickLanguagesBtn()
     {
-        if (CurrentLangIndex == (int)_Language.English)//  if (isChangeFont) //english font load
+        isChangeFont = !isChangeFont;
+        if (isChangeFont) //english font load
         {
             stepText.font = languagesFont[0];
             langManager._stepsText = langManager.readSteps[0];
+          //  stepText.fontSize = 15.5f;
+            //stepText.autoSizeTextContainer = true;
         }
         else //Gujarati font load
         {
             stepText.font = languagesFont[1];
+           // stepText.fontSize = 17.5f;
+          //  stepText.autoSizeTextContainer = false;
             langManager._stepsText = langManager.readSteps[1];
         }
+<<<<<<< HEAD
         // load audio with step title text 
         audioWithStep.PlayStepAudio(countStep);
         stepText.text = langManager._stepsText.ExperimentTitle;
@@ -105,33 +119,39 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     }
     public void OnClickLanguagesBtn()
     {
-
-        int totalLanguagesCount = Enum.GetNames(typeof(_Language)).Length;
-        int nextLanguageIndex = (CurrentLangIndex + 1) % totalLanguagesCount;
-        currentLanguage = (_Language)nextLanguageIndex;
-        stepText.font = languagesFont[(int)currentLanguage];
-        langManager._stepsText = langManager.readSteps[(int)currentLanguage];
-
+=======
         if (!isStep)
         {
-            stepText.text = langManager._stepsText.ExperimentTitle;
+           
+                stepText.text = langManager._stepsText.ExperimentTitle;
+            
+>>>>>>> 226442dd220adba05d826c9b7f9278f997c0c2df
+
+
         }
         else
         {
-
-            if (langManager._stepsText.Steps.Length >= countStep)
+            if (isBrushCleaning)
             {
-                stepText.text = GetStepIndex(countStep - 1); // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
-                stepText.text += langManager._stepsText.Steps[countStep - 1];// ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
+                Debug.Log("call clean brush");
+                CuttingBrush.instance.BrushFontChanage();
+            }
+            else
+            {
+                if (langManager._stepsText.Steps.Length >= countStep)
+                {
+                    Debug.Log("LM callimh;");
+                    stepText.text = GetStepIndex(countStep - 1); // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
+                    stepText.text += langManager._stepsText.Steps[countStep - 1];// ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
+                }
             }
         }
-        SaveCurrentLanguageToMemory();
     }
     // Get Step Number title... ***** ANKITA CHANGES *****
     private string GetStepIndex(int cntNum)
     {
         cntNum++;
-        if (CurrentLangIndex == 0)// if (isChangeFont)
+        if (isChangeFont)
         {
             return "Step - " + cntNum + "\n";
         }

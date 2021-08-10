@@ -53,6 +53,7 @@ public class SteelRuler_VL : MonoBehaviour
         {
             if (other.tag == "MeasurementHL")
             {
+                HLSound.player.PlayHighlightSnapSound();
                 transform.position = other.transform.position;
                 transform.eulerAngles = other.transform.eulerAngles;
                 rb.constraints = RigidbodyConstraints.FreezeAll;

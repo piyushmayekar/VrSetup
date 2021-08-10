@@ -99,6 +99,15 @@ public class Manager : MonoBehaviour
 
     public GameObject Ruler1, Ruler2;
     public GameObject MeasureObj1, MeasureObj2;
+
+    public GameObject ClockWiseSprite, AntiClockWiseSprite;
+    public Transform BrushOT, SteelRulerOT, ScriberOT, DotPunchOT, HammerOT, ChippingHammerOT;
+    public Dictionary<string, ToolOrigin> ToolsOrigin = new Dictionary<string, ToolOrigin>();
+
+    public void PlayVoiceOver(int index)
+    {
+        VoiceOverManager_VL.instance.PlayVOForStepIndex(index);
+    }
     public void Awake()
     {
         instance = this;
@@ -137,6 +146,7 @@ public class Manager : MonoBehaviour
 
     public void Start()
     {
+        //PlayVoiceOver(0);
         WireBrush = WireBrushGo.GetComponent<WireBrush_VL>();
         SteelRuler = SteelRulerGo.GetComponent<SteelRuler_VL>();
         SteelRuler_AttachedToJob = WorkPiece.transform.Find("SteelRuler");
@@ -148,14 +158,57 @@ public class Manager : MonoBehaviour
 
         //EnableJobPlacingForWelding();
 
-       // PrepareJobforRemovingSlag();
+        // PrepareJobforRemovingSlag();
+
+        AssignToolOriginToDictionay();
 
     }
+
+    public ToolOrigin SetToolsOrigin(Transform T)
+    {
+        ToolOrigin To = new ToolOrigin();
+        To.pos = T.position;
+        To.rot = T.localEulerAngles;
+
+        return To;
+    }
+
+
+    public void AssignToolOriginToDictionay()
+    {
+        ToolOrigin WTO = SetToolsOrigin(WireBrushGo.transform);
+        ToolsOrigin.Add("WireBrush", WTO);
+
+        ToolOrigin SRTO = SetToolsOrigin(SteelRulerGo.transform);
+        ToolsOrigin.Add("SteelRuler", SRTO);
+
+        ToolOrigin STO = SetToolsOrigin(ScriberGo.transform);
+        ToolsOrigin.Add("Scriber", STO);
+
+        ToolOrigin DPTO = SetToolsOrigin(CenterPunchGo.transform);
+        ToolsOrigin.Add("CenterPunch", DPTO);
+
+        ToolOrigin HTO = SetToolsOrigin(HammerGo.transform);
+        ToolsOrigin.Add("Hammer", HTO);
+
+        ToolOrigin CHTO = SetToolsOrigin(ChippingHammer.transform);
+        ToolsOrigin.Add("ChippingHammer", CHTO);
+
+    }
+
+    public void ResetToolPosition(Transform tool, ToolOrigin TO)
+    {
+
+        tool.position = TO.pos;
+        tool.localEulerAngles = TO.rot;
+    }
+
 
     #region PPE Kit Methods
     public void EnablePPEKitStep()
     {
         readSteps.HideConifmBnt();
+        
         for (int i = 0; i < ppekitcolliders.Length; i++)
         {
             ppekitcolliders[i].enabled = true;
@@ -180,6 +233,7 @@ public class Manager : MonoBehaviour
 
     public void OnEnableCleanJobWithWireBrush()
     {
+        PlayVoiceOver(2);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableCleanJobWithWireBrush);
     }
@@ -200,8 +254,11 @@ public class Manager : MonoBehaviour
         ToolsHighlight[0].enabled = false;
         WorkPiece.GetComponentInChildren<Outline>().enabled = false;
         Debug.Log("Cleaning Done");
+        
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableMeasuring);
+
+        PlayVoiceOver(3);
         //EnableJobPlacingForWelding();
     }
 
@@ -215,6 +272,7 @@ public class Manager : MonoBehaviour
         WorkPiece.GetComponentInChildren<Outline>().enabled = true;
         SteelRuler.isMeasuring = true;
         SteelRuler.AssignMethodOnSnapForMeasurement(EnableScriberForMeasureing);
+        ResetToolPosition(WireBrushGo.transform, ToolsOrigin["WireBrush"]);
 
 
     }
@@ -316,6 +374,8 @@ public class Manager : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
          readSteps.AddClickConfirmbtnEvent(EnablePunching);
+
+        PlayVoiceOver(4);
         //EnablePunching();
     }
 
@@ -328,6 +388,7 @@ public class Manager : MonoBehaviour
         DotPunch.SetCenterPunchParams(WorkPiece, 1,CenterPunchHL,HammerHL);
         DotPunch.AssignMethodOnPunchingDone(EnablePunchingForSecondLine);
 
+        ResetToolPosition(ScriberGo.transform, ToolsOrigin["Scriber"]);
     }
 
     public void EnablePunchingForSecondLine()
@@ -349,6 +410,8 @@ public class Manager : MonoBehaviour
         MeasureObj2.SetActive(false);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableJobPlacingForWelding);
+
+        PlayVoiceOver(5);
     }
 
     public void EnableJobPlacingForWelding()
@@ -358,6 +421,8 @@ public class Manager : MonoBehaviour
         WorkPiece.GetComponentInChildren<Outline>().enabled = true;
         WeldingSocket.SetActive(true);
         WeldingSocket.GetComponent<CustomSocket>().AssignMethodOnCleaningJobDone(OnJobSnapForWelding);
+        ResetToolPosition(CenterPunchGo.transform, ToolsOrigin["CenterPunch"]);
+        ResetToolPosition(HammerGo.transform, ToolsOrigin["Hammer"]);
     }
 
     public void OnJobSnapForWelding()
@@ -367,6 +432,8 @@ public class Manager : MonoBehaviour
 
         WeldingSocket.SetActive(false);
         readSteps.AddClickConfirmbtnEvent(GasWeldingSetUP.instance.Onclickbtn_s_3_confirm);
+
+        PlayVoiceOver(6);
     }
 
 
@@ -384,7 +451,7 @@ public class Manager : MonoBehaviour
         //readSteps.AddClickConfirmbtnEvent(FlameControlStep);
 
         readSteps.AddClickConfirmbtnEvent(EnablePPEKitStep);
-
+        PlayVoiceOver(1);
         //PlayStepAudio(3);// kit audio
     }
 
@@ -404,6 +471,7 @@ public class Manager : MonoBehaviour
         GasTableObjectcolliders[0].GetComponent<Outline>().enabled = true;
 
         ObjectOutlines[0].enabled = true; // torch nozel part 
+       // PlayVoiceOver(15);
     }
 
     public void LighterSnap_true()
@@ -446,6 +514,8 @@ public class Manager : MonoBehaviour
         //PlayStepAudio(12);// open flam audio
 
         //Need a ui step for setting up the flame
+
+        PlayVoiceOver(16);
 
     }
 
@@ -531,6 +601,8 @@ public class Manager : MonoBehaviour
 
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(EnableWelding);
+
+            PlayVoiceOver(17);
         }
     }
 
@@ -607,17 +679,26 @@ public class Manager : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(CloseCylinderValves);
+        PlayVoiceOver(19);
     }
 
+    public void enableRotateSpriteForClockWiseRotation(GameObject sprite)
+    {
+        Vector3 rot = sprite.transform.localEulerAngles;
+        rot.y = 180;
+        sprite.transform.localEulerAngles = rot;
+    }
     public void CloseCylinderValves()
     {
+        AntiClockWiseSprite.SetActive(true);
+        enableRotateSpriteForClockWiseRotation(AntiClockWiseSprite);
         readSteps.HideConifmBnt();
         GasTableObjectcolliders[6].enabled = true; //blue valve nozzole(1)
         ObjectOutlines[6].enabled = true; //blue valve nozzole(1)
 
         ObjectOutlines[8].enabled = true; //Black regulator
 
-        rotateNozzles[3].isclockwise = false;  //blue valve nozzole(1)
+        rotateNozzles[3].isclockwise = true;  //blue valve nozzole(1)
         rotateNozzles[3].enabled = true; //blue valve nozzole(1)
         rotateNozzles[3].otherMeterobject.SetActive(false); //blue valve nozzole(1)
         rotateNozzles[3].otherMeterobject = ZeroMeterBlack; //blue valve nozzole(1)
@@ -629,6 +710,9 @@ public class Manager : MonoBehaviour
     {
         if (isTurnOffFlame)
         {
+            ClockWiseSprite.SetActive(true);
+            enableRotateSpriteForClockWiseRotation(ClockWiseSprite);
+
             GasTableObjectcolliders[6].enabled = false; //blue valve nozzole
 
             ObjectOutlines[8].enabled = false; //black regulator
@@ -638,7 +722,7 @@ public class Manager : MonoBehaviour
 
             ObjectOutlines[7].enabled = true; //red valve nozzole
 
-            rotateNozzles[4].isclockwise = false; // red valve nozzle
+            rotateNozzles[4].isclockwise = true; // red valve nozzle
             rotateNozzles[4].enabled = true;
             rotateNozzles[4].otherMeterobject.SetActive(false);
             rotateNozzles[4].otherMeterobject = ZeroMeterred;
@@ -665,9 +749,11 @@ public class Manager : MonoBehaviour
     #endregion
     public void SetFillerRod(GameObject fillerRod)
     {
+        
         if (Weldingflame)
         {
             Weldingflame.SetFillerRod(fillerRod);
+            
         }
     }
 
@@ -684,6 +770,7 @@ public class Manager : MonoBehaviour
         {
             FillerRod[i].GetComponent<Outline>().enabled = true;
             FillerRod[i].GetComponent<XRGrabInteractable>().enabled = true;
+           // FillerRod[i].transform.GetChild(0).GetComponent<CapsuleCollider>().enabled = true;
         }
 
         Weldingflame.SetWeldingFlameParams(WorkPiece, 1);
@@ -709,6 +796,7 @@ public class Manager : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(OnTurningOffFlameStep1);
+        PlayVoiceOver(18);
 
     }
 
@@ -721,6 +809,7 @@ public class Manager : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(PrepareJobforRemovingSlag);
+        PlayVoiceOver(20);
     }
     public void PrepareJobforRemovingSlag()
     {
@@ -763,6 +852,8 @@ public class Manager : MonoBehaviour
 
     }
 
+
+
     public void CleanedWeldLines()
     {
         int count = 0;
@@ -779,11 +870,23 @@ public class Manager : MonoBehaviour
             }
         }
         WorkPiece.GetComponent<XRGrabInteractable>().enabled = true;
+        WorkPiece.GetComponent<Rigidbody>().isKinematic = false;
+        WorkPiece.GetComponent<Rigidbody>().useGravity = true;
 
         ToolsHighlight[0].enabled = false;
         finishPanel.SetActive(true);
         readSteps.tablet.SetActive(true);
         readSteps.panel.SetActive(false);
+    }
+
+    public void RestBrushPos()
+    {
+        ResetToolPosition(WireBrushGo.transform, ToolsOrigin["WireBrush"]);
+    }
+
+    public void ResetChippingHammerPos()
+    {
+        ResetToolPosition(ChippingHammerGo.transform, ToolsOrigin["ChippingHammer"]);
     }
     #endregion
 

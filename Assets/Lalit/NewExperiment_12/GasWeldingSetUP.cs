@@ -38,6 +38,10 @@ public class GasWeldingSetUP : MonoBehaviour
 
     public bool isRedCrecking, isBlackCrecking;
     public AudioClip creckykeyClip;
+
+    public List<int> clipIndex = new List<int>();
+    public GameObject glass1, glass2;
+    
     public void Awake()
     {
         instance = this;
@@ -119,7 +123,7 @@ public class GasWeldingSetUP : MonoBehaviour
             isRedCrecking = true;
             GasTablekitcolliders[0].enabled = true;//red crecking  cylinder key
             rotateNozzles[0].enabled = true; //red crecking  cylinder key
-            rotateNozzles[0].isclockwise = false;
+            rotateNozzles[0].isclockwise = true;
             rotateNozzles[0].RotateValue = 20;
 
             stepAudioSource.PlayOneShot(creckykeyClip);
@@ -142,7 +146,7 @@ public class GasWeldingSetUP : MonoBehaviour
             isBlackCrecking = true;
             GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
             rotateNozzles[1].enabled = true; //black crecking  cylinder key
-            rotateNozzles[1].isclockwise = false; //black crecking  cylinder key
+            rotateNozzles[1].isclockwise = true; //black crecking  cylinder key
             rotateNozzles[1].RotateValue = 20;
             stepAudioSource.PlayOneShot(creckykeyClip);
         }
@@ -171,7 +175,7 @@ public class GasWeldingSetUP : MonoBehaviour
     void OnEnableStep4object()
     {
         readSteps.AddClickEventVideoPlay(0);
-        PlayStepAudio(6);// regulators audio
+        PlayStepAudio(clipIndex[0]);// regulators audio
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_4_confirm);
     }
@@ -201,6 +205,7 @@ public class GasWeldingSetUP : MonoBehaviour
                                            //    Debug.Log("call end  of regulator");
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_1_confirm);
+        PlayStepAudio(clipIndex[1]);
     }
 
     void Onclickbtn_s_5_1_confirm()//Flashback Arrestor confirm
@@ -251,7 +256,7 @@ public class GasWeldingSetUP : MonoBehaviour
 
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
-        PlayStepAudio(7);// hose pipe connection audio
+        PlayStepAudio(clipIndex[2]);
     }
     void Onclickbtn_s_5_confirm()
     {
@@ -295,6 +300,7 @@ public class GasWeldingSetUP : MonoBehaviour
         //  Debug.Log("*");
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_2_confirm);
+        PlayStepAudio(clipIndex[3]);
         // readSteps.HideConifmBnt();
 
     }
@@ -317,7 +323,7 @@ public class GasWeldingSetUP : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_part2_confirm);
-        PlayStepAudio(8);// tourch connection with pipe audio
+        PlayStepAudio(clipIndex[4]);
     }
     void Onclickbtn_s_5_part2_confirm()
     {
@@ -427,7 +433,7 @@ public class GasWeldingSetUP : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_6_confirm);
-        PlayStepAudio(9);// Nozzle set audio
+        PlayStepAudio(clipIndex[5]);
     }
     void Onclickbtn_s_6_confirm()
     {
@@ -463,6 +469,7 @@ public class GasWeldingSetUP : MonoBehaviour
             objectOutLines[12].enabled = false; // red reguletor
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_8_confirm_p2);
+            PlayStepAudio(clipIndex[6]);
             //  Debug.Log("call water");
         }
     }
@@ -472,6 +479,8 @@ public class GasWeldingSetUP : MonoBehaviour
 
     void Onclickbtn_s_8_confirm_p2() //acetylene  shop water
     {
+        redRotateSprite.SetActive(false);
+        BlueRotatesprite.SetActive(false);
         GasTablekitcolliders[21].enabled = true; //Glass object for red
         GasTablekitcolliders[21].GetComponent<Outline>().enabled = true; //Glass object for red
         objectOutLines[4].enabled = true;//regulator red
@@ -488,7 +497,7 @@ public class GasWeldingSetUP : MonoBehaviour
         GasTablekitcolliders[22].enabled = true; //Glass object for black
         GasTablekitcolliders[22].GetComponent<Outline>().enabled = true; //Glass object for black
         objectOutLines[5].enabled = true; //regulator black
-
+        glass1.SetActive(false);
 
     }
     public void Done_oxygen_shop_water() //oxygen  shop water
@@ -499,6 +508,8 @@ public class GasWeldingSetUP : MonoBehaviour
         objectOutLines[5].enabled = false;//regulator black
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s9_confirm);
+        glass2.SetActive(false);
+        PlayStepAudio(clipIndex[7]);
     }
 
     #endregion
@@ -535,6 +546,7 @@ public class GasWeldingSetUP : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(CallEndMethod.Invoke);
+        PlayStepAudio(clipIndex[8]);
         if (Manager.instance)
         {
             Manager.instance.ObjectOutlines[0].enabled = false; //Torch nozzle part HL to snap
@@ -551,11 +563,8 @@ public class GasWeldingSetUP : MonoBehaviour
     #endregion
     void PlayStepAudio(int index)
     {
-        if (stepAudioSource.clip != null)
-        {
-            stepAudioSource.Stop();
-            stepAudioSource.PlayOneShot(stepsAudioClip[index]);
-        }
+        VoiceOverManager_VL.instance.PlayVOForStepIndex(index);
+
     }
     public void SetObjectRestPos_Rotate(int indexOfReset)
     {

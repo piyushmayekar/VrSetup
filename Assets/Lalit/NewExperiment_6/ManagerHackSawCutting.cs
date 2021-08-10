@@ -22,7 +22,7 @@ public class ManagerHackSawCutting : MonoBehaviour
     public Collider[] ppekitcolliders;
     public int countppekit;
 
-    public GameObject FlatFileHL,CSBottleHL,SteelRulerHL,BrushHL, ScriberHL, ScriberHL1, CenterPunchHL, CenterPunchHL1, HammerHL, HammerHL1, HackSawHL;
+    public GameObject FlatFileHL,CSBottleHL,SteelRulerHL,BrushHL, ScriberHL, ScriberHL1, CenterPunchHL, CenterPunchHL1, HammerHL, HammerHL1, HackSawHL, HackSawHL1;
 
     #region WorkPieceObjects
     public Transform WorkPiece;
@@ -98,6 +98,11 @@ public class ManagerHackSawCutting : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnablePPEKitStep);
+        PlayVoiceOver(1);
+    }
+    public void PlayVoiceOver(int index)
+    {
+        VoiceOverManager_VL.instance.PlayVOForStepIndex(index);
     }
     private void Start()
     {
@@ -218,6 +223,7 @@ public class ManagerHackSawCutting : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableHoldBenchWiseStep);
+        PlayVoiceOver(2);
        
     }
 
@@ -246,6 +252,7 @@ public class ManagerHackSawCutting : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableFilling);
+        PlayVoiceOver(3);
         
     }
 
@@ -261,6 +268,7 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public void EnableBenchWiseToUnmount()
     {
+        PlayVoiceOver(4);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(OnClickConfirmForMarkingPlacing);
         for (int i = 0; i < JobEdges.Length; i++)
@@ -284,6 +292,7 @@ public class ManagerHackSawCutting : MonoBehaviour
     }
     public void OnJobSanpForMarking()
     {
+        PlayVoiceOver(5);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableMarkingMediaStep);
         WorkPiece.GetComponent<XRGrabInteractable>().enabled = false;
@@ -389,6 +398,7 @@ public class ManagerHackSawCutting : MonoBehaviour
         GameObject steelR = Instantiate(SteelRulePrefab);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnablePunching);
+        PlayVoiceOver(6);
         JobPlateOnStart.GetComponent<Outline>().enabled = false;
     }
 
@@ -413,6 +423,7 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public void OnPunchingdone()
     {
+        PlayVoiceOver(7);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableCuttingSocket);
         markingPlane.SetActive(false);
@@ -442,6 +453,7 @@ public class ManagerHackSawCutting : MonoBehaviour
 
     public void OnEnableCutting()
     {
+        PlayVoiceOver(8);
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableFirstLineCutting);
         WorkPiece.GetComponent<XRGrabInteractable>().enabled = false;
@@ -474,6 +486,7 @@ public class ManagerHackSawCutting : MonoBehaviour
         
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(EnableSecondLineCutting);
+        PlayVoiceOver(9);
     }
     public void EnableSecondLineCutting()
     {
@@ -481,6 +494,7 @@ public class ManagerHackSawCutting : MonoBehaviour
         readSteps.HideConifmBnt();
         ToolsOutlines[5].enabled = true;
         HackSaw.EmptyParams();
+        HackSawHL1.SetActive(true);
         HackSaw.SetHackSawCuttingParams(WorkPiece, 2);
         HackSaw.AssignMethodOnCuttingDone(OnSecondLineCutDone);
         ReadyJobForSecondCutting();

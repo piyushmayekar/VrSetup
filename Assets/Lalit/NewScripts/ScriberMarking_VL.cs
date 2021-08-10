@@ -200,7 +200,7 @@ public class ScriberMarking_VL : MonoBehaviour
         }
         else
         {
-            audio.Stop();
+            //audio.Stop();
             if (other.tag == "MarkPoint")
             {
                 rb.freezeRotation = false;
@@ -217,6 +217,7 @@ public class ScriberMarking_VL : MonoBehaviour
             {
                 other.gameObject.GetComponent<MeshRenderer>().sharedMaterial = measurePointMat;
                 other.tag = "Disable";
+                HLSound.player.PlayHighlightSnapSound();
                 currentMeasureCount++;
                 if (currentMeasureCount == countMeasurePoint)
                 {
@@ -245,8 +246,11 @@ public class ScriberMarking_VL : MonoBehaviour
 
             if (other.tag == "MarkPoint")
             {
-
-                audio.Play();
+                if (!audio.isPlaying)
+                {
+                    audio.Play();
+                }
+                
                 other.transform.GetComponent<MeshRenderer>().enabled = false;
                 other.transform.GetComponent<SphereCollider>().enabled = false;
                 int index = currentcount;
