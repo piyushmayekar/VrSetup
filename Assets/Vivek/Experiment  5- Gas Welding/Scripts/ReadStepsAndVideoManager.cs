@@ -55,7 +55,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     private void Start()
     {
         currentLanguage = FetchCurrentLanguage();
-      //  Debug.Log("Current languages" + currentLanguage);
+       Debug.Log("Current languages" + countStep);
         TitleTextLoad();
     }
     void TitleTextLoad()
@@ -73,7 +73,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         // load audio with step title text 
         audioWithStep.PlayStepAudio(countStep);
         stepText.text = langManager._stepsText.ExperimentTitle;
-
+      //  Debug.Log("Current languages" + countStep);
     }
     #region Save Language in memory
 
@@ -101,6 +101,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
            // Debug.Log("**** Audio Index " + (countStep + 1));
             countStep++;
         }
+        Debug.Log("Current languages" + countStep);
     }
     public void OnClickLanguagesBtn()
     {
@@ -165,7 +166,8 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     ///Load new text or msg on canvas.
     /// </summary>
     public void onClickConfirmbtn()
-    {
+    { 
+     //   Debug.Log("Current languages" + countStep);
         LoadNextStepText();
     }
     /// <summary>

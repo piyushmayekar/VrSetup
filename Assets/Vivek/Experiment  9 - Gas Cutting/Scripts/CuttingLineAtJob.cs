@@ -8,6 +8,8 @@ public class CuttingLineAtJob : MonoBehaviour
     public int CurrentLine, countlinePoint;
     public Transform[] LineCutPoints;//, Line2CutPoints,Line3CutPoints;
     public GameObject[] DrawLine, cutModel;
+    public GameObject particlePlayObject;
+
     //  public GameObject simpleCutModel;
     public bool iscutting;
     public ParticleSystem starParticle;
@@ -40,15 +42,20 @@ public class CuttingLineAtJob : MonoBehaviour
             LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).GetComponent<Outline>().enabled = (true);
 
         }
-        else
-        {
 
-        }
+        particlePlayObject.GetComponent<BoxCollider>().isTrigger = true;
 
+        particlePlayObject.GetComponent<BoxCollider>().enabled = true;
     }
+   
 
     private void OnTriggerEnter(Collider other)
     {
+       if (other.gameObject.tag == "CleanPoint")
+        {
+            starParticle.Play();
+            starParticle.GetComponent<AudioSource>().Play();
+        }
         if (!iscutting)
         {
             if (LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).name == other.gameObject.name)
@@ -92,6 +99,7 @@ public class CuttingLineAtJob : MonoBehaviour
                 cutModel[CurrentLine - 1].SetActive(false);
                 cutModel[CurrentLine].SetActive(true);
                 LineCutPoints[CurrentLine - 1].gameObject.SetActive(false);
+              
             }
             else
             {
@@ -120,7 +128,7 @@ public class CuttingLineAtJob : MonoBehaviour
             cutModel[CurrentLine - 1].SetActive(false);
             cutModel[CurrentLine].SetActive(true);
             LineCutPoints[CurrentLine - 1].gameObject.SetActive(false);
-
+         
         }
     }
 }

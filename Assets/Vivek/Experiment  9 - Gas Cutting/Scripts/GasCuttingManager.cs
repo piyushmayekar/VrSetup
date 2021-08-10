@@ -301,6 +301,9 @@ public class GasCuttingManager : MonoBehaviour
     }
     void onEnableStep11Object()
     {
+        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().isTrigger = true;
+
         torch90degree.SetActive(true);
     }
     public void Checktourch90degree()
@@ -397,7 +400,7 @@ public class GasCuttingManager : MonoBehaviour
         redBol.RotateValue = 40; //RED  bol reduse or crbarn
         redBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         redBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
-        redBol.isclockwise = false; //RED  bol reduse or crbarn
+        redBol.isclockwise = true; //RED  bol reduse or crbarn
 
         redBol.GetComponent<Outline>().enabled = true;
 
@@ -412,9 +415,9 @@ public class GasCuttingManager : MonoBehaviour
 
            // blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
            // blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-         //   blueBol.RotateValue = 60; //GREEN  bol oxidizing
+        blueBol.RotateValue = 310; //GREEN  bol oxidizing
             blueBol.enabled = true; //GREEN  bol oxidizing
-            blueBol.isclockwise = false; //GREEN  bol oxidizing
+            blueBol.isclockwise = true; //GREEN  bol oxidizing
 
             blueBol.GetComponent<Outline>().enabled = true;
         }
@@ -504,6 +507,7 @@ public class GasCuttingManager : MonoBehaviour
     #region Step 15: Pick up C.S. brush and clean the surface
     void Onclickbtn_s14_confirm()
     {
+        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().isTrigger = false;
         onEnableStep14Object();
         readSteps.HideConifmBnt();
     }

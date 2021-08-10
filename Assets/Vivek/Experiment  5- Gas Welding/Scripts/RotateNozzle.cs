@@ -23,6 +23,7 @@ public class RotateNozzle : MonoBehaviour
     public float speed = 20f;
     List<UnityEngine.XR.InputDevice> leftHandDevices;
     List<UnityEngine.XR.InputDevice> righthandDevices;
+
     void Start()
     {
         leftHandDevices = new List<InputDevice>();
@@ -199,20 +200,4 @@ public class RotateNozzle : MonoBehaviour
         }
     }
 
-    public void TEST()
-    {
-        /*print("TEST>>>>>>>>>>>>>>>");
-        if (x)
-        {
-            Debug.Log("aaaaaaaaaaaaaaaaaaaaa");
-            t_rotate.x += Time.deltaTime * speed;
-        }
-        if (y)
-            t_rotate.y += Time.deltaTime * speed;
-        if (z)
-            t_rotate.z += Time.deltaTime * speed;
-
-        transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);*/
-        //callEnterGrabObject();
-    }
 }

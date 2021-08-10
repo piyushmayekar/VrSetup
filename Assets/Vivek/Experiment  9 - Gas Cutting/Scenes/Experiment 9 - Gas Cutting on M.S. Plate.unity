@@ -485,6 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
   stableVelocityThreshold: 1
@@ -810,6 +811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
   stableVelocityThreshold: 1
@@ -23219,6 +23221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
   stableVelocityThreshold: 1
@@ -31333,6 +31336,7 @@ MonoBehaviour:
   - {fileID: 656327427}
   - {fileID: 981638715}
   - {fileID: 1225197189}
+  particlePlayObject: {fileID: 0}
   iscutting: 0
   starParticle: {fileID: 1302802446}
 --- !u!54 &1493078960
@@ -50203,6 +50207,10 @@ PrefabInstance:
       value: Left Attach Transform
       objectReference: {fileID: 0}
     - target: {fileID: 6481033522545046817, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
+      propertyPath: particlePlayObject
+      value: 
+      objectReference: {fileID: 3188086422789168840}
+    - target: {fileID: 6481033522545046817, guid: 24c3cf0b1bb8c09408c65f4082732654, type: 3}
       propertyPath: DrawLine.Array.data[0]
       value: 
       objectReference: {fileID: 5737690795717884300}
@@ -51068,6 +51076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
   stableVelocityThreshold: 1
