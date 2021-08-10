@@ -114,12 +114,16 @@ namespace PiyushUtils
         {
             if (voiceOverData != null)
             {
-                if (voiceOverData.voiceOvers[CurrentTaskIndex] != null && _voAudioSource != null)
+                if (_voAudioSource != null)
                 {
                     if (_voAudioSource.isPlaying) 
                         _voAudioSource.Stop();
-                    if (CurrentLangIndex == (int)_Language.Gujrati)
-                        _voAudioSource.PlayOneShot(voiceOverData.voiceOvers[CurrentTaskIndex]);
+                    if (voiceOverData.voDatas[CurrentLangIndex] != null && voiceOverData.voDatas[CurrentLangIndex].data.Count>0)
+                    {
+                        List<AudioClip> currentLanguageVO = voiceOverData.voDatas[CurrentLangIndex].data;
+                        if (currentLanguageVO != null)
+                            _voAudioSource.PlayOneShot(currentLanguageVO[CurrentTaskIndex]);
+                    }
                 }
             }
             else

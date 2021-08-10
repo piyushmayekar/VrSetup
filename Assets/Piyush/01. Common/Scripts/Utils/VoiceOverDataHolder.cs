@@ -7,6 +7,14 @@ namespace PiyushUtils
     [CreateAssetMenu(fileName = "VO Data", menuName = "Voice Over Holder", order = 1)]
     public class VoiceOverDataHolder : ScriptableObject
     {
-        public List<AudioClip> voiceOvers = new List<AudioClip>();
+        [Tooltip("Store data according to the _Language enum index")]
+        public List<VOData> voDatas = new List<VOData>();
+
+    }
+
+    [System.Serializable]
+    public class VOData
+    {
+        public List<AudioClip> data = new List<AudioClip>();
     }
 }
