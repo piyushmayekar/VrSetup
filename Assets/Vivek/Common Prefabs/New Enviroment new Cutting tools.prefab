@@ -4207,11 +4207,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  RotateValue: 80
+  RotateValue: 310
   ismeter: 0
   isRegulator: 0
   isclockwise: 0
-  speed: -40
+  speed: 40
 --- !u!114 &901900393954462781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62884,9 +62884,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  particlePlayObject: {fileID: 0}
   iscutting: 0
-  isStarPlay: 0
   starParticle: {fileID: 1328508487613463533}
 --- !u!1 &6481033522581450109
 GameObject:
@@ -74181,7 +74179,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  RotateValue: 50
+  RotateValue: 310
   ismeter: 0
   isRegulator: 0
   isclockwise: 0
@@ -88297,14 +88295,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6481033523613369808}
     m_Modifications:
-    - target: {fileID: 4192631485211606370, guid: 8c65fbd28f3555849968cce7481971a2, type: 3}
-      propertyPath: Loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192631485211606370, guid: 8c65fbd28f3555849968cce7481971a2, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: ec5d9245647b9fa42bcb854e8e6969dc, type: 3}
     - target: {fileID: 4992738171542721862, guid: 8c65fbd28f3555849968cce7481971a2, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -88348,10 +88338,6 @@ PrefabInstance:
     - target: {fileID: 4992738171542721862, guid: 8c65fbd28f3555849968cce7481971a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4992738171542721863, guid: 8c65fbd28f3555849968cce7481971a2, type: 3}
-      propertyPath: looping
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4992738171542721865, guid: 8c65fbd28f3555849968cce7481971a2, type: 3}
       propertyPath: m_Name

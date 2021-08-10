@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -38,8 +38,8 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     [HideInInspector]
     public bool isChangeFont, isStep, isBrushCleaning;
 
-    private string[] indexGuj = new string[] { "Ã’", "Ã“", "Ã”", "Ã•", "Ã–", "Ã—", "Ã˜", "Ã™", "Ãš", "Ã›" };
-    //"Ã“Ã’", "Ã“Ã“","Ã“Ã”","Ã“Ã•","Ã“Ã–","Ã“Ã—","Ã“Ã˜","Ã“Ã™","Ã“Ãš","Ã“Ã›","Ã”Ã’"};  // ***** ANKITA CHANGES *****
+    private string[] indexGuj = new string[] { "Ò", "Ó", "Ô", "Õ", "Ö", "×", "Ø", "Ù", "Ú", "Û" };
+    //"ÓÒ", "ÓÓ","ÓÔ","ÓÕ","ÓÖ","Ó×","ÓØ","ÓÙ","ÓÚ","ÓÛ","ÔÒ"};  // ***** ANKITA CHANGES *****
     [Header("Language")]
     public _Language currentLanguage;
     public int CurrentLangIndex => (int)currentLanguage;
@@ -156,7 +156,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
             {
                 stepNumString = indexGuj[cntNum];
             }
-            return "pglu> Ã  " + stepNumString + "\n";
+            return "pglu> à " + stepNumString + "\n";
         }
     }
 
