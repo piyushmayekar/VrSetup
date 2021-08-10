@@ -21,8 +21,8 @@ public class RotateNozzle : MonoBehaviour
     public bool isclockwise;
     Quaternion t_rotate;
     public float speed = 20f;
-    List<UnityEngine.XR.InputDevice> leftHandDevices;
-    List<UnityEngine.XR.InputDevice> righthandDevices;
+    List<InputDevice> leftHandDevices;
+    List<InputDevice> righthandDevices;
 
     void Start()
     {
@@ -81,7 +81,7 @@ public class RotateNozzle : MonoBehaviour
             if (z)
             {
                 //Debug.Log("callzzzzzzzzzzzz grab enter");
-                if (OtherRotate.transform.eulerAngles.z > RotateValue && OtherRotate.transform.eulerAngles.z < (RotateValue + 20))
+                if (OtherRotate.transform.eulerAngles.z > RotateValue && OtherRotate.transform.eulerAngles.z < (RotateValue + 20))//20 hata 
                 {
                     CallEndMethod();
                 }
@@ -153,12 +153,6 @@ public class RotateNozzle : MonoBehaviour
     }
     public void callExitObjectGrab()
     {
-        //GameObject g = grabObject.GetChild(0).gameObject;
-        //leftHand = GameObject.Find("Left Hand").gameObject.transform;
-        //g.transform.parent = leftHand;
-        //g.transform.position = g.transform.parent.position;
-        //g.transform.rotation = g.transform.parent.rotation;
-        // transform.localRotation = Quaternion.Euler(t_rotate.x, t_rotate.y, t_rotate.z);
         if (ishideMesh)
         {
             HideMesh.enabled = true;
@@ -173,8 +167,6 @@ public class RotateNozzle : MonoBehaviour
 
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
-            //print("ENter.................");
-            //leftHand.GetChild(0).transform.parent = grabObject.transform;
             if (val || val1)
             {
                 callEnterGrabObject();
@@ -196,8 +188,9 @@ public class RotateNozzle : MonoBehaviour
         if ((other.gameObject.tag == "RightHand" || other.gameObject.tag == "LeftHand"))
         {
             if (val || val1)
+            {
                 callEnterGrabObject();
+            }
         }
     }
-
 }

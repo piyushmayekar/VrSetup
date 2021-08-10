@@ -437,9 +437,9 @@ public class GasJointweldingManager : MonoBehaviour
             blueBol.enabled = true; //GREEN  bol oxidizing
             blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
             blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            blueBol.RotateValue = 30; //GREEN  bol oxidizing
+            blueBol.RotateValue = 320; //GREEN  bol oxidizing
             blueBol.isclockwise = false; //GREEN  bol oxidizing
-
+            blueBol.speed = -20f;
             blueBol.GetComponent<Outline>().enabled = true;
         }
     }

@@ -828,7 +828,7 @@ public class GasWeldingStep : MonoBehaviour
             rotateNozzles[3].transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
             rotateNozzles[3].OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
          
-            rotateNozzles[3].RotateValue = 250; //GREEN  bol oxidizing
+            rotateNozzles[3].RotateValue = 320; //GREEN  bol oxidizing
             rotateNozzles[3].speed = -20; //GREEN  bol oxidizing
             rotateNozzles[3].enabled = true; //GREEN  bol oxidizing
             rotateNozzles[3].isclockwise = false; //GREEN  bol oxidizing false

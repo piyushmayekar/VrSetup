@@ -415,10 +415,10 @@ public class GasCuttingManager : MonoBehaviour
 
            // blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
            // blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-        blueBol.RotateValue = 310; //GREEN  bol oxidizing
+            blueBol.RotateValue = 80; //GREEN  bol oxidizing
             blueBol.enabled = true; //GREEN  bol oxidizing
             blueBol.isclockwise = true; //GREEN  bol oxidizing
-
+            blueBol.speed = -40f;
             blueBol.GetComponent<Outline>().enabled = true;
         }
     }
