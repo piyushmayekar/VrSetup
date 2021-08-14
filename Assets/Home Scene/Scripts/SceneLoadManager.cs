@@ -10,10 +10,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class SceneLoadManager : MonoBehaviour
 {
     [SerializeField, Tooltip("Please enter scene name with match of experiment buttons number indexes")] string[] sceneNames;
-
+    public GameObject quitPanel, menuButtonPanel;
     public void LoadSceneWithIndex(int SceneIndex)
     {
-        
+
         SceneManager.LoadScene(sceneNames[SceneIndex]);
 
     }
@@ -21,10 +21,20 @@ public class SceneLoadManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
-    public void onClickToQuit()
+    public void OnPressXbutton()
+    {
+        quitPanel.SetActive(true);
+        menuButtonPanel.SetActive(false);
+
+    }
+    public void onClickYesbutton()
     {
         Application.Quit();
     }
-  
+    public void onClickNoButton()
+    {
+        quitPanel.SetActive(false);
+        menuButtonPanel.SetActive(true);
+    }
 }
 

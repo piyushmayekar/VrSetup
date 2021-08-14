@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using System;
+using UnityEngine.XR;
 
 public class ReadStepsAndVideoManager : MonoBehaviour
 {
@@ -51,6 +52,15 @@ public class ReadStepsAndVideoManager : MonoBehaviour
         instance = this;
         isStep = false;
         // isStep = true;
+
+        //xr player reset
+       /* List<InputDevice> devices = new List<InputDevice>();
+        InputDevices.GetDevices(devices);
+        if (devices.Count != 0)
+        {
+            devices[0].subsystem.TryRecenter();
+        }
+*/
     }
     private void Start()
     {
@@ -177,7 +187,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     public void AddClickConfirmbtnEvent(OnClickBtnEvent callBtnclickEvent)
     {
 
-        tablet.SetActive(true);
+      tablet.SetActive(true);
 
         confirmbtn.gameObject.SetActive(true);
         confirmbtn.onClick.RemoveAllListeners();

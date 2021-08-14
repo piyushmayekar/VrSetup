@@ -913,7 +913,7 @@ public class GasWeldingStep : MonoBehaviour
         {
             objectOutLines[4].enabled = false;
             readSteps.panel.SetActive(false);
-            readSteps.tablet.SetActive(true);
+            readSteps.tablet.SetActive(true);//end step
             finishPanel.SetActive(true);
             rotateNozzles[6].enabled = false;
             GasTablekitcolliders[10].enabled = false;

@@ -68,7 +68,7 @@ public class GasCuttingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-     //   CheckJobFlatPlace();
+        //Checktourch90degree();
     }
 
     public void ConfirmSatrtbtn()
@@ -306,6 +306,8 @@ public class GasCuttingManager : MonoBehaviour
 
         torch90degree.SetActive(true);
     }
+    [HideInInspector]
+    public bool isCutting;
     public void Checktourch90degree()
     {
         torch90degree.SetActive(false);
@@ -313,10 +315,12 @@ public class GasCuttingManager : MonoBehaviour
         pos = torch90degree.transform.localPosition;
         GasTableObjectcolliders[6].transform.localPosition = pos;
 
-
+        isCutting = true;
         GasTableObjectcolliders[6].transform.localEulerAngles = torch90degree.transform.localEulerAngles;
+
         GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
         GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
         GasTableObjectcolliders[6].GetComponent<CustomXRGrabInteractable>().trackRotation = false;
 
         readSteps.onClickConfirmbtn();
@@ -377,7 +381,7 @@ public class GasCuttingManager : MonoBehaviour
             GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = false;
             CuttingBrush.instance.cleanPointCount = 15;
             CuttingBrush.instance.isStop = false;
-
+            isCutting = false;
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_14_1_confirm);
         }
@@ -415,10 +419,10 @@ public class GasCuttingManager : MonoBehaviour
 
            // blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
            // blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            blueBol.RotateValue = 80; //GREEN  bol oxidizing
+            //blueBol.RotateValue = 80; //GREEN  bol oxidizing
             blueBol.enabled = true; //GREEN  bol oxidizing
             blueBol.isclockwise = true; //GREEN  bol oxidizing
-            blueBol.speed = -40f;
+            //blueBol.speed = -40f;
             blueBol.GetComponent<Outline>().enabled = true;
         }
     }
@@ -522,6 +526,7 @@ public class GasCuttingManager : MonoBehaviour
     public void cleanBrushFinish()
     {
         objectOutLines[2].enabled = false;
+        readSteps.tablet.SetActive(true); //end step
         finishPanel.SetActive(true);
         readSteps.panel.SetActive(false);
     }
