@@ -1,70 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
+using TMPro;
+using UnityEngine.UI;
+using static UnityEngine.UI.Button;
+using System;
 
 public class HomeManager : MonoBehaviour
 {
-   
-    public GameObject[] allExpGroupButtons;
-	int countButton;
-    // Start is called before the first frame update
+    [Header("ADD SCENE NAMES HERE")]
+    [Tooltip("Add Scenes names here which will be loaded. DON'T FORGET TO ADD THOSE SCENES IN BUILD MENU")]
+    public List<string> sceneNames;
+    
+    [Header("DON'T CHANGE THESE VARIABLES")]
+    [SerializeField, Tooltip("The button that enables user to click on it & load an experiment scene")] 
+    GameObject expSelectorButtonPrefab;
+
+    [SerializeField] Transform selectorPanel;
+
+    SceneLoadManager sceneLoadManager;
+
+
     void Start()
     {
+        sceneLoadManager = GetComponent<SceneLoadManager>();
+        for (int i = 0; i < sceneNames.Count; i++)
+        {
+            GameObject buttonGO = Instantiate(expSelectorButtonPrefab, selectorPanel);
+            ExpSelectorButton expSelector = buttonGO.GetComponentInChildren<ExpSelectorButton>();
+            expSelector.Initialize(sceneNames[i]);
+            expSelector.OnButtonClickEvent.AddListener(() => OnExpSelectorButtonClick(expSelector));
+        }
+    }
 
-	}
-
-    public void onClickNextButton()
+    private void OnExpSelectorButtonClick(ExpSelectorButton expSelector)
     {
-		if (countButton + 1 < allExpGroupButtons.Length)
-		{
-			countButton++;
-		}
-		for (int i = 0; i < allExpGroupButtons.Length; i++)
-		{
-			allExpGroupButtons[i].SetActive(false);
-		}
-		allExpGroupButtons[countButton].SetActive(true);
-	}
-    public void OnClickPreviousButton()
-    {
-		if (countButton - 1 >= 0)
-		{
-			countButton--;
-		}
-		for (int i = 0; i < allExpGroupButtons.Length; i++)
-		{
-			allExpGroupButtons[i].SetActive(false);
-		}
-		allExpGroupButtons[countButton].SetActive(true);
-	}
-	/*
-	 public void BAckButton()
-  {
-	  if(countButton - 1 >= 0)
-	  {
-		  countButton --;
-
-	  }
-
-	  for (int i = 0; i < allExpButtons.Length; i++) {
-		  allExpButtons [i].SetActive (false);
-	  }
-	  allExpButtons [countButton].SetActive (true);
-
-  }
-  public void Nextbutton()
-  {
-	  if(countButton + 1 < allExpButtons.Length)
-	  {
-		  countButton++;
-
-	  }
-	  for (int i = 0; i < allExpButtons.Length; i++) {
-		  allExpButtons [i].SetActive (false);
-	  }
-	  allExpButtons [countButton].SetActive (true);
-
-  }
-	 */
+        sceneLoadManager.LoadSceneWithName(expSelector.sceneName);
+    }
 }

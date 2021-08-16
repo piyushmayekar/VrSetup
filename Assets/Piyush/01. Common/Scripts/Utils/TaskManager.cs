@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -102,6 +103,8 @@ namespace PiyushUtils
             {
                 tablet.relearnButton.gameObject.SetActive(true);
                 tablet.homeButton.gameObject.SetActive(true);
+                tablet.relearnButton.onClick.AddListener(OnRelearnButtonClick);
+                tablet.homeButton.onClick.AddListener(OnHomeButtonClick);
                 SetTaskInfoTextAccToLanguage();
             }
             tablet.SetTabletOnState(true);
@@ -204,6 +207,16 @@ namespace PiyushUtils
             SetTaskInfoFont();
             SetTaskInfoTextAccToLanguage();
             PlayStepVO();
+        }
+
+        void OnRelearnButtonClick()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        void OnHomeButtonClick()
+        {
+            SceneManager.LoadScene("Home Scene");
         }
 
         private void SetTaskInfoFont()
