@@ -38,6 +38,9 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     public bool isChangeFont, isStep, isBrushCleaning;
 
     private string[] indexGuj = new string[] { "р", "с", "т", "у", "ж", "в", "ь", "ы", "з", "ш" };
+    public _Language currentLanguage = _Language.Gujrati;
+
+
     //"ср", "сс","ст","су","сж","св","сь","сы","сз","сш","тр"};  // ***** ANKITA CHANGES *****
 
 

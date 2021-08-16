@@ -323,6 +323,7 @@ public class GasWeldingSetUP : MonoBehaviour
     {
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_part2_confirm);
+        readSteps.AddClickEventVideoPlay(3);
         PlayStepAudio(clipIndex[4]);
     }
     void Onclickbtn_s_5_part2_confirm()

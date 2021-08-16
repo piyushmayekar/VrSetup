@@ -25,7 +25,6 @@ public class BenchWiseJaw : MonoBehaviour
             {
                 if (jobfitted)
                 {
-                    Debug.Log("Shit was here");
                     return;
                 }
                 else
