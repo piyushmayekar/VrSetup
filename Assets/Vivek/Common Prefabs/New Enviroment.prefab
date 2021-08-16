@@ -1004,6 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
   stableVelocityThreshold: 1
@@ -50834,6 +50835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 1
+  soundPlayer: {fileID: 0}
 --- !u!82 &3626890579233449310
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50975,6 +50977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
   stableVelocityThreshold: 1
@@ -52304,6 +52307,8 @@ MonoBehaviour:
   parentBrushRb: {fileID: 3457244313044530865}
   type: 1
   isStop: 0
+  isCleaning: 0
+  CleanText: {fileID: 0}
   cleanPointCount: 15
 --- !u!1 &3276602697870619737
 GameObject:
@@ -57859,6 +57864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
   stableVelocityThreshold: 1

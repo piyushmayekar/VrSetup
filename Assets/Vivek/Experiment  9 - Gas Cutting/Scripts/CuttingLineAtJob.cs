@@ -8,8 +8,10 @@ public class CuttingLineAtJob : MonoBehaviour
     public int CurrentLine, countlinePoint;
     public Transform[] LineCutPoints;//, Line2CutPoints,Line3CutPoints;
     public GameObject[] DrawLine, cutModel;
+    public GameObject particlePlayObject;
+
     //  public GameObject simpleCutModel;
-    public bool iscutting;
+    public bool iscutting,isStarPlay;
     public ParticleSystem starParticle;
     // Start is called before the first frame update
     void Start()
@@ -40,22 +42,29 @@ public class CuttingLineAtJob : MonoBehaviour
             LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).GetComponent<Outline>().enabled = (true);
 
         }
-        else
-        {
 
-        }
+        particlePlayObject.GetComponent<BoxCollider>().isTrigger = true;
 
+        particlePlayObject.GetComponent<BoxCollider>().enabled = true;
     }
-
+   
+  
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "CleanPoint")
+        {
+            isStarPlay = true;
+           // InvokeRepeating("PlayStarParticle",0.5f,.8f);
+            starParticle.Play();
+            starParticle.GetComponent<AudioSource>().Play();
+        }
         if (!iscutting)
         {
             if (LineCutPoints[CurrentLine].transform.GetChild(countlinePoint - 1).name == other.gameObject.name)
             {
                 countlinePoint--;
-                starParticle.Play();
-                starParticle.GetComponent<AudioSource>().Play();
+          /*      starParticle.Play();
+                starParticle.GetComponent<AudioSource>().Play();*/
                 LineCutPoints[CurrentLine].GetComponent<LineRenderer>().positionCount++;
                 LineCutPoints[CurrentLine].GetComponent<LineRenderer>().SetPosition(LineCutPoints[CurrentLine].GetComponent<LineRenderer>().positionCount - 1, other.gameObject.transform.localPosition);
                 other.gameObject.SetActive(false);
@@ -79,6 +88,25 @@ public class CuttingLineAtJob : MonoBehaviour
             }
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "CleanPoint")
+        {
+            isStarPlay = false;
+         //   CancelInvoke("PlayStarParticle");
+            starParticle.Stop();
+            starParticle.GetComponent<AudioSource>().Stop();
+        }
+
+    }
+    void PlayStarParticle()
+    {
+        if (isStarPlay)
+        {
+            starParticle.Play();
+            starParticle.GetComponent<AudioSource>().Play();
+        }
+    }
     void checkGasCutLine()
     {
         if (countlinePoint <= 0)
@@ -92,6 +120,7 @@ public class CuttingLineAtJob : MonoBehaviour
                 cutModel[CurrentLine - 1].SetActive(false);
                 cutModel[CurrentLine].SetActive(true);
                 LineCutPoints[CurrentLine - 1].gameObject.SetActive(false);
+              
             }
             else
             {
@@ -120,7 +149,7 @@ public class CuttingLineAtJob : MonoBehaviour
             cutModel[CurrentLine - 1].SetActive(false);
             cutModel[CurrentLine].SetActive(true);
             LineCutPoints[CurrentLine - 1].gameObject.SetActive(false);
-
+         
         }
     }
 }

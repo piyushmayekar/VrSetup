@@ -68,7 +68,7 @@ public class GasCuttingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-     //   CheckJobFlatPlace();
+        //Checktourch90degree();
     }
 
     public void ConfirmSatrtbtn()
@@ -301,8 +301,13 @@ public class GasCuttingManager : MonoBehaviour
     }
     void onEnableStep11Object()
     {
+        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().isTrigger = true;
+
         torch90degree.SetActive(true);
     }
+    [HideInInspector]
+    public bool isCutting;
     public void Checktourch90degree()
     {
         torch90degree.SetActive(false);
@@ -310,10 +315,12 @@ public class GasCuttingManager : MonoBehaviour
         pos = torch90degree.transform.localPosition;
         GasTableObjectcolliders[6].transform.localPosition = pos;
 
-
+        isCutting = true;
         GasTableObjectcolliders[6].transform.localEulerAngles = torch90degree.transform.localEulerAngles;
+
         GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
         GasTableObjectcolliders[6].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
         GasTableObjectcolliders[6].GetComponent<CustomXRGrabInteractable>().trackRotation = false;
 
         readSteps.onClickConfirmbtn();
@@ -374,7 +381,7 @@ public class GasCuttingManager : MonoBehaviour
             GasTableObjectcolliders[6].GetComponent<FreezeRotation>().isFreeze = false;
             CuttingBrush.instance.cleanPointCount = 15;
             CuttingBrush.instance.isStop = false;
-
+            isCutting = false;
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_14_1_confirm);
         }
@@ -397,7 +404,7 @@ public class GasCuttingManager : MonoBehaviour
         redBol.RotateValue = 40; //RED  bol reduse or crbarn
         redBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         redBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
-        redBol.isclockwise = false; //RED  bol reduse or crbarn
+        redBol.isclockwise = true; //RED  bol reduse or crbarn
 
         redBol.GetComponent<Outline>().enabled = true;
 
@@ -412,10 +419,10 @@ public class GasCuttingManager : MonoBehaviour
 
            // blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
            // blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-         //   blueBol.RotateValue = 60; //GREEN  bol oxidizing
+            //blueBol.RotateValue = 80; //GREEN  bol oxidizing
             blueBol.enabled = true; //GREEN  bol oxidizing
-            blueBol.isclockwise = false; //GREEN  bol oxidizing
-
+            blueBol.isclockwise = true; //GREEN  bol oxidizing
+            //blueBol.speed = -40f;
             blueBol.GetComponent<Outline>().enabled = true;
         }
     }
@@ -504,6 +511,7 @@ public class GasCuttingManager : MonoBehaviour
     #region Step 15: Pick up C.S. brush and clean the surface
     void Onclickbtn_s14_confirm()
     {
+        GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<BoxCollider>().isTrigger = false;
         onEnableStep14Object();
         readSteps.HideConifmBnt();
     }
@@ -518,6 +526,7 @@ public class GasCuttingManager : MonoBehaviour
     public void cleanBrushFinish()
     {
         objectOutLines[2].enabled = false;
+        readSteps.tablet.SetActive(true); //end step
         finishPanel.SetActive(true);
         readSteps.panel.SetActive(false);
     }

@@ -269,4 +269,5 @@ public class CuttingJobMaterial : MonoBehaviour
             GasCuttingManager.instance.CheckJobFlatPlace();
         }
     }
+
 }

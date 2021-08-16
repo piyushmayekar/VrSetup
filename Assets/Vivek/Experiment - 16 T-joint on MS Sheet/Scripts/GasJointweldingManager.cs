@@ -390,9 +390,10 @@ public class GasJointweldingManager : MonoBehaviour
 
         // GasTableObjectcolliders[5].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
 
+        GasTableObjectcolliders[5].transform.localEulerAngles = weldingTorch.transform.localEulerAngles;
+
         GasTableObjectcolliders[5].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
-        GasTableObjectcolliders[5].transform.localEulerAngles = weldingTorch.transform.localEulerAngles;
 
         neturalFlameCube.GetComponent<JointWelding>().isWelding = true;
     }
@@ -437,9 +438,9 @@ public class GasJointweldingManager : MonoBehaviour
             blueBol.enabled = true; //GREEN  bol oxidizing
             blueBol.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
             blueBol.OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            blueBol.RotateValue = 30; //GREEN  bol oxidizing
+            blueBol.RotateValue = 320; //GREEN  bol oxidizing
             blueBol.isclockwise = false; //GREEN  bol oxidizing
-
+            blueBol.speed = -20f;
             blueBol.GetComponent<Outline>().enabled = true;
         }
     }
@@ -566,7 +567,7 @@ public class GasJointweldingManager : MonoBehaviour
     public void checkChappingHummer()
     {
         finishPanel.SetActive(true);
-        readSteps.tablet.SetActive(true);
+        readSteps.tablet.SetActive(true);//end step
         readSteps.panel.SetActive(false);
         objectOutLines[4].enabled = false;
         SetObjectRestPos_Rotate(4); //chapping hummer tool

@@ -95,6 +95,6 @@ public class CuttingBrush : MonoBehaviour
         {
             CleanText.text = cleanPointCount.ToString() + "/15";
         }
-        ReadStepsAndVideoManager.instance.stepText.text = ReadStepsAndVideoManager.instance.currentLanguage == 0 ? "Pick up C.S. brush and clean the surface." : "sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
+        ReadStepsAndVideoManager.instance.stepText.text = ReadStepsAndVideoManager.instance.currentLanguage == 0 ? "Pick up C.S. brush and clean the surface.\n"+cleanPointCount.ToString() + "/15" : "sI.ƒs. b/x ]paDo Ane spa3Ine saf kro.";
     }
 }

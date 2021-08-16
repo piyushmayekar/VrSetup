@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class HomeManager : MonoBehaviour
 {
@@ -10,8 +11,14 @@ public class HomeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-    }
+		//xr player reset
+		/*List<InputDevice> devices = new List<InputDevice>();
+		InputDevices.GetDevices(devices);
+		if (devices.Count != 0)
+		{
+			devices[0].subsystem.TryRecenter();
+		}*/
+	}
 
     public void onClickNextButton()
     {

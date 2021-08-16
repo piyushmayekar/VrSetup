@@ -58,6 +58,7 @@ public class GasWeldingStep : MonoBehaviour
     {
         instance = this;
         Application.targetFrameRate = 60;
+       
         for (int i = 0; i < ppekitcolliders.Length; i++)
         {
             ppekitcolliders[i].enabled = false;
@@ -82,9 +83,11 @@ public class GasWeldingStep : MonoBehaviour
         GasTablekitcolliders[14].GetComponent<SnapGrabbleObject>().enabled = false;
         bluePipeRop.GetComponent<CapsuleCollider>().enabled = false;
         redPipeRop.GetComponent<CapsuleCollider>().enabled = false;
+
         readSteps.panel.SetActive(true);
         readSteps.AddClickConfirmbtnEvent(ConfirmSatrtbtn);
         readSteps.confirmbtn.gameObject.SetActive(true);
+
     }
     public void Start()
     {
@@ -93,9 +96,9 @@ public class GasWeldingStep : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-
+       // Onclickbtn_s_9_confirm();
     }
-    IEnumerator PlayGasWeldingStartAudio()
+  /*  IEnumerator PlayGasWeldingStartAudio()
     {
         yield return new WaitForSeconds(4f);
         //EXP title audio clip (0)
@@ -110,7 +113,7 @@ public class GasWeldingStep : MonoBehaviour
         OnEnableStep3object();
         yield return new WaitForSeconds(5f);
         Onclickbtn_s_3_confirm();
-    }
+    }*/
     public void Update()
     {
         if (isPipeblueConnect)
@@ -130,7 +133,7 @@ public class GasWeldingStep : MonoBehaviour
 
     void ConfirmSatrtbtn()
     {
-        readSteps.onClickConfirmbtn();
+     readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_1_confirm);
     }
     #region step1 Step 1: Wear PPE Kit
@@ -195,7 +198,7 @@ public class GasWeldingStep : MonoBehaviour
             isRedCrecking = true;
             GasTablekitcolliders[1].enabled = true;//red crecking  cylinder key
             rotateNozzles[0].enabled = true; //red crecking  cylinder key
-            rotateNozzles[0].isclockwise = false;
+            rotateNozzles[0].isclockwise = true;
             stepAudioSource.PlayOneShot(creckykeyClip);
         }
         else
@@ -216,7 +219,7 @@ public class GasWeldingStep : MonoBehaviour
             isBlackCrecking = true;
             GasTablekitcolliders[2].enabled = true;//blue crecking cylinder key
             rotateNozzles[1].enabled = true; //black crecking  cylinder key
-            rotateNozzles[1].isclockwise = false;
+            rotateNozzles[1].isclockwise = true;
             stepAudioSource.PlayOneShot(creckykeyClip);
         }
         else
@@ -777,6 +780,7 @@ public class GasWeldingStep : MonoBehaviour
 
             readSteps.onClickConfirmbtn();
             readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_10_confirm);
+          
         }
     }
     #endregion
@@ -798,7 +802,7 @@ public class GasWeldingStep : MonoBehaviour
         rotateNozzles[2].RotateValue = 50; //RED  bol reduse or crbarn
         rotateNozzles[2].transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
         rotateNozzles[2].OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //RED  bol reduse or crbarn
-        rotateNozzles[2].isclockwise = false; //RED  bol reduse or crbarn
+        rotateNozzles[2].isclockwise = true; //RED  bol reduse or crbarn
                                               //
         GasTablekitcolliders[18].transform.gameObject.SetActive(true);
         GasTablekitcolliders[20].transform.parent.gameObject.SetActive(false);
@@ -823,9 +827,11 @@ public class GasWeldingStep : MonoBehaviour
             GasTablekitcolliders[19].transform.gameObject.SetActive(true);  //GREEN  bol oxidizing
             rotateNozzles[3].transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
             rotateNozzles[3].OtherRotate.transform.localRotation = Quaternion.Euler(0, 0, 0); //GREEN  bol oxidizing
-            rotateNozzles[3].RotateValue = 50; //GREEN  bol oxidizing
+         
+            rotateNozzles[3].RotateValue = 320; //GREEN  bol oxidizing
+            rotateNozzles[3].speed = -20; //GREEN  bol oxidizing
             rotateNozzles[3].enabled = true; //GREEN  bol oxidizing
-            rotateNozzles[3].isclockwise = false; //GREEN  bol oxidizing
+            rotateNozzles[3].isclockwise = false; //GREEN  bol oxidizing false
 
             GasTablekitcolliders[18].enabled = false;
 
@@ -907,7 +913,7 @@ public class GasWeldingStep : MonoBehaviour
         {
             objectOutLines[4].enabled = false;
             readSteps.panel.SetActive(false);
-            readSteps.tablet.SetActive(true);
+            readSteps.tablet.SetActive(true);//end step
             finishPanel.SetActive(true);
             rotateNozzles[6].enabled = false;
             GasTablekitcolliders[10].enabled = false;

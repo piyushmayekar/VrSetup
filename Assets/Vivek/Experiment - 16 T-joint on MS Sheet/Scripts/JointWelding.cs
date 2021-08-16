@@ -139,7 +139,14 @@ public class JointWelding : MonoBehaviour
             if (other.transform.tag == "Electrode")
             {
                 isFiller = false;
+                starParticle.Stop();
+                starParticle.GetComponent<AudioSource>().Stop();
                 sparkLight.SetActive(false);
+            }
+            if (other.gameObject.tag == "CleanPoint")
+            {
+                starParticle.Stop();
+                starParticle.GetComponent<AudioSource>().Stop();
             }
         }
     }
@@ -147,12 +154,12 @@ public class JointWelding : MonoBehaviour
     {
         if (jointTools == JointTools.tPlate)
         {
-            if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
+            /*if (other.transform.tag == "CleanPoint" && isFiller)//Add By GP
             {
                 starParticle.Play();
                 starParticle.GetComponent<AudioSource>().Play();
                 sparkLight.SetActive(true);
-            }
+            }*/
         }
     }
     public IEnumerator HammerBreakpoint(GameObject other)

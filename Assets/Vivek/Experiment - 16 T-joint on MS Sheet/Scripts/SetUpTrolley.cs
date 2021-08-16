@@ -130,7 +130,7 @@ public class SetUpTrolley : MonoBehaviour
             isRedCrecking = true;
             GasTablekitcolliders[0].enabled = true;//red crecking  cylinder key
             rotateNozzles[0].enabled = true; //red crecking  cylinder key
-            rotateNozzles[0].isclockwise = false;
+            rotateNozzles[0].isclockwise = true;
             rotateNozzles[0].RotateValue = 20;
 
             stepAudioSource.PlayOneShot(creckykeyClip);
@@ -150,7 +150,7 @@ public class SetUpTrolley : MonoBehaviour
             isBlackCrecking = true;
             GasTablekitcolliders[1].enabled = true;//black crecking cylinder key
             rotateNozzles[1].enabled = true; //black crecking  cylinder key
-            rotateNozzles[1].isclockwise = false; //black crecking  cylinder key
+            rotateNozzles[1].isclockwise = true; //black crecking  cylinder key
             rotateNozzles[1].RotateValue = 20;
             stepAudioSource.PlayOneShot(creckykeyClip);
         }

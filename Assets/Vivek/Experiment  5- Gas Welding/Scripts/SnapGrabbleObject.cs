@@ -40,6 +40,7 @@ public class SnapGrabbleObject : MonoBehaviour
 
                 if (callAnyOtherMethod != null)
                 {
+                    //Debug.Log("This object call " + this.gameObject.name);
                     //    Debug.Log("calllllllllllllllllllllll");
                     callAnyOtherMethod.Invoke();
                 }
