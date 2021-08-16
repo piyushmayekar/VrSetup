@@ -16,10 +16,30 @@ namespace PiyushUtils
         [SerializeField] bool onState = true;
         [SerializeField] GameObject tablet;
 
+        public bool OnState { get => onState; set => onState = value; }
+
+        /// <summary>
+        /// For explicitily setting the on state.
+        /// </summary>
+        /// <param name="on">true for on</param>
+        public void SetTabletOnState(bool on = true)
+        {
+            OnState = on;
+            tablet.SetActive(OnState);
+        }
+
+        /// <summary>
+        /// For setting the state on if it was off & vice versa
+        /// </summary>
         public void ToggleTabletOn()
         {
-            onState = !onState;
-            tablet.SetActive(onState);
+            OnState = !OnState;
+            SetTabletOnState(OnState);
+        }
+
+        public void OnXButtonPress()
+        {
+            ToggleTabletOn();
         }
 
         public void OnLanguageButtonClicked()

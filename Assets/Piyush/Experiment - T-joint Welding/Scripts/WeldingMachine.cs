@@ -58,7 +58,8 @@ namespace TWelding
                 squeezerCollider.enabled = false;
                 // Debug.Log("setting " + (!IsHoldingElectrode));
                 socket_Electrode.socketActive = currentElectrode == null;
-
+                if (currentElectrode != null)
+                    ReleaseElectrode();
             }
             // Debug.Log("-- " + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
             //If squeezer is touched & is holding an electrode, 
@@ -109,6 +110,9 @@ namespace TWelding
             ps = GetComponentInChildren<ParticleSystem>();
             sparkLight = ps.transform.GetChild(0).gameObject;
             squeezerOutline = squeezerCollider.transform.GetComponentInParent<Outline>();
+            socket_Electrode.selectEntered.RemoveAllListeners();
+            socket_Electrode.selectEntered.AddListener(OnElectrodePlaced);
+            socket_Electrode.selectExited.RemoveAllListeners();
             ToggleMachine(false);
             ToggleWeldingTip();
             WeldingArea.OnWeldingMachineTipInContact += (bool isTipAtLeft) =>
@@ -171,6 +175,8 @@ namespace TWelding
                     OnElectrodePlacedEvent?.Invoke();
                 }
                 currentElectrode = electrode;
+                socket_Electrode.socketActive = false;
+                currentElectrode.gameObject.SetActive(false);
                 fauxElectrode.SetActive(true);
                 currentElectrode.GetComponent<MeshRenderer>().enabled = false;
                 Invoke(nameof(TurnOffElectrodeGrab), 1f);
@@ -191,29 +197,30 @@ namespace TWelding
                 currentElectrode.GetComponent<XRGrabInteractable>().colliders[0].enabled = false;
         }
 
-        public void OnElectrodeSocketExit(SelectExitEventArgs args)
+
+        public void ReleaseElectrode()
         {
-            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
+            if (currentElectrode != null)
             {
                 fauxElectrode.SetActive(false);
-                if (currentElectrode != null)
+                //currentElectrode.GetComponent<MeshRenderer>().enabled = true;
+                currentElectrode.gameObject.SetActive(true);
+                currentElectrode.transform.SetPositionAndRotation(fauxElectrode.transform.position, fauxElectrode.transform.rotation);
+                Rigidbody rb = currentElectrode.GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                rb.useGravity = true;
+                XRGrabInteractable grab = currentElectrode.GetComponent<XRGrabInteractable>();
+                grab.movementType = XRBaseInteractable.MovementType.VelocityTracking;
+                grab.colliders.ForEach(collider =>
                 {
-                    currentElectrode.GetComponent<MeshRenderer>().enabled = true;
-                    Rigidbody rb = currentElectrode.GetComponent<Rigidbody>();
-                    rb.isKinematic = false;
-                    rb.useGravity = true;
-                    XRGrabInteractable grab = args.interactable as XRGrabInteractable;
-                    grab.movementType = XRBaseInteractable.MovementType.VelocityTracking;
-                    grab.colliders.ForEach(collider =>
-                    {
-                        collider.isTrigger = false;
-                        collider.enabled = true;
-                    });
-                }
+                    collider.isTrigger = false;
+                    collider.enabled = true;
+                });
                 currentElectrode = null;
                 IsElectrodePlaced = false;
             }
         }
+
         void TurnOnElectrodeSocket()
         {
             socket_Electrode.socketActive = true;

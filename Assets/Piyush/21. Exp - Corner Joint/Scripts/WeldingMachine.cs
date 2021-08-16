@@ -15,16 +15,16 @@ namespace CornerWelding
         public event Action OnElectrodePlacedEvent;
         [SerializeField] ParticleSystem ps;
         [SerializeField] GameObject sparkLight;
-        [SerializeField] bool isOn = false, isElectrodePlaced = false, isTipInContact = false;
-        [SerializeField] GameObject tip;
+        [SerializeField] internal bool isOn = false, isElectrodePlaced = false, isTipInContact = false;
+        [SerializeField] internal GameObject tip;
         [SerializeField] SoundPlayer soundPlayer;
         [SerializeField] GameObject indicator;
         [SerializeField] GameObject fauxElectrode;
         [SerializeField] TMPro.TextMeshProUGUI errorText;
         [SerializeField] ElectrodeType requiredElectrodeType;
         [SerializeField] Electrode currentElectrode;
-        [SerializeField] XRSocketInteractor socket_Electrode;
-        Rigidbody _rb;
+        [SerializeField] internal XRSocketInteractor socket_Electrode;
+        internal Rigidbody _rb;
         Outline squeezerOutline;
 
         //Reset pos
@@ -60,8 +60,9 @@ namespace CornerWelding
                 ToggleGunSqueezers(true);
                 squeezerCollider.enabled = false;
                 // Debug.Log("setting " + (!IsHoldingElectrode));
-                socket_Electrode.socketActive = currentElectrode==null;
-
+                socket_Electrode.socketActive = currentElectrode == null;
+                if (currentElectrode != null)
+                    ReleaseElectrode();
             }
             // Debug.Log("-- " + socket_Electrode.socketActive + " squeezerT:" + IsSqueezerTouched);
             //If squeezer is touched & is holding an electrode, 
@@ -115,8 +116,10 @@ namespace CornerWelding
                 }
                 currentElectrode = electrode;
                 fauxElectrode.SetActive(true);
-                currentElectrode.GetComponent<MeshRenderer>().enabled = false;
-                Invoke(nameof(TurnOffElectrodeGrab), 1f);
+                currentElectrode.gameObject.SetActive(false);
+                socket_Electrode.socketActive = false;
+                //currentElectrode.GetComponent<MeshRenderer>().enabled = false;
+                //Invoke(nameof(TurnOffElectrodeGrab), 1f);
                 ToggleWeldingTip();
                 ShowErrorIndicator(electrode.ElectrodeType != RequiredElectrodeType, _Constants.ELECTRODE_NOT_CORRECT);
             }
@@ -140,25 +143,24 @@ namespace CornerWelding
                 currentElectrode.GetComponent<XRGrabInteractable>().colliders[0].enabled = false;
         }
 
-        public void OnElectrodeSocketExit(SelectExitEventArgs args)
+        public void ReleaseElectrode()
         {
-            if (args.interactable.CompareTag(_Constants.ELECTRODE_TAG))
+            if (currentElectrode != null)
             {
                 fauxElectrode.SetActive(false);
-                if (currentElectrode != null)
+                //currentElectrode.GetComponent<MeshRenderer>().enabled = true;
+                currentElectrode.gameObject.SetActive(true);
+                currentElectrode.transform.SetPositionAndRotation(fauxElectrode.transform.position, fauxElectrode.transform.rotation);
+                Rigidbody rb = currentElectrode.GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                rb.useGravity = true;
+                XRGrabInteractable grab = currentElectrode.GetComponent<XRGrabInteractable>();
+                grab.movementType = XRBaseInteractable.MovementType.VelocityTracking;
+                grab.colliders.ForEach(collider =>
                 {
-                    currentElectrode.GetComponent<MeshRenderer>().enabled = true;
-                    Rigidbody rb = currentElectrode.GetComponent<Rigidbody>();
-                    rb.isKinematic = false;
-                    rb.useGravity = true;
-                    XRGrabInteractable grab = args.interactable as XRGrabInteractable;
-                    grab.movementType = XRBaseInteractable.MovementType.VelocityTracking;
-                    grab.colliders.ForEach(collider => 
-                    { 
-                        collider.isTrigger = false;
-                        collider.enabled = true;
-                    });
-                }
+                    collider.isTrigger = false;
+                    collider.enabled = true;
+                });
                 currentElectrode = null;
                 IsElectrodePlaced = false;
             }
@@ -169,12 +171,15 @@ namespace CornerWelding
             ps = GetComponentInChildren<ParticleSystem>();
             squeezerOutline = squeezerCollider.transform.GetComponentInParent<Outline>();
             sparkLight = ps.transform.GetChild(0).gameObject;
+            socket_Electrode.selectEntered.RemoveAllListeners();
+            socket_Electrode.selectEntered.AddListener(OnElectrodeSocketEnter);
+            socket_Electrode.selectExited.RemoveAllListeners();
             ToggleMachine(false);
             ToggleWeldingTip();
             ResetTransform();
         }
 
-        public void TipInContact(bool inContact)
+        public virtual void TipInContact(bool inContact)
         {
             isTipInContact = inContact;
             ToggleMachine(inContact);

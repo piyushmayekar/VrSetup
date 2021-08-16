@@ -3,6 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using PiyushUtils;
 
 namespace FlatWelding
 {
@@ -12,7 +13,8 @@ namespace FlatWelding
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            OnTaskCompleted();
+            taskManager.confirmButton.onClick.RemoveAllListeners();
+            taskManager.confirmButton.onClick.AddListener(OnTaskCompleted);
         }
     }
 }
