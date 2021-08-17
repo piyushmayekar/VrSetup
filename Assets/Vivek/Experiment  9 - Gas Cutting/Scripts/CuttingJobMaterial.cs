@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using TWelding;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-    public enum CuttingType { Gascut, CircularCut, BevelCut };
-public enum experimentType { GasWelding,GasCutting,GasJointPlate}
+public enum CuttingType { Gascut, CircularCut, BevelCut };
+public enum experimentType { GasWelding, GasCutting, GasJointPlate }
 public class CuttingJobMaterial : MonoBehaviour
 {
     public static CuttingJobMaterial instance;
@@ -34,13 +34,13 @@ public class CuttingJobMaterial : MonoBehaviour
     {
         instance = this;
     }
-   
+
     //SCRIBER MARKING
     public void StartScriberMarking()
     {
         Debug.Log("StartScriberMarking");
         TurnOnMarkingPoint();
-     //   totalLineMarkingPoints = markingLine.transform.childCount;
+        //   totalLineMarkingPoints = markingLine.transform.childCount;
     }
 
     void TurnOnMarkingPoint()
@@ -80,40 +80,56 @@ public class CuttingJobMaterial : MonoBehaviour
         }
         else
         {
-            if (cuttingType == CuttingType.CircularCut)
+
+            currentMarking++;
+            if (cuttingType == CuttingType.BevelCut && currentMarking == 1)
             {
-                currentMarking++;
-            }
-            else
-            {
-                if (countpoint == 2)
                 {
-                    //       TurnOnMarkingPoint();
-                }
-                else
-                {
-                    currentMarking++;
+                    Debug.Log(currentMarking + "1111");
                     TurnOnMarkingPoint();
+                    cuttingType = CuttingType.CircularCut;
                     return;
                 }
 
             }
         }
-        if (currentMarking == 1)
+        if (currentMarking >= 1)
         {
-            Debug.Log(currentMarking);
-            markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
-            markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+
             if (cuttingType == CuttingType.CircularCut)
             {
-                // if (index <= markingLinePoints.Count)
-                {
-                    markingLinePoints[0].GetComponent<Outline>().enabled = true;
-                    markingLinePoints[0].GetComponent<MeshRenderer>().enabled = true;
-                }
+                Debug.Log(currentMarking + "###");
+                markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
+                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+
+                markingLinePoints[0].GetComponent<Outline>().enabled = true;
+                markingLinePoints[0].GetComponent<MeshRenderer>().enabled = true;
+
+            }
+            else if (cuttingType == CuttingType.BevelCut)
+            {
+                Debug.Log(currentMarking + "#@@@@#");
+                markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
+                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+
+                markingLinePoints[0].GetComponent<Outline>().enabled = true;
+                markingLinePoints[0].GetComponent<MeshRenderer>().enabled = true;
+
+            }
+            else
+            {
+                markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
+                markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);
+
+
+
             }
 
         }
+
+    }
+    public void onAddMarkingPoints()
+    {
 
     }
     public int countIndex;
@@ -121,15 +137,17 @@ public class CuttingJobMaterial : MonoBehaviour
     {
         if (index == LineMarkingPoint)
         {
-         //   Debug.Log("Play sound");
+            Debug.Log("Play sound");
             Scibersound.PlayClip(0);
-            if (cuttingType == CuttingType.CircularCut)
+            // if (cuttingType == CuttingType.CircularCut)
             {
                 if (index < markingLinePoints.Count)
                 {
                     if (index + 1 != markingLinePoints.Count)
                     {
-                        markingLinePoints[index + 1].GetComponent<Outline>().enabled = true;
+                        if (markingLinePoints[index + 1].GetComponent<Outline>())
+                            markingLinePoints[index + 1].GetComponent<Outline>().enabled = true;
+
                         markingLinePoints[index + 1].GetComponent<MeshRenderer>().enabled = true;
                     }
                 }
@@ -156,8 +174,8 @@ public class CuttingJobMaterial : MonoBehaviour
             }
             else
             {
-               /* scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
-                Destroy(scribal);*/
+                /* scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
+                 Destroy(scribal);*/
                 GasCuttingManager.instance.CheckJobPlace();
                 for (int i = 0; i < outlines.Count; i++)
                 {
@@ -178,8 +196,8 @@ public class CuttingJobMaterial : MonoBehaviour
         {
             GasCuttingManager.instance.CheckJobPlace();
 
-        /*    scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
-            Destroy(scribal);*/
+            /*    scribal.GetComponent<XRGrabInteractable>().selectEntered = null;
+                Destroy(scribal);*/
             for (int i = 0; i < markingPoints.Count - 1; i++)
             {
                 markingPoints[i].SetActive(false);
@@ -190,7 +208,7 @@ public class CuttingJobMaterial : MonoBehaviour
             if (CountLine == 1)
             {
 
-               // totalLineMarkingPoints = markingLine2.transform.childCount;
+                // totalLineMarkingPoints = markingLine2.transform.childCount;
                 markingLine = markingLine2;
                 currentMarking++;
 
@@ -211,7 +229,7 @@ public class CuttingJobMaterial : MonoBehaviour
                     TurnOnMarkingPoint();
                 }
                 markingLine = markingLine3;
-              //  totalLineMarkingPoints = markingLine3.transform.childCount;
+                //  totalLineMarkingPoints = markingLine3.transform.childCount;
                 SnapScale2.GetComponent<BoxCollider>().enabled = true;
                 markingLinePoints = new List<MarkingLinePoint>(markingLine.transform.GetComponentsInChildren<MarkingLinePoint>());
                 markingLinePoints.ForEach(point => point.OnScriberTipEnter += OnMarkingPointScriberEnter);

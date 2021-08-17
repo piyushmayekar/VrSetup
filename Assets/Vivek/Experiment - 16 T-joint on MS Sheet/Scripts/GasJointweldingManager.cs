@@ -1,4 +1,4 @@
-using PiyushUtils;
+ï»¿using PiyushUtils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +25,7 @@ public class GasJointweldingManager : MonoBehaviour
     [Header("Extra objects")]
     public GameObject neturalFlameCube;
     public GameObject netural_flame, jointTackPoint, hummerhighlight, blacksmoke,
-                      highlighttriSquare, torch35D, torch_m_35d, lighterFlame, supportPlat, supportCube1, supportcube2,jobSupport1,jobSupport2;
+                      highlighttriSquare, torch35D, torch_m_35d, lighterFlame, supportPlat, supportCube1, supportcube2, jobSupport1, jobSupport2;
     public GameObject[] weldingLine1, weldingLine2;
     [Header("          ")]
     public RotateNozzle redBol, blueBol, blackValve, redValve;
@@ -67,7 +67,7 @@ public class GasJointweldingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-    //    Onclickbtn_s14_confirm();
+        // PlaceJobPlate(); 
     }
     public void ConfirmSatrtbtn()
     {
@@ -122,7 +122,7 @@ public class GasJointweldingManager : MonoBehaviour
     }
     #endregion
 
-    #region Step 3:  Keep the job on welding table in “T” Position.
+    #region Step 3:  Keep the job on welding table in ï¿½Tï¿½ Position.
     void Onclickbtn_s_3_confirm()
     {
         SetObjectRestPos_Rotate(0); //Brush tool
@@ -143,7 +143,7 @@ public class GasJointweldingManager : MonoBehaviour
         //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//objectOutLines[1].transform.position;// job plate material
                                                                                                       //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f, 0f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, -90f, 0f);//objectOutLines[1].transform.position;// job plate material
 
         objectOutLines[1].gameObject.SetActive(false);// job flat position      
         GasTableObjectcolliders[0].transform.GetChild(0).GetComponent<Outline>().enabled = false;// job plate material
@@ -247,8 +247,8 @@ public class GasJointweldingManager : MonoBehaviour
         SetObjectRestPos_Rotate(1); //lighter tool
 
         GasTableObjectcolliders[8].enabled = true;
-        objectOutLines[10].GetComponent<Outline>().enabled = true;       
-      
+        objectOutLines[10].GetComponent<Outline>().enabled = true;
+
 
         supportCube1.SetActive(false);
         supportcube2.SetActive(false);
@@ -261,7 +261,7 @@ public class GasJointweldingManager : MonoBehaviour
     {
         ResetRotateJobPlate();
 
-       
+
         // GasTableObjectcolliders[8].enabled = false;
         objectOutLines[10].GetComponent<Outline>().enabled = false;
         readSteps.onClickConfirmbtn();
@@ -323,7 +323,7 @@ public class GasJointweldingManager : MonoBehaviour
         supportcube2.SetActive(false);
         RotateJobPlate_FirstSide();
 
-          GasTableObjectcolliders[8].enabled = true;
+        GasTableObjectcolliders[8].enabled = true;
         objectOutLines[10].GetComponent<Outline>().enabled = true;
         // JointWelding.instance.WeldingEnable();
         torch35D.SetActive(true);
@@ -338,7 +338,7 @@ public class GasJointweldingManager : MonoBehaviour
     public void RotateJobPlate_FirstSide()
     {
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4209f, -0.0036f, -0.0978f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0,90, -10);
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0, 90, -10);
         jobSupport1.SetActive(true);
         jobSupport2.SetActive(false);
     }
@@ -346,7 +346,7 @@ public class GasJointweldingManager : MonoBehaviour
     {   //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//objectOutLines[1].transform.position;// job plate material
                                                                                                       //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 0f, 0f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, -90f, 0f);//objectOutLines[1].transform.position;// job plate material
 
         supportCube1.SetActive(true);
         supportcube2.SetActive(true);
@@ -355,7 +355,7 @@ public class GasJointweldingManager : MonoBehaviour
     }
     public void weldingComplete()
     {
-        ResetRotateJobPlate();    
+        ResetRotateJobPlate();
 
         objectOutLines[10].GetComponent<Outline>().enabled = false;
         GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectEntered = null;
