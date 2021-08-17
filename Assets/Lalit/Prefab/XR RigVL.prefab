@@ -3116,8 +3116,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 161347227, guid: bbde3d6e5619b2747841bdc879cce5a2, type: 3}
-        m_TargetAssemblyTypeName: ReadStepsFromJson, Assembly-CSharp
+      - m_Target: {fileID: 3159722494973409146}
+        m_TargetAssemblyTypeName: ReadStepsAndVideoManager, Assembly-CSharp
         m_MethodName: onClickRetryButton
         m_Mode: 1
         m_Arguments:
@@ -4058,8 +4058,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04bc3bcf37bccb340971e6b49566fadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Experiment_HackSawCutting
-  langManager: {fileID: 11400000, guid: cf12c194e0d8f234e87224b94323c531, type: 2}
+  sceneName: Experiment 6 - HackSaw Practice Straight Cutting
+  langManager: {fileID: 11400000, guid: 94624812f0c04a24b860375009b2f5c5, type: 2}
   panel: {fileID: 3159722494883124133}
   tablet: {fileID: 3159722494702291109}
   languageButton: {fileID: 0}
@@ -15954,6 +15954,8 @@ GameObject:
   - component: {fileID: 3461344418578754463}
   - component: {fileID: 3461344418578754433}
   - component: {fileID: 3461344418578754432}
+  - component: {fileID: 3159722494516118733}
+  - component: {fileID: 3159722494516118732}
   m_Layer: 0
   m_Name: XR RigVL
   m_TagString: Untagged
@@ -16078,7 +16080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 1d7f26db6d84f304186e07a8e6f3387b, type: 3}
+  - {fileID: 8300000, guid: 0cbfa121468d2fd469e3b143c8a9f71f, type: 3}
   - {fileID: 8300000, guid: 10474cda51dbb9342b78c06f05fc9e5b, type: 3}
   clipLists: []
   audioSource: {fileID: 3461344418578754432}
@@ -16178,6 +16180,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!143 &3159722494516118733
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3461344418578754456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.5
+  m_Radius: 0.1
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.0001
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &3159722494516118732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3461344418578754456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6bf904e410ee8479f9093d8830d1f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LocomotionProvider: {fileID: 3461344418578754460}
+  m_MinHeight: 0
+  m_MaxHeight: 1.5
 --- !u!1 &3461344418626352725
 GameObject:
   m_ObjectHideFlags: 0
@@ -19500,7 +19535,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3159722494973409146}
         m_TargetAssemblyTypeName: ReadStepsAndVideoManager, Assembly-CSharp
         m_MethodName: OnClickLanguagesBtn
         m_Mode: 1

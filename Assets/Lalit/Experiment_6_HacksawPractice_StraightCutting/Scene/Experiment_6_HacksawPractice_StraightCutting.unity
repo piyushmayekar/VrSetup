@@ -1821,6 +1821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeCount: 0
   currentCount: 0
+  completed: 0
 --- !u!114 &54145204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6119,6 +6120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTag: 
+  effect: {fileID: 0}
 --- !u!65 &167537053
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8708,6 +8710,8 @@ MonoBehaviour:
   ishideMesh: 1
   MeterObject: {fileID: 0}
   otherMeterobject: {fileID: 0}
+  leftHand: {fileID: 0}
+  grabObject: {fileID: 0}
   OtherRotate: {fileID: 339713664}
   HideMesh: {fileID: 590726037}
   NextStep:
@@ -10502,6 +10506,10 @@ MonoBehaviour:
   countPoint: 0
   currentcount: 0
   markingDone: 0
+  countMeasurePoint: 0
+  currentMeasureCount: 0
+  isMeasuring: 0
+  measurePointMat: {fileID: 0}
 --- !u!65 &286264173
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16745,6 +16753,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   readyForOperation: 0
+  highlight: {fileID: 0}
+  isMeasuring: 0
 --- !u!1 &410605179
 GameObject:
   m_ObjectHideFlags: 0
@@ -18796,6 +18806,8 @@ MonoBehaviour:
   ishideMesh: 1
   MeterObject: {fileID: 0}
   otherMeterobject: {fileID: 0}
+  leftHand: {fileID: 0}
+  grabObject: {fileID: 0}
   OtherRotate: {fileID: 482691460}
   HideMesh: {fileID: 688271268}
   NextStep:
@@ -21071,9 +21083,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15678e02d36b16544a296d29ba2dc644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weldFinishMat: {fileID: 2100000, guid: 906219cb0f6747242b90bdf8af420b17, type: 2}
+  weldMat: {fileID: 0}
   countPoint: 220
   currentCount: 0
+  effect: {fileID: 0}
 --- !u!65 &558855680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34483,6 +34496,8 @@ MonoBehaviour:
   ishideMesh: 1
   MeterObject: {fileID: 1320837046}
   otherMeterobject: {fileID: 867157073}
+  leftHand: {fileID: 0}
+  grabObject: {fileID: 0}
   OtherRotate: {fileID: 852084483}
   HideMesh: {fileID: 817989919}
   NextStep:
@@ -36620,6 +36635,8 @@ MonoBehaviour:
   ishideMesh: 1
   MeterObject: {fileID: 0}
   otherMeterobject: {fileID: 0}
+  leftHand: {fileID: 0}
+  grabObject: {fileID: 0}
   OtherRotate: {fileID: 1018619757}
   HideMesh: {fileID: 688271268}
   NextStep:
@@ -62286,8 +62303,12 @@ MonoBehaviour:
   Step9flame: {fileID: 0}
   extraRedBol: {fileID: 0}
   oldRedBol: {fileID: 0}
-  redRotateSprite: {fileID: 0}
-  BlueRotatesprite: {fileID: 0}
+  redRotateSpriteOn: {fileID: 0}
+  BlueRotatespriteOn: {fileID: 0}
+  redRotateSpriteOff: {fileID: 0}
+  BlueRotatespriteOff: {fileID: 0}
+  snapGlassRed: {fileID: 0}
+  snapGlassBlack: {fileID: 0}
   ppekitcolliders:
   - {fileID: 0}
   - {fileID: 0}
@@ -62371,20 +62392,14 @@ MonoBehaviour:
   isPipeblueConnect: 0
   readSteps: {fileID: 0}
   stepAudioSource: {fileID: 681054538}
-  stepsAudioClip:
-  - {fileID: 8300000, guid: f55ff594015fd2f40b4124e2fabfcf33, type: 3}
-  - {fileID: 8300000, guid: e23f6b73f91c94340a09507ace43889c, type: 3}
-  - {fileID: 8300000, guid: 200d206dad9bdb64dbe7264b6d9fbc00, type: 3}
-  - {fileID: 8300000, guid: c370d88e9a0cd4a498e6dbd90e2d3193, type: 3}
-  - {fileID: 8300000, guid: 7bbf352ccf0a95e41a7acfe3c3bf1913, type: 3}
-  - {fileID: 8300000, guid: 265a7a8d4aeef3646b93a0e7e2bb2f15, type: 3}
-  - {fileID: 8300000, guid: 5450eb07819ebff48952bf6f54b72570, type: 3}
-  - {fileID: 8300000, guid: 8477ddf3cf913cf45a5c370ec07e8979, type: 3}
-  - {fileID: 8300000, guid: d0398539f2d327744be67d2ea60af9ca, type: 3}
-  - {fileID: 8300000, guid: 7bb862e61eaee774b89ad719bfb58573, type: 3}
-  - {fileID: 8300000, guid: 652a9107a7129f44793ff58358a2e921, type: 3}
-  - {fileID: 8300000, guid: ff53542ffff6ef54ca087fb93da8c17d, type: 3}
-  - {fileID: 8300000, guid: b658fdaa346b9e1459e676d418d8de1b, type: 3}
+  creckykeyClip: {fileID: 0}
+  blueStartpos: {x: 0, y: 0, z: 0}
+  redStartpos: {x: 0, y: 0, z: 0}
+  toolToReset: []
+  toolToResetPosition: []
+  toolToResetRotate: []
+  isRedCrecking: 0
+  isBlackCrecking: 0
   ZeroMeterred: {fileID: 0}
   ZeroMeterBlack: {fileID: 0}
   isTurnOffFlame: 0
@@ -65730,6 +65745,8 @@ MonoBehaviour:
   ishideMesh: 1
   MeterObject: {fileID: 1442167825}
   otherMeterobject: {fileID: 46629938}
+  leftHand: {fileID: 0}
+  grabObject: {fileID: 0}
   OtherRotate: {fileID: 866175605}
   HideMesh: {fileID: 1849488497}
   NextStep:
@@ -81420,6 +81437,8 @@ MonoBehaviour:
   ishideMesh: 1
   MeterObject: {fileID: 0}
   otherMeterobject: {fileID: 0}
+  leftHand: {fileID: 0}
+  grabObject: {fileID: 0}
   OtherRotate: {fileID: 437226394}
   HideMesh: {fileID: 1415436926}
   NextStep:
@@ -84955,11 +84974,18 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
+  grabbedInteractorType: 0
+  leftHandAttachTransform: {fileID: 0}
+  rightHandAttachTransform: {fileID: 0}
+  shouldUseDefaultFistAnim: 0
   secondHandGrabPoints:
   - {fileID: 2164672005482698173}
   secondInteractor: {fileID: 0}
   rotationType: 0
   rotationOffset: {x: 10, y: -15, z: 0}
+  rightHandRotationOffset: {x: 0, y: 0, z: 0}
+  leftHandRotationOffset: {x: 0, y: 0, z: 0}
+  secondHandGrabAnimationName: 
 --- !u!65 &3789179560794854512
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -84986,9 +85012,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cuttingPoints: []
+  punchPoints: []
   cutPointCount: 0
   currentCount: 0
   cuttingDone: 0
+  readyForOperation: 0
+  speed: 2
 --- !u!114 &3789179560794854514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86082,6 +86111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BenchWise: {fileID: 0}
+  CanMove: 0
+  isClockwise: 0
+  HighlightMat: {fileID: 0}
 --- !u!4 &7729546492909045809
 Transform:
   m_ObjectHideFlags: 0

@@ -44,8 +44,8 @@ public class ReadStepsAndVideoManager : MonoBehaviour
 
 
     //"ср", "сс","ст","су","сж","св","сь","сы","сз","сш","тр"};  // ***** ANKITA CHANGES *****
-    //[Header("Language")]
-    //public _Language currentLanguage;
+    [Header("Language")]
+   public _Language currentLanguage;
     public int CurrentLangIndex => (int)currentLanguage;
 
     [Header("---------------------------------------------------")]
