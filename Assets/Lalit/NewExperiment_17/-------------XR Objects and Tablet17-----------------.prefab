@@ -2763,6 +2763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04bc3bcf37bccb340971e6b49566fadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneName: 
   langManager: {fileID: 11400000, guid: 31dad9d6f4dece543a94023aef839c2a, type: 2}
   panel: {fileID: 2126657537454318326}
   tablet: {fileID: 2126657536631568388}
@@ -2771,7 +2772,6 @@ MonoBehaviour:
   stepText: {fileID: 2126657538404007362}
   languageText: {fileID: 0}
   confirmbtn: {fileID: 2126657537544515102}
-  sceneName: 
   languagesFont:
   - {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - {fileID: 11400000, guid: cd189c41fd7fec44d8cec17de432c2b1, type: 2}
@@ -2786,6 +2786,7 @@ MonoBehaviour:
   isStep: 0
   isBrushCleaning: 0
   currentLanguage: 1
+  audioWithStep: {fileID: 0}
 --- !u!1 &2126657537030971674
 GameObject:
   m_ObjectHideFlags: 0

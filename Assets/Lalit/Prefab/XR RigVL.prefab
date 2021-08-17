@@ -4058,6 +4058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04bc3bcf37bccb340971e6b49566fadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneName: Experiment_HackSawCutting
   langManager: {fileID: 11400000, guid: cf12c194e0d8f234e87224b94323c531, type: 2}
   panel: {fileID: 3159722494883124133}
   tablet: {fileID: 3159722494702291109}
@@ -4066,7 +4067,6 @@ MonoBehaviour:
   stepText: {fileID: 3159722493874338600}
   languageText: {fileID: 0}
   confirmbtn: {fileID: 3159722494171384618}
-  sceneName: Experiment_HackSawCutting
   languagesFont:
   - {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - {fileID: 11400000, guid: cd189c41fd7fec44d8cec17de432c2b1, type: 2}
@@ -4081,6 +4081,7 @@ MonoBehaviour:
   isStep: 0
   isBrushCleaning: 0
   currentLanguage: 1
+  audioWithStep: {fileID: 0}
 --- !u!1 &3159722495265492782
 GameObject:
   m_ObjectHideFlags: 0
