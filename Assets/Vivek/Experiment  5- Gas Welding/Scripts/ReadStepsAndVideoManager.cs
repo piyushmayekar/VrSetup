@@ -45,7 +45,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
 
     //"ср", "сс","ст","су","сж","св","сь","сы","сз","сш","тр"};  // ***** ANKITA CHANGES *****
     [Header("Language")]
-    public _Language currentLanguage;
+   public _Language currentLanguage;
     public int CurrentLangIndex => (int)currentLanguage;
 
     [Header("---------------------------------------------------")]
@@ -84,7 +84,11 @@ public class ReadStepsAndVideoManager : MonoBehaviour
             langManager._stepsText = langManager.readSteps[1];
         }
         // load audio with step title text 
-        audioWithStep.PlayStepAudio(countStep);
+        if (audioWithStep)
+        {
+            audioWithStep.PlayStepAudio(countStep);
+        }
+        
         stepText.text = langManager._stepsText.ExperimentTitle;
         //  Debug.Log("Current languages" + countStep);
     }
@@ -110,7 +114,11 @@ public class ReadStepsAndVideoManager : MonoBehaviour
             stepText.text = GetStepIndex(countStep); // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
             stepText.text += langManager._stepsText.Steps[countStep]; // ***************************** CHANGES DONE HERE ***** ANKITA CHANGES *****
             // load audio with step text (for first is play title so heare +1 index pass)
-            audioWithStep.PlayStepAudio(countStep + 1);
+            if (audioWithStep)
+            {
+                audioWithStep.PlayStepAudio(countStep + 1);
+            }
+            
             // Debug.Log("**** Audio Index " + (countStep + 1));
             countStep++;
         }
