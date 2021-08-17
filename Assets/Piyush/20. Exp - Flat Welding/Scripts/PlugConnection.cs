@@ -115,10 +115,10 @@ namespace FlatWelding
 
         private void OnNutFittingDone()
         {
+            OnConnectionDone?.Invoke();
             nutSpannerTrigger.GetComponent<Collider>().enabled = false;
             spanners.ForEach(spanner => spanner.GetComponent<Outline>().enabled = false);
             StopAllCoroutines();
-            OnConnectionDone?.Invoke();
         }
     }
 }

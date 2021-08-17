@@ -23,6 +23,7 @@ public class Task : MonoBehaviour
     public bool IsTaskComplete { get => isTaskComplete; set => isTaskComplete = value; }
     public string Title { get => title; set => title = value; }
     public string TaskDetails { get => taskDetails; set => taskDetails = value; }
+    public static PiyushUtils.TaskManager taskManager = null;
 
     public virtual void OnTaskBegin()
     {
@@ -43,20 +44,7 @@ public class Task : MonoBehaviour
                 if (outlines[i] != null)
                     outlines[i].enabled = false;
             EventsOnTaskComplete?.Invoke();
-            EnableButton();
+            taskManager.OnTaskCompleted(this);
         }
-    }
-
-    public void EnableButton()
-    {
-        Button button = PiyushUtils.TaskManager.Instance.confirmButton;
-        button.gameObject.SetActive(true);
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(OnButtonClick);
-    }
-
-    public void OnButtonClick()
-    {
-        PiyushUtils.TaskManager.Instance.OnTaskCompleted(this);
     }
 }
