@@ -67,7 +67,7 @@ public class GasJointweldingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-        // PlaceJobPlate(); 
+       
     }
     public void ConfirmSatrtbtn()
     {
@@ -259,7 +259,7 @@ public class GasJointweldingManager : MonoBehaviour
 
     public void CheckTackPoint()
     {
-        ResetRotateJobPlate();
+        ResetRotateJobPlate(-90f);
 
 
         // GasTableObjectcolliders[8].enabled = false;
@@ -342,11 +342,11 @@ public class GasJointweldingManager : MonoBehaviour
         jobSupport1.SetActive(true);
         jobSupport2.SetActive(false);
     }
-    public void ResetRotateJobPlate()
+    public void ResetRotateJobPlate(float rotate)
     {   //job plat posion set
         GasTableObjectcolliders[0].transform.localPosition = new Vector3(-0.4475f, 0.0112f, -0.1002f);//objectOutLines[1].transform.position;// job plate material
                                                                                                       //     GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, 180f,0f);//objectOutLines[1].transform.position;// job plate material
-        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, -90f, 0f);//objectOutLines[1].transform.position;// job plate material
+        GasTableObjectcolliders[0].transform.localEulerAngles = new Vector3(0f, rotate, 0f);//objectOutLines[1].transform.position;// job plate material
 
         supportCube1.SetActive(true);
         supportcube2.SetActive(true);
@@ -355,7 +355,7 @@ public class GasJointweldingManager : MonoBehaviour
     }
     public void weldingComplete()
     {
-        ResetRotateJobPlate();
+        ResetRotateJobPlate(0f);
 
         objectOutLines[10].GetComponent<Outline>().enabled = false;
         GasTableObjectcolliders[8].GetComponent<XRGrabInteractable>().selectEntered = null;
