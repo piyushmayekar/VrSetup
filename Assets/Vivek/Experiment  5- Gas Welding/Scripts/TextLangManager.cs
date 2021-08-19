@@ -10,4 +10,7 @@ public class TextLangManager : ScriptableObject
     public ReadSteps[] readSteps;
     [HideInInspector]
     public ReadSteps _stepsText;
+
+    [Tooltip("The scene name of the experiment in Unity")]
+    public string expSceneName;
 }

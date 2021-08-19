@@ -101,6 +101,7 @@ namespace PiyushUtils
                 StartTask(CurrentTaskIndex);
             else //Current Task index reached out of the task list index. ie. Tasks are done
             {
+                tablet.confirmButton.gameObject.SetActive(false);
                 tablet.relearnButton.gameObject.SetActive(true);
                 tablet.homeButton.gameObject.SetActive(true);
                 tablet.relearnButton.onClick.AddListener(OnRelearnButtonClick);
@@ -187,14 +188,14 @@ namespace PiyushUtils
         }
 
 
-        _Language FetchCurrentLanguage()
+        public static _Language FetchCurrentLanguage()
         {
             return (_Language)PlayerPrefs.GetInt(nameof(_Language), (int)_Language.Gujrati);
         }
 
-        void SaveCurrentLanguageToMemory()
+        public static void SaveCurrentLanguageToMemory(_Language currentLang)
         {
-            PlayerPrefs.SetInt(nameof(_Language), (int)currentLanguage);
+            PlayerPrefs.SetInt(nameof(_Language), (int)currentLang);
         }
 
         void OnLanguageButtonClick()
@@ -203,7 +204,7 @@ namespace PiyushUtils
             int nextLanguageIndex = (CurrentLangIndex + 1) % totalLanguagesCount;
             currentLanguage = (_Language)nextLanguageIndex;
 
-            SaveCurrentLanguageToMemory();
+            SaveCurrentLanguageToMemory(currentLanguage);
             SetTaskInfoFont();
             SetTaskInfoTextAccToLanguage();
             PlayStepVO();
