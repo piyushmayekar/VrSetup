@@ -69,7 +69,7 @@ public class A_ReadStepsAndVideoManager : MonoBehaviour
     }
     private void Start()
     {
-        //countStep = 20;
+        //countStep = 3;
         currentLanguage = FetchCurrentLanguage();
         //  Debug.Log("Current languages" + currentLanguage);
         TitleTextLoad();
@@ -192,6 +192,10 @@ public class A_ReadStepsAndVideoManager : MonoBehaviour
             else if (SceneManager.GetActiveScene().name.Contains("Experiment 2 - "))
             {
                 Exp2Manager.instance.cntSteps = countStep;
+            }
+            else if (SceneManager.GetActiveScene().name.Contains("Experiment 3 - "))
+            {
+                Exp3Manager.instance.cntSteps = countStep;
             }
 
             isStep = true;
