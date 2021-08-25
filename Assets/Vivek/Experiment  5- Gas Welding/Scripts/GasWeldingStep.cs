@@ -8,7 +8,7 @@ public class GasWeldingStep : MonoBehaviour
 {
     public static GasWeldingStep instance;
     [Header("Canvas ")]
-    public GameObject finishPanel;
+    //public GameObject finishPanel;
     public GameObject setPressureRegulatorCanvas, LighterCanvas, lighter_Flame;
     public GameObject creacking_C_key1_canvas, creacking_C_key2_canvas;
 
@@ -391,6 +391,12 @@ public class GasWeldingStep : MonoBehaviour
     }
     void EnableWeldingTouchCanvas()
     {
+      //  string sceneName = SceneManager.GetActiveScene().name;
+
+     //   if (sceneName == "Experiment 16 – To make T-joint on MS Sheet")
+     //   {
+            readSteps.AddClickEventVideoPlay(3); // play welding torch setup animation
+     //   }
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_part2_confirm);
     }
@@ -476,6 +482,7 @@ public class GasWeldingStep : MonoBehaviour
         GasTablekitcolliders[28].enabled = true;
         GasTablekitcolliders[28].GetComponent<Outline>().enabled = true;
         GasTablekitcolliders[28].GetComponent<SnapGrabbleObject>().enabled = true;
+        readSteps.videoPlayBtn.gameObject.SetActive(false);
         HL_T_ClipRed.SetActive(true);
     }
     public void DoneRedClip_T()
@@ -914,7 +921,8 @@ public class GasWeldingStep : MonoBehaviour
             objectOutLines[4].enabled = false;
             readSteps.panel.SetActive(false);
             readSteps.tablet.SetActive(true);//end step
-            finishPanel.SetActive(true);
+            //finishPanel.SetActive(true);
+            readSteps.OnLoadCompletePanel();
             rotateNozzles[6].enabled = false;
             GasTablekitcolliders[10].enabled = false;
         }
@@ -925,7 +933,7 @@ public class GasWeldingStep : MonoBehaviour
     #region FinishPanel
     public void OnRestartbtn()
     {
-        finishPanel.SetActive(false);
+        //finishPanel.SetActive(false);
         SceneManager.LoadScene("Gas Welding");
     }
     #endregion

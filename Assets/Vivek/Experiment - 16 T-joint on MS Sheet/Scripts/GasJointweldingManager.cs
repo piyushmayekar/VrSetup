@@ -16,8 +16,8 @@ public class GasJointweldingManager : MonoBehaviour
     [Header("Table uper gas kit")]
     public Collider[] GasTableObjectcolliders;
 
-    [Header("Canvas ")]
-    public GameObject finishPanel;
+   /* [Header("Canvas ")]
+    public GameObject finishPanel;*/
 
     [Header("Read step from json calss")]
     public ReadStepsAndVideoManager readSteps;
@@ -67,7 +67,9 @@ public class GasJointweldingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-       
+     //   Onclickbtn_s11_confirm();
+
+
     }
     public void ConfirmSatrtbtn()
     {
@@ -566,7 +568,7 @@ public class GasJointweldingManager : MonoBehaviour
     }
     public void checkChappingHummer()
     {
-        finishPanel.SetActive(true);
+        readSteps.OnLoadCompletePanel();
         readSteps.tablet.SetActive(true);//end step
         readSteps.panel.SetActive(false);
         objectOutLines[4].enabled = false;

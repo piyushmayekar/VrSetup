@@ -10,7 +10,7 @@ namespace FlatWelding
     public class Slag : Task
     {
         [SerializeField] public GameObject Task1;
-        [SerializeField] public GameObject Task2;
+       // [SerializeField] public GameObject Task2;
         [SerializeField] public int WeldingTask;
         [SerializeField] public GameObject tablet;
         [SerializeField] public float tim;
@@ -33,7 +33,7 @@ namespace FlatWelding
                     tabON = false;
                 }
             }
-            if (Task1.transform.name == "Done" && Task2.transform.name == "Done")
+            if (Task1.transform.name == "Done")
             {
                 OnTaskCompleted();
             }

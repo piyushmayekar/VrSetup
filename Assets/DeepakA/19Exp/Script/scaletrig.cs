@@ -12,8 +12,8 @@ public class scaletrig : MonoBehaviour
     {
         if (other.gameObject.name == trigName)
         {
-            transform.position = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
-            transform.eulerAngles = new Vector3(other.transform.eulerAngles.x, other.transform.eulerAngles.y, transform.eulerAngles.z);
+            transform.position = other.transform.position;
+            transform.eulerAngles = other.transform.eulerAngles;
             transform.GetChild(0).name = "trigon";
         }
     }

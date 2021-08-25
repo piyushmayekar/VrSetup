@@ -3116,8 +3116,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 161347227, guid: bbde3d6e5619b2747841bdc879cce5a2, type: 3}
-        m_TargetAssemblyTypeName: ReadStepsFromJson, Assembly-CSharp
+      - m_Target: {fileID: 3159722494973409146}
+        m_TargetAssemblyTypeName: ReadStepsAndVideoManager, Assembly-CSharp
         m_MethodName: onClickRetryButton
         m_Mode: 1
         m_Arguments:
@@ -4082,6 +4082,10 @@ MonoBehaviour:
   isBrushCleaning: 0
   currentLanguage: 1
   audioWithStep: {fileID: 0}
+  eng_finishStep_clip: {fileID: 0}
+  guj_finishStep_clip: {fileID: 0}
+  finishtext: {fileID: 0}
+  finishPanel: {fileID: 0}
 --- !u!1 &3159722495265492782
 GameObject:
   m_ObjectHideFlags: 0
@@ -19367,16 +19371,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 161347227, guid: bbde3d6e5619b2747841bdc879cce5a2, type: 3}
-        m_TargetAssemblyTypeName: ReadStepsFromJson, Assembly-CSharp
-        m_MethodName: onClickRetryButton
-        m_Mode: 1
+      - m_Target: {fileID: 3159722494973409146}
+        m_TargetAssemblyTypeName: ReadStepsAndVideoManager, Assembly-CSharp
+        m_MethodName: onClickHomeButton
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Home Scene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &6256592281047543955

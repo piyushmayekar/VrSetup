@@ -16,8 +16,8 @@ public class GasCuttingManager : MonoBehaviour
 
     [Header("Table uper gas kit")]
     public Collider[] GasTableObjectcolliders;
-    [Header("Canvas ")]
-    public GameObject finishPanel;
+   /* [Header("Canvas ")]
+    public GameObject finishPanel;*/
 
     [Header("Extra objects")]
     public GameObject neturalFlameCube;
@@ -68,7 +68,7 @@ public class GasCuttingManager : MonoBehaviour
             toolToResetPosition.Add(toolToReset[i].localPosition);
             toolToResetRotate.Add(toolToReset[i].localEulerAngles);
         }
-        //Checktourch90degree();
+     //   Onclickbtn_s13_confirm();
     }
 
     public void ConfirmSatrtbtn()
@@ -527,7 +527,8 @@ public class GasCuttingManager : MonoBehaviour
     {
         objectOutLines[2].enabled = false;
         readSteps.tablet.SetActive(true); //end step
-        finishPanel.SetActive(true);
+                                          //finishPanel.SetActive(true);
+        readSteps.OnLoadCompletePanel();
         readSteps.panel.SetActive(false);
     }
     #endregion

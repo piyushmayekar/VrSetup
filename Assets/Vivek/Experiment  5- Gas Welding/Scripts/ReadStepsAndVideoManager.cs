@@ -50,6 +50,7 @@ public class ReadStepsAndVideoManager : MonoBehaviour
 
     [Header("---------------------------------------------------")]
     public AudioManagerWithLanguage audioWithStep;
+    public AudioClip eng_finishStep_clip,guj_finishStep_clip;
     void Awake()
     {
         instance = this;
@@ -246,6 +247,29 @@ public class ReadStepsAndVideoManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+    #region end of finish canvas
+    [Header("-------finish panel------")]
+    public TextMeshProUGUI finishtext;
+    public GameObject finishPanel;
+    public void OnLoadCompletePanel()
+    {
+        if (CurrentLangIndex == (int)_Language.English)//  if (isChangeFont) //english font load
+        {
+            finishtext.font = languagesFont[0];
+            finishtext.text = "Experiment Successfully Completed";
+            audioWithStep.stepsAudioSource.PlayOneShot(eng_finishStep_clip);
+        }
+        else
+        {
+            finishtext.font = languagesFont[1];
+            finishtext.text = "p/yog sf5tapUvRk pU`R 4yo";
+            audioWithStep.stepsAudioSource.PlayOneShot(guj_finishStep_clip);
+        }
+        finishPanel.SetActive(true);
+
+    } 
+
+    #endregion
     public void onClickHomeButton(string homeScene)
     {
         SceneManager.LoadScene(homeScene);

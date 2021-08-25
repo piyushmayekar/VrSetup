@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class SetUpTrolley : MonoBehaviour
@@ -265,6 +266,7 @@ public class SetUpTrolley : MonoBehaviour
       
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_confirm);
+       
         //EXP regulators  hose PIP  connector audio  clip (3)
         //PlayStepAudio(3);
     }
@@ -331,6 +333,12 @@ public class SetUpTrolley : MonoBehaviour
 
     void EnableWeldingTouchCanvas()
     {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (sceneName == "Experiment 16 – To make T-joint on MS Sheet")
+        {
+            readSteps.AddClickEventVideoPlay(3);//// play welding torch setup animation
+        }
         readSteps.onClickConfirmbtn();
         readSteps.AddClickConfirmbtnEvent(Onclickbtn_s_5_part2_confirm);
         //EXP welding torch hose clip and connector audio  clip (5)
@@ -432,6 +440,7 @@ public class SetUpTrolley : MonoBehaviour
     }
     public void DoneRedClip_T()
     {
+        readSteps.videoPlayBtn.gameObject.SetActive(false);
         onEnableStep6Object();
         //EXP set preseegor on regulator audio  clip (6)
         //PlayStepAudio(6);
