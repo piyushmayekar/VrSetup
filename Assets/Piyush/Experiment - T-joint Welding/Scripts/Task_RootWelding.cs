@@ -13,7 +13,7 @@ namespace TWelding
         Transform leftPointingT, rightPointingT, electrodeT;
         [SerializeField, Tooltip("The max angle between the job plate angle vector & the electrode beyond which we will display an error")]
         float maxAngleThreshold = 10f;
-        [SerializeField] int weldingRemainingCount = 0, slagRemaining = 0; //Exterior points
+        [SerializeField] int weldingRemainingCount = 0, slagToBeHitWithHammerRemaining = 0; //Exterior points
         [SerializeField] List<WeldingPoint> weldingPoints;
         [SerializeField] CurrentKnob currentKnob;
         [SerializeField] float targetCurrent = 130f;
@@ -54,6 +54,7 @@ namespace TWelding
 
         private void InitializeEverything()
         {
+            CurrentKnob.OnTargetValueSet -= InitializeEverything;
             weldingPoints = new List<WeldingPoint>(
                 pointsParent.GetComponentsInChildren<WeldingPoint>());
             weldingArea = FindObjectOfType<WeldingArea>(true).gameObject;
@@ -66,7 +67,7 @@ namespace TWelding
                 {
                     point.OnHitWithHammer += () =>
                     {
-                        slagRemaining--;
+                        slagToBeHitWithHammerRemaining--;
                         CheckIfTaskCompleted();
                     };
                 }
@@ -78,7 +79,7 @@ namespace TWelding
                     };
             });
             weldingRemainingCount = weldingPoints.Count;
-            slagRemaining = weldingPoints.Count;
+            slagToBeHitWithHammerRemaining = weldingPoints.Count;
 
             WeldingPoint.CheckWeldingElectrodeAngle += (isLeft) =>
             {
@@ -91,12 +92,12 @@ namespace TWelding
 
         public void CheckIfTaskCompleted()
         {
-            if (weldingRemainingCount <= 0 && slagRemaining <= 0)
+            if (weldingRemainingCount <= 0 && slagToBeHitWithHammerRemaining <= 0)
             {
-                CurrentKnob.OnTargetValueSet -= InitializeEverything;
                 tackingPointsParent.SetActive(false);
                 machine.ShowErrorIndicator(false);
-                StartCoroutine(SlagChecker());
+                if (gameObject.activeSelf)
+                    StartCoroutine(SlagChecker());
             }
         }
 
@@ -106,6 +107,12 @@ namespace TWelding
                 yield return new WaitForEndOfFrame();
             StopAllCoroutines();
             OnTaskCompleted();
+        }
+
+        [ContextMenu(nameof(ReduceWeldingPointTimer))]
+        public void ReduceWeldingPointTimer()
+        {
+            weldingPoints.ForEach(point => point.WeldingTimer = .1f);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace TWelding
         public bool ShouldShowSlag { get => shouldShowSlag; set => shouldShowSlag = value; }
         public float BreakForceThreshold { get => breakForceThreshold; set => breakForceThreshold = value; }
         public bool IsPointOnLeft { get => isPointOnLeft; set => isPointOnLeft = value; }
+        public float WeldingTimer { get => weldingTimer; set => weldingTimer = value; }
 
         static WeldingMachine machine;
         public ChippingHammer chippingHammer;
@@ -72,12 +73,12 @@ namespace TWelding
 
         IEnumerator Timer()
         {
-            while (weldingTimer > 0f)
+            while (WeldingTimer > 0f)
             {
-                weldingTimer -= Time.fixedDeltaTime;
+                WeldingTimer -= Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
-            if (weldingTimer <= 0f && !IsWeldingDone)
+            if (WeldingTimer <= 0f && !IsWeldingDone)
                 OnWeldingTimerFinish();
         }
 

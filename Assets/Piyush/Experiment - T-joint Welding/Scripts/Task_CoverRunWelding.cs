@@ -108,5 +108,11 @@ namespace TWelding
                 yield return new WaitForEndOfFrame();
             OnTaskCompleted();
         }
+
+        [ContextMenu(nameof(ReduceWeldingPointTimer))]
+        public void ReduceWeldingPointTimer()
+        {
+            weldingPoints.ForEach(point => point.WeldingTimer = .1f);
+        }
     }
 }

@@ -122,6 +122,7 @@ namespace TWelding
             };
             WeldingArea.OnWeldingMachineTipLoseContact += () =>
             {
+                DisableIndicator();
                 TipInContact(false);
             };
             ResetTransform();
@@ -138,13 +139,15 @@ namespace TWelding
             isOn = on;
             if (on && isTipInContact && IsElectrodePlaced)
             {
-                ps.Play();
+                if (ps != null)
+                    ps.Play();
                 sparkLight.SetActive(true);
                 soundPlayer.PlayClip(soundPlayer.Clips[0], true);
             }
             else
             {
-                ps.Stop();
+                if (ps != null)
+                    ps.Stop();
                 sparkLight.SetActive(false);
                 soundPlayer.StopPlayingAllSounds();
             }
@@ -235,18 +238,13 @@ namespace TWelding
 
         public void ShowErrorIndicator(bool show, string message = null)
         {
-            CancelInvoke(nameof(DisableIndicator));
             if (indicator)
             {
                 indicator.SetActive(show);
                 if (show) errorText.text = message;
-                if (show)
-                {
-                    Invoke(nameof(DisableIndicator), 2f);
-                }
             }
         }
-        void DisableIndicator() => ShowErrorIndicator(false);
+        public void DisableIndicator() => ShowErrorIndicator(false);
 
     }
 }

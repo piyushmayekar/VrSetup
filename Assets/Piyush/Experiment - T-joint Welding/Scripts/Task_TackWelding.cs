@@ -29,5 +29,13 @@ namespace TWelding
             machine.CheckIfRequiredElectrodePlaced(requireElectrodeType);
         }
 
+
+        [ContextMenu("Hack complete")]
+        public void HackCompleteThisTask()
+        {
+            weldingPoints[0].transform.parent.gameObject.SetActive(false);
+            jobPlatesGrabInteractable.enabled = true;
+            OnTaskCompleted();
+        }
     }
 }
