@@ -87,5 +87,12 @@ namespace PiyushUtils
             if (other.CompareTag(_Constants.FLATFILE_TAG))
                 soundPlayer.StopPlayingAllSounds();
         }
+
+        [ContextMenu(nameof(Hack_CompleteCutting))]
+        public void Hack_CompleteCutting()
+        {
+            cuttingPoints.ForEach(point => point.gameObject.SetActive(false));
+            OnCuttingComplete?.Invoke();
+        }
     }
 }
