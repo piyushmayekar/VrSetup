@@ -7,7 +7,7 @@ namespace Semester2
 {
     public class Task_WeldingRun : Task
     {
-
+        [SerializeField] GameObject diagram;
         [SerializeField] GameObject weldingArea, machineAnimation;
         [SerializeField] int weldingDoneOnPoints = 0, slagRemaining = 0; //Exterior points
         [SerializeField] Transform pointsParent;
@@ -21,7 +21,8 @@ namespace Semester2
         public override void OnTaskBegin()
         {
             base.OnTaskBegin();
-            
+            if (diagram != null) diagram.SetActive(true);
+
             //Getting all points
             allPoints = new List<WeldingPoint>(pointsParent.
             GetComponentsInChildren<WeldingPoint>());
@@ -73,8 +74,8 @@ namespace Semester2
             }
             weldingArea.SetActive(true);
             allPoints[0].transform.parent.gameObject.SetActive(true);
-            if (machineAnimation != null)
-                machineAnimation.SetActive(true);
+            if (machineAnimation != null) machineAnimation.SetActive(true);
+            
             allPoints.ForEach(point =>
             {
                 if (point.ShouldShowSlag)
@@ -113,6 +114,7 @@ namespace Semester2
                 yield return new WaitForEndOfFrame();
             StopAllCoroutines();
             weldingArea.SetActive(false);
+            if (diagram != null) diagram.SetActive(false);
             OnTaskCompleted();
         }
 
