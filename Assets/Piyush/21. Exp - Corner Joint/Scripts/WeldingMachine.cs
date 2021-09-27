@@ -19,7 +19,7 @@ namespace CornerWelding
         [SerializeField] internal GameObject tip;
         [SerializeField] SoundPlayer soundPlayer;
         [SerializeField] GameObject indicator;
-        [SerializeField] GameObject fauxElectrode;
+        [SerializeField] internal GameObject fauxElectrode;
         [SerializeField] TMPro.TextMeshProUGUI errorText;
         [SerializeField] ElectrodeType requiredElectrodeType;
         [SerializeField] Electrode currentElectrode;

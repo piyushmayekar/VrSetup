@@ -36,7 +36,10 @@ namespace Semester2
             //If current as per required, wait for it to be set
             knob.TargetValue = targetCurrentValue;
             if (knob.CurrentValue != targetCurrentValue)
+            {
+                FindObjectOfType<FlatWelding.CurrentKnob>().ToggleOutline();
                 FlatWelding.CurrentKnob.OnTargetValueSet += OnKnobTargetValueSet;
+            }
             else
                 currentSet = true;
 

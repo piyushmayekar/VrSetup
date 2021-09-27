@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-namespace Semester2
+namespace Semester2.Exp17
 {
     /// <summary>
     /// Place plate 100 in vertical position, then the 4 plate stands. Place the 2 45 plates on top of the stands.

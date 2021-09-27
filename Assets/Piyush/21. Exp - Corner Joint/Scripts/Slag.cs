@@ -29,6 +29,7 @@ namespace CornerWelding
 
         void OnWeldingDone(WeldingPoint point)
         {
+            weldingPoint.OnWeldingDone -= OnWeldingDone;
             _renderer.enabled = true;
             _collider.enabled = true;
         }
@@ -46,9 +47,8 @@ namespace CornerWelding
                     * UnityEngine.Random.Range(residueThrowForce.x, residueThrowForce.y));
                     Destroy(prefab, autoDestructTimer);
                 });
-                weldingPoint.OnWeldingDone -= OnWeldingDone;
                 weldingPoint.OnSlagHitWithHammer();
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

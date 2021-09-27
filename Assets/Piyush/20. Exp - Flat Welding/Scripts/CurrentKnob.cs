@@ -14,6 +14,8 @@ namespace FlatWelding
         [SerializeField] float minRot = 0f, maxRot = 180f;
         [SerializeField] TMPro.TextMeshProUGUI displayerText;
         [SerializeField] XRGrabInteractable interactable;
+        [SerializeField] Outline outline;
+
         public float CurrentValue { get => currentValue; set => currentValue = value; }
         public float TargetValue { get => targetValue; set => targetValue = value; }
 
@@ -35,7 +37,10 @@ namespace FlatWelding
         {
             StopAllCoroutines();
             if (Mathf.Approximately(currentValue, TargetValue))
+            {
+                ToggleOutline(false);
                 OnTargetValueSet?.Invoke();
+            }
         }
 
         IEnumerator MeterCalculator()
@@ -53,6 +58,11 @@ namespace FlatWelding
         private void SetIndicatorText()
         {
             displayerText.text = currentValue.ToString("0.0") + "A";
+        }
+
+        public void ToggleOutline(bool on=true)
+        {
+            outline.enabled = on;
         }
     }
 }
