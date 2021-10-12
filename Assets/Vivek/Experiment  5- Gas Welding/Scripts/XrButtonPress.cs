@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR;
-
+using UnityEngine.SceneManagement;
 public class XrButtonPress : MonoBehaviour
 {
     static readonly Dictionary<string, InputFeatureUsage<bool>> availableButtons = new Dictionary<string, InputFeatureUsage<bool>>
@@ -96,6 +96,10 @@ public class XrButtonPress : MonoBehaviour
     public void OnPressXbutton()
     {
         tablet.SetActive(!tablet.active);
+    }
+    public void onPressYbutton()
+    {
+        SceneManager.LoadScene("Home Scene");
     }
 }
 

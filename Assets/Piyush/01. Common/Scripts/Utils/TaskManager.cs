@@ -203,7 +203,6 @@ namespace PiyushUtils
             int totalLanguagesCount = Enum.GetNames(typeof(_Language)).Length;
             int nextLanguageIndex = (CurrentLangIndex + 1) % totalLanguagesCount;
             currentLanguage = (_Language)nextLanguageIndex;
-
             SaveCurrentLanguageToMemory(currentLanguage);
             SetTaskInfoFont();
             SetTaskInfoTextAccToLanguage();
