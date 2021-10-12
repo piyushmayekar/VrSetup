@@ -74,5 +74,14 @@ namespace TWelding
             jobSockets[1].socketActive = true;
             jobSockets[1].GetComponent<MeshRenderer>().enabled = true;
         }
+
+        [ContextMenu("Hack complete")]
+        public void HackCompleteThisTask()
+        {
+            jobSockets[0].socketActive = false;
+            jobSockets[0].GetComponent<MeshRenderer>().enabled = false;
+            finalJobs.ForEach(job => job.SetActive(true));
+            OnTaskCompleted();
+        }
     }
 }

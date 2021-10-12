@@ -64,7 +64,7 @@ namespace CornerWelding
             }
             weldingArea.SetActive(true);
             allPoints[0].transform.parent.gameObject.SetActive(true);
-            machineAnimation.SetActive(true);
+            machineAnimation?.SetActive(true);
             weavingImage.SetActive(true);
             allPoints.ForEach(point =>
             {
@@ -89,7 +89,7 @@ namespace CornerWelding
 
         public void CheckIfTaskCompleted()
         {
-            machineAnimation.SetActive(false);
+            machineAnimation?.SetActive(false);
             if (weldingDoneOnPoints == allPoints.Count && slagRemaining <= 0)
             {
                 machine.ShowErrorIndicator(false);

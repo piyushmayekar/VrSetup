@@ -72,6 +72,9 @@ namespace CornerWelding
             OnWeldingDone?.Invoke(this);
         }
 
-        internal void OnSlagHitWithHammer() => OnHitWithHammer?.Invoke();
+        internal void OnSlagHitWithHammer() 
+        {
+            OnHitWithHammer?.Invoke();
+        }
     }
 }

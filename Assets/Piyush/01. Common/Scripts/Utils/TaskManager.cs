@@ -15,7 +15,7 @@ namespace PiyushUtils
     public class TaskManager : MonoBehaviour
     {
         [SerializeField] float startDelay = 1f;
-        [SerializeField, Range(0, 22)] int currentTaskIndex = 0;
+        [SerializeField, Range(0, 25)] int currentTaskIndex = 0;
         [SerializeField] List<Task> tasks;
         [SerializeField] TMPro.TextMeshProUGUI taskDetailsText;
         [SerializeField] public Button confirmButton;

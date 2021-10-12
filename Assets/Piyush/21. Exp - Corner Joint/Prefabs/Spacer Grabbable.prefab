@@ -148,8 +148,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldReset: 1
+  shouldUpdateStablePos: 1
   lastStablePos: {x: 0, y: 0, z: 0}
   lastStableRotEulerAngles: {x: 0, y: 0, z: 0}
+  stableVelocityThreshold: 1
   rb: {fileID: 0}
 --- !u!114 &1794875807843329403
 MonoBehaviour:
@@ -176,9 +178,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3695396037303701698, guid: d3310cfeb7d71f04bb3b2a1a6cb03ad3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4578409077006018888, guid: d3310cfeb7d71f04bb3b2a1a6cb03ad3, type: 3}
       propertyPath: m_Name
       value: Spacer Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 4578409077006018888, guid: d3310cfeb7d71f04bb3b2a1a6cb03ad3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4578409077006018889, guid: d3310cfeb7d71f04bb3b2a1a6cb03ad3, type: 3}
       propertyPath: m_RootOrder

@@ -10,18 +10,6 @@ namespace CornerWelding
     {
         public UnityEvent OnWeldingMachineTipEnter, OnWeldingMachineTipExit,
         OnChippingHammerEnter;
-
-        #region SINGLETON
-        public static WeldingArea Instance { get => instance; }
-        private static WeldingArea instance = null;
-        void Awake()
-        {
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
-                Destroy(this);
-        }
-        #endregion
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(_Constants.WELDING_TAG))
